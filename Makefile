@@ -16,7 +16,9 @@ SRCS			=	main.c 		\
 
 NAME			=	cub3d
 
-OBJS			=	$(addprefix ./.build/, $(notdir $(SRCS:.c=.o)))
+OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
+
+OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
@@ -60,13 +62,13 @@ libft :
 
 mlx :
 	@echo "── MLX ─────────────────────────"
-	@make -C "./includes/MacroLibX/"
+	@make -C "./includes/MacroLibX/" -j
 	@echo "────────────────────────────────"
 
-create :
-	@mkdir -p .build
+$(OBJ_DIR):
+	@mkdir -p $@
 
-${NAME} : create mlx libft ${OBJS}
+${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
         tput cuu1; \
 		tput el; \
