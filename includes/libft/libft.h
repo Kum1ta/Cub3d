@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:40:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/11 23:47:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_lstadd_front(t_list **lst, t_list *new);
 void		ft_lstadd_back(t_list **lst, t_list *new);
+int			ft_dprintf(int fd, const char *str, ...);
 void		ft_putchar_rep(char c, int rep, int fd);
 ssize_t		ft_putunbr_fd(unsigned int nb, int fd);
 char		*ft_strrchr(const char *str, int chr);
