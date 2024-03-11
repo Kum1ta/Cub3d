@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putunbr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 18:00:06 by edbernar          #+#    #+#             */
-/*   Updated: 2023/11/04 15:03:38 by edbernar         ###   ########.fr       */
+/*   Created: 2023/11/02 18:16:48 by psalame           #+#    #+#             */
+/*   Updated: 2024/03/11 23:39:51 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ft_printf.h"
+#include "../libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+ssize_t	ft_putunbr_fd(unsigned int nb, int fd)
 {
-	int	i;
+	char			c;
+	short			len;
 
-	i = -1;
-	if (s == NULL)
-	{
-		write(fd, "(null)", 6);
-		return ;
-	}
-	while (s[++i])
-		write(fd, &s[i], 1);
+	len = 0;
+	if (nb >= 10)
+		len += ft_putunbr_fd(nb / 10, fd);
+	c = nb % 10 + '0';
+	len += write(fd, &c, 1);
+	return (len);
 }

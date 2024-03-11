@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/11 17:29:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/11 23:40:51 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "./File/gnl/get_next_line.h"
+
+# define FT_HEXA_BASE "0123456789abcdef"
+# define FT_HEXA_BASE_MAJ "0123456789ABCDEF"
 
 typedef struct s_list
 {
@@ -35,8 +38,10 @@ void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 size_t		ft_strlcat(char *dest, const char *src, size_t size);
 void		*ft_memcpy(void *dest, const void *src, size_t size);
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
+char		*ft_ultoa_base(unsigned long nb, const char *base);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 void		*ft_memset(void *pointer, int value, size_t count);
+ssize_t		ft_putxnbr_fd(unsigned int nb, short maj, int fd);
 char		*ft_str_insert(char *src, char *str, size_t pos);
 void		*ft_memmove(void *dest, void *src, size_t size);
 void		*ft_calloc(size_t elem_count, size_t elem_size);
@@ -48,16 +53,19 @@ char		*ft_strjoin(char const *s1, char const *s2);
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_lstadd_front(t_list **lst, t_list *new);
 void		ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_putchar_rep(char c, int rep, int fd);
+ssize_t		ft_putunbr_fd(unsigned int nb, int fd);
 char		*ft_strrchr(const char *str, int chr);
 void		ft_bzero(void *pointer, size_t size);
 char		*ft_strchr(const char *str, int chr);
 void		free_split(char **strf, int error);
 char		**ft_split(char const *s, char c);
+ssize_t		ft_putptr_fd(void *ptr, int fd);
 int			ft_printf(const char *str, ...);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);
 size_t		ft_strcmp(char *s1, char *s2);
-void		ft_putstr_fd(char *s, int fd);
+ssize_t		ft_putstr_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 char		*ft_strdup(const char *src);
 size_t		ft_strlen(const char *str);

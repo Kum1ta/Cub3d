@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+         #
+#    By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 17:20:50 by edbernar          #+#    #+#              #
-#    Updated: 2023/12/19 14:19:37 by edbernar         ###   ########.fr        #
+#    Updated: 2024/03/11 23:44:22 by psalame          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Convertion/ft_atoi.c \
 					Convertion/ft_itoa.c \
 					Convertion/ft_atol.c \
+					Convertion/ft_ultoa_base.c \
 					Lists/ft_lstadd_back.c \
 					Lists/ft_lstadd_front.c \
 					Lists/ft_lstclear.c \
@@ -41,17 +42,22 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Memory/ft_memmove.c \
 					Memory/ft_memset.c \
 					Output/ft_putchar_fd.c \
+					Output/ft_putchar_rep.c \
 					Output/ft_putendl_fd.c \
 					Output/ft_putnbr_fd.c \
+					Output/ft_putptr_fd.c \
 					Output/ft_putstr_fd.c \
-					Output/ft_printf/ft_len.c \
-					Output/ft_printf/ft_print_addr.c \
-					Output/ft_printf/ft_printf.c \
-					Output/ft_printf/ft_putnbr_fd.c \
-					Output/ft_printf/ft_putnbr_hexa.c \
-					Output/ft_printf/ft_putstr_fd.c \
-					Output/ft_printf/ft_put_unsigned_int.c \
-					Output/ft_printf/ft_strlen_fp.c \
+					Output/ft_putunbr_fd.c \
+					Output/ft_putxnbr_fd.c \
+					Output/printf/ft_printf.c \
+					Output/printf/utils/combinaison_flag.c \
+					Output/printf/utils/conversion_flag.c \
+					Output/printf/utils/print_functions/ft_printf_char.c \
+					Output/printf/utils/print_functions/ft_printf_hexa.c \
+					Output/printf/utils/print_functions/ft_printf_int.c \
+					Output/printf/utils/print_functions/ft_printf_ptr.c \
+					Output/printf/utils/print_functions/ft_printf_string.c \
+					Output/printf/utils/print_functions/ft_printf_uint.c \
 					Strings/ft_split.c \
 					Strings/ft_strchr.c \
 					Strings/ft_strcmp.c \

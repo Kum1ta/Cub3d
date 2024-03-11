@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 22:07:50 by edbernar          #+#    #+#             */
-/*   Updated: 2023/12/19 00:51:37 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:27:13 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
