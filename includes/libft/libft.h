@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2023/12/22 13:20:40 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:26:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+void		ft_lstremoveif(t_list **lst, void *e, void (*del)(), int (*cmp)());
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char		*ft_strnstr(const char *str, const char *to_find, size_t size);
 void		*ft_memchr(const void *addr, int searchedChar, size_t size);
@@ -36,6 +37,7 @@ void		*ft_memcpy(void *dest, const void *src, size_t size);
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 void		*ft_memset(void *pointer, int value, size_t count);
+char		*ft_str_insert(char *src, char *str, size_t pos);
 void		*ft_memmove(void *dest, void *src, size_t size);
 void		*ft_calloc(size_t elem_count, size_t elem_size);
 int			ft_strncmp(char *s1, char *s2, unsigned int n);
@@ -74,6 +76,7 @@ int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
 int			ft_isprint(int c);
+uint		ft_abs(int value);
 char		*ft_itoa(int n);
 
 #endif
