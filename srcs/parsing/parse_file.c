@@ -6,13 +6,16 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/11 23:08:11 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/11 23:54:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "./parsing_Int.h"
+#include <string.h>
+#include <errno.h>
 
-void	empty_map_data(t_map *map)
+static inline void	empty_map_data(t_map *map)
 {
 	map->blocks = NULL;
 	map->texture.north = NULL;
@@ -24,14 +27,26 @@ void	empty_map_data(t_map *map)
 	map->playerPos.x = -1.0f;
 }
 
-t_map	*parse_file(char *filename)
+t_map	*parse_map(char *filename)
 {
 	t_map	*res;
+	char	fd;
 
-	(void) filename;
 	res = malloc(sizeof(t_map));
 	if (!res)
-		return (NULL); // todo error case
+	{
+		ft_dprintf(2, "Error\n%s\n", strerror(ENOMEM));
+		return (NULL);
+	}
 	empty_map_data(res);
+	fd = open(filename, O_RDONLY);
+	if (!fd)
+	{
+		free(res);
+		ft_dprintf(2, "Error\n%s\n", strerror(errno));
+		return (NULL);
+	}
+	// todo parsing map
+	close(fd);
 	return (res);
 }
