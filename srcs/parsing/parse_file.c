@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:50:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/12 23:56:33 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static inline bool	is_map_valid(t_map *map)
 	return (map->texture.north && map->texture.south
 		&& map->texture.east && map->texture.west && map->playerPos.x != -1.0f
 		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1
-		&& !can_exit_map(map->blocks, map->playerPos.x, map->playerPos.y))
+		&& !can_exit_map(map->blocks, map->playerPos.x, map->playerPos.y));
 }
 
 t_map	*parse_map(char *filename)
