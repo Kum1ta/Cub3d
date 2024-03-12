@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 13:42:52 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:25:02 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	(void)map;
-	ft_printf("Hello world !");
+	graphics_part(map);
+	ft_printf("Hello world !\n");
 }

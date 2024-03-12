@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 11:01:18 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 13:50:29 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/12 14:20:08 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/12 14:24:38 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_abs(int value)
-{
-	unsigned int	res;
+#include "../graphics.h"
 
-	if (value >= 0)
-		res = value;
-	else
-		res = -value;
-	return (res);
+void	free_all_graphics(t_mlx *mlx)
+{
+
+
+	free(mlx);
 }

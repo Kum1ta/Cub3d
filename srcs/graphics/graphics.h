@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 11:01:18 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 13:50:29 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/12 18:02:42 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_abs(int value)
-{
-	unsigned int	res;
+#ifndef GRAPHICS_H
+# define GRAPHICS_H
 
-	if (value >= 0)
-		res = value;
-	else
-		res = -value;
-	return (res);
-}
+# include "mlx.h"
+# include "cub3d.h"
+
+typedef struct s_mlx
+{
+	void    *mlx;
+	void    *win;
+}   t_mlx;
+
+/* ------ free_all.c ------------------------------------------------------- */
+void	free_all_graphics(t_mlx *mlx);
+
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:13:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/12 14:26:21 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <stdbool.h>
-
 
 typedef enum e_block {
 	WALL,
@@ -47,5 +46,7 @@ typedef struct s_map {
 	t_texture	texture;
 	t_vec3		playerPos;
 }	t_map;
+
+void	graphics_part(t_block map[4][5]);
 
 #endif

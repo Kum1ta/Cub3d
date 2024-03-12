@@ -12,7 +12,10 @@
 
 MAKEFLAGS 		+= --silent
 
-SRCS			=	main.c 		\
+SRCS			=	main.c 						\
+					graphics/main_graphics.c 	\
+					graphics/free_functions/free_all.c 	\
+					utils/first.c 				\
 
 NAME			=	cub3d
 
@@ -22,7 +25,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -L./includes/MacroLibX -lmlx -lm
+CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes -L./includes/MacroLibX/ -lmlx -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 

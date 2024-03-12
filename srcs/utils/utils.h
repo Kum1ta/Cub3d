@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 11:01:18 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 13:50:29 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/12 14:09:25 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/12 14:11:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_abs(int value)
-{
-	unsigned int	res;
+#ifndef UTILS_H
+# define UTILS_H
 
-	if (value >= 0)
-		res = value;
-	else
-		res = -value;
-	return (res);
-}
+# include "cube3d.h"
+
+#endif

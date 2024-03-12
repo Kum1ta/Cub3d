@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   first.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 11:01:18 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 13:50:29 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/12 14:09:15 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_abs(int value)
-{
-	unsigned int	res;
-
-	if (value >= 0)
-		res = value;
-	else
-		res = -value;
-	return (res);
-}
