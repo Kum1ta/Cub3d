@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+         #
+#    By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 17:20:50 by edbernar          #+#    #+#              #
-#    Updated: 2024/03/12 13:06:34 by psalame          ###   ########.fr        #
+#    Updated: 2024/03/12 13:46:19 by edbernar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Char_Compare/ft_isspace.c \
 					Char_Compare/ft_tolower.c \
 					Char_Compare/ft_toupper.c \
+					Convertion/ft_abs.c \
 					Convertion/ft_atoi.c \
 					Convertion/ft_itoa.c \
 					Convertion/ft_atol.c \

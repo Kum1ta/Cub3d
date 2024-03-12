@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 13:37:05 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:42:52 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int ac, char **av)
 		{ WALL , FLOOR, FLOOR, WALL , END },
 		{ WALL , WALL , FLOOR , WALL , END },
 		{ EMPTY, WALL , WALL , WALL , END },
-		NULL
 	};
 	(void)ac;
 	(void)av;

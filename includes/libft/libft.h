@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 13:06:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/12 13:45:34 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,14 @@ int			ft_lstsize(t_list *lst);
 int			ft_isnumber(char *str);
 char		*get_next_line(int fd);
 char		*get_file(char *file);
-inline int	ft_isspace(char c);
+unsigned int	ft_abs(int value);
+int			ft_isspace(char c);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
 int			ft_isprint(int c);
-uint		ft_abs(int value);
+unsigned int	ft_abs(int value);
 char		*ft_itoa(int n);
 
 #endif
