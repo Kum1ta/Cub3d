@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/11 23:54:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/12 12:49:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ t_map	*parse_map(char *filename)
 	}
 	empty_map_data(res);
 	fd = open(filename, O_RDONLY);
-	if (!fd)
+	if (fd == -1)
 	{
 		free(res);
 		ft_dprintf(2, "Error\n%s\n", strerror(errno));
 		return (NULL);
 	}
-	// todo parsing map
+	if (!parse_lines(fd, res))
+	{
+		// todo free map
+		res = NULL;
+	}
 	close(fd);
 	return (res);
 }
