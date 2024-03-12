@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 13:45:34 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:21:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 int			ft_dprintf(int fd, const char *str, ...);
 void		ft_putchar_rep(char c, int rep, int fd);
 ssize_t		ft_putunbr_fd(unsigned int nb, int fd);
+char		**ft_split2(char const *s, char *skip);
 char		*ft_strrchr(const char *str, int chr);
 void		ft_bzero(void *pointer, size_t size);
 char		*ft_strchr(const char *str, int chr);

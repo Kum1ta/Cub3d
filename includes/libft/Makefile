@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+         #
+#    By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 17:20:50 by edbernar          #+#    #+#              #
-#    Updated: 2024/03/12 13:46:19 by edbernar         ###   ########.fr        #
+#    Updated: 2024/03/12 18:22:22 by psalame          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Output/printf/utils/print_functions/ft_printf_string.c \
 					Output/printf/utils/print_functions/ft_printf_uint.c \
 					Strings/ft_split.c \
+					Strings/ft_split2.c \
 					Strings/ft_strchr.c \
 					Strings/ft_strcmp.c \
 					Strings/ft_strdup.c \

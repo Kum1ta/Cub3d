@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:21:51 by edbernar          #+#    #+#             */
-/*   Updated: 2024/01/14 12:23:37 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:06:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
