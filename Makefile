@@ -25,7 +25,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes -L./includes/MacroLibX/ -lmlx -lm -lSDL2
+CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 
@@ -35,7 +35,7 @@ all : ${NAME}
 
 ./.build/%.o : ./srcs/%.c
 	@tput civis
-	@$(CC) -c $(CFLAGS) "$<" -o "$@"
+	@$(CC) -c ./includes/MacroLibX/libmlx.so $(CFLAGS) "$<" -o "$@" 
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
         tput cuu1; \
 		tput el; \
@@ -86,7 +86,7 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
         echo "┌───────────────────────────────────────┐"; \
 		echo "│███████████████████████████████████████│"; \
 		echo "└───────────────────────────────────────┘"; \
-		gcc ${OBJS} -o ${NAME} ${CFLAGS}; \
+		gcc ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS}; \
 		echo "[ 100% ]\033[32m Compilation $(NAME) completed !\033[0m"; \
 		echo "\n\033[32mThe program \"$(NAME)\" is ready !\033[0m"; \
 	else \
