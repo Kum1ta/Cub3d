@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_rep.c                                   :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 11:02:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 18:39:32 by psalame          ###   ########.fr       */
+/*   Created: 2024/03/12 20:36:29 by psalame           #+#    #+#             */
+/*   Updated: 2024/03/12 20:39:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "cub3d.h"
 
-void	ft_putchar_rep(char
-static inline bool	check_map_line(char *line, t_list **map_lines)
+void	free_blocks(t_block **blocks)
 {
-	
-} c, int rep, int fd)
-{
-	while (rep > 0)
+	size_t	i;
+
+	if (blocks)
 	{
-		write(fd, &c, 1);
-		rep--;
+		i = 0;
+		while (blocks[i])
+			free(blocks[i++]);
+		free(blocks);
+	}
+}
+
+void	free_map(t_map *map)
+{
+	if (map)
+	{
+		free_blocks(map->blocks);
+		free(map->texture.north);
+		free(map->texture.south);
+		free(map->texture.east);
+		free(map->texture.west);
+		free(map);
 	}
 }

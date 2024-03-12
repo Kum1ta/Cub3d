@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:13:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/12 23:30:13 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 
 typedef enum e_block {
-	WALL,
-	FLOOR,
 	EMPTY,
-	END
+	END,
+	WALL,
+	FLOOR
 }	t_block;
 
 typedef struct s_texture {
@@ -47,5 +47,11 @@ typedef struct s_map {
 	t_texture	texture;
 	t_vec3		playerPos;
 }	t_map;
+
+t_map	*parse_map(char *filename);
+
+// free utils
+void	free_blocks(t_block **blocks);
+void	free_map(t_map *map);
 
 #endif
