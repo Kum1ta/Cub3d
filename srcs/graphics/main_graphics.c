@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 22:28:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:32:52 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	update(void *mlx_ptr)
 
 	mlx = (t_mlx *)mlx_ptr;
 	larg_map(mlx);
-	if (mlx->img)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 	return (0);
 }
 
