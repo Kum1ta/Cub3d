@@ -16,7 +16,13 @@ SRCS			=	main.c 								\
 					graphics/main_graphics.c 			\
 					graphics/free_functions/free_all.c 	\
 					graphics/map/larg_map.c 			\
+					parsing/check_map_lines.c 			\
+					parsing/check_map_param.c 			\
+					parsing/parse_file.c 				\
+					parsing/parse_lines.c 				\
+					parsing/set_map_blocks.c			\
 					utils/first.c 						\
+					free_map.c 							\
 
 NAME			=	cub3d
 

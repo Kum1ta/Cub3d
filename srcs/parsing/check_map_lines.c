@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 18:35:47 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 22:26:03 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static size_t	get_map_height(t_list *lines)
 	return (height);
 }
 
-static bool	allocate_map(t_map *map, t_list *lines, size_t width, size_t height)
+static bool	allocate_map(t_map *map, size_t width, size_t height)
 {
 	size_t	i;
 
@@ -146,7 +146,7 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 		return (MAP_INVALID_CHARACTER);
 	map_width = get_max_line_size(lines);
 	map_height = get_map_height(lines);
-	if (!allocate_map(map, lines, map_width, map_height))
+	if (!allocate_map(map, map_width, map_height))
 		return (MAP_ERROR_ALLOC);
 	res = set_map_blocks(map, lines);
 	if (res != MAP_NO_ERROR)

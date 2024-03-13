@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 21:53:47 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:28:27 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,19 @@ void	larg_map(t_mlx *mlx)
 	if (mlx->img)
 		mlx_destroy_image(mlx->mlx, mlx->img);
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-	while (mlx->map[i][0] != END)
+	while (mlx->map->blocks[i])
 	{
 		j = 0;
 		x = 0;
-		while (mlx->map[i][j] != END)
+		while (mlx->map->blocks[i][j] != END)
 		{
-			x = j * 40;
-			y = i * 40;
-			ft_printf("map[%d][%d] = %d\n", i, j, mlx->map[i][j]);
-			if (mlx->map[i][j] == WALL)
-				draw_square(mlx, (int [2]){x, y}, 40, 0xFFFFFFFF);
+			x = j * 20;
+			y = i * 20;
+			if (mlx->map->blocks[i][j] == WALL)
+				draw_square(mlx, (int [2]){x, y}, 20, 0xFFFFFFFF);
 			j++;
 		}
 		i++;
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	ft_printf("end\n");
 }

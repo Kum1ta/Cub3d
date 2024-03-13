@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 21:49:24 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:17:39 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ typedef struct s_mouse
 
 typedef struct s_mlx
 {
-	t_block	map[30][100];
-	// t_map	**map;
+	t_map	*map;
 	void    *mlx;
 	void    *win;
 	void	*img;
