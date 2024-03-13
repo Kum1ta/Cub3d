@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 16:20:52 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:02:50 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	update(void *mlx_ptr)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)mlx_ptr;
-	larg_map(mlx, mlx->map);
+	larg_map(mlx);
 	if (mlx->img)
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 	return (0);
@@ -57,8 +57,8 @@ void	graphics_part(t_block map[30][100])
 		return ;
 	init_mlx(mlx);
 	/*****JUSTE TANT QU'IL Y A PAS LE PARSING*/
-	for (int i = 0; i < 30; i++) {
-		for (int j = 0; j < 100; j++) {
+	for (int i = 0; map[i][0] != END; i++) {
+		for (int j = 0; map[i][j] != END; j++) {
 			map[i][j] = mlx->map[i][j];
 		}
 	}

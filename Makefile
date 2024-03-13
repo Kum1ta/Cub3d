@@ -36,7 +36,7 @@ all : ${NAME}
 
 ./.build/%.o : ./srcs/%.c
 	@tput civis
-	@$(CC) -c ./includes/MacroLibX/libmlx.so $(CFLAGS) "$<" -o "$@" 
+	@$(CC) -c $(CFLAGS) "$<" -o "$@" 
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
         tput cuu1; \
 		tput el; \
