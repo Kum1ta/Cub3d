@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 16:34:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 22:09:19 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <stdbool.h>
-
 
 typedef enum e_block {
 	EMPTY,
@@ -47,6 +46,8 @@ typedef struct s_map {
 	t_texture	texture;
 	t_vec4		playerPos;
 }	t_map;
+
+void	graphics_part(t_block map[30][100]);
 
 t_map	*parse_map(char *filename);
 
