@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 12:59:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:44:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ typedef enum e_map_line_type {
 	LTYPE_MAP
 }	t_map_line_type;
 
+
+typedef struct s_vec2 {
+	size_t	x;
+	size_t	y;
+}	t_vec2;
+
 typedef enum e_map_error_type {
 	MAP_NO_ERROR,
 	MAP_ERROR_ALLOC,
@@ -32,7 +38,8 @@ typedef enum e_map_error_type {
 	MAP_INVALID_COLOR,
 	MAP_DUPLICATE_PARAMETER,
 	MAP_INVALID_CHARACTER,
-	MAP_DUPLICATE_PLAYER_POS
+	MAP_DUPLICATE_PLAYER_POS,
+	MAP_CAN_EXIT
 }	t_map_error_type;
 
 bool				parse_lines(int fd, t_map *map_data);

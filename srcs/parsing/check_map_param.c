@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:27:23 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 13:12:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:14:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static bool	set_map_color_param(int color[3], char *color_str)
 				return (false);
 			else
 				current++;
+			color_str++;
 		}
 		else
 		{
@@ -79,7 +80,6 @@ static bool	set_map_color_param(int color[3], char *color_str)
 			while (ft_isdigit(*color_str))
 				color_str++;
 		}
-		color_str++;
 	}
 	return (color[2] != -1);
 }

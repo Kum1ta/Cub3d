@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:56:33 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:44:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,34 @@ static inline void	empty_map_data(t_map *map)
 	map->playerPos.x = -1.0f;
 }
 
-static bool	can_exit_map(t_block **blocks, int x, int y)
-{
-	t_block	current;
-	bool	escaped;
-
-	if (blocks[y] == NULL || y == 0 || x == 0 || blocks[y][x] != FLOOR)
-		return (true);
-	current = blocks[y][x];
-	blocks[y][x] = WALL;
-	escaped = false;
-	if (!escaped && blocks[y - 1][x] != WALL)
-		escaped = can_exit_map(blocks, x, y - 1);
-	if (!escaped && blocks[y + 1][x] != WALL)
-		escaped |= can_exit_map(blocks, x, y + 1);
-	if (!escaped && blocks[y][x - 1] != WALL)
-		escaped |= can_exit_map(blocks, x - 1, y);
-	if (!escaped && blocks[y][x + 1] != WALL)
-		escaped |= can_exit_map(blocks, x + 1, y);
-	blocks[y][x] = current;
-	return (escaped);
-}
-
 static inline bool	is_map_valid(t_map *map)
 {
 	return (map->texture.north && map->texture.south
 		&& map->texture.east && map->texture.west && map->playerPos.x != -1.0f
-		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1
-		&& !can_exit_map(map->blocks, map->playerPos.x, map->playerPos.y));
+		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1);
+}
+
+static bool	check_file_ext(char *filename, char *ext)
+{
+	size_t	filename_size;
+	size_t	ext_size;
+
+	if (!filename)
+	{
+		ft_dprintf(2, "Error\nfilename cannot be NULL\n");
+		return (false);
+	}
+	filename_size = ft_strlen(filename);
+	ext_size = ft_strlen(ext);
+	if (filename_size < ext_size)
+		return (false);
+	if (ft_strncmp(filename + filename_size - ext_size, ext, ext_size) == 0)
+		return (true);
+	else
+	{
+		ft_dprintf(2, "Error\nBad file extention\n");
+		return (false);
+	}
 }
 
 t_map	*parse_map(char *filename)
@@ -66,12 +66,13 @@ t_map	*parse_map(char *filename)
 	t_map	*res;
 	char	fd;
 
+	if (!check_file_ext(filename, ".cub"))
+		return (NULL);
 	res = malloc(sizeof(t_map));
 	if (!res)
-	{
 		ft_dprintf(2, "Error\n%s\n", strerror(ENOMEM));
+	if (!res)
 		return (NULL);
-	}
 	empty_map_data(res);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -80,7 +81,7 @@ t_map	*parse_map(char *filename)
 		ft_dprintf(2, "Error\n%s\n", strerror(errno));
 		return (NULL);
 	}
-	if (!parse_lines(fd, res) || is_map_valid(res))
+	if (!parse_lines(fd, res) || !is_map_valid(res))
 	{
 		free_map(res);
 		res = NULL;

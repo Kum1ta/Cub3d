@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:58:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 12:52:34 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 18:02:48 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,11 @@ void	test_map(char *filename, int expected)
 		res = 0;
 	}
 	else
-	{
-		ft_printf("invalid\n");
 		res = 1;
-	}
 	if (res != expected)
-		ft_printf("\033[31mKO\033[0m");
+		ft_printf("\033[31mKO\n\033[0m");
 	else
-		ft_printf("\033[32mOK\033[0m");
+		ft_printf("\033[32mOK\n\033[0m");
 }
 
 int	main(void)
@@ -84,8 +81,12 @@ int	main(void)
 	test_map("./test_maps/missing_parameter.cub", 1);
 	test_map("./test_maps/no_player.cub", 1);
 	test_map("./test_maps/unclosed_map.cub", 1);
+	test_map("./test_maps/unclosed_map2.cub", 1);
+	test_map("./test_maps/unclosed_map3.cub", 1);
+	test_map("./test_maps/unclosed_map4.cub", 1);
+	test_map("./test_maps/unclosed_map5.cub", 1);
+	test_map("./test_maps/empty_file.cub", 1);
 	test_map("./test_maps/valid_one.cub", 0);
 	test_map("./test_maps/valid_two.cub", 0);
-
-	
+	test_map("./test_maps/valid_colorspace_todo.cub", 0);
 }

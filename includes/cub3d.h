@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 23:30:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:34:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ typedef struct s_texture {
 	int		ceiling[3];
 }	t_texture;
 
-typedef struct s_vec3 {
+typedef struct s_vec4 {
 	float	x;
 	float	y;
 	float	z;
 	float	h;
-}	t_vec3;
+}	t_vec4;
 
 typedef struct s_map {
 	t_block		**blocks;
-	
+
 	t_texture	texture;
-	t_vec3		playerPos;
+	t_vec4		playerPos;
 }	t_map;
 
 t_map	*parse_map(char *filename);

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 13:00:32 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:45:18 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static inline void	print_map_error(t_map_error_type type)
 		ft_dprintf(2, "Error\nInvalid character in map content.\n");
 	else if (type == MAP_DUPLICATE_PLAYER_POS)
 		ft_dprintf(2, "Error\nDuplicate player.\n");
+	else if (type == MAP_CAN_EXIT)
+		ft_dprintf(2, "Error\nCan exit map.\n");
 }
 
 t_map_error_type	add_map_line(char *line, t_list **map_lines)
