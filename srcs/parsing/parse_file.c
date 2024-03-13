@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 16:44:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 19:00:02 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,14 @@ static inline void	empty_map_data(t_map *map)
 
 static inline bool	is_map_valid(t_map *map)
 {
-	return (map->texture.north && map->texture.south
+	bool res;
+
+	res = map->texture.north && map->texture.south
 		&& map->texture.east && map->texture.west && map->playerPos.x != -1.0f
-		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1);
+		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1;
+	if (!res)
+		ft_dprintf(2, "Error\nMissing map parameter.\n");
+	return (res);
 }
 
 static bool	check_file_ext(char *filename, char *ext)
