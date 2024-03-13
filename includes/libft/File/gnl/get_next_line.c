@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:10:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/01/09 23:16:40 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:04:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static char	*free_all(char **backup)
 	while (i < 1024)
 	{
 		if (backup[i])
+		{
 			free(backup[i]);
+			backup[i] = NULL;
+		}
 		i++;
 	}
 	return (NULL);

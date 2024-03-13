@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:27:23 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:28:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:12:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static inline t_map_line_type	get_line_type(char *line)
 static inline void	*get_param_ptr(char *identifier, t_map *map_data, int *type)
 {
 	*type = 0;
-	if (ft_strmcmp(identifier, "NO", 3) == 0)
+	if (ft_strncmp(identifier, "NO", 3) == 0)
 		return (&(map_data->texture.north));
 	else if (ft_strncmp(identifier, "SO", 3) == 0)
 		return (&(map_data->texture.south));
@@ -47,9 +47,9 @@ static inline void	*get_param_ptr(char *identifier, t_map *map_data, int *type)
 	{
 		*type = 1;
 		if (ft_strncmp(identifier, "C", 2) == 0)
-			return (&(map_data->texture.ceiling));
+			return (map_data->texture.ceiling);
 		else if (ft_strncmp(identifier, "F", 2) == 0)
-			return (&(map_data->texture.floor));
+			return (map_data->texture.floor);
 		else
 			return (NULL);
 	}
@@ -103,11 +103,11 @@ static t_map_error_type	set_map_param(char **data, t_map *map_data)
 	}
 	else
 	{
-		if ((*((int **)param_ptr))[0] != -1)
+		if (((int *)param_ptr)[0] != -1)
 			return (MAP_DUPLICATE_PARAMETER);
 		if (ft_strlen(data[1]) > 11)
 			return (MAP_INVALID_COLOR);
-		if (!set_map_color_param(*((int **)param_ptr), data[1]))
+		if (!set_map_color_param(param_ptr, data[1]))
 			return (MAP_INVALID_COLOR);
 	}
 	return (MAP_NO_ERROR);
@@ -122,13 +122,13 @@ t_map_error_type	check_map_param(char *line, t_map *map_data, t_list **map_lines
 	type = get_line_type(line);
 	valid = MAP_NO_ERROR;
 	if (type == LTYPE_MAP)
-		return (check_map_line(line, map_lines));
+		return (add_map_line(line, map_lines));
 	else if (type == LTYPE_DATA)
 	{
 		data = ft_split2(line, WHITESPACE_CHARS);
 		if (data != NULL)
 		{
-			if (data[1] == NULL || data[3] == NULL)
+			if (data[1] == NULL || data[2] != NULL)
 				valid = MAP_INVALID_IDENTIFIER;
 			else
 				valid = set_map_param(data, map_data);

@@ -6,14 +6,16 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:33:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:59:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# define WHITESPACE_CHARS (char *) { ' ', '\a', '\b', '\t', '\v', '\f', '\r', '\n' }
+# include "cub3d.h"
+
+# define WHITESPACE_CHARS " \a\b\t\v\f\n\r"
 
 // todo add -fshort-enums in makefile
 

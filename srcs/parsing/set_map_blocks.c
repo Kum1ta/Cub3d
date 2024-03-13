@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:20:48 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:01:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_map_error_type	set_map_blocks(t_map *map, t_list *lines)
 		line = lines->content;
 		while (map->blocks[y][x] != END)
 		{
-			res = parse_map_char(map, line[x], x++, y);
+			res = parse_map_char(map, line[x], x, y);
 			if (res != MAP_NO_ERROR)
 				return (res);
 			x++;

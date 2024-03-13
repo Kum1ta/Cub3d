@@ -6,13 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:36:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:00:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "./parsing_Int.h"
 #include <errno.h>
+#include <string.h>
 
 static inline void	print_map_error(t_map_error_type type)
 {
@@ -63,7 +64,7 @@ bool	parse_lines(int fd, t_map *map_data)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (!check_line_content(line, map_data, map_lines))
+		if (!check_line_content(line, map_data, &map_lines))
 		{
 			get_next_line(-1);
 			ft_lstclear(&map_lines, &free);
@@ -74,7 +75,7 @@ bool	parse_lines(int fd, t_map *map_data)
 	if (!map_lines)
 		return (false);
 	res = check_map_lines(map_data, map_lines);
-	ft_lstfree(map_lines);
+	ft_lstclear(&map_lines, free);
 	if (res != MAP_NO_ERROR)
 		print_map_error(res);
 	return (res == MAP_NO_ERROR);

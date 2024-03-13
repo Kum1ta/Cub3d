@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/12 23:11:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:53:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	is_all_lines_valid(t_list *lines)
 		current_line_empty = true;
 		while (line && *line)
 		{
-			if (ft_strchr('01 NSWE\n', *line) == NULL)
+			if (ft_strchr("01 NSWE\n", *line) == NULL)
 				return (false);
 			if (current_line_empty && !ft_isspace(*line))
 				current_line_empty = false;
@@ -122,5 +122,5 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 	map_height = get_map_height(lines);
 	if (!allocate_map(map, lines, map_width, map_height))
 		return (MAP_ERROR_ALLOC);
-	set_map_blocks(map, lines); // todo
+	return (set_map_blocks(map, lines));
 }
