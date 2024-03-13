@@ -12,10 +12,11 @@
 
 MAKEFLAGS 		+= --silent
 
-SRCS			=	main.c 						\
-					graphics/main_graphics.c 	\
+SRCS			=	main.c 								\
+					graphics/main_graphics.c 			\
 					graphics/free_functions/free_all.c 	\
-					utils/first.c 				\
+					graphics/map/larg_map.c 			\
+					utils/first.c 						\
 
 NAME			=	cub3d
 

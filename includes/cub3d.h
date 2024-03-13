@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 14:26:21 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:31:36 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ typedef struct s_map {
 	t_vec3		playerPos;
 }	t_map;
 
-void	graphics_part(t_block map[4][5]);
+void	graphics_part(t_block map[30][100]);
 
 #endif
