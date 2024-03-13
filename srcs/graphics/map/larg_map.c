@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 22:32:03 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 00:02:06 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	draw_square(t_mlx *mlx, int xy[2], int size, int color)
 		while (j < size)
 		{
 			if (xy[0] + i < WIDTH && xy[1] + j < HEIGHT && xy[0] + i > 0 && xy[1] + j > 0)
-			mlx_set_image_pixel(mlx->mlx, mlx->img, xy[0] + i, xy[1] + j, color);
+				mlx_set_image_pixel(mlx->mlx, mlx->img, xy[0] + i, xy[1] + j, color);
 			j++;
 		}
 		i++;

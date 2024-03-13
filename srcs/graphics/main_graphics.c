@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 22:32:52 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:58:03 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,16 @@ void	init_mlx(t_mlx *mlx)
 
 int	update(void *mlx_ptr)
 {
+	// static int 		i = 0;
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)mlx_ptr;
+	// if (i == 0)
+	// {
 	larg_map(mlx);
+	// 	i++;
+	// }
+	// free_all_graphics(mlx);
 	return (0);
 }
 
