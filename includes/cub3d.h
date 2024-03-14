@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 22:16:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:35:56 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CUB3D_H
 
 # include "libft.h"
+# include <sys/time.h>
+# include <stdio.h>
 # include <stdbool.h>
 
 typedef enum e_block {
@@ -49,13 +51,16 @@ typedef struct s_map {
 
 
 /* --- main_graphics.c ----------------------------------------------------- */
-void	graphics_part(t_map *map);
+void		graphics_part(t_map *map);
 
 /* --- parse_file.c -------------------------------------------------------- */
-t_map	*parse_map(char *filename);
+t_map		*parse_map(char *filename);
 
 /* --- free_map.c ---------------------------------------------------------- */
-void	free_blocks(t_block **blocks);
-void	free_map(t_map *map);
+void		free_blocks(t_block **blocks);
+void		free_map(t_map *map);
+
+/* --- utils.c ------------------------------------------------------------- */
+long long	get_now_time(void);
 
 #endif

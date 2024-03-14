@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/13 22:58:03 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:01:06 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,38 @@ void	init_mlx(t_mlx *mlx)
 	mlx->img = NULL;
 }
 
+void	put_fps(t_mlx *mlx)
+{
+	static long long	last_time = 0;
+	static int			change = 0;
+	long long			now;
+	float				fps;
+	static char			*tmp = NULL;
+
+	now = get_now_time();
+	fps = 1000000 / (now - last_time);
+	last_time = now;
+	if (change % 10 == 0)
+	{
+		if (tmp)
+			free(tmp);
+		tmp = ft_itoa(fps);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 20, 15, 0xFFFF0000, tmp);
+		change = 0;
+	}
+	else 
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 20, 15, 0xFFFF0000, tmp);
+	change++;
+}
+
 int	update(void *mlx_ptr)
 {
-	// static int 		i = 0;
-	t_mlx	*mlx;
+	t_mlx				*mlx;
 
 	mlx = (t_mlx *)mlx_ptr;
-	// if (i == 0)
-	// {
+	mlx_clear_window(mlx->mlx, mlx->win);
 	larg_map(mlx);
-	// 	i++;
-	// }
-	// free_all_graphics(mlx);
+	put_fps(mlx);
 	return (0);
 }
 

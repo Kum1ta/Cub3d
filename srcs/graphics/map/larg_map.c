@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 00:02:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:00:56 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	larg_map(t_mlx *mlx)
 
 	i = 0;
 	if (mlx->img)
+	{
 		mlx_destroy_image(mlx->mlx, mlx->img);
+		mlx->img = NULL;
+	}
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	while (mlx->map->blocks[i])
 	{
