@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first.c                                            :+:      :+:    :+:   */
+/*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 17:27:28 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/14 17:52:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../graphics.h"
 
-void	*error_ptr(char *str, void *ret)
+void	exit_game(t_mlx *mlx)
 {
-	printf("Cube3d: %s\n", str);
-	return (ret);
+	if (mlx->img)
+		mlx_destroy_image(mlx->mlx, mlx->img);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	if (mlx->mlx)
+		mlx_destroy_display(mlx->mlx);
+	free_all_graphics(mlx);
+	exit(0);
 }
 
-int	error_int(char *str, int ret)
+int	keyboard(int key, void *mlx_ptr)
 {
-	printf("Cube3d: %s\n", str);
-	return (ret);
-}
+	t_mlx	*mlx;
 
-long long	get_now_time(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000 + tv.tv_usec);
+	printf("key: %d\n", key);
+	mlx = (t_mlx *)mlx_ptr;
+	if (key == 41)
+		exit_game(mlx);
+	return (0);
 }

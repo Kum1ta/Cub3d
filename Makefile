@@ -16,6 +16,10 @@ SRCS			=	main.c 								\
 					graphics/main_graphics.c 			\
 					graphics/free_functions/free_all.c 	\
 					graphics/map/larg_map.c 			\
+					graphics/entry/keyboard.c			\
+					graphics/entry/mouse_whell.c		\
+					graphics/entry/mouse_down.c			\
+					graphics/entry/mouse_up.c			\
 					parsing/check_map_lines.c 			\
 					parsing/check_map_param.c 			\
 					parsing/parse_file.c 				\

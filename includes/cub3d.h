@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 13:35:56 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:25:22 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void		free_blocks(t_block **blocks);
 void		free_map(t_map *map);
 
 /* --- utils.c ------------------------------------------------------------- */
+void		*error_ptr(char *str, void *ret);
+int			error_int(char *str, int ret);
 long long	get_now_time(void);
 
 #endif

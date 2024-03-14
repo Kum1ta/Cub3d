@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first.c                                            :+:      :+:    :+:   */
+/*   mouse_down.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 17:27:28 by edbernar         ###   ########.fr       */
+/*   Created: 2024/03/14 18:07:38 by edbernar          #+#    #+#             */
+/*   Updated: 2024/03/14 18:25:02 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../graphics.h"
 
-void	*error_ptr(char *str, void *ret)
+int	mouse_down(int button, void *mlx_ptr)
 {
-	printf("Cube3d: %s\n", str);
-	return (ret);
-}
+	t_mlx	*mlx;
 
-int	error_int(char *str, int ret)
-{
-	printf("Cube3d: %s\n", str);
-	return (ret);
-}
-
-long long	get_now_time(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000 + tv.tv_usec);
+	mlx = (t_mlx *)mlx_ptr;
+	if (button == 1)
+		mlx->mouse->pressed_left = true;
+	else if (button == 3)
+		mlx->mouse->pressed_right = true;
+	return (0);
 }

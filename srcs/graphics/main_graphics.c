@@ -6,17 +6,37 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 14:01:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:10:28 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
 
-void	init_mlx(t_mlx *mlx)
+int	init(t_mlx *mlx)
 {
 	mlx->mlx = NULL;
 	mlx->win = NULL;
 	mlx->img = NULL;
+	mlx->menu_map = malloc(sizeof(t_menu_map));
+	if (!mlx->menu_map)
+	{
+		free(mlx);
+		return (1);
+	}
+	mlx->mouse = malloc(sizeof(t_mouse));
+	if (!mlx->mouse)
+	{
+		free(mlx->menu_map);
+		free(mlx);
+		return (1);
+	}
+	mlx->mouse->pressed_left = false;
+	mlx->mouse->pressed_right = false;
+	mlx->menu_map->x = 0;
+	mlx->menu_map->y = 0;
+	mlx->menu_map->size = 20;
+	mlx->actuel_menu = MAP_LARG_MENU;
+	return (0);
 }
 
 void	put_fps(t_mlx *mlx)
@@ -35,11 +55,11 @@ void	put_fps(t_mlx *mlx)
 		if (tmp)
 			free(tmp);
 		tmp = ft_itoa(fps);
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 20, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
 		change = 0;
 	}
 	else 
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 20, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
 	change++;
 }
 
@@ -49,7 +69,12 @@ int	update(void *mlx_ptr)
 
 	mlx = (t_mlx *)mlx_ptr;
 	mlx_clear_window(mlx->mlx, mlx->win);
-	larg_map(mlx);
+	if (mlx->mouse->pressed_left)
+		mlx_mouse_get_pos(mlx->mlx, &mlx->mouse->x, &mlx->mouse->y);
+	if (mlx->actuel_menu == MAP_LARG_MENU)
+		larg_map(mlx);
+	else
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50, HEIGHT / 2, 0xFFFF0000, "Error");
 	put_fps(mlx);
 	return (0);
 }
@@ -58,10 +83,11 @@ int	close_window(int event, void *mlx_ptr)
 {
 	t_mlx	*mlx;
 
-	if	(event == 0 || event == 41)
+	if	(event == 0)
 	{
 		mlx = (t_mlx *)mlx_ptr;
-		mlx_destroy_image(mlx->mlx, mlx->img);
+		if (mlx->img)
+			mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free_all_graphics(mlx);
@@ -77,13 +103,19 @@ void	graphics_part(t_map *map)
 	mlx = malloc(sizeof(t_mlx));
 	if (!mlx)
 		return ;
-	init_mlx(mlx);
+	if (init(mlx))
+	{
+		ft_printf("Cube3d: Error init()\n");
+		return ;
+	}
 	mlx->map = map;
 	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, 1900, 950, "Cub3d");
-	mlx_set_fps_goal(mlx->mlx, 60);
+	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "Cub3d");
 	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, close_window, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, close_window, (void *)mlx); // a adapter plus tard pour prendre tout le clavier
+	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEWHEEL, &mouse_whell, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEDOWN, &mouse_down, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEUP, &mouse_up, (void *)mlx);
 	mlx_loop_hook(mlx->mlx, update, mlx);
 	mlx_loop(mlx->mlx);
 }
