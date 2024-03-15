@@ -12,21 +12,23 @@
 
 MAKEFLAGS 		+= --silent
 
-SRCS			=	main.c 								\
-					graphics/main_graphics.c 			\
-					graphics/free_functions/free_all.c 	\
-					graphics/map/larg_map.c 			\
-					graphics/entry/keyboard.c			\
-					graphics/entry/mouse_whell.c		\
-					graphics/entry/mouse_down.c			\
-					graphics/entry/mouse_up.c			\
-					parsing/check_map_lines.c 			\
-					parsing/check_map_param.c 			\
-					parsing/parse_file.c 				\
-					parsing/parse_lines.c 				\
-					parsing/set_map_blocks.c			\
-					utils/first.c 						\
-					free_map.c 							\
+SRCS			=	main.c 										\
+					graphics/main_graphics.c 					\
+					graphics/load_textures/load_textures.c		\
+					graphics/free_functions/free_all.c 			\
+					graphics/free_functions/destroy_textures.c 	\
+					graphics/map/larg_map.c 					\
+					graphics/entry/keyboard.c					\
+					graphics/entry/mouse_whell.c				\
+					graphics/entry/mouse_down.c					\
+					graphics/entry/mouse_up.c					\
+					parsing/check_map_lines.c 					\
+					parsing/check_map_param.c 					\
+					parsing/parse_file.c 						\
+					parsing/parse_lines.c 						\
+					parsing/set_map_blocks.c					\
+					utils/first.c 								\
+					free_map.c 									\
 
 NAME			=	cub3d
 

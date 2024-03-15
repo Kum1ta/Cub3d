@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 18:26:33 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:57:08 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 
 # define WIDTH 1900
 # define HEIGHT 950
+
+# define TEXTURE_LIST "north", \
+	"south", \
+	"east", \
+	"west", \
+	"floor", \
+	"ceiling"
 
 typedef enum e_menu {
 	MAIN_MENU,
@@ -41,22 +48,50 @@ typedef struct s_menu_map
 	int		size;
 }	t_menu_map;
 
+typedef struct s_img
+{
+	void	*img;
+	int		width;
+	int		height;
+}	t_img;
+
+typedef	struct s_loadeds_textures
+{
+	t_img	*north;
+	t_img	*south;
+	t_img	*east;
+	t_img	*west;
+	t_img	*floor;
+	t_img	*ceiling;
+	t_img	*player_icon_larg_map;
+}	t_loadeds_textures;
+
 typedef struct s_mlx
 {
-	t_mouse		*mouse;
-	t_map		*map;
-	t_menu_map	*menu_map;
-	void    	*mlx;
-	void    	*win;
-	void		*img;
-	t_menu		actuel_menu;
+	t_mouse				*mouse;
+	t_map				*map;
+	t_menu_map			*menu_map;
+	t_loadeds_textures	*textures;
+	void    			*mlx;
+	void    			*win;
+	void				*img;
+	t_menu				actuel_menu;
 }   t_mlx;
+
+/* ------ main_graphics.c -------------------------------------------------- */
+int		close_window(int event, void *mlx_ptr);
 
 /* ------ map.c ------------------------------------------------------------ */
 void	larg_map(t_mlx *mlx);
 
+/* ------ load_textures.c -------------------------------------------------- */
+int		load_textures(t_mlx *mlx);
+
 /* ------ free_all.c ------------------------------------------------------- */
 void	free_all_graphics(t_mlx *mlx);
+
+/* ------ destroy_textures.c ----------------------------------------------- */
+int		destroy_textures(t_mlx *mlx);
 
 /* ------ keyboard.c ------------------------------------------------------- */
 int		keyboard(int key, void *mlx_ptr);

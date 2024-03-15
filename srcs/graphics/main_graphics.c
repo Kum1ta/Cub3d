@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 19:10:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:51:27 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	close_window(int event, void *mlx_ptr)
 	if	(event == 0)
 	{
 		mlx = (t_mlx *)mlx_ptr;
+		destroy_textures(mlx);
 		if (mlx->img)
 			mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
@@ -110,6 +111,11 @@ void	graphics_part(t_map *map)
 	}
 	mlx->map = map;
 	mlx->mlx = mlx_init();
+	if (load_textures(mlx))
+	{
+		free(mlx);
+		return ;
+	}
 	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "Cub3d");
 	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, close_window, (void *)mlx);
 	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard, (void *)mlx);
