@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 15:57:08 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:27:43 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,7 @@
 
 # define WIDTH 1900
 # define HEIGHT 950
-
-# define TEXTURE_LIST "north", \
-	"south", \
-	"east", \
-	"west", \
-	"floor", \
-	"ceiling"
+# define TIME_PER_FRAME_US 0
 
 typedef enum e_menu {
 	MAIN_MENU,
@@ -66,6 +60,17 @@ typedef	struct s_loadeds_textures
 	t_img	*player_icon_larg_map;
 }	t_loadeds_textures;
 
+typedef struct s_keyboard
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	left;
+	bool	right;
+	bool	esc;
+}	t_keyboard;
+
 typedef struct s_mlx
 {
 	t_mouse				*mouse;
@@ -74,15 +79,15 @@ typedef struct s_mlx
 	t_loadeds_textures	*textures;
 	void    			*mlx;
 	void    			*win;
-	void				*img;
 	t_menu				actuel_menu;
+	t_keyboard			*keyboard;
 }   t_mlx;
 
 /* ------ main_graphics.c -------------------------------------------------- */
 int		close_window(int event, void *mlx_ptr);
 
 /* ------ map.c ------------------------------------------------------------ */
-void	larg_map(t_mlx *mlx);
+void	larg_map(t_mlx *mlx, int need_free);
 
 /* ------ load_textures.c -------------------------------------------------- */
 int		load_textures(t_mlx *mlx);
@@ -94,7 +99,13 @@ void	free_all_graphics(t_mlx *mlx);
 int		destroy_textures(t_mlx *mlx);
 
 /* ------ keyboard.c ------------------------------------------------------- */
-int		keyboard(int key, void *mlx_ptr);
+int		keyboard(t_mlx *mlx);
+
+/* ------ gane_keyboard.c -------------------------------------------------- */
+void	game_keyboard(t_mlx *mlx);
+
+/* ------ map_larg_menu_keyboard.c ----------------------------------------- */
+void	larg_map_keyboard(t_mlx *mlx);
 
 /* ------ mouse_wheel.c ---------------------------------------------------- */
 int		mouse_whell(int button, void *mlx_ptr);
@@ -104,5 +115,8 @@ int		mouse_down(int button, void *mlx_ptr);
 
 /* ------ mouse_up.c ------------------------------------------------------- */
 int		mouse_up(int button, void *mlx_ptr);
+
+/* ------ main_raycasting.c ------------------------------------------------ */
+void	raycasting(t_mlx *mlx);
 
 #endif

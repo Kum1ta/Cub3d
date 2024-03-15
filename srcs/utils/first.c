@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 17:27:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:24:05 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 
 void	*error_ptr(char *str, void *ret)
 {
-	printf("Cube3d: %s\n", str);
+	ft_printf("Cube3d: %s\n", str);
 	return (ret);
 }
 
 int	error_int(char *str, int ret)
 {
-	printf("Cube3d: %s\n", str);
+	ft_printf("Cube3d: %s\n", str);
 	return (ret);
+}
+
+void	wait_us(long long time_us)
+{
+	struct timeval	tv;
+	long long		time;
+	long long		time2;
+
+	gettimeofday(&tv, NULL);
+	time = tv.tv_sec * 1000000 + tv.tv_usec + time_us;
+	time2 = 0;
+	while (time2 < time)
+	{
+		gettimeofday(&tv, NULL);
+		time2 = tv.tv_sec * 1000000 + tv.tv_usec;
+	}
 }
 
 long long	get_now_time(void)

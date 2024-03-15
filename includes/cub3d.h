@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 14:50:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:18:14 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <math.h>
+# include <SDL2/SDL.h>
 
 typedef enum e_block {
 	EMPTY,
@@ -63,6 +65,7 @@ void		free_map(t_map *map);
 /* --- utils.c ------------------------------------------------------------- */
 void		*error_ptr(char *str, void *ret);
 int			error_int(char *str, int ret);
+void		wait_us(long long time_us);
 long long	get_now_time(void);
 
 #endif

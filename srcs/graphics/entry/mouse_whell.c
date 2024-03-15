@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:39:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/14 19:14:45 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:28:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,9 @@
 static void	larg_map_menu_wheel(int button, t_mlx *mlx)
 {
 	if (button == 1 && mlx->menu_map->size < 100)
-	{
-		if (mlx->menu_map->size < 10)
-			mlx->menu_map->size += 2;
 		mlx->menu_map->size *= 1.2;
-	}
-	else if (button == 2 && mlx->menu_map->size > 1)
-	{
-		if (mlx->menu_map->size > 10)
-			mlx->menu_map->size -= 2;
+	else if (button == 2 && mlx->menu_map->size > 10)
 		mlx->menu_map->size /= 1.2;
-	}
 }
 
 int	mouse_whell(int button, void *mlx_ptr)
