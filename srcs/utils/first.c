@@ -6,11 +6,40 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 23:24:05 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:01:08 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../graphics/graphics.h"
+
+void	put_fps(t_mlx *mlx, int need_free)
+{
+	static long long	last_time = 0;
+	static int			change = 0;
+	long long			now;
+	float				fps;
+	static char			*tmp = NULL;
+
+	if (need_free)
+	{
+		free(tmp);
+		return ;
+	}
+	now = get_now_time();
+	fps = 1000000 / (now - last_time);
+	last_time = now;
+	if (change % 10 == 0)
+	{
+		if (tmp)
+			free(tmp);
+		tmp = ft_itoa(fps);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
+		change = 0;
+	}
+	else
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
+	change++;
+}
 
 void	*error_ptr(char *str, void *ret)
 {

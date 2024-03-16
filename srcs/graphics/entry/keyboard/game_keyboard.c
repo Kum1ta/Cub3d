@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 23:07:54 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:06:48 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	game_keyboard(t_mlx *mlx)
 {
-	float add;
+	float	add;
 
 	add = 0.1;
 	/******** POUR LE DEBUT, CA SERA CHANGÉ PLUS TARD MAIS PEUT ETRE GARDÉ POUR AUTRE CHOSE ********/

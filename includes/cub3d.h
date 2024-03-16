@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 23:18:14 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:04:25 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdbool.h>
 # include <math.h>
 # include <SDL2/SDL.h>
+
+typedef struct s_mlx t_mlx;
 
 typedef enum e_block {
 	EMPTY,
@@ -63,6 +65,7 @@ void		free_blocks(t_block **blocks);
 void		free_map(t_map *map);
 
 /* --- utils.c ------------------------------------------------------------- */
+void		put_fps(t_mlx *mlx, int need_free);
 void		*error_ptr(char *str, void *ret);
 int			error_int(char *str, int ret);
 void		wait_us(long long time_us);

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/15 23:27:43 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:27:09 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_mouse
 {
 	int		x;
 	int		y;
+	int		last_x;
+	int		last_y;
 	bool	pressed_left;
 	bool	pressed_right;
 }	t_mouse;
@@ -39,7 +41,10 @@ typedef struct s_menu_map
 {
 	int		x;
 	int		y;
+	int		width;
+	int		height;
 	int		size;
+	int		initial_size;
 }	t_menu_map;
 
 typedef struct s_img
@@ -49,7 +54,7 @@ typedef struct s_img
 	int		height;
 }	t_img;
 
-typedef	struct s_loadeds_textures
+typedef struct s_loadeds_textures
 {
 	t_img	*north;
 	t_img	*south;
@@ -57,7 +62,6 @@ typedef	struct s_loadeds_textures
 	t_img	*west;
 	t_img	*floor;
 	t_img	*ceiling;
-	t_img	*player_icon_larg_map;
 }	t_loadeds_textures;
 
 typedef struct s_keyboard
@@ -66,6 +70,9 @@ typedef struct s_keyboard
 	bool	a;
 	bool	s;
 	bool	d;
+	bool	r;
+	bool	up;
+	bool	down;
 	bool	left;
 	bool	right;
 	bool	esc;
@@ -77,14 +84,20 @@ typedef struct s_mlx
 	t_map				*map;
 	t_menu_map			*menu_map;
 	t_loadeds_textures	*textures;
-	void    			*mlx;
-	void    			*win;
+	void				*mlx;
+	void				*win;
 	t_menu				actuel_menu;
 	t_keyboard			*keyboard;
-}   t_mlx;
+}	t_mlx;
 
 /* ------ main_graphics.c -------------------------------------------------- */
-int		close_window(int event, void *mlx_ptr);
+int		window(int event, void *mlx_ptr);
+
+/* ------ update.c --------------------------------------------------------- */
+int		update(void *mlx_ptr);
+
+/* ------ init.c ----------------------------------------------------------- */
+int		init(t_mlx *mlx, t_map *map);
 
 /* ------ map.c ------------------------------------------------------------ */
 void	larg_map(t_mlx *mlx, int need_free);
@@ -93,12 +106,15 @@ void	larg_map(t_mlx *mlx, int need_free);
 int		load_textures(t_mlx *mlx);
 
 /* ------ free_all.c ------------------------------------------------------- */
-void	free_all_graphics(t_mlx *mlx);
+int		free_all_graphics(t_mlx *mlx);
 
 /* ------ destroy_textures.c ----------------------------------------------- */
 int		destroy_textures(t_mlx *mlx);
 
 /* ------ keyboard.c ------------------------------------------------------- */
+void	keyboard_status(int key_code[2], bool *key, bool from, bool to);
+int		keyboard_down(int key, void *mlx_ptr);
+int		keyboard_up(int key, void *mlx_ptr);
 int		keyboard(t_mlx *mlx);
 
 /* ------ gane_keyboard.c -------------------------------------------------- */

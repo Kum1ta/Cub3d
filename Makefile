@@ -25,6 +25,8 @@ SRCS			=	main.c 													\
 					graphics/entry/mouse_whell.c							\
 					graphics/entry/mouse_down.c								\
 					graphics/entry/mouse_up.c								\
+					graphics/init/init.c									\
+					graphics/update.c										\
 					parsing/check_map_lines.c 								\
 					parsing/check_map_param.c 								\
 					parsing/parse_file.c 									\
