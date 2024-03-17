@@ -17,14 +17,16 @@ SRCS			=	main.c 													\
 					graphics/load_textures/load_textures.c					\
 					graphics/free_functions/free_all.c 						\
 					graphics/free_functions/destroy_textures.c				\
+					graphics/raycasting/mini_map/mini_map.c					\
 					graphics/raycasting/main_raycasting.c					\
-					graphics/map/larg_map.c 								\
+					graphics/larg_map/larg_map.c							\
 					graphics/entry/keyboard/keyboard.c						\
 					graphics/entry/keyboard/game_keyboard.c					\
 					graphics/entry/keyboard/map_larg_menu_keyboard.c		\
 					graphics/entry/mouse_whell.c							\
 					graphics/entry/mouse_down.c								\
 					graphics/entry/mouse_up.c								\
+					graphics/debug/info_player.c							\
 					graphics/init/init.c									\
 					graphics/update.c										\
 					parsing/check_map_lines.c 								\

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 17:05:34 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:23:30 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ int	keyboard(t_mlx *mlx)
 	if (mlx->actuel_menu == GAME)
 		game_keyboard(mlx);
 	else if (mlx->actuel_menu == MAP_LARG_MENU)
-		larg_map_keyboard(mlx);
+	{
+		game_keyboard(mlx);
+		// larg_map_keyboard(mlx);
+	}
 	return (0);
 }

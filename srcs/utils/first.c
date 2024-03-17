@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 16:01:08 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:48:08 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ void	wait_us(long long time_us)
 	long long		time;
 	long long		time2;
 
+	static int	i = 0;
+	if (i == 0)
+	{
+		printf("\033[0;31mDon't forget to remove the function \"wait_us()\" : Forbidden function\n\033[0m");
+		i++;
+	}
+
 	gettimeofday(&tv, NULL);
 	time = tv.tv_sec * 1000000 + tv.tv_usec + time_us;
 	time2 = 0;
@@ -72,6 +79,13 @@ void	wait_us(long long time_us)
 long long	get_now_time(void)
 {
 	struct timeval	tv;
+
+	static int	i = 0;
+	if (i == 0)
+	{
+		printf("\033[0;31mDon't forget to remove the function \"get_now_time()\" : Forbidden function\n\033[0m");
+		i++;
+	}
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000000 + tv.tv_usec);

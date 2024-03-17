@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 17:27:09 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:51:39 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,16 @@
 # define WIDTH 1900
 # define HEIGHT 950
 # define TIME_PER_FRAME_US 0
+# define PI 3.14159265
 
-typedef enum e_menu {
+typedef struct s_vec2
+{
+	float x;
+	float y;
+}	t_vec2;
+
+typedef enum e_menu
+{
 	MAIN_MENU,
 	MAP_LARG_MENU,
 	GAME,
@@ -90,6 +98,9 @@ typedef struct s_mlx
 	t_keyboard			*keyboard;
 }	t_mlx;
 
+/* ############################ DEBUG FUNCTION ############################# */
+void	info_player(t_mlx *mlx);
+
 /* ------ main_graphics.c -------------------------------------------------- */
 int		window(int event, void *mlx_ptr);
 
@@ -133,6 +144,6 @@ int		mouse_down(int button, void *mlx_ptr);
 int		mouse_up(int button, void *mlx_ptr);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
-void	raycasting(t_mlx *mlx);
+void	raycasting(t_mlx *mlx, int need_free);
 
 #endif
