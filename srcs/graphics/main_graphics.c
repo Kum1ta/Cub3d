@@ -6,13 +6,14 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/17 19:03:33 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:48:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
 
 void	mini_map(t_mlx *mlx, float angle[WIDTH], float distance[WIDTH], int need_free);
+void	inventory(t_mlx *mlx, void *img, int need_free);
 
 int	window(int event, void *mlx_ptr)
 {
@@ -25,6 +26,7 @@ int	window(int event, void *mlx_ptr)
 		larg_map(mlx, 1);
 		raycasting(mlx, 1);
 		put_fps(mlx, 1);
+		inventory(mlx, NULL, 1);
 		mini_map(mlx, NULL, NULL, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);

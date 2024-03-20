@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 17:26:53 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:11:26 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,27 @@ int	destroy_textures(t_mlx *mlx)
 	if (mlx->textures->ceiling && mlx->textures->ceiling->img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->ceiling->img);
 	free(mlx->textures->ceiling);
+	if (mlx->textures->player_ico && mlx->textures->player_ico->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player_ico->img);
+	free(mlx->textures->player_ico);
+	if (mlx->textures->fist_inv && mlx->textures->fist_inv->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->fist_inv->img);
+	free(mlx->textures->fist_inv);
+	if (mlx->textures->knife_inv && mlx->textures->knife_inv->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->knife_inv->img);
+	free(mlx->textures->knife_inv);
+	if (mlx->textures->weapon_inv && mlx->textures->weapon_inv->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->weapon_inv->img);
+	free(mlx->textures->weapon_inv);
+	if (mlx->textures->weapon_game && mlx->textures->weapon_game->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->weapon_game->img);
+	free(mlx->textures->weapon_game);
+	if (mlx->textures->fist_game && mlx->textures->fist_game->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->fist_game->img);
+	free(mlx->textures->fist_game);
+	if (mlx->textures->knife_game && mlx->textures->knife_game->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->knife_game->img);
+	free(mlx->textures->knife_game);
 	free(mlx->textures);
 	return (0);
 }

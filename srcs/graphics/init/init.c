@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/17 18:22:59 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:17:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,10 @@ int	init(t_mlx *mlx, t_map *map)
 	mlx->map->playerPos.h -= 90;
 	if (mlx->map->playerPos.h < 0)
 		mlx->map->playerPos.h += 360;
+	mlx->player = malloc(sizeof(t_player));
+	if (!mlx->player)
+		return (free_all_graphics(mlx));
+	mlx->player->health = 100;
+	mlx->player->actual_weapon = WEAPON_INV;
 	return (0);
 }

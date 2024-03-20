@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 20:45:34 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:11:08 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	init_textures(t_loadeds_textures *textures)
 	textures->west = NULL;
 	textures->floor = NULL;
 	textures->ceiling = NULL;
+	textures->player_ico = NULL;
+	textures->fist_inv = NULL;
+	textures->knife_inv = NULL;
+	textures->weapon_inv = NULL;
+	textures->weapon_game = NULL;
+	textures->fist_game = NULL;
+	textures->knife_game = NULL;
 }
 
 int	load_textures(t_mlx *mlx)
@@ -57,5 +64,54 @@ int	load_textures(t_mlx *mlx)
 	if (!mlx->textures->west->img)
 		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
 
+	mlx->textures->player_ico = malloc(sizeof(t_img));
+	if (!mlx->textures->player_ico)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->player_ico->img = mlx_png_file_to_image(mlx->mlx, "textures/mini_map/player.png", &mlx->textures->player_ico->width, &mlx->textures->player_ico->height);
+	if (!mlx->textures->player_ico->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+
+	mlx->textures->fist_inv = malloc(sizeof(t_img));
+	if (!mlx->textures->fist_inv)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->fist_inv->img = mlx_png_file_to_image(mlx->mlx, "textures/inventory/fist.png", &mlx->textures->fist_inv->width, &mlx->textures->fist_inv->height);
+	if (!mlx->textures->fist_inv->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	
+	mlx->textures->knife_inv = malloc(sizeof(t_img));
+	if (!mlx->textures->knife_inv)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->knife_inv->img = mlx_png_file_to_image(mlx->mlx, "textures/inventory/knife.png", &mlx->textures->knife_inv->width, &mlx->textures->knife_inv->height);
+	if (!mlx->textures->knife_inv->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	
+	mlx->textures->weapon_inv = malloc(sizeof(t_img));
+	if (!mlx->textures->weapon_inv)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->weapon_inv->img = mlx_png_file_to_image(mlx->mlx, "textures/inventory/weapon.png", &mlx->textures->weapon_inv->width, &mlx->textures->weapon_inv->height);
+	if (!mlx->textures->weapon_inv->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+
+	mlx->textures->weapon_game = malloc(sizeof(t_img));
+	if (!mlx->textures->weapon_game)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->weapon_game->img = mlx_png_file_to_image(mlx->mlx, "textures/game/weapon.png", &mlx->textures->weapon_game->width, &mlx->textures->weapon_game->height);
+	if (!mlx->textures->weapon_game->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	
+	// mlx->textures->fist_game = malloc(sizeof(t_img));
+	// if (!mlx->textures->fist_game)
+	// 	return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	// mlx->textures->fist_game->img = mlx_png_file_to_image(mlx->mlx, "textures/game/fist.png", &mlx->textures->fist_game->width, &mlx->textures->fist_game->height);
+	// if (!mlx->textures->fist_game->img)
+	// 	return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+
+	// mlx->textures->knife_game = malloc(sizeof(t_img));
+	// if (!mlx->textures->knife_game)
+	// 	return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	// mlx->textures->knife_game->img = mlx_png_file_to_image(mlx->mlx, "textures/game/knife.png", &mlx->textures->knife_game->width, &mlx->textures->knife_game->height);
+	// if (!mlx->textures->knife_game->img)
+	// 	return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	
 	return (0);
 }

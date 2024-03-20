@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/17 17:51:39 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:09:24 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ typedef enum e_menu
 	MAP_LARG_MENU,
 	GAME,
 	OPTIONS,
+	NOTHING,
 }	t_menu;
+
+typedef enum e_inventory
+{
+	WEAPON_INV,
+	KNIFE_INV,
+	FIST_INV,
+}	t_inventory;
 
 typedef struct s_mouse
 {
@@ -70,6 +78,13 @@ typedef struct s_loadeds_textures
 	t_img	*west;
 	t_img	*floor;
 	t_img	*ceiling;
+	t_img	*player_ico;
+	t_img	*weapon_inv;
+	t_img	*fist_inv;
+	t_img	*knife_inv;
+	t_img	*weapon_game;
+	t_img	*fist_game;
+	t_img	*knife_game;
 }	t_loadeds_textures;
 
 typedef struct s_keyboard
@@ -86,12 +101,19 @@ typedef struct s_keyboard
 	bool	esc;
 }	t_keyboard;
 
+typedef struct s_player
+{
+	int			health;
+	t_inventory	actual_weapon;
+}	t_player;
+
 typedef struct s_mlx
 {
 	t_mouse				*mouse;
 	t_map				*map;
 	t_menu_map			*menu_map;
 	t_loadeds_textures	*textures;
+	t_player			*player;
 	void				*mlx;
 	void				*win;
 	t_menu				actuel_menu;
@@ -110,8 +132,10 @@ int		update(void *mlx_ptr);
 /* ------ init.c ----------------------------------------------------------- */
 int		init(t_mlx *mlx, t_map *map);
 
-/* ------ map.c ------------------------------------------------------------ */
+/* ------ larg_map.c ------------------------------------------------------- */
+void	*creat_square(t_mlx *mlx, int size, int color);
 void	larg_map(t_mlx *mlx, int need_free);
+
 
 /* ------ load_textures.c -------------------------------------------------- */
 int		load_textures(t_mlx *mlx);

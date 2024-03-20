@@ -18,6 +18,7 @@ SRCS			=	main.c 													\
 					graphics/free_functions/free_all.c 						\
 					graphics/free_functions/destroy_textures.c				\
 					graphics/raycasting/mini_map/mini_map.c					\
+					graphics/raycasting/inventory/inventory.c				\
 					graphics/raycasting/main_raycasting.c					\
 					graphics/larg_map/larg_map.c							\
 					graphics/entry/keyboard/keyboard.c						\
@@ -45,7 +46,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
+CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 
