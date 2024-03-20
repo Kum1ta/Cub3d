@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 15:17:31 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:54:18 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	printf("Real start angle  : %f\n", mlx->map->playerPos.h - FOV / 2 + 360);
 	printf("Real end angle  : %f\n", mlx->map->playerPos.h + FOV / 2);
 	printf("Joueur x : %f, y : %f\n", mlx->map->playerPos.x, mlx->map->playerPos.y);
-	while (i < WIDTH)
+	while (i < 100)
 	{
 		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
 		if (angle[i] < 0)
