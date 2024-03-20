@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/18 18:25:43 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:57:54 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	print_map(t_mlx *mlx, void **ptr)
 
 void	larg_map(t_mlx *mlx, int need_free)
 {
-	static void		*ptr[2] = {NULL, NULL};
+	static void	*ptr[2] = {NULL, NULL};
+	int			angle;
 
 	if (ptr[0] || (ptr[0] && need_free))
 		mlx_destroy_image(mlx->mlx, ptr[0]);
@@ -105,7 +106,10 @@ void	larg_map(t_mlx *mlx, int need_free)
 	update_pos(mlx);
 	ptr[0] = creat_square(mlx, mlx->menu_map->size + 1, 0xFFFFFF0F);
 	ptr[1] = creat_square(mlx, mlx->menu_map->size / 2, 0xFFFF0000);
-	calculate_target_position(mlx, mlx->map->playerPos.h * (PI / 180.0),
+	angle = mlx->map->playerPos.h - 90;
+	if (angle < 0)
+		angle += 360;
+	calculate_target_position(mlx, angle * (PI / 180.0),
 		mlx->menu_map->size);
 	print_map(mlx, ptr);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, ptr[1], mlx->menu_map->x

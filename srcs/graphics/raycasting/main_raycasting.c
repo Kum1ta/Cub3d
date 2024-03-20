@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 18:54:18 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:11:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,25 +278,28 @@ void	draw_line(t_mlx *mlx, void *img, int pos[4], int color)
 
 float raycast(t_mlx *mlx, float angle)
 {
-	float distance = 0.0;
+    float	distance;
 
-	while (distance < MAX_DISTANCE)
+	distance = 0.01f;
+    while (distance < MAX_DISTANCE)
 	{
-		float posX = mlx->map->playerPos.x + distance * cos(angle);
-		float posY = mlx->map->playerPos.y + distance * sin(angle);
-		int tileX = (int)(posX);
-		int tileY = (int)(posY);
-		if (mlx->map->blocks[tileX][tileY] == WALL)
+        float posX = mlx->map->playerPos.x + distance * cos(angle);
+        float posY = mlx->map->playerPos.y + distance * sin(angle);
+        int tileX = (int)(posX);
+        int tileY = (int)(posY);
+
+        if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
+            return (MAX_DISTANCE);
+        if (mlx->map->blocks[tileX][tileY] == WALL)
 		{
-			float deltaX = posX - mlx->map->playerPos.x;
-			float deltaY = posY - mlx->map->playerPos.y;
-			printf("posX : %f, posY : %f, tileX : %d, tileY : %d\n", posX, posY, tileX, tileY);
-			distance = sqrt(deltaX * deltaX + deltaY * deltaY);
-			break;
-		}
-		distance += 0.1;
-	}
-	return distance;
+            float deltaX = posX - mlx->map->playerPos.x;
+            float deltaY = posY - mlx->map->playerPos.y;
+            distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+            return (distance);
+        }
+        distance += 0.1f;
+    }
+    return (MAX_DISTANCE);
 }
 
 void	put_actual_weapon(t_mlx *mlx, void *img)
@@ -357,35 +360,35 @@ void	raycasting(t_mlx *mlx, int need_free)
 		return ;
 	img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	i = 0;
-	printf("Real start angle  : %f\n", mlx->map->playerPos.h - FOV / 2 + 360);
-	printf("Real end angle  : %f\n", mlx->map->playerPos.h + FOV / 2);
-	printf("Joueur x : %f, y : %f\n", mlx->map->playerPos.x, mlx->map->playerPos.y);
-	while (i < 100)
+	printf("playerPos.h = %f\n", mlx->map->playerPos.h);
+	while (i < 500)
 	{
-		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
+		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)500 * FOV;
 		if (angle[i] < 0)
 			angle[i] += 360;
 		else if (angle[i] > 360)
 			angle[i] -= 360;
 		distance[i] = raycast(mlx, angle[i]);
-		int	wall_size = HEIGHT / distance[i];
-		if (wall_size > HEIGHT)
-			wall_size = HEIGHT - 1;
-		int wall_start = HEIGHT / 2 - wall_size / 2;
-		int wall_end = HEIGHT / 2 + wall_size / 2;
-		int color = 0xFFFF0000;
-		if (angle[i] > 0 && angle[i] < 3.14)
-			color = 0xFF00FF00;
-		for (int j = 0; j < wall_start; j++)
-			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xE00000FF);
-		for (int j = wall_start; j < wall_end; j++)
-			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
-		for (int j = wall_end; j < HEIGHT; j++)
-			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xE000FF00);
-		//faire un trait qui represente la distance ainsi que l'angle
-		draw_line(mlx, img, (int[4]){100, 100, sin(angle[i]) * 100 + distance[i], cos(angle[i]) * 100 + distance[i]}, 0xFF00FF00);
+		//probleme avec raycast qui semble renvoyer de la merde, ensuite il faut faire les murs en fonction de la distance
 		i++;
 	}
+	play_sound(mlx);
+	put_actual_weapon(mlx, img);
+	mini_map(mlx, angle, distance, 0);
+	inventory(mlx, img, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
+}
+
+/*
+			distance[i] = raycast(mlx, angle[i]);
+		float radian = angle[i] * (PI / 180.0f);
+		int end_x = WIDTH / 2 + (distance[i]) * sin(radian) * 10;
+        int end_y = HEIGHT / 2 + (distance[i]) * cos(radian) * 10;
+        
+        draw_line(mlx, img, (int[4]){WIDTH / 2, HEIGHT / 2, end_x, end_y}, 0xFF00FF00);
+*/
+
+/*
 	// for (int i = 0; i < WIDTH; i++)
 	// {
 	// 	angle[i] = mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV;
@@ -408,10 +411,4 @@ void	raycasting(t_mlx *mlx, int need_free)
 	// 		mlx_set_image_pixel(mlx->mlx, img, i, j, 0xE000FF00);
 	// 	draw_line(mlx, img, (int[4]){100, 100, sin(angle[i]) * 100 + distance[i], cos(angle[i]) * 100 + distance[i]}, 0xFF00FF00);
 	// }
-	// play_sound(mlx);
-	// put_actual_weapon(mlx, img);
-	// mini_map(mlx, angle, distance, 0);
-	inventory(mlx, img, 0);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
-	// exit(0);
-}
+*/

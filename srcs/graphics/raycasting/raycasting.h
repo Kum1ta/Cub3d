@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 14:37:21 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:54:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../graphics.h"
 
-# define MAX_DISTANCE 10
+# define MAX_DISTANCE 1000
 # define TILE_SIZE 64
 # define FOV 90
 

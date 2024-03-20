@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 01:09:24 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:11:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct s_mlx
 	t_menu				actuel_menu;
 	t_keyboard			*keyboard;
 }	t_mlx;
+
+void draw_raycasting(t_mlx *mlx, void *img);
 
 /* ############################ DEBUG FUNCTION ############################# */
 void	info_player(t_mlx *mlx);

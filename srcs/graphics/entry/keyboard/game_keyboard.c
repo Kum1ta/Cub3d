@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/17 16:00:01 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:59:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	movePlayer(t_mlx *mlx, float deltaX, float deltaY)
 {
-	float angle;
+	float	angle;
+	int		tmp;
 
-	angle = mlx->map->playerPos.h * (PI / 180);
+	tmp = mlx->map->playerPos.h - 90;
+	if (tmp < 0)
+		tmp += 360;
+	angle = tmp * (PI / 180);
 	mlx->map->playerPos.x += deltaX * cos(angle) - deltaY * sin(angle);
 	mlx->map->playerPos.y += deltaX * sin(angle) + deltaY * cos(angle);
 }
