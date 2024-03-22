@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 22:11:29 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:37:17 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,31 +313,52 @@ void	put_actual_weapon(t_mlx *mlx, void *img)
 	while (++i < 20)
 		mlx_set_image_pixel(mlx->mlx, img, WIDTH / 2, HEIGHT / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->weapon_game->img, 0, 0);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->weapon_game->img, mlx->player->xy_item[0], mlx->player->xy_item[1]);
 	// else if (mlx->player->actual_weapon == FIST_INV)
 	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fist_inv->img, 0, 0);
 	// else if (mlx->player->actual_weapon == KNIFE_INV)
 	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, 0, 0);
 }
 
-void	play_sound(t_mlx *mlx)
+void	weapon_effect(t_mlx *mlx, long long *last_time)
+{
+	if (!mlx->player->is_reloading && (mlx->mouse->pressed_left && (get_now_time() - *last_time > 150000)) && mlx->player->ammo)
+	{
+		system("paplay ./sounds/game/weapon_fire.wav &");
+		*last_time = get_now_time();
+		mlx->player->ammo--;
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fire_gun->img, 938 + mlx->player->xy_item[0], 500 + mlx->player->xy_item[1]);
+	}
+	if (!mlx->player->is_reloading && mlx->keyboard->r && get_now_time() - *last_time > 50000 && mlx->player->ammo < 30)
+	{
+		system("paplay --volume=50000 ./sounds/game/weapon_reload.wav &");
+		*last_time = get_now_time();
+		mlx->player->is_reloading = true;
+	}
+	if (mlx->player->is_reloading)
+	{
+		mlx->player->xy_item[1] += 3;
+		if (*last_time + 1700000 < get_now_time())
+		{
+			mlx->player->is_reloading = false;
+			mlx->player->ammo = 30;
+			mlx->player->xy_item[1] = 0;
+		}
+	}
+}
+
+void	item_effect(t_mlx *mlx)
 {
 	static int	i = 0;
 	static long long last_time = 0;
-	static bool	last = false;
-
 
 	if (i == 0)
 	{
-		printf("\033[0;31mDon't forget to remove the function \"play_sound()\" : Forbidden fonction\n\033[0m");
+		printf("\033[0;31mDon't forget to remove the function \"weapon_effect()\" : Forbidden fonction\n\033[0m");
 		i++;
 	}
-	last = false;
-	if (mlx->player->actual_weapon == WEAPON_INV && (mlx->mouse->pressed_left && (get_now_time() - last_time > 150000)))
-	{
-		system("paplay ./sounds/game/weapon_fire.wav &");
-		last_time = get_now_time();
-	}
+	if (mlx->player->actual_weapon == WEAPON_INV)
+		weapon_effect(mlx, &last_time);
 	// else if (mlx->player->actual_weapon == FIST_INV)
 	// 	system("afplay ./sounds/fist.wav &");
 	else if (mlx->player->actual_weapon == KNIFE_INV && mlx->mouse->pressed_left && get_now_time() - last_time > 500000)
@@ -352,6 +373,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	float		angle[WIDTH];
 	float		distance[WIDTH];
 	static void	*img = NULL;
+	char		*tmp;
 	int			i;
 
 	if (img)
@@ -360,22 +382,24 @@ void	raycasting(t_mlx *mlx, int need_free)
 		return ;
 	img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	i = 0;
-	printf("playerPos.h = %f\n", mlx->map->playerPos.h);
-	while (i < 500)
+	while (i < WIDTH)
 	{
-		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)500 * FOV;
+		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
 		if (angle[i] < 0)
 			angle[i] += 360;
 		else if (angle[i] > 360)
 			angle[i] -= 360;
 		distance[i] = raycast(mlx, angle[i]);
-		//probleme avec raycast qui semble renvoyer de la merde, ensuite il faut faire les murs en fonction de la distance
+		//probleme avec raycast qui semble renvoyer de la merde. ensuite il faut faire les murs en fonction de la distance
 		i++;
 	}
-	play_sound(mlx);
+	item_effect(mlx);
 	put_actual_weapon(mlx, img);
 	mini_map(mlx, angle, distance, 0);
 	inventory(mlx, img, 0);
+	tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
+	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 150, HEIGHT - 210, 0xFF00FF00, tmp);
+	free(tmp);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
 }
 

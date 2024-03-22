@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 19:11:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:55:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_loadeds_textures
 	t_img	*weapon_game;
 	t_img	*fist_game;
 	t_img	*knife_game;
+	t_img	*fire_gun;
 }	t_loadeds_textures;
 
 typedef struct s_keyboard
@@ -105,6 +106,9 @@ typedef struct s_player
 {
 	int			health;
 	t_inventory	actual_weapon;
+	int			ammo;
+	int			xy_item[2];
+	bool		is_reloading;
 }	t_player;
 
 typedef struct s_mlx

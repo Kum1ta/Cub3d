@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 21:01:01 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:55:37 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,9 @@ int	init(t_mlx *mlx, t_map *map)
 		return (free_all_graphics(mlx));
 	mlx->player->health = 100;
 	mlx->player->actual_weapon = WEAPON_INV;
+	mlx->player->ammo = 30;
+	mlx->player->is_reloading = false;
+	mlx->player->xy_item[0] = 0;
+	mlx->player->xy_item[1] = 0;
 	return (0);
 }

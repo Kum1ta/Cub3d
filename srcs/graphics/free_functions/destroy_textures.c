@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 01:11:26 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:10:21 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int	destroy_textures(t_mlx *mlx)
 	if (mlx->textures->knife_game && mlx->textures->knife_game->img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->knife_game->img);
 	free(mlx->textures->knife_game);
+	if (mlx->textures->fire_gun && mlx->textures->fire_gun->img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->fire_gun->img);
+	free(mlx->textures->fire_gun);
 	free(mlx->textures);
 	return (0);
 }
