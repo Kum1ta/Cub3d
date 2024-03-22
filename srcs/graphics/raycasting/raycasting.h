@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 20:54:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:31:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

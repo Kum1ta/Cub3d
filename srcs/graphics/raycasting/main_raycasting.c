@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 19:37:17 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:50:34 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,25 +279,30 @@ void	draw_line(t_mlx *mlx, void *img, int pos[4], int color)
 float raycast(t_mlx *mlx, float angle)
 {
     float	distance;
+	float	raySpeedQuotien;
 
+	raySpeedQuotien = 1;
 	distance = 0.01f;
     while (distance < MAX_DISTANCE)
 	{
-        float posX = mlx->map->playerPos.x + distance * cos(angle);
-        float posY = mlx->map->playerPos.y + distance * sin(angle);
-        int tileX = (int)(posX);
+        float posX = mlx->map->playerPos.x + (distance * cos(angle * PI / 180));
+        float posY = mlx->map->playerPos.y + (distance * sin(angle * PI / 180));
+		int tileX = (int)(posX);
         int tileY = (int)(posY);
 
         if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
             return (MAX_DISTANCE);
-        if (mlx->map->blocks[tileX][tileY] == WALL)
+        if (mlx->map->blocks[tileY][tileX] == WALL)
 		{
-            float deltaX = posX - mlx->map->playerPos.x;
-            float deltaY = posY - mlx->map->playerPos.y;
-            distance = sqrt(deltaX * deltaX + deltaY * deltaY);
-            return (distance);
-        }
-        distance += 0.1f;
+			if (raySpeedQuotien == 1000)
+            	return (distance);
+			else
+			{
+				distance -= (1.0f / raySpeedQuotien);
+				raySpeedQuotien *= 10;
+			}
+		}
+        distance += (1.0f / raySpeedQuotien);
     }
     return (MAX_DISTANCE);
 }
@@ -381,26 +386,63 @@ void	raycasting(t_mlx *mlx, int need_free)
 	if (need_free)
 		return ;
 	img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-	i = 0;
-	while (i < WIDTH)
+	i = -1;
+	// while (i < WIDTH)
+	// {
+	// 	angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
+	// 	if (angle[i] < 0)
+	// 		angle[i] += 360;
+	// 	else if (angle[i] > 360)
+	// 		angle[i] -= 360;
+	// 	distance[i] = raycast(mlx, angle[i]);
+	// 	//probleme avec raycast qui semble renvoyer de la merde. ensuite il faut faire les murs en fonction de la distance
+	// 	// printf("angle:%f, dist: %f\n", angle[i], distance[i]);
+	// 	i++;
+	// }
+	while (++i < WIDTH)
 	{
-		angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
+		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
 		if (angle[i] < 0)
 			angle[i] += 360;
 		else if (angle[i] > 360)
 			angle[i] -= 360;
 		distance[i] = raycast(mlx, angle[i]);
-		//probleme avec raycast qui semble renvoyer de la merde. ensuite il faut faire les murs en fonction de la distance
-		i++;
+		// if (distance[i] < 0.1)
+		// 	distance[i] = 0.1;
+		int	wall_size = HEIGHT / distance[i];
+		if (wall_size > HEIGHT)
+			wall_size = HEIGHT - 1;
+		int wall_start = (HEIGHT - wall_size) / 2;
+		int wall_end = (HEIGHT + wall_size) / 2;
+		int j = -1;
+		while (++j < wall_start)
+		{
+			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFF0000FF);
+		}
+		while (j < wall_end)
+		{
+			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFFFF0000);
+			j++;
+		}
+		while (j < HEIGHT)
+		{
+			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFF00FF00);
+			j++;
+		}
+		// float radian = angle[i] * (PI / 180.0f);
+		// int end_x = WIDTH / 2 + (distance[i]) * sin(radian) * 10;
+		// int end_y = HEIGHT / 2 + (distance[i]) * cos(radian) * 10;
+		// draw_line(mlx, img, (int[4]){WIDTH / 2, HEIGHT / 2, end_x, end_y}, 0xFF00FF00);
 	}
-	item_effect(mlx);
-	put_actual_weapon(mlx, img);
-	mini_map(mlx, angle, distance, 0);
-	inventory(mlx, img, 0);
-	tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
-	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 150, HEIGHT - 210, 0xFF00FF00, tmp);
-	free(tmp);
+	// exit(0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
+	// item_effect(mlx);
+	// put_actual_weapon(mlx, img);
+	// mini_map(mlx, angle, distance, 0);
+	// inventory(mlx, img, 0);
+	// tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
+	// mlx_string_put(mlx->mlx, mlx->win, WIDTH - 150, HEIGHT - 210, 0xFF00FF00, tmp);
+	// free(tmp);
 }
 
 /*

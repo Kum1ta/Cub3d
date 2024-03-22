@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/17 18:23:30 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 21:46:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

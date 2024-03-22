@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 18:28:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:05:55 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	update(void *mlx_ptr)
 	t_mlx				*mlx;
 	long long			now;
 
-	now = get_now_time();
+	// now = get_now_time();
 	mlx = (t_mlx *)mlx_ptr;
 	mlx_clear_window(mlx->mlx, mlx->win);
 	keyboard(mlx);
-	mlx_mouse_get_pos(mlx->mlx, &mlx->mouse->x, &mlx->mouse->y);
+	// mlx_mouse_get_pos(mlx->mlx, &mlx->mouse->x, &mlx->mouse->y);
 	if (mlx->player->health <= 0)
 	{
 		mlx->actuel_menu = NOTHING;
@@ -37,7 +37,7 @@ int	update(void *mlx_ptr)
 			HEIGHT / 2, 0xFFFF0000, "Error");
 	put_fps(mlx, 0);
 	// info_player(mlx);
-	if (now - get_now_time() < TIME_PER_FRAME_US * 1000)
-		wait_us(TIME_PER_FRAME_US - (now - get_now_time()));
+	// if (now - get_now_time() < TIME_PER_FRAME_US * 1000)
+	// 	wait_us(TIME_PER_FRAME_US - (now - get_now_time()));
 	return (0);
 }
