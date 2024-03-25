@@ -6,305 +6,60 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:50:34 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:15:42 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raycasting.h"
 
-typedef struct s_calcul
+void	calculate_ray_data(t_raydata *ray, float posX, float posY)
 {
-	int	dx;
-	int	dy;
-	int	incre;
-	int	incrne;
-	int	d;
-	int	x;
-	int	y;
-}	t_calcul;
-
-void	draw_line_0(t_mlx *mlx, void *img, int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dx;
-	c.incrne = 2 * (c.dy + c.dx);
-	c.d = c.dx - c.dy;
-	c.x = pos[0] - 1;
-	c.y = pos[1] + 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.y > pos[3])
+	if (posX - ((int) posX) < 0.02 || posX - ((int) posX) > 0.98)
 	{
-		if (c.d <= 0)
-		{
-			c.d += c.incre;
-			c.y--;
-		}
+		if (posX - ((int) posX) < 0.02)
+			ray->dir = 0;
 		else
-		{
-			c.d += c.incrne;
-			c.x++;
-			c.y--;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
+			ray->dir = 2;
+		ray->imgXPercent = posY - ((int) posY);
 	}
-}
-
-void	draw_line_45(t_mlx *mlx, void *img, int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dy;
-	c.incrne = 2 * (c.dy + c.dx);
-	c.d = c.dx - c.dy;
-	c.x = pos[0] - 1;
-	c.y = pos[1] + 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.x < pos[2])
+	else
 	{
-		if (c.d <= 0)
-		{
-			c.d -= c.incre;
-			c.x++;
-		}
+		if (posY - ((int) posY) > 0.98)
+			ray->dir = 1;
 		else
-		{
-			c.d -= c.incrne;
-			c.x++;
-			c.y--;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
+			ray->dir = 3;
+		ray->imgXPercent = posX - ((int) posX);
 	}
+	ray->found = true;
 }
 
-void	draw_line_90(t_mlx *mlx, void *img, int pos[4], int color)
+t_raydata	raycast(t_mlx *mlx, float angle)
 {
-	t_calcul	c;
+	float		raySpeed;
+	float		rAngle;
+	t_raydata	res;
 
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dy;
-	c.incrne = 2 * (c.dx - c.dy);
-	c.d = c.dy - c.dx;
-	c.x = pos[0] - 1;
-	c.y = pos[1];
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.x < pos[2])
+	raySpeed = 0.01f;
+	ft_bzero(&res, sizeof(t_raydata));
+	rAngle = angle * PI / 180;
+	while (res.dist < MAX_DISTANCE)
 	{
-		if (c.d <= 0)
-		{
-			c.d += c.incre;
-			c.x++;
-		}
-		else
-		{
-			c.d -= c.incrne;
-			c.x++;
-			c.y++;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-void	draw_line_135(t_mlx *mlx, void *img, int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dx;
-	c.incrne = 2 * (c.dx - c.dy);
-	c.d = c.dx - c.dy;
-	c.x = pos[0];
-	c.y = pos[1] - 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.y < pos[3])
-	{
-		if (c.d <= 0)
-			c.d += c.incre;
-		else
-		{
-			c.d += c.incrne;
-			c.x++;
-		}
-		c.y++;
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-void	draw_line_180(t_mlx *mlx, void *img,  int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dx;
-	c.incrne = 2 * (c.dy + c.dx);
-	c.d = c.dx - c.dy;
-	c.x = pos[0] + 1;
-	c.y = pos[1] - 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.y < pos[3])
-	{
-		if (c.d >= 0)
-		{
-			c.d += c.incre;
-			c.y++;
-		}
-		else
-		{
-			c.d += c.incrne;
-			c.x--;
-			c.y++;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-void	draw_line_225(t_mlx *mlx, void *img,  int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dy;
-	c.incrne = 2 * (c.dy + c.dx);
-	c.d = c.dx - c.dy;
-	c.x = pos[0] + 1;
-	c.y = pos[1] - 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.x > pos[2])
-	{
-		if (c.d >= 0)
-		{
-			c.d -= c.incre;
-			c.x--;
-		}
-		else
-		{
-			c.d -= c.incrne;
-			c.x--;
-			c.y++;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-void	draw_line_270(t_mlx *mlx, void *img,  int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dy;
-	c.incrne = 2 * (c.dy - c.dx);
-	c.d = c.dx - c.dy;
-	c.x = pos[0] + 1;
-	c.y = pos[1];
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.x > pos[2])
-	{
-		if (c.d <= 0)
-		{
-			c.d -= c.incre;
-			c.x--;
-		}
-		else
-		{
-			c.d -= c.incrne;
-			c.x--;
-			c.y--;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-void	draw_line_315(t_mlx *mlx, void *img,  int pos[4], int color)
-{
-	t_calcul	c;
-
-	c.dx = pos[2] - pos[0];
-	c.dy = pos[3] - pos[1];
-	c.incre = 2 * c.dx;
-	c.incrne = 2 * (c.dx - c.dy);
-	c.d = c.dy - c.dx;
-	c.x = pos[0];
-	c.y = pos[1] + 1;
-	mlx_set_image_pixel(mlx->mlx, img, pos[0], pos[1], color);
-	while (c.y > pos[3])
-	{
-		if (c.d <= 0)
-		{
-			c.d -= c.incre;
-			c.y--;
-		}
-		else
-		{
-			c.d -= c.incrne;
-			c.x--;
-			c.y--;
-		}
-		mlx_set_image_pixel(mlx->mlx, img, c.x, c.y, color);
-	}
-}
-
-
-void	draw_line(t_mlx *mlx, void *img, int pos[4], int color)
-{
-	double	angle;
-
-	angle = atan2(pos[2] - pos[0], pos[3] - pos[1]) * (180.0 / PI);
-	if (angle >= 135 && angle <= 180)
-		draw_line_0(mlx, img, pos, color);
-	else if (angle >= 90 && angle < 135)
-		draw_line_45(mlx, img, pos, color);
-	else if (angle >= 45 && angle < 90)
-		draw_line_90(mlx, img, pos, color);
-	else if (angle >= 0 && angle <= 45)
-		draw_line_135(mlx, img, pos, color);
-	else if (angle > -45 && angle < 0)
-		draw_line_180(mlx, img, pos, color);
-	else if (angle >= -90 && angle <= -45)
-		draw_line_225(mlx, img, pos, color);
-	else if (angle > -135 && angle <= -90)
-		draw_line_270(mlx, img, pos, color);
-	else if (angle > -180 && angle <= -135)
-		draw_line_315(mlx, img, pos, color);
-}
-
-float raycast(t_mlx *mlx, float angle)
-{
-    float	distance;
-	float	raySpeedQuotien;
-
-	raySpeedQuotien = 1;
-	distance = 0.01f;
-    while (distance < MAX_DISTANCE)
-	{
-        float posX = mlx->map->playerPos.x + (distance * cos(angle * PI / 180));
-        float posY = mlx->map->playerPos.y + (distance * sin(angle * PI / 180));
+		float posX = mlx->map->playerPos.x + (res.dist * cos(rAngle));
+		float posY = mlx->map->playerPos.y + (res.dist * sin(rAngle));
 		int tileX = (int)(posX);
-        int tileY = (int)(posY);
+		int tileY = (int)(posY);
 
-        if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
-            return (MAX_DISTANCE);
-        if (mlx->map->blocks[tileY][tileX] == WALL)
+		if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
+			break ;
+		else if (mlx->map->blocks[tileY][tileX] == WALL)
 		{
-			if (raySpeedQuotien == 1000)
-            	return (distance);
-			else
-			{
-				distance -= (1.0f / raySpeedQuotien);
-				raySpeedQuotien *= 10;
-			}
+			calculate_ray_data(&res, posX, posY);
+			return res;
 		}
-        distance += (1.0f / raySpeedQuotien);
-    }
-    return (MAX_DISTANCE);
+		res.dist += raySpeed;
+	}
+	res.dist = MAX_DISTANCE;
+	return (res);
 }
 
 void	put_actual_weapon(t_mlx *mlx, void *img)
@@ -406,10 +161,10 @@ void	raycasting(t_mlx *mlx, int need_free)
 			angle[i] += 360;
 		else if (angle[i] > 360)
 			angle[i] -= 360;
-		distance[i] = raycast(mlx, angle[i]);
+		distance[i] = raycast(mlx, angle[i]).dist;
 		// if (distance[i] < 0.1)
 		// 	distance[i] = 0.1;
-		int	wall_size = HEIGHT / distance[i];
+		float wall_size = HEIGHT / distance[i];
 		if (wall_size > HEIGHT)
 			wall_size = HEIGHT - 1;
 		int wall_start = (HEIGHT - wall_size) / 2;
