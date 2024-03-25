@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:13:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/25 13:38:00 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "mlx.h"
 # include "cub3d.h"
 
-# define WIDTH 1900
-# define HEIGHT 950
+# define WIDTH 1280
+# define HEIGHT 720
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
 

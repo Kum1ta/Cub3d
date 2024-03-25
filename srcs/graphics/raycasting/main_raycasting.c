@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:50:34 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:59:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ float raycast(t_mlx *mlx, float angle)
     float	distance;
 	float	raySpeedQuotien;
 
-	raySpeedQuotien = 1;
+	raySpeedQuotien = 100;
 	distance = 0.01f;
     while (distance < MAX_DISTANCE)
 	{
@@ -294,7 +294,7 @@ float raycast(t_mlx *mlx, float angle)
             return (MAX_DISTANCE);
         if (mlx->map->blocks[tileY][tileX] == WALL)
 		{
-			if (raySpeedQuotien == 1000)
+			if (raySpeedQuotien == 100)
             	return (distance);
 			else
 			{
@@ -378,27 +378,18 @@ void	raycasting(t_mlx *mlx, int need_free)
 	float		angle[WIDTH];
 	float		distance[WIDTH];
 	static void	*img = NULL;
+	int			color; 
 	char		*tmp;
 	int			i;
 
-	if (img)
+	if (img && need_free)
+	{
 		mlx_destroy_image(mlx->mlx, img);
-	if (need_free)
 		return ;
-	img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
+	}
+	if (!img)
+		img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	i = -1;
-	// while (i < WIDTH)
-	// {
-	// 	angle[i] = (mlx->map->playerPos.h - FOV / 2) + (float)i / (float)WIDTH * FOV;
-	// 	if (angle[i] < 0)
-	// 		angle[i] += 360;
-	// 	else if (angle[i] > 360)
-	// 		angle[i] -= 360;
-	// 	distance[i] = raycast(mlx, angle[i]);
-	// 	//probleme avec raycast qui semble renvoyer de la merde. ensuite il faut faire les murs en fonction de la distance
-	// 	// printf("angle:%f, dist: %f\n", angle[i], distance[i]);
-	// 	i++;
-	// }
 	while (++i < WIDTH)
 	{
 		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
@@ -407,8 +398,6 @@ void	raycasting(t_mlx *mlx, int need_free)
 		else if (angle[i] > 360)
 			angle[i] -= 360;
 		distance[i] = raycast(mlx, angle[i]);
-		// if (distance[i] < 0.1)
-		// 	distance[i] = 0.1;
 		int	wall_size = HEIGHT / distance[i];
 		if (wall_size > HEIGHT)
 			wall_size = HEIGHT - 1;
@@ -417,16 +406,20 @@ void	raycasting(t_mlx *mlx, int need_free)
 		int j = -1;
 		while (++j < wall_start)
 		{
+			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16 | mlx->map->texture.ceiling[1] << 8 | mlx->map->texture.ceiling[2]; 
 			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFF0000FF);
 		}
+		int	k = 0;
 		while (j < wall_end)
 		{
-			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFFFF0000);
-			j++;
+			color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
+			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
+			k++;
 		}
 		while (j < HEIGHT)
 		{
-			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFF00FF00);
+			color = 255 << 24 | mlx->map->texture.floor[0] << 16 | mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2]; 
+			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
 			j++;
 		}
 		// float radian = angle[i] * (PI / 180.0f);
@@ -434,7 +427,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		// int end_y = HEIGHT / 2 + (distance[i]) * cos(radian) * 10;
 		// draw_line(mlx, img, (int[4]){WIDTH / 2, HEIGHT / 2, end_x, end_y}, 0xFF00FF00);
 	}
-	// exit(0);
+	// // exit(0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
