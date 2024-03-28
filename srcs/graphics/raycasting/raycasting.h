@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/28 20:08:32 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/28 21:28:27 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "../graphics.h"
 
 # define MAX_DISTANCE 1000
-# define TILE_SIZE 64
 # define FOV 80
-# define NB_RAYS 800
+# define PRECISION 0
 
 typedef struct s_raydata
 {
