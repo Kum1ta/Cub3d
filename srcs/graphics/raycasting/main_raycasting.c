@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/25 18:20:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/28 20:17:01 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,37 @@ void	raycasting(t_mlx *mlx, int need_free)
 	i = -1;
 	while (++i < WIDTH)
 	{
+		
 		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
 		if (angle[i] < 0)
 			angle[i] += 360;
 		else if (angle[i] > 360)
 			angle[i] -= 360;
 		distance[i] = raycast(mlx, angle[i]).dist;
+		printf("---------------------\nBefore distance: %f\n", distance[i]);
+		// float pa = mlx->map->playerPos.h * (PI / 180.0f);
+		// if (pa > PI)
+		// 	pa -= 2 * PI;
+		// if (pa < -PI)
+		// 	pa += 2 * PI;
+		// printf("Player angle: %f and %f\n", pa, mlx->map->playerPos.h);
+		// float ra = angle[i] * (PI / 180.0f);
+		// if (ra > PI)
+		// 	ra -= 2 * PI;
+		// if (ra < -PI)
+		// 	ra += 2 * PI;
+		// printf("Ray angle: %f\n", ra);
+		// float radian = (mlx->map->playerPos.h - angle[i] + 90) * (PI / 180.0f);
+		// if (radian > 2 * PI)
+		// 	radian -= 2 * PI;
+		// if (radian < 0)
+		// 	radian += 2 * PI;
+		// printf("Radian: %f\n", radian);
+		// distance[i] *= cos(mlx->map->playerPos.h * (PI / 180.0f));
+		// printf("ANGLE PLAYER: %f | ANGLE RAY: %f\n", mlx->map->playerPos.h, angle[i]);
+		if (distance[i] < 0.2)
+			distance[i] = 0.2; 
+		printf("After distance: %f\n", distance[i]);
 		int	wall_size = HEIGHT / distance[i];
 		if (wall_size > HEIGHT)
 			wall_size = HEIGHT - 1;
@@ -167,9 +192,11 @@ void	raycasting(t_mlx *mlx, int need_free)
 		int	k = 0;
 		while (j < wall_end)
 		{
-			color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
+			// color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
+			color = 0xFF5A9FED;
 			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
 			k++;
+			j++;
 		}
 		while (j < HEIGHT)
 		{
@@ -177,12 +204,12 @@ void	raycasting(t_mlx *mlx, int need_free)
 			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
 			j++;
 		}
-		// float radian = angle[i] * (PI / 180.0f);
-		// int end_x = WIDTH / 2 + (distance[i]) * sin(radian) * 10;
-		// int end_y = HEIGHT / 2 + (distance[i]) * cos(radian) * 10;
-		// draw_line(mlx, img, (int[4]){WIDTH / 2, HEIGHT / 2, end_x, end_y}, 0xFF00FF00);
+		float radiand = angle[i] * (PI / 180.0f);
+		int end_x = WIDTH / 2 + (distance[i]) * sin(radiand) * 10;
+		int end_y = HEIGHT / 2 + (distance[i]) * cos(radiand) * 10;
+		if (end_x >= 0 && end_x < WIDTH && end_y >= 0 && end_y < HEIGHT)
+			mlx_pixel_put(mlx->mlx, mlx->win, end_x, end_y, 0xFF00FF00);
 	}
-	// // exit(0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
@@ -225,4 +252,24 @@ void	raycasting(t_mlx *mlx, int need_free)
 	// 		mlx_set_image_pixel(mlx->mlx, img, i, j, 0xE000FF00);
 	// 	draw_line(mlx, img, (int[4]){100, 100, sin(angle[i]) * 100 + distance[i], cos(angle[i]) * 100 + distance[i]}, 0xFF00FF00);
 	// }
+*/
+
+
+
+
+
+
+
+
+
+/*
+
+	float width = (float)WIDTH / NB_RAYS;
+	printf("width: %f\n", width);
+	while (++i < NB_RAYS)
+	{
+
+		// angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
+		angle[i] = (mlx->map->playerPos.h - FOV / 2 + ((float)FOV / NB_RAYS) * i);
+
 */

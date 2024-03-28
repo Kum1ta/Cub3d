@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:05:55 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/28 18:25:03 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	update(void *mlx_ptr)
 {
 	t_mlx				*mlx;
-	long long			now;
 
-	// now = get_now_time();
 	mlx = (t_mlx *)mlx_ptr;
 	mlx_clear_window(mlx->mlx, mlx->win);
 	keyboard(mlx);
