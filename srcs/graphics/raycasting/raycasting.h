@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/28 21:28:27 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:43:26 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "../graphics.h"
 
-# define MAX_DISTANCE 1000
+# define MAX_DISTANCE 10000
+# define MAX_RENDER_DISTANCE 40
 # define FOV 80
 # define PRECISION 0
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/28 21:40:04 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:52:47 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,22 +128,54 @@ void	item_effect(t_mlx *mlx)
 	}
 }
 
+void	fill_background(t_mlx *mlx, void *img)
+{
+	int	color_ceiling;
+	int	color_floor;
+	int	i;
+	int	j;
+
+	i = -1;
+	color_ceiling = 255 << 24 | mlx->map->texture.ceiling[0] << 16 | mlx->map->texture.ceiling[1] << 8 | mlx->map->texture.ceiling[2];
+	color_floor = 255 << 24 | mlx->map->texture.floor[0] << 16 | mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
+	while (++i < WIDTH)
+	{
+		j = -1;
+		while (++j < HEIGHT / 2)
+			mlx_set_image_pixel(mlx->mlx, img, i, j, color_ceiling);
+		while (j < HEIGHT)
+			mlx_set_image_pixel(mlx->mlx, img, i, j++, color_floor);
+	}
+}
+
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	float		angle[WIDTH];
 	float		distance[WIDTH];
 	static void	*img = NULL;
+	static void *backgroud = NULL;
 	int			color; 
 	char		*tmp;
 	int			i;
 
-	if (img && need_free)
+	if (need_free)
 	{
 		mlx_destroy_image(mlx->mlx, img);
+		mlx_destroy_image(mlx->mlx, backgroud);
 		return ;
+	}
+	if (img)
+	{
+		mlx_destroy_image(mlx->mlx, img);
+		img = NULL;
 	}
 	if (!img)
 		img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
+	if (!backgroud)
+	{
+		backgroud = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
+		fill_background(mlx, backgroud);
+	}
 	i = -1;
 	int l = 0;
 	int	wall_size = 0;
@@ -169,41 +201,39 @@ void	raycasting(t_mlx *mlx, int need_free)
 			distance[i] *= cos(radian);
 			if (distance[i] < 0.2)
 				distance[i] = 0.2;
-			wall_size = (HEIGHT / distance[i]) * 1.5;
+			wall_size = (HEIGHT / distance[i]) * 1.0;
 			if (wall_size > HEIGHT)
 				wall_size = HEIGHT - 1;
 			wall_start = (HEIGHT - wall_size) / 2;
 			wall_end = (HEIGHT + wall_size) / 2;
 		}
-		int j = -1;
-		while (++j < wall_start)
-		{
-			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16 | mlx->map->texture.ceiling[1] << 8 | mlx->map->texture.ceiling[2]; 
-			mlx_set_image_pixel(mlx->mlx, img, i, j, 0xFF0000FF);
-		}
+		int j = wall_start;
 		int	k = 0;
 		while (j < wall_end)
 		{
-			// color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
-			// 0xFF5A9FED = 255 << 24 | 90 << 16 | 159 << 8 | 237
-			int a = 90 - distance[i] * 3;
-			if (a < 0)
-				a = 0;
-			int b = 159 - distance[i] * 3;
-			if (b < 0)
-				b = 0;
-			int c = 237 - distance[i] * 3;
-			if (c < 0)
-				c = 0;
-			color = 255 << 24 | a << 16 | b << 8 | c;
+			color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
+			int a;
+			int b;
+			int c;
+			int d;
+			if (distance[i] > MAX_RENDER_DISTANCE)
+				d = 255 - (distance[i] - MAX_RENDER_DISTANCE) * 10;
+			else
+				d = 255;
+			if (d < 0)
+				d = 0;
+			a = ((color & 0x00FF0000) >> 16) - distance[i] * 5;
+			if (a < 50)
+				a = 50;
+			b = ((color & 0x0000FF00) >> 8) - distance[i] * 5;
+			if (b < 50)
+				b = 50;
+			c = (color & 0x000000FF)- distance[i] * 5;
+			if (c < 50)
+				c = 50;
+			color = d << 24 | a << 16 | b << 8 | c;
 			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
 			k++;
-			j++;
-		}
-		while (j < HEIGHT)
-		{
-			color = 255 << 24 | mlx->map->texture.floor[0] << 16 | mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2]; 
-			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
 			j++;
 		}
 		if (l == PRECISION)
@@ -211,6 +241,8 @@ void	raycasting(t_mlx *mlx, int need_free)
 		else
 			l++;
 	}
+	mlx_clear_window(mlx->mlx, mlx->win);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, backgroud, 0, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
