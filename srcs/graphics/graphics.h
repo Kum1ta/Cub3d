@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 00:42:54 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/29 20:50:14 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "cub3d.h"
 
 # define WIDTH 1024
-# define HEIGHT 512
+# define HEIGHT 768
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
 
@@ -122,6 +122,7 @@ typedef struct s_mlx
 	void				*win;
 	t_menu				actuel_menu;
 	t_keyboard			*keyboard;
+	void				*tmp;
 }	t_mlx;
 
 void draw_raycasting(t_mlx *mlx, void *img);

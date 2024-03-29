@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 00:52:47 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:06:31 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,39 @@ void	calculate_ray_data(t_raydata *ray, float posX, float posY)
 	ray->found = true;
 }
 
-t_raydata	raycast(t_mlx *mlx, float angle)
+t_raydata	*raycast(t_mlx *mlx, float angle)
 {
+	float 		posX;
+	float		posY;
+	int			tileX;
+	int			tileY;
 	float		raySpeed;
 	float		rAngle;
-	t_raydata	res;
+	t_raydata	*res;
 
-	raySpeed = 0.02f;
-	ft_bzero(&res, sizeof(t_raydata));
+	res = malloc(sizeof(t_raydata));
+	if (!res)
+		return (NULL);
+	raySpeed = 0.01f + (QUALITY * 0.01f);
+	ft_bzero(res, sizeof(t_raydata));
 	rAngle = angle * PI / 180;
-	while (res.dist < MAX_DISTANCE)
+	while (res->dist < MAX_DISTANCE)
 	{
-		float posX = mlx->map->playerPos.x + (res.dist * cos(rAngle));
-		float posY = mlx->map->playerPos.y + (res.dist * sin(rAngle));
-		int tileX = (int)(posX);
-		int tileY = (int)(posY);
+		posX = mlx->map->playerPos.x + (res->dist * cos(rAngle));
+		posY = mlx->map->playerPos.y + (res->dist * sin(rAngle));
+		tileX = (int)(posX);
+		tileY = (int)(posY);
 
 		if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
 			break ;
 		else if (mlx->map->blocks[tileY][tileX] == WALL)
 		{
-			calculate_ray_data(&res, posX, posY);
-			return res;
+			calculate_ray_data(res, posX, posY);
+			return (res);
 		}
-		res.dist += raySpeed;
+		res->dist += raySpeed;
 	}
-	res.dist = MAX_DISTANCE;
+	res->dist = MAX_DISTANCE;
 	return (res);
 }
 
@@ -73,9 +80,11 @@ void	put_actual_weapon(t_mlx *mlx, void *img)
 	while (++i < 20)
 		mlx_set_image_pixel(mlx->mlx, img, WIDTH / 2, HEIGHT / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->weapon_game->img, mlx->player->xy_item[0], mlx->player->xy_item[1]);
-	// else if (mlx->player->actual_weapon == FIST_INV)
-	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fist_inv->img, 0, 0);
+		mlx_put_image_to_window(mlx->mlx, mlx->win,
+			mlx->textures->weapon_game->img,
+			mlx->player->xy_item[0],
+			mlx->player->xy_item[1]
+		);
 	// else if (mlx->player->actual_weapon == KNIFE_INV)
 	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, 0, 0);
 }
@@ -119,8 +128,6 @@ void	item_effect(t_mlx *mlx)
 	}
 	if (mlx->player->actual_weapon == WEAPON_INV)
 		weapon_effect(mlx, &last_time);
-	// else if (mlx->player->actual_weapon == FIST_INV)
-	// 	system("afplay ./sounds/fist.wav &");
 	else if (mlx->player->actual_weapon == KNIFE_INV && mlx->mouse->pressed_left && get_now_time() - last_time > 500000)
 	{
 		system("paplay ./sounds/game/cut_hit.wav &");
@@ -148,102 +155,245 @@ void	fill_background(t_mlx *mlx, void *img)
 	}
 }
 
+void	ajust_angle(float *angle)
+{
+	if (*angle < 0)
+		*angle += 360;
+	else if (*angle > 360)
+		*angle -= 360;
+}
+
+void	free_ray(t_raydata **ray)
+{
+	int	i;
+
+	i = -1;
+	while (++i < WIDTH)
+		free(ray[i]);
+}
+
+void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
+{
+	float	radian;
+	float	ra;
+
+
+	ra = angle_ray + 90;
+	ajust_angle(&ra);
+	radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
+	ray->dist *= cos(radian);
+}
+
+void	calcul_wall_size(t_raydata *ray)
+{
+	int	tmp;
+
+	if (ray->dist < 0.2)
+		ray->dist = 0.2;
+	ray->wall_size = (HEIGHT / ray->dist) * 1.0;
+	tmp = ray->wall_size;
+	if (ray->wall_size > HEIGHT)
+		ray->wall_size = HEIGHT - 1;
+	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
+	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
+	ray->diff = tmp - ray->wall_size;
+}
+
+void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
+{
+	int		j;
+	int		color;
+
+	j = 0;
+	while (j < ray->wall_start)
+	{
+		color = 255 << 24 | mlx->map->texture.ceiling[0] << 16
+		| mlx->map->texture.ceiling[1] << 8
+		| mlx->map->texture.ceiling[2];
+		mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
+		j++;
+	}
+	j += ray->wall_size;
+	while (j < HEIGHT)
+	{
+		color = 255 << 24 | mlx->map->texture.floor[0] << 16
+		| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
+		mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
+		j++;
+	}
+}
+
+void	show_fps(t_mlx *mlx)
+{
+	int	x;
+	int	y;
+
+	if (SHOW_FPS)
+	{
+		y = 0;
+		while (y < 20)
+		{
+			x = 0;
+			while (x < 40)
+			{
+				mlx_pixel_put(mlx->mlx, mlx->win,  WIDTH - x, y, 0x00000000);
+				x++;
+			}
+			y++;
+		}
+		put_fps(mlx, 0);
+	}
+}
+
+int	choose_anti_aliasing(int distance)
+{
+	int	lvl;
+
+	if (ANTIALIASING_LEVEL == 2)
+	{
+		if (distance < 2)
+			lvl = 1;
+		else
+			lvl = 2;
+	}
+	else if (distance < 2)
+		lvl = 1;
+	else if (distance < 5)
+		lvl = ANTIALIASING_LEVEL / 4;
+	else if (distance < 10)
+		lvl = ANTIALIASING_LEVEL / 2;
+	else
+		lvl = ANTIALIASING_LEVEL;
+	return (lvl);
+}
+
+int	get_supersampling_color(t_mlx *mlx, int x, int y, int distance)
+{
+	int		color[3];
+	int		x_pos;
+	int		y_pos;
+	int		color_tmp;
+	int		lvl;
+	
+	if (ANTIALIASING_LEVEL == 1)
+		return (mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img, x, y));
+	lvl = choose_anti_aliasing(distance);
+	ft_bzero(color, 3 * sizeof(int));
+	y_pos = -1;
+	while (++y_pos < lvl)
+	{
+		x_pos = -1;
+		while (++x_pos < lvl)
+		{
+			color_tmp = mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img,
+				x + x_pos, y + y_pos);
+			color[0] += (color_tmp & 0x00FF0000) >> 16;
+			color[2] += (color_tmp & 0x0000FF00) >> 8;
+			color[1] += color_tmp & 0x000000FF;
+		}
+	}
+	return (255 << 24 | (color[0] / (lvl * lvl)) << 16
+		| (color[2] / (lvl * lvl)) << 8 | (color[1] / (lvl * lvl)));
+}
+
+void	downscalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
+{
+	float	tmp;
+	int		color;
+	int		last;
+	int		j;
+
+	last = 0;
+	j = ray->wall_start - 1;
+	while (++j < ray->wall_end)
+	{
+		tmp = last + factor;
+		while (last < tmp)
+		{
+			if (ray->dir == 0)
+				mlx->tmp = mlx->textures->north;
+			else if (ray->dir == 1)
+				mlx->tmp = mlx->textures->east;
+			else if (ray->dir == 2)
+				mlx->tmp = mlx->textures->south;
+			else
+				mlx->tmp = mlx->textures->west;
+			color = get_supersampling_color(mlx, (int)(ray->imgXPercent
+				* ((t_img *)mlx->tmp)->width), (int)(last
+				* ((t_img *)mlx->tmp)->height / ray->wall_size),
+				(int)ray->dist);
+			mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
+			last++;
+		}
+	}
+}
+
+void	upscalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
+{
+	int		color;
+	int		j;
+
+	(void)factor;
+	j = ray->wall_start;
+	while (j < ray->wall_end)
+	{
+		if (ray->dir == 0)
+			mlx->tmp = mlx->textures->north;
+		else if (ray->dir == 1)
+			mlx->tmp = mlx->textures->east;
+		else if (ray->dir == 2)
+			mlx->tmp = mlx->textures->south;
+		else
+			mlx->tmp = mlx->textures->west;
+		color = get_supersampling_color(mlx, (int)(ray->imgXPercent
+			* ((t_img *)mlx->tmp)->width), (int)((j - ray->wall_start)
+			* ((t_img *)mlx->tmp)->height / ray->wall_size), (int)ray->dist);
+		mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
+		j++;
+	}
+}
+
 void	raycasting(t_mlx *mlx, int need_free)
 {
+	t_raydata	*ray[WIDTH];
 	float		angle[WIDTH];
-	float		distance[WIDTH];
-	static void	*img = NULL;
-	static void *backgroud = NULL;
-	int			color; 
-	char		*tmp;
 	int			i;
+	float		factor;
 
 	if (need_free)
-	{
-		mlx_destroy_image(mlx->mlx, img);
-		mlx_destroy_image(mlx->mlx, backgroud);
 		return ;
-	}
-	if (img)
-	{
-		mlx_destroy_image(mlx->mlx, img);
-		img = NULL;
-	}
-	if (!img)
-		img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-	if (!backgroud)
-	{
-		backgroud = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
-		fill_background(mlx, backgroud);
-	}
 	i = -1;
-	int l = 0;
-	int	wall_size = 0;
-	int wall_start = 0;
-	int wall_end = 0;
 	while (++i < WIDTH)
 	{
-		if (l == 0)
+		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
+		ajust_angle(&angle[i]);
+		ray[i] = raycast(mlx, angle[i]);
+		if (!ray[i])
 		{
-			angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
-			if (angle[i] < 0)
-				angle[i] += 360;
-			else if (angle[i] > 360)
-				angle[i] -= 360;
-			distance[i] = raycast(mlx, angle[i]).dist;
-			float ra = angle[i] + 90;
-			if (ra > 360)
-				ra -= 360;
-			if (ra < 0)
-				ra += 360;
-			float radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
-			float tmp = distance[i];
-			distance[i] *= cos(radian);
-			if (distance[i] < 0.2)
-				distance[i] = 0.2;
-			wall_size = (HEIGHT / distance[i]) * 1.0;
-			if (wall_size > HEIGHT)
-				wall_size = HEIGHT - 1;
-			wall_start = (HEIGHT - wall_size) / 2;
-			wall_end = (HEIGHT + wall_size) / 2;
+			free_ray(ray);
+			return ;
 		}
-		int j = wall_start;
-		int	k = 0;
-		while (j < wall_end)
-		{
-			color = mlx_get_image_pixel(mlx->mlx, mlx->textures->north->img, i, k);
-			int a;
-			int b;
-			int c;
-			int d;
-			if (distance[i] > MAX_RENDER_DISTANCE)
-				d = 255 - (distance[i] - MAX_RENDER_DISTANCE) * 10;
-			else
-				d = 255;
-			if (d < 0)
-				d = 0;
-			a = ((color & 0x00FF0000) >> 16) - distance[i] * 5;
-			if (a < 50)
-				a = 50;
-			b = ((color & 0x0000FF00) >> 8) - distance[i] * 5;
-			if (b < 50)
-				b = 50;
-			c = (color & 0x000000FF)- distance[i] * 5;
-			if (c < 50)
-				c = 50;
-			color = d << 24 | a << 16 | b << 8 | c;
-			mlx_set_image_pixel(mlx->mlx, img, i, j, color);
-			k++;
-			j++;
-		}
-		if (l == PRECISION)
-			l = 0;
-		else
-			l++;
+		correct_fish_eye(ray[i], angle[i], mlx);
+		calcul_wall_size(ray[i]);
 	}
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, backgroud, 0, 0);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
+	i = -1;
+	while (++i < WIDTH)
+	{
+		put_celling_floor(mlx, ray[i], i);
+		if (ray[i]->dir == 0)
+			factor = (float)ray[i]->wall_size / (float)mlx->textures->north->height;
+		else if (ray[i]->dir == 1)
+			factor = (float)ray[i]->wall_size / (float)mlx->textures->east->height;
+		else if (ray[i]->dir == 2)
+			factor = (float)ray[i]->wall_size / (float)mlx->textures->south->height;
+		else
+			factor = (float)ray[i]->wall_size / (float)mlx->textures->west->height;
+		if (factor < 1)
+			downscalling(ray[i], mlx, i, factor);
+		else
+			upscalling(ray[i], mlx, i, factor);
+	}
+	show_fps(mlx);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
 	// mini_map(mlx, angle, distance, 0);
@@ -256,9 +406,8 @@ void	raycasting(t_mlx *mlx, int need_free)
 
 
 // FONCTION POUR AFFICHER LE POINT D'ARRIVEE DES RAYONS
-		// SANS CORRECTION DE FISHEYE
 		// float radiand = angle[i] * (PI / 180.0f);
-		// int end_x = WIDTH / 4 + (tmp) * sin(radiand) * 10;
+		// int end_x = WIDTH / 4 + ({VALEUR DISTANCE}) * sin(radiand) * 10;
 		// int end_y = HEIGHT / 2 + (tmp) * cos(radiand) * 10;
 		// if (end_x >= 0 && end_x < WIDTH && end_y >= 0 && end_y < HEIGHT)
 		// {
@@ -266,17 +415,3 @@ void	raycasting(t_mlx *mlx, int need_free)
 		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x, end_y + 1, 0xFF00FF00);
 		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x + 1, end_y, 0xFF00FF00);
 		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x + 1, end_y + 1, 0xFF00FF00);
-
-		// }
-
-		// AVEC CORRECTION DE FISHEYE
-		// end_x = ((WIDTH / 4) * 3) + (distance[i]) * sin(radiand) * 10;
-		// end_y = HEIGHT / 2 + (distance[i]) * cos(radiand) * 10;
-		// if (end_x >= 0 && end_x < WIDTH && end_y >= 0 && end_y < HEIGHT)
-		// {
-		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x, end_y, 0xFF00FF00);
-		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x, end_y + 1, 0xFF00FF00);
-		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x + 1, end_y, 0xFF00FF00);
-		// 	mlx_pixel_put(mlx->mlx, mlx->win, end_x + 1, end_y + 1, 0xFF00FF00);
-
-		// }

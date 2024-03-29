@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 19:36:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:07:10 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ void move_weapon(t_mlx *mlx)
 {
 	static long long	prev_time = 0;
 	long long 			current_time;
-	double				horizontal_offset;
+	// double				horizontal_offset;
 	double				vertical_offset;
-	double				elapsed_time;
 
 	current_time = get_now_time();
 	if (mlx->player->actual_weapon == WEAPON_INV)
 	{
 		double elapsed_time = (double)(current_time - prev_time);
 		vertical_offset = AMPLITUDE_VERTICAL * sin(FREQUENCY * elapsed_time);
-		horizontal_offset = AMPLITUDE_HORIZONTAL * sin(2 * FREQUENCY * elapsed_time);
+		// horizontal_offset = AMPLITUDE_HORIZONTAL * sin(2 * FREQUENCY * elapsed_time);
 		mlx->player->xy_item[1] = vertical_offset;
 		// mlx->player->xy_item[0] = horizontal_offset;
 		prev_time = current_time;
