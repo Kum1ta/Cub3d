@@ -3,69 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 21:06:31 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:40:26 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raycasting.h"
 
-void	calculate_ray_data(t_raydata *ray, float posX, float posY)
+typedef struct s_ray {
+	float	raySpeed;
+	float	rAngle;
+	float	dirX;
+	float	dirY;
+	int		posX;
+	int		posY;
+	float	distX;
+	float	distY;
+	float	deltaDistX;
+	float	deltaDistY;
+	int		stepX;
+	int		stepY;
+	int		nbStep;
+	int		dir;
+}	t_ray;
+
+void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 {
-	if (posX - ((int) posX) < 0.02 || posX - ((int) posX) > 0.98)
-	{
-		if (posX - ((int) posX) < 0.02)
-			ray->dir = 0;
-		else
-			ray->dir = 2;
-		ray->imgXPercent = posY - ((int) posY);
-	}
+	ray->raySpeed = 0.01f + (QUALITY * 0.01f);
+	ray->rAngle = angle * PI / 180;
+	ray->dirX = cos(ray->rAngle);
+	ray->dirY = sin(ray->rAngle);
+	ray->posX = (int) mlx->map->playerPos.x;
+	ray->posY = (int) mlx->map->playerPos.y;
+	ray->deltaDistX = sqrt(1 + (ray->dirY * ray->dirY) / (ray->dirX * ray->dirX));
+	ray->deltaDistY = sqrt(1 + (ray->dirX * ray->dirX) / (ray->dirY * ray->dirY));
+	if (ray->dirX < 0)
+		ray->distX = (mlx->map->playerPos.x - ray->posX) * ray->deltaDistX;
 	else
-	{
-		if (posY - ((int) posY) > 0.98)
-			ray->dir = 1;
-		else
-			ray->dir = 3;
-		ray->imgXPercent = posX - ((int) posX);
-	}
-	ray->found = true;
+		ray->distX = (ray->posX + 1 - mlx->map->playerPos.x) * ray->deltaDistX;
+	if (ray->dirY < 0)
+		ray->distY = (mlx->map->playerPos.y - ray->posY) * ray->deltaDistY;
+	else
+		ray->distY = (ray->posY + 1 - mlx->map->playerPos.y) * ray->deltaDistY;
+	ray->stepX = 1 - 2 * (ray->dirX < 0);
+	ray->stepY = 1 - 2 * (ray->dirY < 0);
+	ray->nbStep = 0;
 }
 
-t_raydata	*raycast(t_mlx *mlx, float angle)
+t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 {
-	float 		posX;
-	float		posY;
-	int			tileX;
-	int			tileY;
-	float		raySpeed;
-	float		rAngle;
 	t_raydata	*res;
+	t_ray		ray;
 
-	res = malloc(sizeof(t_raydata));
+	res = ft_calloc(1, sizeof(t_raydata));
 	if (!res)
 		return (NULL);
-	raySpeed = 0.01f + (QUALITY * 0.01f);
-	ft_bzero(res, sizeof(t_raydata));
-	rAngle = angle * PI / 180;
-	while (res->dist < MAX_DISTANCE)
+	init_ray(&ray, mlx, angle, screenX);
+	while (!res->found && ray.nbStep < MAX_DISTANCE)
 	{
-		posX = mlx->map->playerPos.x + (res->dist * cos(rAngle));
-		posY = mlx->map->playerPos.y + (res->dist * sin(rAngle));
-		tileX = (int)(posX);
-		tileY = (int)(posY);
-
-		if (tileX < 0 || tileX >= mlx->menu_map->width || tileY < 0 || tileY >= mlx->menu_map->height)
-			break ;
-		else if (mlx->map->blocks[tileY][tileX] == WALL)
+		if (ray.distX < ray.distY)
 		{
-			calculate_ray_data(res, posX, posY);
-			return (res);
+			ray.distX += ray.deltaDistX;
+			ray.posX += ray.stepX;
+			ray.dir = 0;
 		}
-		res->dist += raySpeed;
+		else
+		{
+			ray.distY += ray.deltaDistY;
+			ray.posY += ray.stepY;
+			ray.dir = 1;
+		}
+		if (ray.posX < 0 || ray.posY < 0 || ray.posX > mlx->menu_map->width || ray.posY > mlx->menu_map->height)
+			break ;
+		else if (mlx->map->blocks[ray.posY][ray.posX] == WALL)
+		{
+			res->found = true;
+			if (ray.dir == 0)
+			{
+				res->dist = ray.distX - ray.deltaDistX;
+				res->dir = ray.dir + 2 * (ray.stepX == -1);
+				res->imgXPercent = mlx->map->playerPos.y + res->dist * ray.dirY;
+			}
+			else
+			{
+				res->dist = ray.distY - ray.deltaDistY;
+				res->dir = ray.dir + 2 * (ray.stepY == -1);
+				res->imgXPercent = mlx->map->playerPos.x + res->dist * ray.dirX;
+			}
+			res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
+		}
 	}
-	res->dist = MAX_DISTANCE;
+	if (!res->found)
+		res->dist = MAX_DISTANCE;
 	return (res);
 }
 
@@ -176,7 +207,6 @@ void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
 {
 	float	radian;
 	float	ra;
-
 
 	ra = angle_ray + 90;
 	ajust_angle(&ra);
@@ -367,7 +397,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	{
 		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
 		ajust_angle(&angle[i]);
-		ray[i] = raycast(mlx, angle[i]);
+		ray[i] = raycast(mlx, angle[i], i);
 		if (!ray[i])
 		{
 			free_ray(ray);
