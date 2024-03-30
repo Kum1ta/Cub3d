@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 15:40:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/30 15:54:13 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,14 @@ int	choose_anti_aliasing(int distance)
 	return (lvl);
 }
 
+static inline int	max(int a, int b)
+{
+	if (a > b)
+		return (b);
+	else
+		return (a);
+}
+
 int	get_supersampling_color(t_mlx *mlx, int x, int y, int distance)
 {
 	int		color[3];
@@ -316,7 +324,7 @@ int	get_supersampling_color(t_mlx *mlx, int x, int y, int distance)
 		while (++x_pos < lvl)
 		{
 			color_tmp = mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img,
-				x + x_pos, y + y_pos);
+				max(x + x_pos, ((t_img *)mlx->tmp)->width), max(y + y_pos, ((t_img *)mlx->tmp)->height));
 			color[0] += (color_tmp & 0x00FF0000) >> 16;
 			color[2] += (color_tmp & 0x0000FF00) >> 8;
 			color[1] += color_tmp & 0x000000FF;
@@ -345,7 +353,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 		mlx->tmp = mlx->textures->west;
 	imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
 	wall_size = HEIGHT / ray->dist;
-	imgY = (j - HEIGHT / 2 + wall_size / 2) * factor;
+	imgY = (j - (HEIGHT - wall_size) / 2) * factor;
 	while (j < ray->wall_end)
 	{
 		color = get_supersampling_color(mlx, imgX, (int) imgY, (int)ray->dist);
