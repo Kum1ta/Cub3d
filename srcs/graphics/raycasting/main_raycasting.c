@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 14:40:26 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/30 15:40:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,12 +221,12 @@ void	calcul_wall_size(t_raydata *ray)
 	if (ray->dist < 0.2)
 		ray->dist = 0.2;
 	ray->wall_size = (HEIGHT / ray->dist) * 1.0;
-	tmp = ray->wall_size;
+	// tmp = ray->wall_size;
 	if (ray->wall_size > HEIGHT)
-		ray->wall_size = HEIGHT - 1;
+		ray->wall_size = HEIGHT;
 	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
 	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
-	ray->diff = tmp - ray->wall_size;
+	// ray->diff = tmp - ray->wall_size;
 }
 
 void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
@@ -326,58 +326,30 @@ int	get_supersampling_color(t_mlx *mlx, int x, int y, int distance)
 		| (color[2] / (lvl * lvl)) << 8 | (color[1] / (lvl * lvl)));
 }
 
-void	downscalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
-{
-	float	tmp;
-	int		color;
-	int		last;
-	int		j;
-
-	last = 0;
-	j = ray->wall_start - 1;
-	while (++j < ray->wall_end)
-	{
-		tmp = last + factor;
-		while (last < tmp)
-		{
-			if (ray->dir == 0)
-				mlx->tmp = mlx->textures->north;
-			else if (ray->dir == 1)
-				mlx->tmp = mlx->textures->east;
-			else if (ray->dir == 2)
-				mlx->tmp = mlx->textures->south;
-			else
-				mlx->tmp = mlx->textures->west;
-			color = get_supersampling_color(mlx, (int)(ray->imgXPercent
-				* ((t_img *)mlx->tmp)->width), (int)(last
-				* ((t_img *)mlx->tmp)->height / ray->wall_size),
-				(int)ray->dist);
-			mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
-			last++;
-		}
-	}
-}
-
-void	upscalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
+void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 {
 	int		color;
 	int		j;
+	float	wall_size;
+	int		imgX;
+	float	imgY;
 
-	(void)factor;
 	j = ray->wall_start;
+	if (ray->dir == 0)
+		mlx->tmp = mlx->textures->north;
+	else if (ray->dir == 1)
+		mlx->tmp = mlx->textures->east;
+	else if (ray->dir == 2)
+		mlx->tmp = mlx->textures->south;
+	else
+		mlx->tmp = mlx->textures->west;
+	imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
+	wall_size = HEIGHT / ray->dist;
+	imgY = (j - HEIGHT / 2 + wall_size / 2) * factor;
 	while (j < ray->wall_end)
 	{
-		if (ray->dir == 0)
-			mlx->tmp = mlx->textures->north;
-		else if (ray->dir == 1)
-			mlx->tmp = mlx->textures->east;
-		else if (ray->dir == 2)
-			mlx->tmp = mlx->textures->south;
-		else
-			mlx->tmp = mlx->textures->west;
-		color = get_supersampling_color(mlx, (int)(ray->imgXPercent
-			* ((t_img *)mlx->tmp)->width), (int)((j - ray->wall_start)
-			* ((t_img *)mlx->tmp)->height / ray->wall_size), (int)ray->dist);
+		color = get_supersampling_color(mlx, imgX, (int) imgY, (int)ray->dist);
+		imgY += factor;
 		mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
 		j++;
 	}
@@ -410,18 +382,16 @@ void	raycasting(t_mlx *mlx, int need_free)
 	while (++i < WIDTH)
 	{
 		put_celling_floor(mlx, ray[i], i);
+		factor = HEIGHT / ray[i]->dist;
 		if (ray[i]->dir == 0)
-			factor = (float)ray[i]->wall_size / (float)mlx->textures->north->height;
+			factor = (float)mlx->textures->north->height / factor;
 		else if (ray[i]->dir == 1)
-			factor = (float)ray[i]->wall_size / (float)mlx->textures->east->height;
+			factor = (float)mlx->textures->east->height / factor;
 		else if (ray[i]->dir == 2)
-			factor = (float)ray[i]->wall_size / (float)mlx->textures->south->height;
+			factor = (float)mlx->textures->south->height / factor;
 		else
-			factor = (float)ray[i]->wall_size / (float)mlx->textures->west->height;
-		if (factor < 1)
-			downscalling(ray[i], mlx, i, factor);
-		else
-			upscalling(ray[i], mlx, i, factor);
+			factor = (float)mlx->textures->west->height / factor;
+		scalling(ray[i], mlx, i, factor);
 	}
 	show_fps(mlx);
 	// item_effect(mlx);
