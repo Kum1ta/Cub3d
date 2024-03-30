@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 15:50:20 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/30 17:06:26 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../graphics.h"
 
-# define MAX_DISTANCE 10000
+# define MAX_DISTANCE 1000
 # define FOV 80
 # define SHOW_FPS 1 // 0: off, 1: on
 # define ANTIALIASING_LEVEL 8 // 1: None, 2: 2x, 4: 4x, 8: 8x

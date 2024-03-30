@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 22:26:03 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:55:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,24 +88,24 @@ static size_t	get_map_height(t_list *lines)
 	return (height);
 }
 
-static bool	allocate_map(t_map *map, size_t width, size_t height)
+static bool	allocate_map(t_map *map)
 {
 	size_t	i;
 
-	map->blocks = malloc((height + 1) * sizeof(t_block *));
+	map->blocks = malloc((map->height + 1) * sizeof(t_block *));
 	if (!map->blocks)
 		return (false);
 	i = 0;
-	while (i < height)
+	while (i < map->height)
 	{
-		map->blocks[i] = ft_calloc((width + 1), sizeof(t_block));
+		map->blocks[i] = ft_calloc((map->width + 1), sizeof(t_block));
 		if (map->blocks[i] == NULL)
 		{
 			free_blocks(map->blocks);
 			map->blocks = NULL;
 			return (false);
 		}
-		map->blocks[i][width] = END;
+		map->blocks[i][map->width] = END;
 		i++;
 	}
 	map->blocks[i] = NULL;
@@ -137,26 +137,24 @@ static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_vec
 
 t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 {
-	size_t				map_width;
-	size_t				map_height;
 	t_map_error_type	res;
 	bool				*flagBlocks;
 
 	if (!is_all_lines_valid(lines))
 		return (MAP_INVALID_CHARACTER);
-	map_width = get_max_line_size(lines);
-	map_height = get_map_height(lines);
-	if (!allocate_map(map, map_width, map_height))
+	map->width = get_max_line_size(lines);
+	map->height = get_map_height(lines);
+	if (!allocate_map(map))
 		return (MAP_ERROR_ALLOC);
 	res = set_map_blocks(map, lines);
 	if (res != MAP_NO_ERROR)
 		return (res);
 	if (map->playerPos.x == -1.0f)
 		return (MAP_NO_ERROR);
-	flagBlocks = ft_calloc(map_height * map_width, sizeof(bool));
+	flagBlocks = ft_calloc(map->height * map->width, sizeof(bool));
 	if (flagBlocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flagBlocks, map_width, (t_vec2){map->playerPos.x, map->playerPos.y}))
+	if (can_exit_map(map->blocks, flagBlocks, map->width, (t_vec2){map->playerPos.x, map->playerPos.y}))
 		res = MAP_CAN_EXIT;
 	free(flagBlocks);
 	return (res);

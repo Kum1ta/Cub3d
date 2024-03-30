@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 15:54:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/30 16:58:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,8 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 			ray.posY += ray.stepY;
 			ray.dir = 1;
 		}
-		if (ray.posX < 0 || ray.posY < 0 || ray.posX > mlx->menu_map->width || ray.posY > mlx->menu_map->height)
-			break ;
-		else if (mlx->map->blocks[ray.posY][ray.posX] == WALL)
+		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height
+			&& mlx->map->blocks[ray.posY][ray.posX] == WALL)
 		{
 			res->found = true;
 			if (ray.dir == 0)
@@ -94,9 +93,8 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 			}
 			res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
 		}
+		ray.nbStep++;
 	}
-	if (!res->found)
-		res->dist = MAX_DISTANCE;
 	return (res);
 }
 
@@ -218,6 +216,13 @@ void	calcul_wall_size(t_raydata *ray)
 {
 	int	tmp;
 
+	if (!ray->found)
+	{
+		ray->wall_size = 0;
+		ray->wall_start = HEIGHT / 2;
+		ray->wall_end = HEIGHT / 2;
+		return ;
+	}
 	if (ray->dist < 0.2)
 		ray->dist = 0.2;
 	ray->wall_size = (HEIGHT / ray->dist) * 1.0;
@@ -390,16 +395,19 @@ void	raycasting(t_mlx *mlx, int need_free)
 	while (++i < WIDTH)
 	{
 		put_celling_floor(mlx, ray[i], i);
-		factor = HEIGHT / ray[i]->dist;
-		if (ray[i]->dir == 0)
-			factor = (float)mlx->textures->north->height / factor;
-		else if (ray[i]->dir == 1)
-			factor = (float)mlx->textures->east->height / factor;
-		else if (ray[i]->dir == 2)
-			factor = (float)mlx->textures->south->height / factor;
-		else
-			factor = (float)mlx->textures->west->height / factor;
-		scalling(ray[i], mlx, i, factor);
+		if (ray[i]->found)
+		{
+			factor = HEIGHT / ray[i]->dist;
+			if (ray[i]->dir == 0)
+				factor = (float)mlx->textures->north->height / factor;
+			else if (ray[i]->dir == 1)
+				factor = (float)mlx->textures->east->height / factor;
+			else if (ray[i]->dir == 2)
+				factor = (float)mlx->textures->south->height / factor;
+			else
+				factor = (float)mlx->textures->west->height / factor;
+			scalling(ray[i], mlx, i, factor);
+		}
 	}
 	show_fps(mlx);
 	// item_effect(mlx);

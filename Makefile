@@ -46,7 +46,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
+CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2 -MD
 # CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))
@@ -143,5 +143,7 @@ recub :
 	@rm -f ${NAME}
 	@echo "Files successfully cleaned (only cub3d's files)."
 	@make all
+
+-include $(OBJS:.o=.d)
 
 .PHONY : libft mlx re fclean all clean create
