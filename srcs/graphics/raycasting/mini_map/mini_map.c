@@ -6,119 +6,112 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/19 18:03:14 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 18:30:22 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../raycasting.h"
 
-void	put_health(t_mlx *mlx, void *img)
+void	put_health(t_mlx *mlx)
 {
-	int	x;
-	int	y;
-	int	max;
+	float	health;
+	int		x;
+	int		y;
 
-	y = 0;
-	max = mlx->player->health * 349 / 100;
-	while (y < 18)
+	y = 181 + POS_MINI_MAP_Y;
+	health = 350 * mlx->player->health / 100;
+	while (y < 199 + POS_MINI_MAP_Y)
 	{
-		x = 0;
-		while (x < 349)
+		x = 0 + POS_MINI_MAP_X + 1;
+		while (x < 350 + POS_MINI_MAP_X && x < health + POS_MINI_MAP_X + 1)
 		{
-			if (x < max)
-				mlx_set_image_pixel(mlx->mlx, img, x + 1, y + 181, 0xFFC82626);
-			else
-				mlx_set_image_pixel(mlx->mlx, img, x + 1, y + 181, 0xFF000000);
+			mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFD93A3A);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_map(t_mlx *mlx, int need_free)
+void	draw_player_pos(t_mlx *mlx)
 {
-	static void	*ptr = NULL;
-	// int			corner[4][2];
-	int			i;
-	int			j;
-	int			x;
-	int			y;
-
-	y = 0;
-	i = 0;
-	if (ptr)
-		mlx_destroy_image(mlx->mlx, ptr);
-	if (need_free)
-		return ;
-	ptr = mlx_new_image(mlx->mlx, 350, 180);
-	if (!ptr)
-		return ;
-	while (mlx->map->blocks[i] && y < 200)
-	{
-		j = 0;
-		x = 0;
-		while (mlx->map->blocks[i][j] != END && x <= 350)
-		{
-			x = j * 14;
-			y = i * 14;
-			// if (mlx->map->blocks[i][j] == WALL)
-			// 	draw_polygon_4(mlx, ptr, corner, 0xFF000000);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	mini_map(t_mlx *mlx, float angle[WIDTH], float distance[WIDTH], int need_free)
-{
-	(void)angle;
-	(void)distance;
-	static void		*img = NULL;
-	static float	last_x = 0;
-	static float	last_y = 0;
 	int	x;
 	int	y;
 
-	if (need_free)
+	y = POS_MINI_MAP_Y + 90 - 2;
+	while (y < POS_MINI_MAP_Y + 90 + 2)
 	{
-		draw_map(mlx, 1);
-		if (img)
-			mlx_destroy_image(mlx->mlx, img);
-		return ;
-	}
-	y = 0;
-	if (last_x != mlx->map->playerPos.x || last_y != mlx->map->playerPos.y)
-	{
-		last_x = mlx->map->playerPos.x;
-		last_y = mlx->map->playerPos.y;
-		if (img)
-			mlx_destroy_image(mlx->mlx, img);
-		img = mlx_new_image(mlx->mlx, 351, 200);
-	}
-	else
-	{
-		draw_map(mlx, 0);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, img, 50, HEIGHT - 225);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->player_ico->img, 205, HEIGHT - 100);
-		return ;
-	}
-	while (y < 200)
-	{
-		x = 0;
-		mlx_set_image_pixel(mlx->mlx, img, x++, y, 0xF091a3b0);
-		while (x < 350)
+		x = POS_MINI_MAP_X + 175 - 2;
+		while (x < POS_MINI_MAP_X + 175 + 2)
 		{
-			if (y == 199 || y == 0 || y == 180)
-				mlx_set_image_pixel(mlx->mlx, img, x, y, 0xF091a3b0);
-			else
-				mlx_set_image_pixel(mlx->mlx, img, x, y, 0xF0343434);
+			mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFF0000FF);
 			x++;
 		}
-		mlx_set_image_pixel(mlx->mlx, img, x, y, 0xF091a3b0);
 		y++;
 	}
-	put_health(mlx, img);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 50, HEIGHT - 225);
-	draw_map(mlx, 0);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->player_ico->img, 205, HEIGHT - 100);
+	
+}
+
+void	print_square(t_mlx *mlx, int x, int y)
+{
+	float	x_calc;
+	float	y_calc;
+	int		x_map;
+	int		y_map;
+
+	y_map = -1;
+	while (++y_map < WALL_SIZE_MINI_MAP - 1)
+	{
+		x_calc = (POS_MINI_MAP_X + 150) + ((x - mlx->map->playerPos.x) * WALL_SIZE_MINI_MAP);
+		y_calc = (POS_MINI_MAP_Y + 82.5) + ((y - mlx->map->playerPos.y) * WALL_SIZE_MINI_MAP);
+		x_map = -1;
+		while (++x_map < WALL_SIZE_MINI_MAP - 1 && y_calc + y_map < POS_MINI_MAP_Y + 180
+			&& y_calc + y_map > POS_MINI_MAP_Y + 1 && x_calc + x_map < POS_MINI_MAP_X + 350)
+		{
+			if (x_calc + x_map > POS_MINI_MAP_X + 1)
+				mlx_pixel_put(mlx->mlx, mlx->win, x_calc + x_map, y_calc + y_map, 0xFF534B4B);
+		}
+	}
+}
+
+void	draw_map(t_mlx *mlx)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < mlx->menu_map->height / mlx->menu_map->size)
+	{
+		x = -1;
+		while (++x < mlx->menu_map->width / mlx->menu_map->size)
+		{
+			if (mlx->map->blocks[y][x] == WALL)
+				print_square(mlx, x, y);
+		}
+	}
+	draw_player_pos(mlx);
+}
+
+void	mini_map(t_mlx *mlx, t_raydata *ray[WIDTH])
+{
+	int	x;
+	int	y;
+
+	y = 0 + POS_MINI_MAP_Y;
+	while (y < 200 + POS_MINI_MAP_Y && y < HEIGHT)
+	{
+		x = 0 + POS_MINI_MAP_X;
+		mlx_pixel_put(mlx->mlx, mlx->win, x++, y, 0xF091a3b0);
+		while (x < 350 + POS_MINI_MAP_X && x < WIDTH)
+		{
+			if (y == 199 + POS_MINI_MAP_Y || y == 0 + POS_MINI_MAP_Y || y == 180 + POS_MINI_MAP_Y)
+				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xF091a3b0);
+			else
+				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xF0343434);
+			x++;
+		}
+		mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xF091a3b0);
+		y++;
+	}
+	put_health(mlx);
+	draw_map(mlx);
 }
