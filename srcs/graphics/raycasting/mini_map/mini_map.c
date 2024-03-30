@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 18:30:22 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:04:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	draw_map(t_mlx *mlx)
 	draw_player_pos(mlx);
 }
 
-void	mini_map(t_mlx *mlx, t_raydata *ray[WIDTH])
+void	mini_map(t_mlx *mlx)
 {
 	int	x;
 	int	y;

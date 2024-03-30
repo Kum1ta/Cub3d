@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 15:55:22 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:04:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -426,7 +426,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	show_fps(mlx);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
-	mini_map(mlx, ray);
+	mini_map(mlx);
 	// inventory(mlx, img, 0);
 	// tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
 	// mlx_string_put(mlx->mlx, mlx->win, WIDTH - 150, HEIGHT - 210, 0xFF00FF00, tmp);
