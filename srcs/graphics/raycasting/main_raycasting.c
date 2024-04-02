@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 16:14:38 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/02 17:31:01 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,12 +223,13 @@ void	calcul_wall_size(t_raydata *ray)
 	}
 	if (ray->dist < 0.2)
 		ray->dist = 0.2;
-	ray->wall_size = (HEIGHT / ray->dist) * 1.0;
+	ray->wall_size = (HEIGHT / ray->dist);
 	// tmp = ray->wall_size;
 	if (ray->wall_size > HEIGHT)
 		ray->wall_size = HEIGHT;
-	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
+	ray->wall_start = (HEIGHT - (ray->wall_size)) / 2;
 	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
+	ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (WALL_SIZE - 1));
 	// ray->diff = tmp - ray->wall_size;
 }
 
