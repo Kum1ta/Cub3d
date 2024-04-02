@@ -1,0 +1,101 @@
+{
+   name
+   Memcheck:Leak
+   fun:*
+   ...
+   obj:*libmlx*
+   ...
+}
+{
+   name
+   Memcheck:Cond
+   fun:*
+   ...
+   obj:*libmlx*
+   ...
+}
+{
+   name
+   Memcheck:Value8
+   fun:*
+   ...
+   obj:*libmlx*
+   ...
+}
+{
+   name
+   Memcheck:Addr4
+   fun:*
+   ...
+   obj:*libmlx*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   ...
+   obj:*SDL*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   ...
+   obj:*X11*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   ...
+   obj:*nvidia.so*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   obj:*
+   ...
+   fun:X11*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*alloc
+   obj:*
+   ...
+   fun:SDL*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   obj:*
+   ...
+   fun:_dl_*
+   ...
+}
+{
+   name
+   Memcheck:Leak
+   fun:*
+   obj:*
+   ...
+   fun:dl_*
+   ...
+}
+{
+   name
+   Memcheck:Addr8
+   fun:*
+   obj:*
+   ...
+   fun:dl_*
+   ...
+}
