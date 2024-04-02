@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 17:06:26 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:11:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@
 # define FOV 80
 # define SHOW_FPS 1 // 0: off, 1: on
 # define ANTIALIASING_LEVEL 8 // 1: None, 2: 2x, 4: 4x, 8: 8x
-# define QUALITY 1 // 0: high, 1: medium, 2: low
+# define QUALITY 0 // 0: high, 1: medium, 2: low
+
+# define POS_MINI_MAP_X 10
+# define POS_MINI_MAP_Y HEIGHT - 210
+# define WALL_SIZE_MINI_MAP 20
+
 typedef struct s_raydata
 {
 	float	imgXPercent;
@@ -34,7 +39,7 @@ typedef struct s_raydata
 }	t_raydata;
 
 /* ---- mini_map.c --------------------------------------------------------- */
-void	mini_map(t_mlx *mlx, float angle[WIDTH], float distance[WIDTH], int need_free);
+void	mini_map(t_mlx *mlx);
 
 /* ---- inventory.c --------------------------------------------------------- */
 void	inventory(t_mlx *mlx, void *img, int need_free);

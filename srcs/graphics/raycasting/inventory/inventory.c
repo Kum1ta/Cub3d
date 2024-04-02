@@ -6,13 +6,12 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:49:38 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/20 00:19:11 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:02:59 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../raycasting.h"
 
-//fonction qui trace un cercle en le remplissant d'une couleur 0xF0343434 et le contour en 0xF091a3b0
 static void	draw_circle(t_mlx *mlx, int x, int y, int radius, int need_free)
 {
 	static void	*img = NULL;

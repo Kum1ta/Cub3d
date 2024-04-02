@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 20:50:14 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:01:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef struct s_vec2
 {
-	float x;
-	float y;
+	float	x;
+	float	y;
 }	t_vec2;
 
 typedef enum e_menu
@@ -125,8 +125,6 @@ typedef struct s_mlx
 	void				*tmp;
 }	t_mlx;
 
-void draw_raycasting(t_mlx *mlx, void *img);
-
 /* ############################ DEBUG FUNCTION ############################# */
 void	info_player(t_mlx *mlx);
 
@@ -140,9 +138,7 @@ int		update(void *mlx_ptr);
 int		init(t_mlx *mlx, t_map *map);
 
 /* ------ larg_map.c ------------------------------------------------------- */
-void	*creat_square(t_mlx *mlx, int size, int color);
 void	larg_map(t_mlx *mlx, int need_free);
-
 
 /* ------ load_textures.c -------------------------------------------------- */
 int		load_textures(t_mlx *mlx);

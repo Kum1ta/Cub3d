@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 21:07:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:02:28 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #define AMPLITUDE_HORIZONTAL 2
 #define FREQUENCY 0.1
 
-void move_weapon(t_mlx *mlx)
+void	move_weapon(t_mlx *mlx)
 {
 	static long long	prev_time = 0;
-	long long 			current_time;
+	long long			current_time;
 	// double				horizontal_offset;
 	double				vertical_offset;
 
@@ -35,7 +35,7 @@ void move_weapon(t_mlx *mlx)
 	}
 }
 
-void	movePlayer(t_mlx *mlx, float deltaX, float deltaY)
+void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
 	float	angle;
 	int		tmp;
@@ -58,13 +58,13 @@ void	game_keyboard(t_mlx *mlx)
 		|| (mlx->keyboard->s && mlx->keyboard->d))
 		add = add / 1.5;
 	if (mlx->keyboard->w)
-		movePlayer(mlx, add, 0);
+		move_player(mlx, add, 0);
 	if (mlx->keyboard->s)
-		movePlayer(mlx, -add, 0);
+		move_player(mlx, -add, 0);
 	if (mlx->keyboard->a)
-		movePlayer(mlx, 0, -add);
+		move_player(mlx, 0, -add);
 	if (mlx->keyboard->d)
-		movePlayer(mlx, 0, add);
+		move_player(mlx, 0, add);
 	if (mlx->keyboard->left)
 	{
 		mlx->map->playerPos.h -= 5.0;

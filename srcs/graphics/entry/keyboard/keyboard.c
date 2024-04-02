@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 21:46:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/03/30 18:13:15 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ int	keyboard(t_mlx *mlx)
 	if (mlx->actuel_menu == GAME)
 		game_keyboard(mlx);
 	else if (mlx->actuel_menu == MAP_LARG_MENU)
-	{
-		game_keyboard(mlx);
-		// larg_map_keyboard(mlx);
-	}
+		larg_map_keyboard(mlx);
 	return (0);
 }
