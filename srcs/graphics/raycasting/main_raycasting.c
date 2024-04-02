@@ -6,14 +6,13 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 16:11:05 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:14:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raycasting.h"
 
 typedef struct s_ray {
-	float	raySpeed;
 	float	rAngle;
 	float	dirX;
 	float	dirY;
@@ -31,7 +30,6 @@ typedef struct s_ray {
 
 void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 {
-	ray->raySpeed = 0.01f + (QUALITY * 0.01f);
 	ray->rAngle = angle * PI / 180;
 	ray->dirX = cos(ray->rAngle);
 	ray->dirY = sin(ray->rAngle);
