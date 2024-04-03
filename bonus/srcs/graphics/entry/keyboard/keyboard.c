@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 18:13:15 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:21:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	keyboard_down(int key, void *mlx_ptr)
 	keyboard_status((int [2]){key, 80}, &mlx->keyboard->left, false, true);
 	keyboard_status((int [2]){key, 79}, &mlx->keyboard->right, false, true);
 	keyboard_status((int [2]){key, 41}, &mlx->keyboard->esc, false, true);
+	keyboard_status((int [2]){key, 8}, &mlx->keyboard->e, false, true);
 	return (0);
 }
 
@@ -57,6 +58,7 @@ int	keyboard_up(int key, void *mlx_ptr)
 	keyboard_status((int [2]){key, 80}, &mlx->keyboard->left, true, false);
 	keyboard_status((int [2]){key, 79}, &mlx->keyboard->right, true, false);
 	keyboard_status((int [2]){key, 41}, &mlx->keyboard->esc, true, false);
+	keyboard_status((int [2]){key, 8}, &mlx->keyboard->e, true, false);
 	return (0);
 }
 

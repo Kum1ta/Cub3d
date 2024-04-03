@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 13:52:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:15:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@
 
 # define MIDSCREEN_POSX WIDTH / 2
 # define MIDSCREEN_POSY HEIGHT / 2
+
+typedef struct s_raydata
+{
+	float	imgXPercent;
+	bool	found;
+	t_block	*block;
+	float	dist;
+	int		dir;
+	int		wall_start;
+	int		wall_size;
+	int		wall_end;
+	int		diff;
+}	t_raydata;
 
 typedef struct s_vec2
 {
@@ -103,15 +116,17 @@ typedef struct s_keyboard
 	bool	left;
 	bool	right;
 	bool	esc;
+	bool	e;
 }	t_keyboard;
 
 typedef struct s_player
 {
-	int			health;
-	t_inventory	actual_weapon;
-	int			ammo;
-	int			xy_item[2];
-	bool		is_reloading;
+	int					health;
+	t_inventory			actual_weapon;
+	int					ammo;
+	int					xy_item[2];
+	bool				is_reloading;
+	struct s_raydata	front_ray;
 }	t_player;
 
 typedef struct s_mlx

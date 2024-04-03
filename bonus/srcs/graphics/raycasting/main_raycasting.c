@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:34:47 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:51:18 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,6 +388,11 @@ void	raycasting(t_mlx *mlx, int need_free)
 		angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
 		ajust_angle(&angle[i]);
 		ray[i] = raycast(mlx, angle[i], i);
+		if (i == WIDTH / 2)
+			mlx->player->front_ray = *(ray[i]);
+		{
+			
+		}
 		if (!ray[i])
 		{
 			free_ray(ray);

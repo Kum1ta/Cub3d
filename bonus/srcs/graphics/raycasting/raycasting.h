@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:32:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:16:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@
 # define POS_MINI_MAP_X 10
 # define POS_MINI_MAP_Y HEIGHT - 210
 # define WALL_SIZE_MINI_MAP 20
-
-typedef struct s_raydata
-{
-	float	imgXPercent;
-	bool	found;
-	t_block	*block;
-	float	dist;
-	int		dir; // 0: north, 1: east, 2: south, 3: west
-	int		wall_start;
-	int		wall_size;
-	int		wall_end;
-	int		diff;
-	
-}	t_raydata;
 
 /* ---- mini_map.c --------------------------------------------------------- */
 void	mini_map(t_mlx *mlx);

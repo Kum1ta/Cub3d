@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:28:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:22:11 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,52 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
 	float				angle;
 	int					tmp;
-	float				addVal;
-	t_vec4				*plyPos;
-	static long long	lastMove;
+	float				add_val;
+	t_vec4				*ply_pos;
 
-	if (get_now_time() - lastMove < MOVE_TIME_US)
-		return ;
-	lastMove = get_now_time();
 	move_weapon(mlx);
 	tmp = mlx->map->playerPos.h - 90;
 	if (tmp < 0)
 		tmp += 360;
 	angle = tmp * (PI / 180);
-	plyPos = &(mlx->map->playerPos);
+	ply_pos = &(mlx->map->playerPos);
 	// move X
 	{
-		addVal = deltaX * cos(angle) - deltaY * sin(angle);
-		t_block	block = mlx->map->blocks[(int) plyPos->y][(int) (plyPos->x + addVal)];
+		add_val = deltaX * cos(angle) - deltaY * sin(angle);
+		t_block	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
 		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
-			plyPos->x += addVal;
+			ply_pos->x += add_val;
 	}
 	// move Y
 	{
-		addVal = deltaX * sin(angle) + deltaY * cos(angle);
-		t_block	block = mlx->map->blocks[(int) (plyPos->y + addVal)][(int) plyPos->x];
+		add_val = deltaX * sin(angle) + deltaY * cos(angle);
+		t_block	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
 		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
-			plyPos->y += addVal;
+			ply_pos->y += add_val;
+	}
+}
+
+void	interract_block(t_mlx *mlx)
+{
+	if (mlx->player->front_ray.found && mlx->player->front_ray.dist < 2)
+	{
+		t_block	*front_block = mlx->player->front_ray.block;
+		printf("%d == %d\n", front_block->type, DOOR);
+		if (front_block->type == DOOR)
+			front_block->data.door = !front_block->data.door;
 	}
 }
 
 void	game_keyboard(t_mlx *mlx)
 {
+	static long long	lastMove;
 	float add = 0.1;
 	float addX;
 	float addY;
+
+	if (get_now_time() - lastMove < MOVE_TIME_US)
+		return ;
+	lastMove = get_now_time();
 	if ((mlx->keyboard->w && mlx->keyboard->a)
 		|| (mlx->keyboard->w && mlx->keyboard->d)
 		|| (mlx->keyboard->s && mlx->keyboard->a)
@@ -83,16 +95,18 @@ void	game_keyboard(t_mlx *mlx)
 	addX = (mlx->keyboard->w + -mlx->keyboard->s) * add;
 	addY = (mlx->keyboard->d + -mlx->keyboard->a) * add;
 	move_player(mlx, addX, addY);
-	if (mlx->keyboard->left)
-	{
-		mlx->map->playerPos.h -= 5.0;
-		if (mlx->map->playerPos.h < 0)
-			mlx->map->playerPos.h += 360;
-	}
-	if (mlx->keyboard->right)
-	{
-		mlx->map->playerPos.h += 5.0;
-		if (mlx->map->playerPos.h >= 360)
-			mlx->map->playerPos.h -= 360;
-	}
+	// if (mlx->keyboard->left)
+	// {
+	// 	mlx->map->playerPos.h -= 5.0;
+	// 	if (mlx->map->playerPos.h < 0)
+	// 		mlx->map->playerPos.h += 360;
+	// }
+	// if (mlx->keyboard->right)
+	// {
+	// 	mlx->map->playerPos.h += 5.0;
+	// 	if (mlx->map->playerPos.h >= 360)
+	// 		mlx->map->playerPos.h -= 360;
+	// }
+	if (mlx->keyboard->e)
+		interract_block(mlx);
 }
