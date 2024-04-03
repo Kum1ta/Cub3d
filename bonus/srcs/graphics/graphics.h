@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 19:48:14 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:38:46 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,6 @@ void	mouse_move(t_mlx *mlx);
 void	raycasting(t_mlx *mlx, int need_free);
 
 /* ------ main_menu.c ------------------------------------------------------ */
-void	main_menu(t_mlx *mlx);
+void	main_menu(t_mlx *mlx, int need_free);
 
 #endif

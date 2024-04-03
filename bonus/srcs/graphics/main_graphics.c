@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 19:26:33 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:39:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	window(int event, void *mlx_ptr)
 		larg_map(mlx, 1);
 		raycasting(mlx, 1);
 		put_fps(mlx, 1);
+		main_menu(mlx, 1);
 		inventory(mlx, NULL, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 16:00:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:39:26 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	update(void *mlx_ptr)
 	if (mlx->actuel_menu == MAIN_MENU)
 	{
 		mlx_mouse_show();
-		main_menu(mlx);
+		main_menu(mlx, 0);
 	}
 	else if (mlx->actuel_menu == MAP_LARG_MENU)
 	{
