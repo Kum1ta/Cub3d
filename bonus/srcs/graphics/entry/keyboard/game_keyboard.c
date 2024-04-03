@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 13:29:45 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:02 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	angle = tmp * (PI / 180);
 	plyPos = &(mlx->map->playerPos);
 	addVal = deltaX * cos(angle) - deltaY * sin(angle);
-	if (mlx->map->blocks[(int) plyPos->y][(int) (plyPos->x + addVal)] != WALL)
+	if (mlx->map->blocks[(int) plyPos->y][(int) (plyPos->x + addVal)].type != WALL)
 		plyPos->x += addVal;
 	addVal = deltaX * sin(angle) + deltaY * cos(angle);
-	if (mlx->map->blocks[(int) (plyPos->y + addVal)][(int) plyPos->x] != WALL)
+	if (mlx->map->blocks[(int) (plyPos->y + addVal)][(int) plyPos->x].type != WALL)
 		plyPos->y += addVal;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 19:38:15 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:29 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	print_map(t_mlx *mlx)
 	{
 		j = 0;
 		x = 0;
-		while (mlx->map->blocks[i][j] != END && x <= WIDTH)
+		while (mlx->map->blocks[i][j].type != END && x <= WIDTH)
 		{
 			x = j * mlx->menu_map->size + mlx->menu_map->x;
 			y = i * mlx->menu_map->size + mlx->menu_map->y;
-			if (mlx->map->blocks[i][j] == WALL)
+			if (mlx->map->blocks[i][j].type == WALL)
 				draw_square(mlx, mlx->menu_map->size, 0x55F0000F, x, y);
 			j++;
 		}

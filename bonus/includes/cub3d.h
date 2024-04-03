@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 16:54:52 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:15:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,22 @@
 
 typedef struct s_mlx t_mlx;
 
-typedef enum e_block {
+enum e_blocktype {
 	EMPTY,
 	END,
 	WALL,
+	DOOR,
 	FLOOR
+};
+
+union u_blockdata {
+	bool	door;
+};
+
+
+typedef struct s_block {
+	enum e_blocktype	type;
+	union u_blockdata	data;
 }	t_block;
 
 typedef struct s_texture {

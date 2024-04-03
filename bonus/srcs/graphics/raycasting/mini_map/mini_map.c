@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 19:04:12 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	draw_map(t_mlx *mlx)
 		x = -1;
 		while (++x < mlx->menu_map->width / mlx->menu_map->size)
 		{
-			if (mlx->map->blocks[y][x] == WALL)
+			if (mlx->map->blocks[y][x].type == WALL)
 				print_square(mlx, x, y);
 		}
 	}

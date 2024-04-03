@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 21:43:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:11 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	init_map(t_mlx *mlx, int size)
 	while (mlx->map->blocks[++i])
 	{
 		j = 0;
-		while (mlx->map->blocks[i][j] != END)
+		while (mlx->map->blocks[i][j].type != END)
 			j++;
 		if (j > bigger_x)
 			bigger_x = j;

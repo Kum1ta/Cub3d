@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:38:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/03 13:52:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:08:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	mouse_move(t_mlx *mlx)
 		return ;
 	last_update = get_now_time();
 	mlx_mouse_get_pos(mlx->mlx, &mouseX, &mouseY);
-	printf("%d - %d = %d\n", mouseX, MIDSCREEN_POSX, mouseX - MIDSCREEN_POSX);
 	move = (mouseX - MIDSCREEN_POSX) * MOUSEMOVE_SENSIBILITY;
 	
 	if (move != 0)

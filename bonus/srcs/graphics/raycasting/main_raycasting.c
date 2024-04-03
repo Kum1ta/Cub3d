@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 17:31:01 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:11:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 			ray.dir = 1;
 		}
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height
-			&& mlx->map->blocks[ray.posY][ray.posX] == WALL)
+			&& mlx->map->blocks[ray.posY][ray.posX].type == WALL)
 		{
 			res->found = true;
 			if (ray.dir == 0)

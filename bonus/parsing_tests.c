@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:58:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 18:02:48 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:10:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	test_map(char *filename, int expected)
 		while (map->blocks[i])
 		{
 			size_t	j = 0;
-			while (map->blocks[i][j] != END)
+			while (map->blocks[i][j].type != END)
 			{
-				switch (map->blocks[i][j])
+				switch (map->blocks[i][j].type)
 				{
 					case EMPTY:
 						write(1, " ", 1);
@@ -44,6 +44,9 @@ void	test_map(char *filename, int expected)
 						break;
 					case FLOOR:
 						write(1, "0", 1);
+						break;
+					case DOOR:
+						write(1, "D", 1);
 						break;
 					case END:
 						break;

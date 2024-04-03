@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/30 16:55:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:12:37 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static bool	allocate_map(t_map *map)
 			map->blocks = NULL;
 			return (false);
 		}
-		map->blocks[i][map->width] = END;
+		map->blocks[i][map->width].type = END;
 		i++;
 	}
 	map->blocks[i] = NULL;
@@ -118,8 +118,8 @@ static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_vec
 
 	if (blocks[pos.y] == NULL)
 		return (true);
-	if (blocks[pos.y][pos.x] == END || blocks[pos.y][pos.x] == EMPTY || blocks[pos.y][pos.x] == WALL)
-		return (blocks[pos.y][pos.x] != WALL);
+	if (blocks[pos.y][pos.x].type == END || blocks[pos.y][pos.x].type == EMPTY || blocks[pos.y][pos.x].type == WALL)
+		return (blocks[pos.y][pos.x].type != WALL);
 	flagBlocks[pos.y * width + pos.x] = true;
 	if (pos.y == 0 || pos.x == 0 || blocks[pos.y + 1] == NULL)
 		return (true);
