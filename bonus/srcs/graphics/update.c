@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 18:56:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:38:36 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	update(void *mlx_ptr)
 	mlx = (t_mlx *)mlx_ptr;
 	mlx_clear_window(mlx->mlx, mlx->win);
 	keyboard(mlx);
+	mouse_move(mlx);
 	mlx_mouse_get_pos(mlx->mlx, &mlx->mouse->x, &mlx->mouse->y);
 	if (mlx->player->health <= 0)
 	{

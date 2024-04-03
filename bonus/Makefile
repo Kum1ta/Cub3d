@@ -26,6 +26,7 @@ SRCS			=	main.c 													\
 					graphics/entry/keyboard/map_larg_menu_keyboard.c		\
 					graphics/entry/mouse_whell.c							\
 					graphics/entry/mouse_down.c								\
+					graphics/entry/mouse_move.c								\
 					graphics/entry/mouse_up.c								\
 					graphics/debug/info_player.c							\
 					graphics/init/init.c									\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_down.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 18:07:38 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 17:05:20 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:35:42 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

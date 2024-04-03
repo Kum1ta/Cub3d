@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 19:08:07 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:52:23 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # define HEIGHT 768
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
+
+# define MIDSCREEN_POSX WIDTH / 2
+# define MIDSCREEN_POSY HEIGHT / 2
 
 typedef struct s_vec2
 {
@@ -169,6 +172,9 @@ int		mouse_down(int button, void *mlx_ptr);
 
 /* ------ mouse_up.c ------------------------------------------------------- */
 int		mouse_up(int button, void *mlx_ptr);
+
+/* ------ mouse_move.c ------------------------------------------------------- */
+void	mouse_move(t_mlx *mlx);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
 void	raycasting(t_mlx *mlx, int need_free);
