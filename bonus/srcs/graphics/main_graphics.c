@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 16:03:09 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:26:33 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	graphics_part(t_map *map)
 		free(mlx);
 		return ;
 	}
-	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "Kumilos");
+	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "Kumilos - Cube3d");
 	mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, window, (void *)mlx);
 	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard_down, (void *)mlx);
