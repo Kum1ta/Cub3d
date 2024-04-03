@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:11:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:28:10 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,20 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 		tmp += 360;
 	angle = tmp * (PI / 180);
 	plyPos = &(mlx->map->playerPos);
-	addVal = deltaX * cos(angle) - deltaY * sin(angle);
-	if (mlx->map->blocks[(int) plyPos->y][(int) (plyPos->x + addVal)].type != WALL)
-		plyPos->x += addVal;
-	addVal = deltaX * sin(angle) + deltaY * cos(angle);
-	if (mlx->map->blocks[(int) (plyPos->y + addVal)][(int) plyPos->x].type != WALL)
-		plyPos->y += addVal;
+	// move X
+	{
+		addVal = deltaX * cos(angle) - deltaY * sin(angle);
+		t_block	block = mlx->map->blocks[(int) plyPos->y][(int) (plyPos->x + addVal)];
+		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
+			plyPos->x += addVal;
+	}
+	// move Y
+	{
+		addVal = deltaX * sin(angle) + deltaY * cos(angle);
+		t_block	block = mlx->map->blocks[(int) (plyPos->y + addVal)][(int) plyPos->x];
+		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
+			plyPos->y += addVal;
+	}
 }
 
 void	game_keyboard(t_mlx *mlx)

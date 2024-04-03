@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:11:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:30:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 	ray->nbStep = 0;
 }
 
+// todo send back more informations :
+//   wall bigger behind -> multisize walls
+//   touch block address (t_block *) -> obj interaction like door open
 t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 {
 	t_raydata	*res;
@@ -73,23 +76,26 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 			ray.posY += ray.stepY;
 			ray.dir = 1;
 		}
-		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height
-			&& mlx->map->blocks[ray.posY][ray.posX].type == WALL)
+		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
-			res->found = true;
-			if (ray.dir == 0)
+			t_block	block = mlx->map->blocks[ray.posY][ray.posX];
+			if (block.type == WALL || (block.type == DOOR && block.data.door == false))
 			{
-				res->dist = ray.distX - ray.deltaDistX;
-				res->dir = ray.dir + 2 * (ray.stepX == -1);
-				res->imgXPercent = mlx->map->playerPos.y + res->dist * ray.dirY;
+				res->found = true;
+				if (ray.dir == 0)
+				{
+					res->dist = ray.distX - ray.deltaDistX;
+					res->dir = ray.dir + 2 * (ray.stepX == -1);
+					res->imgXPercent = mlx->map->playerPos.y + res->dist * ray.dirY;
+				}
+				else
+				{
+					res->dist = ray.distY - ray.deltaDistY;
+					res->dir = ray.dir + 2 * (ray.stepY == -1);
+					res->imgXPercent = mlx->map->playerPos.x + res->dist * ray.dirX;
+				}
+				res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
 			}
-			else
-			{
-				res->dist = ray.distY - ray.deltaDistY;
-				res->dir = ray.dir + 2 * (ray.stepY == -1);
-				res->imgXPercent = mlx->map->playerPos.x + res->dist * ray.dirX;
-			}
-			res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
 		}
 		ray.nbStep++;
 	}
