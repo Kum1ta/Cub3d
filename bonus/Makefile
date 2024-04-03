@@ -20,6 +20,7 @@ SRCS			=	main.c 													\
 					graphics/raycasting/mini_map/mini_map.c					\
 					graphics/raycasting/inventory/inventory.c				\
 					graphics/raycasting/main_raycasting.c					\
+					graphics/main_menu/main_menu.c							\
 					graphics/larg_map/larg_map.c							\
 					graphics/entry/keyboard/keyboard.c						\
 					graphics/entry/keyboard/game_keyboard.c					\

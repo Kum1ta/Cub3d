@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 15:15:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:39:01 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,13 @@ int		mouse_down(int button, void *mlx_ptr);
 /* ------ mouse_up.c ------------------------------------------------------- */
 int		mouse_up(int button, void *mlx_ptr);
 
-/* ------ mouse_move.c ------------------------------------------------------- */
+/* ------ mouse_move.c ----------------------------------------------------- */
 void	mouse_move(t_mlx *mlx);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
 void	raycasting(t_mlx *mlx, int need_free);
+
+/* ------ main_menu.c ------------------------------------------------------ */
+void	main_menu(t_mlx *mlx);
 
 #endif

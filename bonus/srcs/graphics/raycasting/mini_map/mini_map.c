@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:11:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 16:06:42 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	print_square(t_mlx *mlx, int x, int y)
 	y_map = -1;
 	while (++y_map < WALL_SIZE_MINI_MAP - 1)
 	{
-		x_calc = (POS_MINI_MAP_X + 150) + ((x - mlx->map->playerPos.x) * WALL_SIZE_MINI_MAP);
-		y_calc = (POS_MINI_MAP_Y + 82.5) + ((y - mlx->map->playerPos.y) * WALL_SIZE_MINI_MAP);
+		x_calc = (POS_MINI_MAP_X + 155) + ((x - mlx->map->playerPos.x) * WALL_SIZE_MINI_MAP);
+		y_calc = (POS_MINI_MAP_Y + 91) + ((y - mlx->map->playerPos.y) * WALL_SIZE_MINI_MAP);
 		x_map = -1;
 		while (++x_map < WALL_SIZE_MINI_MAP - 1 && y_calc + y_map < POS_MINI_MAP_Y + 180
 			&& y_calc + y_map > POS_MINI_MAP_Y + 1 && x_calc + x_map < POS_MINI_MAP_X + 350)
@@ -85,7 +85,7 @@ void	draw_map(t_mlx *mlx)
 		while (++x < mlx->menu_map->width / mlx->menu_map->size)
 		{
 			if (mlx->map->blocks[y][x].type == WALL)
-				print_square(mlx, x, y);
+				print_square(mlx, x + 1 , y);
 		}
 	}
 	draw_player_pos(mlx);
