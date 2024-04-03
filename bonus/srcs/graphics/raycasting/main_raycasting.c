@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:30:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/03 14:34:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 
 // todo send back more informations :
 //   wall bigger behind -> multisize walls
-//   touch block address (t_block *) -> obj interaction like door open
 t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 {
 	t_raydata	*res;
@@ -78,9 +77,10 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 		}
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
-			t_block	block = mlx->map->blocks[ray.posY][ray.posX];
-			if (block.type == WALL || (block.type == DOOR && block.data.door == false))
+			res->block = &(mlx->map->blocks[ray.posY][ray.posX]);
+			if (res->block->type == WALL || (res->block->type == DOOR && res->block->data.door == false))
 			{
+				
 				res->found = true;
 				if (ray.dir == 0)
 				{
