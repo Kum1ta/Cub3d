@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 15:23:01 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:54:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	float				angle;
 	int					tmp;
 	float				add_val;
-	float				col_val;
 	t_vec4				*ply_pos;
 
 	move_weapon(mlx);
@@ -54,16 +53,14 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	// move X
 	{
 		add_val = deltaX * cos(angle) - deltaY * sin(angle);
-		col_val = 0.15 * (-1 + (add_val > 0) * 2);
-		t_block	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val + col_val)];
+		t_block	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
 		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 			ply_pos->x += add_val;
 	}
 	// move Y
 	{
 		add_val = deltaX * sin(angle) + deltaY * cos(angle);
-		col_val = 0.15 * (-1 + (add_val > 0) * 2);
-		t_block	block = mlx->map->blocks[(int) (ply_pos->y + add_val + col_val)][(int) ply_pos->x];
+		t_block	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
 		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 			ply_pos->y += add_val;
 	}

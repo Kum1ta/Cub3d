@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/03 14:15:18 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:52:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ static t_map_error_type	parse_map_char(t_map *map, char c, size_t x, size_t y)
 		map->blocks[y][x].type = EMPTY;
 	else if (c == '0')
 		map->blocks[y][x].type = FLOOR;
-	else if (c == '1')
+	else if (c >= '1' && c <= '9')
+	{
 		map->blocks[y][x].type = WALL;
+		map->blocks[y][x].data.wall = c - '0';
+	}
 	else if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 	{
 		map->blocks[y][x].type = FLOOR;

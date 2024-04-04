@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:27:23 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 13:14:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:53:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline t_map_line_type	get_line_type(char *line)
 	{
 		if (ft_isspace(*line))
 			line++;
-		else if (*line == '1' || *line == '0')
+		else if ((*line >= '0' && *line <= '9') || *line == 'D')
 			return (LTYPE_MAP);
 		else if (((*line == 'N' || *line == 'S') && line[1] != 'O')
 			|| (*line == 'W' && line[1] != 'E')

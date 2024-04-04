@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:15:08 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:50:54 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum e_blocktype {
 
 union u_blockdata {
 	bool	door;
+	int		wall;
 };
 
 
