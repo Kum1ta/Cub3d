@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 18:21:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:16:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char		*ft_strnstr(const char *str, const char *to_find, size_t size);
 void		*ft_memchr(const void *addr, int searchedChar, size_t size);
 int			ft_memcmp(const void *ptr1, const void *ptr2, size_t size);
+int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
@@ -45,7 +46,6 @@ ssize_t		ft_putxnbr_fd(unsigned int nb, short maj, int fd);
 char		*ft_str_insert(char *src, char *str, size_t pos);
 void		*ft_memmove(void *dest, void *src, size_t size);
 void		*ft_calloc(size_t elem_count, size_t elem_size);
-int			ft_strncmp(char *s1, char *s2, unsigned int n);
 void		ft_lstclear(t_list **lst, void (*del)(void*));
 void		ft_lstdelone(t_list *lst, void (*del)(void*));
 char		*ft_strtrim(char const *s1, char const *set);
@@ -62,6 +62,7 @@ void		ft_bzero(void *pointer, size_t size);
 char		*ft_strchr(const char *str, int chr);
 void		free_split(char **strf, int error);
 char		**ft_split(char const *s, char c);
+char		*ft_strfjoin(char *s1, char *s2);
 ssize_t		ft_putptr_fd(void *ptr, int fd);
 int			ft_printf(const char *str, ...);
 void		ft_putendl_fd(char *s, int fd);
