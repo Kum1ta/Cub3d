@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 14:24:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:42:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 
 // todo send back more informations :
 //   wall bigger behind -> multisize walls
-t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
+t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int size)
 {
 	t_raydata	*res;
 	t_ray		ray;
@@ -78,9 +78,8 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX)
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
 			res->block = &(mlx->map->blocks[ray.posY][ray.posX]);
-			if (res->block->type == WALL || (res->block->type == DOOR && res->block->data.door == false))
+			if ((res->block->type == WALL && res->block->data.wall > size) || (res->block->type == DOOR && res->block->data.door == false)) // ici pour la detection de la hauteur du mur
 			{
-				
 				res->found = true;
 				if (ray.dir == 0)
 				{
@@ -196,7 +195,7 @@ void	ajust_angle(float *angle)
 		*angle -= 360;
 }
 
-void	free_ray(t_raydata **ray)
+void	free_ray(t_raydata ***ray)
 {
 	int	i;
 
@@ -227,16 +226,16 @@ void	calcul_wall_size(t_raydata *ray)
 		ray->wall_end = HEIGHT / 2;
 		return ;
 	}
-	if (ray->dist < 0.2)
-		ray->dist = 0.2;
 	ray->wall_size = (HEIGHT / ray->dist);
-	// tmp = ray->wall_size;
 	if (ray->wall_size > HEIGHT)
 		ray->wall_size = HEIGHT;
-	ray->wall_start = (HEIGHT - (ray->wall_size)) / 2;
+	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
 	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
+	if (ray->block->type == WALL)
+		ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (ray->block->data.wall - 1));
+	else
+		ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (WALL_SIZE - 1));
 	ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (WALL_SIZE - 1));
-	// ray->diff = tmp - ray->wall_size;
 }
 
 void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
@@ -280,7 +279,7 @@ void	show_fps(t_mlx *mlx)
 		while (y < 20)
 		{
 			x = 0;
-			while (x < 40)
+			while (x < 60)
 			{
 				mlx_pixel_put(mlx->mlx, mlx->win,  WIDTH - x, y, 0x00000000);
 				x++;
@@ -378,15 +377,17 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 			imgY += factor;
 			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j,
 				get_ss_color(mlx, imgX, (int) imgY, (int)ray->dist));
+			// mlx_pixel_put(mlx->mlx, mlx->win, i + k, j, 0xEE459825);
 		}
 	}
 }
 
 void	raycasting(t_mlx *mlx, int need_free)
 {
-	t_raydata	*ray[WIDTH];
-	float		angle[WIDTH];
+	t_raydata	*ray[WIDTH][MAX_HEIGHT];
+	float		angle;
 	int			i;
+	int			j;
 	float		factor;
 
 	if (need_free)
@@ -394,38 +395,47 @@ void	raycasting(t_mlx *mlx, int need_free)
 	i = -1;
 	while (++i < WIDTH)
 	{
-		if (i % QUALITY == 0)
+		j = -1;
+		while (++j < MAX_HEIGHT)
 		{
-			angle[i] = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
-			ajust_angle(&angle[i]);
-			ray[i] = raycast(mlx, angle[i], i);
-			if (i == WIDTH / 2)
-				mlx->player->front_ray = *(ray[i]);
-			if (!ray[i])
+			if (i % QUALITY == 0)
 			{
-				free_ray(ray);
-				return ;
+				angle = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
+				ajust_angle(&angle);
+				ray[i][j] = raycast(mlx, angle, i, j);
+				if (i == WIDTH / 2)
+					mlx->player->front_ray = *(ray[i][j]);
+				if (!ray[i])
+				{
+					// free_ray(ray);
+					return ;
+				}
+				correct_fish_eye(ray[i][j], angle, mlx);
+				calcul_wall_size(ray[i][j]);
 			}
-			correct_fish_eye(ray[i], angle[i], mlx);
-			calcul_wall_size(ray[i]);
 		}
 	}
 	i = 0;
 	while (i < WIDTH)
 	{
-		put_celling_floor(mlx, ray[i], i);
-		if (ray[i]->found)
+		// put_celling_floor(mlx, ray[i][j], i);
+		j = MAX_HEIGHT - 1;
+		while (j >= 0)
 		{
-			factor = HEIGHT / ray[i]->dist;
-			if (ray[i]->dir == 0)
-				factor = (float)mlx->textures->north->height / factor;
-			else if (ray[i]->dir == 1)
-				factor = (float)mlx->textures->east->height / factor;
-			else if (ray[i]->dir == 2)
-				factor = (float)mlx->textures->south->height / factor;
-			else
-				factor = (float)mlx->textures->west->height / factor;
-			scalling(ray[i], mlx, i, factor);
+			if (ray[i][j]->found)
+			{
+				factor = HEIGHT / ray[i][j]->dist;
+				if (ray[i][j]->dir == 0)
+					factor = (float)mlx->textures->north->height / factor;
+				else if (ray[i][j]->dir == 1)
+					factor = (float)mlx->textures->east->height / factor;
+				else if (ray[i][j]->dir == 2)
+					factor = (float)mlx->textures->south->height / factor;
+				else
+					factor = (float)mlx->textures->west->height / factor;
+				scalling(ray[i][j], mlx, i, factor);
+			}
+			j--;
 		}
 		i += QUALITY;
 	}

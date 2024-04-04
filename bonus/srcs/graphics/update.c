@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 20:39:26 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:19:54 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	update(void *mlx_ptr)
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50,
 			HEIGHT / 2, 0xFFFF0000, "You died");
 	}
-	if (mlx->actuel_menu == MAIN_MENU)
+	else if (mlx->actuel_menu == START_GAME)
+	{
+		start_screen(mlx, 0);
+	}
+	else if (mlx->actuel_menu == MAIN_MENU)
 	{
 		mlx_mouse_show();
 		main_menu(mlx, 0);

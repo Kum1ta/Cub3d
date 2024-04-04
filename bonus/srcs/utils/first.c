@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/29 16:40:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:50:52 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	put_fps(t_mlx *mlx, int need_free)
 		if (tmp)
 			free(tmp);
 		tmp = ft_itoa(fps);
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 55, 15, 0xFFFF0000, tmp);
 		change = 0;
 	}
 	else
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 25, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 55, 15, 0xFFFF0000, tmp);
 	change++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 14:19:13 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:20:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef enum e_menu
 	MAP_LARG_MENU,
 	GAME,
 	OPTIONS,
+	START_GAME,
 	NOTHING,
 }	t_menu;
 
@@ -196,5 +197,8 @@ void	raycasting(t_mlx *mlx, int need_free);
 
 /* ------ main_menu.c ------------------------------------------------------ */
 void	main_menu(t_mlx *mlx, int need_free);
+
+/* ------ start_screen.c --------------------------------------------------- */
+void	start_screen(t_mlx *mlx, int need_free);
 
 #endif
