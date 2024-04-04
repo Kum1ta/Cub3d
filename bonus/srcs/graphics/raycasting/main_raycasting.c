@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 20:08:29 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:24:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,19 +359,19 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 	float	imgY;
 
 	k = -1;
+	if (ray->dir == 0)
+		mlx->tmp = mlx->textures->north;
+	else if (ray->dir == 1)
+		mlx->tmp = mlx->textures->east;
+	else if (ray->dir == 2)
+		mlx->tmp = mlx->textures->south;
+	else
+		mlx->tmp = mlx->textures->west;
+	imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
+	wall_size = HEIGHT / ray->dist;
 	while (++k < QUALITY)
 	{
 		j = ray->wall_start - 1;
-		if (ray->dir == 0)
-			mlx->tmp = mlx->textures->north;
-		else if (ray->dir == 1)
-			mlx->tmp = mlx->textures->east;
-		else if (ray->dir == 2)
-			mlx->tmp = mlx->textures->south;
-		else
-			mlx->tmp = mlx->textures->west;
-		imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
-		wall_size = HEIGHT / ray->dist;
 		imgY = ((j + 1) - (HEIGHT - wall_size) / 2) * factor;
 		while (++j < ray->wall_end)
 		{
