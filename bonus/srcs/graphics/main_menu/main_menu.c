@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 14:59:35 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:46:14 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,5 @@ void	main_menu(t_mlx *mlx, int need_free)
 	}
 	put_fps(mlx, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, main_menu->logo.img, 15 / 2, -250);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, start_solo_game);
-	// add_button(mlx, "Multiplayer", 50, HEIGHT / 2, square_img);
-	// add_button(mlx, "Options", 50, HEIGHT / 2 + 50, square_img);
-	// add_button(mlx, "Exit", 50, HEIGHT / 2 + 100, square_img);
+	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, change_solo_menu);
 }

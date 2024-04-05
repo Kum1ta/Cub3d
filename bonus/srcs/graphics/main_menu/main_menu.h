@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:42:26 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 14:47:34 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:46:21 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../graphics.h"
 
-char	*start_solo_game(void *ptr, int action);
+char	*change_solo_menu(void *ptr, int action);
 
 
 #endif
