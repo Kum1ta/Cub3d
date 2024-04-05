@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 18:15:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:31:06 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 
 	(void) currTs;
 	i = 0;
-	while (value[i] != ',')
+	while (value[i] != ',' && i <= SV_MAX_PLAYER_NAME)
 	{
 		clients[clientI].playerName[i] = value[i];
 		i++;
 	}
-	clients[clientI].playerName[i++] = 0;
+	clients[clientI].playerName[i] = 0;
+	while (value[i++] != ',')
+		;
 	clients[clientI].playerPos = parse_vec4(value + i);
 	i = 0;
 	while (i < SV_MAX_CONNECTION)
