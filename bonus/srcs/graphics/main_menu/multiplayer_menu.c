@@ -6,33 +6,50 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 19:17:31 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:48:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "main_menu.h"
 
+char	get_key_ascii(int key, bool shift)
+{
+	if (key >= KEY_A && key <= KEY_Z)
+		return (key - KEY_A + 'a' - (' ' * shift));
+	if (key >= KEY_NB1 && key <= KEY_NB9)
+		return (key - KEY_NB1 + '1');
+	if (key == KEY_NB0)
+		return ('0');
+	if (key == KEY_POINT)
+		return ('.');
+	return (0);
+}
+
 void	catch_input(t_mlx *mlx, char *str, int max_size)
 {
-	int	i;
+	int		i;
+	t_list	*keyboard;
+	char	c;
 
 	if (is_key_just_down(mlx->keyboard, KEY_BACKSPACE))
 	{
 		if (ft_strlen(str) > 0)
 			str[ft_strlen(str) - 1] = 0;
 	}
-	if (ft_strlen(str) < max_size)
+	keyboard = mlx->keyboard;
+	while (keyboard && ft_strlen(str) < max_size)
 	{
-		i = 1;
-		while (i < 11)
+		if ((int) ((intptr_t) keyboard->content) > 0) // key just down
 		{
-			if (is_key_just_down(mlx->keyboard, KEY_NB1 + i - 1))
+			c = get_key_ascii((intptr_t) keyboard->content, is_key_down(mlx->keyboard, KEY_SHIFT));
+			if (c != 0)
 			{
 				str[ft_strlen(str) + 1] = 0;
-				str[ft_strlen(str)] = '0' + (i % 10);
+				str[ft_strlen(str)] = c;
+				keyboard->content = (void *) -((intptr_t) keyboard->content);
 			}
-			i++;
 		}
+		keyboard = keyboard->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 19:20:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:23:07 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	keyboard_down(int key, void *mlx_ptr)
 		ft_lstadd_back(&(mlx->keyboard), ft_lstnew((void *)(intptr_t) key));
 	else
 		set_key_not_just_down(mlx->keyboard, key);
+	printf("%d\n", key);
 	return (0);
 }
 

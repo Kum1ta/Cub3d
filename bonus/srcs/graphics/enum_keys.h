@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:43:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 19:07:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:24:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ enum e_key {
 	KEY_NB8,
 	KEY_NB9,
 	KEY_NB0,
+	KEY_POINT,
 };
+
+#define KEY_SHIFT 225
 
 #endif

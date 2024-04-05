@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:50:36 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:49:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*set_port_btn(void *ptr, int action)
 			return (mlx->game_server.port_str);
 	}
 	if (action == 2)
-		return ((char *) 3);
+		return ((char *) 4);
 	return (NULL);
 }
 
@@ -90,6 +90,6 @@ char	*connect_btn(void *ptr, int action)
 	if (action == 0)
 		return ("Connect");
 	if (action == 2)
-		return ((char *) 3);
+		return ((char *) 5);
 	return (NULL);
 }
