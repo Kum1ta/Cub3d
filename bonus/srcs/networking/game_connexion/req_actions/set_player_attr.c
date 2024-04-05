@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player_attr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 13:48:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 14:21:20 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 	while (*value++ != ',')
 		;
 	ply = get_player_from_source(src);
-	while (ply == NULL) // lol fuck your cpu if i dont have ram
+	while (ply == NULL && "lol fuck your cpu if i dont have ram") 
 		ply = create_online_player(src);
 	i = 0;
 	while (i < SV_MAX_PLAYER_NAME && *value != ',')

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 17:02:04 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:35:32 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	init(t_mlx *mlx, t_map *map)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = GAME;
+	mlx->actuel_menu = MAIN_MENU;
 	mlx->keyboard = malloc(sizeof(t_keyboard));
 	if (!mlx->keyboard)
 		return (free_all_graphics(mlx));

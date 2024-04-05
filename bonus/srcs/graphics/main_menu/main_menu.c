@@ -6,11 +6,11 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 16:37:45 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:59:35 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../graphics.h"
+#include "./main_menu.h"
 
 typedef struct s_main_menu
 {
@@ -35,18 +35,18 @@ void	create_square(t_mlx *mlx, void *img)
 	}
 }
 
-void	add_bouton(t_mlx *mlx, char *str, int x, int y, void *img)
+void	add_button(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 {
-	if (mlx->mouse->x > x - 10 && mlx->mouse->x < x + 190 && mlx->mouse->y > y - 30 && mlx->mouse->y < y + 10)
+	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 190 && mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
 	{
-		mlx_put_image_to_window(mlx->mlx, mlx->win, img, x - 10, y - 22);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, img, xy[0] - 10, xy[1] - 22);
 		if (mlx->mouse->pressed_left)
 		{
 			mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
-			mlx->actuel_menu = GAME;
+			f((void *)mlx, 1);
 		}
 	}
-	mlx_string_put(mlx->mlx, mlx->win, x, y, 0xFFFFFFFF, str);
+	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[01], 0xFFFFFFFF, f((void *)mlx, 0));
 }
 
 void	main_menu(t_mlx *mlx, int need_free)
@@ -83,8 +83,8 @@ void	main_menu(t_mlx *mlx, int need_free)
 	}
 	put_fps(mlx, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, main_menu->logo.img, 15 / 2, -250);
-	add_bouton(mlx, "Solo", 50, HEIGHT / 2 - 50, square_img);
-	add_bouton(mlx, "Multiplayer", 50, HEIGHT / 2, square_img);
-	add_bouton(mlx, "Options", 50, HEIGHT / 2 + 50, square_img);
-	add_bouton(mlx, "Exit", 50, HEIGHT / 2 + 100, square_img);
+	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, start_solo_game);
+	// add_button(mlx, "Multiplayer", 50, HEIGHT / 2, square_img);
+	// add_button(mlx, "Options", 50, HEIGHT / 2 + 50, square_img);
+	// add_button(mlx, "Exit", 50, HEIGHT / 2 + 100, square_img);
 }
