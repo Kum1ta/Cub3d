@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-MAKEFLAGS 		+= --silent
+# MAKEFLAGS 		+= --silent
 
 SRCS			=	main.c 													\
 					graphics/main_graphics.c 								\
@@ -45,18 +45,30 @@ NAME			=	cub3d
 
 OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
-OBJ_DIR			=	$(sort $(dir $(OBJS)))
+SV_SRCS			=	networking/server/server.c								\
+					networking/server/manage_client.c						\
+					networking/server/manage_client_input.c					\
+					networking/utils/current_timestamp.c					\
+					networking/utils/ft_atof.c								\
+					networking/utils/read_request.c							\
+					networking/utils/socket_init.c							\
+
+SV_OBJS			=	$(addprefix ./.build/, $(SV_SRCS:.c=.o))
+
+SV_NAME			=	cub3d_server
+
+OBJ_DIR			=	$(sort $(dir $(OBJS) $(SV_OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2 -MD
+CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
 # CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 
 COMPILED_SRCS 	= 	0
 
-all : ${NAME}
+all : ${NAME} ${SV_NAME}
 
 ./.build/%.o : ./srcs/%.c
 	@tput civis
@@ -98,25 +110,47 @@ $(OBJ_DIR):
 
 ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
-        tput cuu1; \
-		tput el; \
 		tput cuu1; \
 		tput el; \
 		tput cuu1; \
 		tput el; \
 		tput cuu1; \
 		tput el; \
-    fi
+		tput cuu1; \
+		tput el; \
+	fi
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
-        echo "┌───────────────────────────────────────┐"; \
+		echo "┌───────────────────────────────────────┐"; \
 		echo "│███████████████████████████████████████│"; \
 		echo "└───────────────────────────────────────┘"; \
-		gcc ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS}; \
+		gcc ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS} -lSDL2; \
 		echo "[ 100% ]\033[32m Compilation $(NAME) completed !\033[0m"; \
 		echo "\n\033[32mThe program \"$(NAME)\" is ready !\033[0m"; \
 	else \
 		echo "\033[32mThe program \"$(NAME)\" is already ready !\033[0m"; \
-    fi
+	fi
+
+${SV_NAME} : libft $(OBJ_DIR) ${SV_OBJS}
+	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
+		tput cuu1; \
+		tput el; \
+		tput cuu1; \
+		tput el; \
+		tput cuu1; \
+		tput el; \
+		tput cuu1; \
+		tput el; \
+	fi
+	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
+		echo "┌───────────────────────────────────────┐"; \
+		echo "│███████████████████████████████████████│"; \
+		echo "└───────────────────────────────────────┘"; \
+		gcc ${SV_OBJS} -o ${SV_NAME} ${CFLAGS}; \
+		echo "[ 100% ]\033[32m Compilation $(SV_NAME) completed !\033[0m"; \
+		echo "\n\033[32mThe program \"$(SV_NAME)\" is ready !\033[0m"; \
+	else \
+		echo "\033[32mThe program \"$(SV_NAME)\" is already ready !\033[0m"; \
+	fi
 
 clean :
 	@rm -f ${OBJS}

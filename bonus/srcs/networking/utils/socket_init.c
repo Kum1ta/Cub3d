@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   socket_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 17:20:02 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 18:16:19 by psalame          ###   ########.fr       */
+/*   Created: 2024/03/20 14:25:20 by psalame           #+#    #+#             */
+/*   Updated: 2024/03/20 14:59:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
-{
-	unsigned int	i;
+#include <errno.h>
+#include <sys/socket.h>
+#include <netinet/in.h> 
+#include <stdbool.h>
+#include <asm-generic/socket.h>
 
-	i = 0;
-	if (n == 0)
-		return (0);
-	if (!s1 || !s2)
-		return (1);
-	while (s2[i] && s1[i] == s2[i] && i < n - 1)
-		i++;
-	return ((unsigned char)s1[i] - s2[i]);
+bool	create_socket(int *sockfd)
+{
+	int opt;
+
+	*sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	if (*sockfd == -1)
+		return (false);
+	opt = 1;
+	if (setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,	sizeof(opt)))
+		return (false);
+	return (true);
 }

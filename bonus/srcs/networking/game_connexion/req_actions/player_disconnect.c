@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   player_disconnect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 17:20:02 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 18:16:19 by psalame          ###   ########.fr       */
+/*   Created: 2024/04/05 13:03:00 by psalame           #+#    #+#             */
+/*   Updated: 2024/04/05 13:10:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
-{
-	unsigned int	i;
+#include "game_connexion.h"
 
-	i = 0;
-	if (n == 0)
-		return (0);
-	if (!s1 || !s2)
-		return (1);
-	while (s2[i] && s1[i] == s2[i] && i < n - 1)
-		i++;
-	return ((unsigned char)s1[i] - s2[i]);
+static inline int	cmp_ply(void *plyRaw, void *srcRaw)
+{
+	t_online_player	*player;
+	int				src;
+
+	player = plyRaw;
+	src = (int) srcRaw;
+	return (player->serverId - src);
+}
+
+void	player_disconnect(t_server *srv, char *value, void *mlx)
+{
+	int	player_src;
+
+	(void) mlx;
+	player_src = ft_atoi(value);
+	ft_lstremoveif(&srv->online_player, (void *) player_src, &free, &cmp_ply);
 }
