@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:38:04 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:50:36 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*set_ip_address_btn(void *ptr, int action)
 	if (action == 0)
 	{
 		if (mlx->game_server.ip[0] == 0)
-			return ("127.0.0.1");
+			return ("IP");
 		else
 			return (mlx->game_server.ip);
 	}
@@ -76,7 +76,7 @@ char	*set_port_btn(void *ptr, int action)
 	if (action == 0)
 	{
 		if (mlx->game_server.port_str[0] == 0)
-			return ("42420");
+			return ("PORT");
 		else
 			return (mlx->game_server.port_str);
 	}

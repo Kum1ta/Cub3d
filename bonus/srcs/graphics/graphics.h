@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:26:59 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:17:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,48 @@ typedef struct s_loadeds_textures
 
 typedef struct s_keyboard
 {
-	bool	w;
 	bool	a;
-	bool	s;
+	bool	b;
+	bool	c;
 	bool	d;
+	bool	e;
+	bool	f;
+	bool	g;
+	bool	h;
+	bool	i;
+	bool	j;
+	bool	k;
+	bool	l;
+	bool	m;
+	bool	n;
+	bool	o;
+	bool	p;
+	bool	q;
 	bool	r;
+	bool	s;
+	bool	t;
+	bool	u;
+	bool	v;
+	bool	w;
+	bool	x;
+	bool	y;
+	bool	z;
 	bool	up;
 	bool	down;
 	bool	left;
 	bool	right;
 	bool	esc;
-	bool	e;
+	bool	nb0;
+	bool	nb1;
+	bool	nb2;
+	bool	nb3;
+	bool	nb4;
+	bool	nb5;
+	bool	nb6;
+	bool	nb7;
+	bool	nb8;
+	bool	nb9;
+	bool	backspace;
 }	t_keyboard;
 
 typedef struct s_player
