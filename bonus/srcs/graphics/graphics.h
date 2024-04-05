@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:55:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:16:37 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int		keyboard_down(int key, void *mlx_ptr);
 int		keyboard_up(int key, void *mlx_ptr);
 int		keyboard(t_mlx *mlx);
 bool	is_key_down(t_list *keyboard, int key);
+bool	is_key_just_down(t_list *keyboard, int key);
 
 /* ------ gane_keyboard.c -------------------------------------------------- */
 void	game_keyboard(t_mlx *mlx);

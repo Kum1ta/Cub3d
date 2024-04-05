@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 19:10:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:20:02 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,46 @@ static int	cmp_key(void *keyRaw, void *keyCmpRaw)
 
 	key = (intptr_t) keyRaw;
 	keyCmp = (intptr_t) keyCmpRaw;
-	return (key - keyCmp);
+	return (abs(key) - keyCmp);
+}
+
+static void	set_key_not_just_down(t_list *keyboard, int key)
+{
+	int	key_state;
+
+	while (keyboard)
+	{
+		if (key == (intptr_t) keyboard->content)
+		{
+			key_state = (intptr_t) keyboard->content;
+			key_state = -key_state;
+			keyboard->content = (void *) (intptr_t) key_state;
+			break ;
+		}
+		keyboard = keyboard->next;
+	}
 }
 
 bool	is_key_down(t_list *keyboard, int key)
 {
 	while (keyboard)
 	{
-		if (key == (intptr_t) keyboard->content)
+		if (key == abs((intptr_t) keyboard->content))
 			return (true);
+		keyboard = keyboard->next;
+	}
+	return (false);
+}
+
+bool	is_key_just_down(t_list *keyboard, int key)
+{
+	while (keyboard)
+	{
+		if (key == (intptr_t) keyboard->content)
+		{
+			set_key_not_just_down(keyboard, key);
+			return (true);
+		}
 		keyboard = keyboard->next;
 	}
 	return (false);
@@ -44,6 +75,8 @@ int	keyboard_down(int key, void *mlx_ptr)
 		mlx->actuel_menu = GAME;
 	if (!is_key_down(mlx->keyboard, key))
 		ft_lstadd_back(&(mlx->keyboard), ft_lstnew((void *)(intptr_t) key));
+	else
+		set_key_not_just_down(mlx->keyboard, key);
 	return (0);
 }
 
