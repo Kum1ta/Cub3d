@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 14:35:32 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:39:19 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ static void	init_map(t_mlx *mlx, int size)
 int	init(t_mlx *mlx, t_map *map)
 {
 	mlx->map = map;
-	mlx->mlx = NULL;
-	mlx->win = NULL;
-	mlx->mouse = NULL;
-	mlx->keyboard = NULL;
 	mlx->menu_map = malloc(sizeof(t_menu_map));
 	if (!mlx->menu_map)
 		return (free_all_graphics(mlx));

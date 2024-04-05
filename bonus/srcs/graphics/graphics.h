@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 15:20:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:26:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "mlx.h"
 # include "cub3d.h"
+# include "../networking/game_connexion/game_connexion.h"
 
 # define WIDTH 1024
 # define HEIGHT 768
@@ -46,6 +47,7 @@ typedef struct s_vec2
 typedef enum e_menu
 {
 	MAIN_MENU,
+	MULTIPLAYER_MENU,
 	MAP_LARG_MENU,
 	GAME,
 	OPTIONS,
@@ -140,8 +142,10 @@ typedef struct s_mlx
 	void				*mlx;
 	void				*win;
 	t_menu				actuel_menu;
+	int					menu_button_focus;
 	t_keyboard			*keyboard;
 	void				*tmp;
+	t_server			game_server;
 }	t_mlx;
 
 /* ############################ DEBUG FUNCTION ############################# */
@@ -197,6 +201,9 @@ void	raycasting(t_mlx *mlx, int need_free);
 
 /* ------ main_menu.c ------------------------------------------------------ */
 void	main_menu(t_mlx *mlx, int need_free);
+
+/* ------ multiplayer_menu.c ------------------------------------------------------ */
+void	multiplayer_menu(t_mlx *mlx, int need_free);
 
 /* ------ start_screen.c --------------------------------------------------- */
 void	start_screen(t_mlx *mlx, int need_free);

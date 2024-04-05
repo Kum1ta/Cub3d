@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 13:49:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:37:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_server
 {
 	// server informations
 	char					ip[16];
+	char					port_str[6];
 	uint16_t				port;
 	enum e_server_status	status;
 	t_list					*online_player;
@@ -64,7 +65,7 @@ typedef struct s_server
 	struct sockaddr_in		addr;
 	int						sockfd;
 
-}	t_server
+}	t_server;
 
 void	manage_server_request(int socketFd, char *request, void *mlx);
 

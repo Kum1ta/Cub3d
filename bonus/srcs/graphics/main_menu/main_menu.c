@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_menu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 14:59:35 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:20:34 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	create_square(t_mlx *mlx, void *img)
 	}
 }
 
-void	add_button(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
+void	add_button(t_mlx *mlx, int xy[3], void *img, char *(*f)(void *, int))
 {
 	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 190 && mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
 	{
@@ -44,6 +44,7 @@ void	add_button(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 		{
 			mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 			f((void *)mlx, 1);
+			mlx->menu_button_focus = (intptr_t) f((void *)mlx, 2);
 		}
 	}
 	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[01], 0xFFFFFFFF, f((void *)mlx, 0));
@@ -84,7 +85,7 @@ void	main_menu(t_mlx *mlx, int need_free)
 	put_fps(mlx, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, main_menu->logo.img, 15 / 2, -250);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, start_solo_game);
-	// add_button(mlx, "Multiplayer", 50, HEIGHT / 2, square_img);
+	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, open_multiplayer_menu);
 	// add_button(mlx, "Options", 50, HEIGHT / 2 + 50, square_img);
 	// add_button(mlx, "Exit", 50, HEIGHT / 2 + 100, square_img);
 }

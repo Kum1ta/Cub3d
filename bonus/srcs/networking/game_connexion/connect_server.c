@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 10:40:32 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:30:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,25 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 	return (true);
 }
 
-t_server	connect_to_server(char ip[16], uint16_t port)
+void	connect_to_server(t_server *srv)
 {
-	t_server	res;
-
-	bzero(&res, sizeof(t_server));
-	res.ip = ip;
-	res.port = port;
-	if (!create_socket(&(res.sockfd)))
+	if (!create_socket(&(srv->sockfd)))
 	{
-		close_server(&res, ERR_CREATE_SOCKET);
-		return (res);
+		close_server(srv, ERR_CREATE_SOCKET);
+		return ;
 	}
-	res.addr.sin_family = AF_INET;
-	res.addr.sin_port = htons(res.port);
-	if (inet_aton(res.ip, &(res.addr.sin_addr)) == 0)
+	srv->addr.sin_family = AF_INET;
+	srv->addr.sin_port = htons(srv->port);
+	if (inet_aton(srv->ip, &(srv->addr.sin_addr)) == 0)
 	{
-		close_server(&res, ERR_INVALID_ADDRESS);
-		return (res);
+		close_server(srv, ERR_INVALID_ADDRESS);
+		return ;
 	}
-	if (connect(res.addr.sockfd, (struct sockaddr *) &(res.addr), sizeof(res.addr)) != 0)
+	if (connect(srv->sockfd, (struct sockaddr *) &(srv->addr), sizeof(srv->addr)) != 0)
 	{
-		close_server(&res, ERR_CONNECT);
-		return (res);
+		close_server(srv, ERR_FAILED_CONNEXION);
+		return ;
 	}
-	fcntl(res.sockfd, F_SETFL, O_NONBLOCK);
-	res.status = CONNECTED;
-	return (res);
+	fcntl(srv->sockfd, F_SETFL, O_NONBLOCK);
+	srv->status = CONNECTED;
 }

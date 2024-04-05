@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 15:26:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:39:06 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	window(int event, void *mlx_ptr)
 		raycasting(mlx, 1);
 		put_fps(mlx, 1);
 		main_menu(mlx, 1);
+		multiplayer_menu(mlx, 1);
 		inventory(mlx, NULL, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
@@ -39,7 +40,7 @@ void	graphics_part(t_map *map)
 {
 	t_mlx	*mlx;
 
-	mlx = malloc(sizeof(t_mlx));
+	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
 		return ;
 	if (init(mlx, map))
