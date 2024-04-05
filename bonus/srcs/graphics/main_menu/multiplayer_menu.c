@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 18:19:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:08:13 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ void	catch_input(t_mlx *mlx, char *str, int max_size)
 	if (get_now_time() - last_test < 100000)
 		return ;
 	last_test = get_now_time();
-	if (mlx->keyboard->backspace)
+	if (is_key_down(mlx->keyboard, KEY_BACKSPACE))
 	{
 		if (ft_strlen(str) > 0)
 			str[ft_strlen(str) - 1] = 0;
 	}
 	if (ft_strlen(str) < max_size)
 	{
-		i = 0;
-		while (i < 10)
+		i = 1;
+		while (i < 11)
 		{
-			if (*((&mlx->keyboard->nb0) + i))
+			if (is_key_down(mlx->keyboard, KEY_NB1 + i - 1))
 			{
 				str[ft_strlen(str) + 1] = 0;
-				str[ft_strlen(str)] = '0' + i;
+				str[ft_strlen(str)] = '0' + (i % 10);
 			}
 			i++;
 		}

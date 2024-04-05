@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:39:19 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:54:36 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ static void	init_mouse(t_mouse *mouse)
 	mouse->last_y = 0;
 	mouse->pressed_left = false;
 	mouse->pressed_right = false;
-}
-
-static void	init_keyboard(t_keyboard *keyboard)
-{
-	keyboard->w = false;
-	keyboard->a = false;
-	keyboard->s = false;
-	keyboard->d = false;
-	keyboard->r = false;
-	keyboard->up = false;
-	keyboard->down = false;
-	keyboard->left = false;
-	keyboard->right = false;
-	keyboard->esc = false;
 }
 
 static void	init_map(t_mlx *mlx, int size)
@@ -79,10 +65,6 @@ int	init(t_mlx *mlx, t_map *map)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
 	mlx->actuel_menu = MAIN_MENU;
-	mlx->keyboard = malloc(sizeof(t_keyboard));
-	if (!mlx->keyboard)
-		return (free_all_graphics(mlx));
-	init_keyboard(mlx->keyboard);
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
 		return (free_all_graphics(mlx));

@@ -6,18 +6,31 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:26:05 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:06:48 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../graphics.h"
 
-void	keyboard_status(int key_code[2], bool *key, bool from, bool to)
+static int	cmp_key(void *keyRaw, void *keyCmpRaw)
 {
-	if (key_code[0] == key_code[1] && from == true && to == false)
-		*key = false;
-	else if (key_code[0] == key_code[1] && from == false && to == true)
-		*key = true;
+	int	key;
+	int	keyCmp;
+
+	key = (intptr_t) keyRaw;
+	keyCmp = (intptr_t) keyCmpRaw;
+	return (key - keyCmp);
+}
+
+bool	is_key_down(t_list *keyboard, int key)
+{
+	while (keyboard)
+	{
+		if (key == (intptr_t) keyboard->content)
+			return (true);
+		keyboard = keyboard->next;
+	}
+	return (false);
 }
 
 int	keyboard_down(int key, void *mlx_ptr)
@@ -29,17 +42,8 @@ int	keyboard_down(int key, void *mlx_ptr)
 		mlx->actuel_menu = MAP_LARG_MENU;
 	else if (key == 43 && mlx->actuel_menu == MAP_LARG_MENU)
 		mlx->actuel_menu = GAME;
-	for (int i = 0; i < 26; i++)
-		keyboard_status((int [2]){key, 4 + i}, &mlx->keyboard->a + i, false, true);
-	keyboard_status((int [2]){key, 82}, &mlx->keyboard->up, false, true);
-	keyboard_status((int [2]){key, 81}, &mlx->keyboard->down, false, true);
-	keyboard_status((int [2]){key, 80}, &mlx->keyboard->left, false, true);
-	keyboard_status((int [2]){key, 79}, &mlx->keyboard->right, false, true);
-	keyboard_status((int [2]){key, 41}, &mlx->keyboard->esc, false, true);
-	keyboard_status((int [2]){key, 98}, &mlx->keyboard->nb0, false, true);
-	for (int i = 0; i < 9; i++)
-		keyboard_status((int [2]){key, 89 + i}, &mlx->keyboard->nb1 + i, false, true);
-	keyboard_status((int [2]){key, 42}, &mlx->keyboard->backspace, false, true);
+	printf("%d\n", key);
+	ft_lstadd_back(&(mlx->keyboard), ft_lstnew((void *)(intptr_t) key));
 	return (0);
 }
 
@@ -48,24 +52,13 @@ int	keyboard_up(int key, void *mlx_ptr)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)mlx_ptr;
-	for (int i = 0; i < 26; i++)
-		keyboard_status((int [2]){key, 4 + i}, &mlx->keyboard->a + i, true, false);
-	keyboard_status((int [2]){key, 82}, &mlx->keyboard->up, true, false);
-	keyboard_status((int [2]){key, 81}, &mlx->keyboard->down, true, false);
-	keyboard_status((int [2]){key, 80}, &mlx->keyboard->left, true, false);
-	keyboard_status((int [2]){key, 79}, &mlx->keyboard->right, true, false);
-	keyboard_status((int [2]){key, 41}, &mlx->keyboard->esc, true, false);
-	keyboard_status((int [2]){key, 98}, &mlx->keyboard->nb0, true, false);
-	for (int i = 0; i < 9; i++)
-		keyboard_status((int [2]){key, 89 + i}, &mlx->keyboard->nb1 + i, true, false);
-	keyboard_status((int [2]){key, 42}, &mlx->keyboard->backspace, true, false);
-	printf("%d\n", key);
+	ft_lstremoveif(&(mlx->keyboard), (void *)(intptr_t) key, NULL, &cmp_key);
 	return (0);
 }
 
 int	keyboard(t_mlx *mlx)
 {
-	if (mlx->keyboard->esc)
+	if (is_key_down(mlx->keyboard, KEY_ESC))
 		window(0, (void *)mlx);
 	if (mlx->actuel_menu == GAME)
 		game_keyboard(mlx);

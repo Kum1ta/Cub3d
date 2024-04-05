@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_larg_menu_keyboard.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:13:23 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/16 17:02:38 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:57:33 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	larg_map_keyboard(t_mlx *mlx)
 {
-	if (mlx->keyboard->left)
+	if (is_key_down(mlx->keyboard, KEY_LEFT))
 		mlx->menu_map->x += 10;
-	if (mlx->keyboard->right)
+	if (is_key_down(mlx->keyboard, KEY_RIGHT))
 		mlx->menu_map->x -= 10;
-	if (mlx->keyboard->up)
+	if (is_key_down(mlx->keyboard, KEY_UP))
 		mlx->menu_map->y += 10;
-	if (mlx->keyboard->down)
+	if (is_key_down(mlx->keyboard, KEY_DOWN))
 		mlx->menu_map->y -= 10;
-	if (mlx->keyboard->r)
+	if (is_key_down(mlx->keyboard, KEY_R))
 	{
 		mlx->menu_map->x = (WIDTH - mlx->menu_map->width) / 2;
 		mlx->menu_map->y = (HEIGHT - mlx->menu_map->height) / 2;

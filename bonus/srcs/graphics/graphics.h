@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:17:47 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:55:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "mlx.h"
 # include "cub3d.h"
+# include "enum_keys.h"
 # include "../networking/game_connexion/game_connexion.h"
 
 # define WIDTH 1024
@@ -107,52 +108,6 @@ typedef struct s_loadeds_textures
 	t_img	*fire_gun;
 }	t_loadeds_textures;
 
-typedef struct s_keyboard
-{
-	bool	a;
-	bool	b;
-	bool	c;
-	bool	d;
-	bool	e;
-	bool	f;
-	bool	g;
-	bool	h;
-	bool	i;
-	bool	j;
-	bool	k;
-	bool	l;
-	bool	m;
-	bool	n;
-	bool	o;
-	bool	p;
-	bool	q;
-	bool	r;
-	bool	s;
-	bool	t;
-	bool	u;
-	bool	v;
-	bool	w;
-	bool	x;
-	bool	y;
-	bool	z;
-	bool	up;
-	bool	down;
-	bool	left;
-	bool	right;
-	bool	esc;
-	bool	nb0;
-	bool	nb1;
-	bool	nb2;
-	bool	nb3;
-	bool	nb4;
-	bool	nb5;
-	bool	nb6;
-	bool	nb7;
-	bool	nb8;
-	bool	nb9;
-	bool	backspace;
-}	t_keyboard;
-
 typedef struct s_player
 {
 	int					health;
@@ -174,7 +129,7 @@ typedef struct s_mlx
 	void				*win;
 	t_menu				actuel_menu;
 	int					menu_button_focus;
-	t_keyboard			*keyboard;
+	t_list				*keyboard;
 	void				*tmp;
 	t_server			game_server;
 }	t_mlx;
@@ -204,10 +159,10 @@ int		free_all_graphics(t_mlx *mlx);
 int		destroy_textures(t_mlx *mlx);
 
 /* ------ keyboard.c ------------------------------------------------------- */
-void	keyboard_status(int key_code[2], bool *key, bool from, bool to);
 int		keyboard_down(int key, void *mlx_ptr);
 int		keyboard_up(int key, void *mlx_ptr);
 int		keyboard(t_mlx *mlx);
+bool	is_key_down(t_list *keyboard, int key);
 
 /* ------ gane_keyboard.c -------------------------------------------------- */
 void	game_keyboard(t_mlx *mlx);

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 16:54:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:53:23 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,14 @@ void	game_keyboard(t_mlx *mlx)
 	if (get_now_time() - lastMove < MOVE_TIME_US)
 		return ;
 	lastMove = get_now_time();
-	if ((mlx->keyboard->w && mlx->keyboard->a)
-		|| (mlx->keyboard->w && mlx->keyboard->d)
-		|| (mlx->keyboard->s && mlx->keyboard->a)
-		|| (mlx->keyboard->s && mlx->keyboard->d))
+	if ((is_key_down(mlx->keyboard, KEY_W) && is_key_down(mlx->keyboard, KEY_A))
+		|| (is_key_down(mlx->keyboard, KEY_W) && is_key_down(mlx->keyboard, KEY_D))
+		|| (is_key_down(mlx->keyboard, KEY_S) && is_key_down(mlx->keyboard, KEY_A))
+		|| (is_key_down(mlx->keyboard, KEY_S) && is_key_down(mlx->keyboard, KEY_D)))
 		add = add / 1.5;
-	addX = (mlx->keyboard->w + -mlx->keyboard->s) * add;
-	addY = (mlx->keyboard->d + -mlx->keyboard->a) * add;
+	addX = (is_key_down(mlx->keyboard, KEY_W) + -is_key_down(mlx->keyboard, KEY_S)) * add;
+	addY = (is_key_down(mlx->keyboard, KEY_D) + -is_key_down(mlx->keyboard, KEY_A)) * add;
 	move_player(mlx, addX, addY);
-	// if (mlx->keyboard->left)
-	// {
-	// 	mlx->map->playerPos.h -= 5.0;
-	// 	if (mlx->map->playerPos.h < 0)
-	// 		mlx->map->playerPos.h += 360;
-	// }
-	// if (mlx->keyboard->right)
-	// {
-	// 	mlx->map->playerPos.h += 5.0;
-	// 	if (mlx->map->playerPos.h >= 360)
-	// 		mlx->map->playerPos.h -= 360;
-	// }
-	if (mlx->keyboard->e)
+	if (is_key_down(mlx->keyboard, KEY_E))
 		interract_block(mlx);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:20:08 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/19 18:25:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:54:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	free_all_graphics(t_mlx *mlx)
 		free(mlx->mouse);
 		free(mlx->map);
 		free(mlx->player);
-		free(mlx->keyboard);
+		ft_lstclear(&(mlx->keyboard), NULL);
 	}
 	free(mlx);
 	return (1);

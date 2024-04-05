@@ -6,7 +6,7 @@
 #    By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 17:20:50 by edbernar          #+#    #+#              #
-#    Updated: 2024/03/12 18:22:22 by psalame          ###   ########.fr        #
+#    Updated: 2024/04/05 18:58:24 by psalame          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Lists/ft_lstlast.c \
 					Lists/ft_lstmap.c \
 					Lists/ft_lstnew.c \
+					Lists/ft_lstremoveif.c \
 					Lists/ft_lstsize.c \
 					File/get_file.c \
 					File/gnl/get_next_line.c \
