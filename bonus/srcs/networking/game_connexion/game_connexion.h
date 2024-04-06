@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 13:39:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:30:29 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_online_player
 }	t_online_player;
 
 t_online_player	*get_player_from_source(t_list *players, int player_src);
-t_online_player	*create_online_player(int server_id);
+t_online_player	*create_online_player(t_list **players, int server_id);
 
 enum e_server_status
 {

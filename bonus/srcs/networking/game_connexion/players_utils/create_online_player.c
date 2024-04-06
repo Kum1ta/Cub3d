@@ -6,27 +6,29 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:30:15 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 14:11:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:30:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../game_connexion.h"
 
-t_online_player	*create_online_player(int server_id)
+t_online_player	*create_online_player(t_list **players, int server_id)
 {
-	t_online_player	*res;
+	t_online_player	*ply;
 	t_list			*node;
 
 	printf("creating player %d\n", server_id); // debug
-	res = malloc(sizeof(t_online_player));
-	if (!res)
+	ply = malloc(sizeof(t_online_player));
+	if (!ply)
 		return (NULL);
-	node = ft_lstnew(res);
+	node = ft_lstnew(ply);
 	if (!node)
 	{
-		free(res);
+		free(ply);
 		return (NULL);
 	}
-	res->serverId = server_id;
-	return (res);
+	ply->serverId = server_id;
+	node->content = ply;
+	ft_lstadd_back(players, node);
+	return (ply);
 }
