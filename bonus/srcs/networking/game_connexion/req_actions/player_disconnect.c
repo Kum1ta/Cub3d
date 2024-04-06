@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:03:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:03:04 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:11:01 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline int	cmp_ply(void *plyRaw, void *srcRaw)
 	int				src;
 
 	player = plyRaw;
-	src = (int) srcRaw;
+	src = (intptr_t) srcRaw;
 	return (player->serverId - src);
 }
 
@@ -28,5 +28,6 @@ void	player_disconnect(t_server *srv, char *value, void *mlx)
 
 	(void) mlx;
 	player_src = ft_atoi(value);
-	ft_lstremoveif(&srv->online_player, (void *) player_src, &free, &cmp_ply);
+	printf("removing player %d\n", player_src); // debug
+	ft_lstremoveif(&srv->online_player, (void *) (intptr_t) player_src, &free, &cmp_ply);
 }

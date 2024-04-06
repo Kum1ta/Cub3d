@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:32:35 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:02:45 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_vec4	parse_vec4(char *str)
 	while (*str && *str++ != ',')
 		;
 	res.h = ft_atof(str);
+	return (res);
 }
 
 void	act_ping(t_client *clients, int clientI, char *value, long long currTs)
@@ -68,24 +69,13 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
-			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, value);
-		i++;
-	}
-}
-
-void	act_get_players(t_client *clients, int clientI, char *value, long long currTs)
-{
-	int	i;
-
-	i = 0;
-	while (i < SV_MAX_CONNECTION)
-	{
-		if (i != clientI && clients[i].socket != -1)
 		{
-			dprintf(clients[clientI].socket, "setPlayersAttr:%d,%s,%.2f,%.2f,%.2f,%.2f;",
+			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, value);
+			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f;",
 				i, clients[i].playerName, clients[i].playerPos.x,
 				clients[i].playerPos.y, clients[i].playerPos.z,
 				clients[i].playerPos.h);
+			printf("sent to %d and %d\n", i, clientI);
 		}
 		i++;
 	}
@@ -108,8 +98,8 @@ void	act_set_pos(t_client *clients, int clientI, char *value, long long currTs)
 
 static inline void	exec_req_action(t_client *clients, int clientI, char *request, long long currTs)
 {
-	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "getPlayers:", "setPos:", NULL};
-	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_get_players, &act_set_pos};
+	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "setPos:", NULL};
+	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_set_pos};
 	size_t		act_len;
 	int			act_i;
 

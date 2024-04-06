@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:28:31 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 13:39:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ enum e_server_status
 	DISCONNECTED,
 	ERR_INVALID_ADDRESS,
 	ERR_CREATE_SOCKET,
-	ERR_FAILED_CONNEXION, // check errno if this error appear
+	ERR_FAILED_CONNEXION,
 };
 
 typedef struct s_server

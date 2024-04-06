@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:53:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:16:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 			ply_pos->y += add_val;
 	}
+	if (mlx->game_server.status == CONNECTED)
+		dprintf(mlx->game_server.sockfd, "setPos:%.2f,%.2f,%.2f,%.2f;",
+			ply_pos->x, ply_pos->y, ply_pos->z, ply_pos->h);
 }
 
 void	interract_block(t_mlx *mlx)
@@ -94,7 +97,8 @@ void	game_keyboard(t_mlx *mlx)
 		add = add / 1.5;
 	addX = (is_key_down(mlx->keyboard, KEY_W) + -is_key_down(mlx->keyboard, KEY_S)) * add;
 	addY = (is_key_down(mlx->keyboard, KEY_D) + -is_key_down(mlx->keyboard, KEY_A)) * add;
-	move_player(mlx, addX, addY);
+	if (addX || addY)
+		move_player(mlx, addX, addY);
 	if (is_key_down(mlx->keyboard, KEY_E))
 		interract_block(mlx);
 }

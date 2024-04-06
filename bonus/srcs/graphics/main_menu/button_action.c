@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 10:21:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 13:53:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,11 @@ char	*connect_btn(void *ptr, int action)
 	if (mlx->game_server.status != CONNECTED)
 		print_network_err(mlx->game_server.status);
 	else
+	{
 		mlx->actuel_menu = GAME;
+		dprintf(mlx->game_server.sockfd, "initPlayer:%s,%.2f,%.2f,%.2f,%.2f;",
+			mlx->game_server.playerName, mlx->map->playerPos.x, mlx->map->playerPos.y,
+			mlx->map->playerPos.z, mlx->map->playerPos.h);
+	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:19:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:32:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:07:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static inline void	exec_req_action(t_server *srv, char *request, void *mlx)
 			act_fct[act_i](srv, request + act_len, mlx);
 			return ;
 		}
+		act_i++;
 	}
 	ft_dprintf(2, "Unknown request type received.\n");
 }
