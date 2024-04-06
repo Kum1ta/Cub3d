@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 17:37:22 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:28:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@
 #  define SV_MAX_PLAYER_NAME 100
 # endif
 
+float		ft_atof(char *str);
 long long	current_timestamp(void);
 bool		create_socket(int *sockfd);
-char		*read_request(int socketfd, int *byteRead);
+char		*read_request(int socketfd, int *byteRead, bool clear);
 
 typedef struct s_online_player
 {
@@ -57,6 +58,7 @@ typedef struct s_server
 	// server informations
 	char					ip[16];
 	char					port_str[6];
+	char					playerName[SV_MAX_PLAYER_NAME + 1];
 	uint16_t				port;
 	enum e_server_status	status;
 	t_list					*online_player;
@@ -67,12 +69,16 @@ typedef struct s_server
 
 }	t_server;
 
-void	manage_server_request(int socketFd, char *request, void *mlx);
+void	manage_server_request(t_server *srv, char *request, void *mlx);
 
 typedef void (*t_req_action_fct)(t_server *, char *, void *);
 void	receive_message(t_server *srv, char *value, void *mlx);
 void	player_disconnect(t_server *srv, char *value, void *mlx);
 void	set_player_attr(t_server *srv, char *value, void *mlx);
 void	set_player_pos(t_server *srv, char *value, void *mlx);
+
+void	connect_to_server(t_server *srv);
+void	print_network_err(enum e_server_status status);
+bool	client_loop_hook(t_server *srv, void *mlx);
 
 #endif

@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_disconnect.c                                :+:      :+:    :+:   */
+/*   print_network_err.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 13:03:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:03:04 by psalame          ###   ########.fr       */
+/*   Created: 2024/04/06 10:14:16 by psalame           #+#    #+#             */
+/*   Updated: 2024/04/06 10:22:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../game_connexion.h"
+#include "game_connexion.h"
 
-static inline int	cmp_ply(void *plyRaw, void *srcRaw)
+void	print_network_err(enum e_server_status status)
 {
-	t_online_player	*player;
-	int				src;
-
-	player = plyRaw;
-	src = (int) srcRaw;
-	return (player->serverId - src);
-}
-
-void	player_disconnect(t_server *srv, char *value, void *mlx)
-{
-	int	player_src;
-
-	(void) mlx;
-	player_src = ft_atoi(value);
-	ft_lstremoveif(&srv->online_player, (void *) player_src, &free, &cmp_ply);
+	if (status == ERR_INVALID_ADDRESS)
+		ft_dprintf(2, "Failed to connect to server: Invalid address.\n");
+	else if (status == ERR_CREATE_SOCKET)
+		ft_dprintf(2, "Failed to create socket connexion to server.\n");
+	else if (status == ERR_FAILED_CONNEXION)
+		ft_dprintf(2, "Failed to connect to server : %s.\n", strerror(errno));
 }

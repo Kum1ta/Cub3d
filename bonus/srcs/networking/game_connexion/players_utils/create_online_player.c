@@ -6,16 +6,16 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:30:15 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 13:33:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:07:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "game_connexion.h"
+#include "../game_connexion.h"
 
-t_server_id	*create_online_player(int server_id)
+t_online_player	*create_online_player(int server_id)
 {
-	t_server_id	*res;
-	t_list		*node;
+	t_online_player	*res;
+	t_list			*node;
 
 	res = malloc(sizeof(t_online_player));
 	if (!res)

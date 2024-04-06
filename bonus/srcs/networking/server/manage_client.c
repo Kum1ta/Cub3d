@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:21:14 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 12:58:48 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:32:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	try_accept_client(int sockfd, t_client *clients)
 		inet_ntop(AF_INET, &(clientAdress.sin_addr), ip, INET_ADDRSTRLEN);
 		if (!add_client(clients, clientSock, ip))
 		{
-			printf("Can't connect %s: server is full.\n", ip);
+			ft_printf("Can't connect %s: server is full.\n", ip);
 			close(clientSock);
 		}
 		else
-			printf("Client %s connected.\n", ip);
+			ft_printf("Client %s connected.\n", ip);
 	}
 }

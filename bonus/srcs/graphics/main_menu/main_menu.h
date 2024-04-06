@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:42:26 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:34:42 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 09:22:33 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*open_multiplayer_menu(void *ptr, int action);
 char	*open_main_menu(void *ptr, int action);
 char	*set_ip_address_btn(void *ptr, int action);
 char	*set_port_btn(void *ptr, int action);
+char	*set_pseudo_btn(void *ptr, int action);
 char	*connect_btn(void *ptr, int action);
 
 #endif

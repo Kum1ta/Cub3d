@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 19:49:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:21:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,36 @@ char	*set_port_btn(void *ptr, int action)
 	return (NULL);
 }
 
+char	*set_pseudo_btn(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	mlx = ptr;
+	if (action == 0)
+	{
+		if (mlx->game_server.playerName[0] == 0)
+			return ("PSEUDO");
+		else
+			return (mlx->game_server.playerName);
+	}
+	if (action == 2)
+		return ((char *) 5);
+	return (NULL);
+}
+
 char	*connect_btn(void *ptr, int action)
 {
+	t_mlx	*mlx;
+
 	if (action == 0)
 		return ("Connect");
 	if (action == 2)
-		return ((char *) 5);
+		return ((char *) 6);
+	mlx = ptr;
+	connect_to_server(&(mlx->game_server));
+	if (mlx->game_server.status != CONNECTED)
+		print_network_err(mlx->game_server.status);
+	else
+		mlx->actuel_menu = GAME;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:43:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 19:24:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 09:29:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ enum e_key {
 	KEY_ESC,
 	KEY_BACKSPACE,
 	KEY_43,
-	KEY_44,
+	KEY_SPACE,
 	KEY_45,
 	KEY_46,
 	KEY_47,

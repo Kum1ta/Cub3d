@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 18:31:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:32:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	act_get_players(t_client *clients, int clientI, char *value, long long curr
 	{
 		if (i != clientI && clients[i].socket != -1)
 		{
-			ft_dprintf(clients[clientI].socket, "setPlayersAttr:%d,%s,%.2f,%.2f,%.2f,%.2f;",
+			dprintf(clients[clientI].socket, "setPlayersAttr:%d,%s,%.2f,%.2f,%.2f,%.2f;",
 				i, clients[i].playerName, clients[i].playerPos.x,
 				clients[i].playerPos.y, clients[i].playerPos.z,
 				clients[i].playerPos.h);

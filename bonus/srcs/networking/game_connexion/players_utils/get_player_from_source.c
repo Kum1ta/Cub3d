@@ -6,11 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:50:15 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 12:50:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:03:19 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "game_connexion.h"
+#include "../game_connexion.h"
 
 t_online_player	*get_player_from_source(t_list *players, int player_src)
 {

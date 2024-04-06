@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:19:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 13:49:26 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:32:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static inline void	exec_req_action(t_server *srv, char *request, void *mlx)
 			return ;
 		}
 	}
-	dprintf(2, "Unknown request type received.\n");
+	ft_dprintf(2, "Unknown request type received.\n");
 }
 
 void	manage_server_request(t_server *srv, char *request, void *mlx)
@@ -48,6 +48,6 @@ void	manage_server_request(t_server *srv, char *request, void *mlx)
 			exec_req_action(srv, requestData[i], mlx);
 			i++;
 		}
-		ft_free_strs(requestData);
+		free_split(requestData, 0);
 	}
 }

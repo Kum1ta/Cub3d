@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/05 17:30:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:34:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static inline void	close_server(t_server *srv, enum e_server_status status)
 		close(srv->sockfd);
 		srv->sockfd = 0;
 	}
-
+	ft_lstclear(&(srv->online_player), &free);
 }
 
 bool	client_loop_hook(t_server *srv, void *mlx)
@@ -30,7 +30,7 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 	int				byteRead;
 	static time_t	last_ping = 0;
 
-	request = read_request(srv->sockfd, &byteRead);
+	request = read_request(srv->sockfd, &byteRead, false);
 	if (byteRead == -1 && errno != EAGAIN)
 	{
 		ft_dprintf(2, "Error while receiving packet from server: %s.\n", strerror(errno));
@@ -38,10 +38,11 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 	else
 	{
 		if (request != NULL)
-			manage_server_request(srv->sockfd, request, mlx);
+			manage_server_request(srv, request, mlx);
 		if (byteRead == 0)
 		{
 			close_server(srv, DISCONNECTED);
+			ft_printf("Disconnected from server.\n");
 			return (false);
 		}
 	}
@@ -49,13 +50,14 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 	if (time(NULL) - last_ping > 5)
 	{
 		last_ping = time(NULL);
-		ft_dprintf(srv->sockfd, "ping:%lld;", current_timestamp());
+		dprintf(srv->sockfd, "ping:%lld;", current_timestamp());
 	}
 	return (true);
 }
 
 void	connect_to_server(t_server *srv)
 {
+	srv->port = ft_atoi(srv->port_str);
 	if (!create_socket(&(srv->sockfd)))
 	{
 		close_server(srv, ERR_CREATE_SOCKET);

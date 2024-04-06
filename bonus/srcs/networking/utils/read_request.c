@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:36:04 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 18:12:52 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 09:37:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	set_prev_buffer(char **request, char **prev_buffer)
 		}
 	}
 }
-
-
 
 char	*read_request(int socketfd, int *byteRead, bool clear)
 {

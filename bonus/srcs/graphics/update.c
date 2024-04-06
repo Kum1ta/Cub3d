@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:17:18 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 10:30:36 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@ int	update(void *mlx_ptr)
 	{
 		mlx_mouse_show();
 		larg_map(mlx, 0);
+		if (!client_loop_hook(&(mlx->game_server), mlx))
+			mlx->actuel_menu = MULTIPLAYER_MENU;
 	}
 	else if (mlx->actuel_menu == GAME)
 	{
 		mouse_move(mlx);
 		mlx_mouse_hide();
 		raycasting(mlx, 0);
+		if (!client_loop_hook(&(mlx->game_server), mlx))
+			mlx->actuel_menu = MULTIPLAYER_MENU;
 	}
 	else
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50,
