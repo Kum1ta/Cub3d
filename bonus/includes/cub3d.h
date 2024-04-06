@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 16:50:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:00:35 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_vec4 {
 	float	y;
 	float	z;
 	float	h;
+	float	v;
 }	t_vec4;
 
 typedef struct s_map {

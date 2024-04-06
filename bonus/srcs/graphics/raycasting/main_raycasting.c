@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:54:55 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:46:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
 	ray->dist *= cos(radian);
 }
 
-void	calcul_wall_size(t_raydata *ray)
+void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 {
 	int	tmp;
 
@@ -247,21 +247,21 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 	k = -1;
 	while (++k < QUALITY)
 	{
-		j = 0;
+		j = -mlx->map->playerPos.v;
 		while (j < ray->wall_start)
 		{
 			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16
 			| mlx->map->texture.ceiling[1] << 8
 			| mlx->map->texture.ceiling[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
 			j++;
 		}
 		j += ray->wall_size;
-		while (j < HEIGHT)
+		while (j < HEIGHT - mlx->map->playerPos.v)
 		{
 			color = 255 << 24 | mlx->map->texture.floor[0] << 16
 			| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
 			j++;
 		}
 	}
@@ -349,13 +349,14 @@ int	get_ss_color(t_mlx *mlx, int x, int y, int distance)
 		| (color[2] / (lvl * lvl)) << 8 | (color[1] / (lvl * lvl)));
 }
 
-void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
+void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 {
 	int		j;
 	int		k;
 	float	wall_size;
 	int		imgX;
 	float	imgY;
+	int		color;
 
 	k = -1;
 	if (ray->dir == 0)
@@ -375,9 +376,13 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 		while (++j < ray->wall_end)
 		{
 			imgY += factor;
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j,
-				get_ss_color(mlx, imgX, (int) imgY, (int)ray->dist));
-			// mlx_pixel_put(mlx->mlx, mlx->win, i + k, j, 0xEE459825);
+			color = get_ss_color(mlx, (int) imgX, (int) imgY, (int)ray->dist);
+			if (color == 0)
+			{
+				imgY = 0;
+				color = get_ss_color(mlx, (int) imgX, (int) imgY, (int)ray->dist);
+			}
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
 		}
 	}
 }
@@ -411,14 +416,14 @@ void	raycasting(t_mlx *mlx, int need_free)
 					return ;
 				}
 				correct_fish_eye(ray[i][j], angle, mlx);
-				calcul_wall_size(ray[i][j]);
+				calcul_wall_size(mlx, ray[i][j]);
 			}
 		}
 	}
 	i = 0;
 	while (i < WIDTH)
 	{
-		// put_celling_floor(mlx, ray[i][j], i);
+		put_celling_floor(mlx, ray[i][j], i);
 		j = MAX_HEIGHT - 1;
 		while (j >= 0)
 		{
@@ -433,7 +438,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 					factor = (float)mlx->textures->south->height / factor;
 				else
 					factor = (float)mlx->textures->west->height / factor;
-				scalling(ray[i][j], mlx, i, factor);
+				scalling(ray[i][j], mlx, i, factor, j);
 			}
 			j--;
 		}

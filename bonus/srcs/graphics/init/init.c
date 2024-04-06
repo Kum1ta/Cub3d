@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 18:54:36 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 19:01:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	init(t_mlx *mlx, t_map *map)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = MAIN_MENU;
+	mlx->actuel_menu = GAME;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
 		return (free_all_graphics(mlx));
@@ -74,5 +74,6 @@ int	init(t_mlx *mlx, t_map *map)
 	mlx->player->is_reloading = false;
 	mlx->player->xy_item[0] = 0;
 	mlx->player->xy_item[1] = 0;
+	mlx->map->playerPos.v = 0;
 	return (0);
 }

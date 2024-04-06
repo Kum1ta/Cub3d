@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 14:16:04 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/06 18:49:49 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ void	game_keyboard(t_mlx *mlx)
 	addY = (is_key_down(mlx->keyboard, KEY_D) + -is_key_down(mlx->keyboard, KEY_A)) * add;
 	if (addX || addY)
 		move_player(mlx, addX, addY);
+	if (is_key_down(mlx->keyboard, KEY_UP))
+		mlx->just_try += 25;
+	if (is_key_down(mlx->keyboard, KEY_DOWN))
+		mlx->just_try -= 25;
 	if (is_key_down(mlx->keyboard, KEY_E))
 		interract_block(mlx);
 }
