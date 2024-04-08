@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 18:49:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:42:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,18 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 
 void	interract_block(t_mlx *mlx)
 {
-	if (mlx->player->front_ray.found && mlx->player->front_ray.dist < 2)
+	t_raydata	*front_ray;
+
+	front_ray = raycast(mlx, fmod(mlx->map->playerPos.h + (360 - 90), 360), true, mlx->map->playerPos);
+	if (front_ray->found && front_ray->dist < 2)
 	{
-		t_block	*front_block = mlx->player->front_ray.block;
-		printf("%d == %d\n", front_block->type, DOOR);
+		t_block	*front_block = front_ray->block;
 		if (front_block->type == DOOR)
+		{
 			front_block->data.door = !front_block->data.door;
+			if (mlx->game_server.status == CONNECTED)
+				ft_dprintf(mlx->game_server.sockfd, "setDoorState:%d,%d,%d;", front_block->data.door, (int) front_ray->pos.x, (int) front_ray->pos.y);
+		}
 	}
 }
 
@@ -103,6 +109,6 @@ void	game_keyboard(t_mlx *mlx)
 		mlx->just_try += 25;
 	if (is_key_down(mlx->keyboard, KEY_DOWN))
 		mlx->just_try -= 25;
-	if (is_key_down(mlx->keyboard, KEY_E))
+	if (is_key_just_down(mlx->keyboard, KEY_E))
 		interract_block(mlx);
 }

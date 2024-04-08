@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 18:46:35 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 20:42:42 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,44 @@ typedef struct s_ray {
 	int		dir;
 }	t_ray;
 
-void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
+void	init_ray(t_ray *ray, t_mlx *mlx, float angle, t_vec4 start)
 {
 	ray->rAngle = angle * PI / 180;
 	ray->dirX = cos(ray->rAngle);
 	ray->dirY = sin(ray->rAngle);
-	ray->posX = (int) mlx->map->playerPos.x;
-	ray->posY = (int) mlx->map->playerPos.y;
+	ray->posX = (int) start.x;
+	ray->posY = (int) start.y;
 	ray->deltaDistX = sqrt(1 + (ray->dirY * ray->dirY) / (ray->dirX * ray->dirX));
 	ray->deltaDistY = sqrt(1 + (ray->dirX * ray->dirX) / (ray->dirY * ray->dirY));
 	if (ray->dirX < 0)
-		ray->distX = (mlx->map->playerPos.x - ray->posX) * ray->deltaDistX;
+		ray->distX = (start.x - ray->posX) * ray->deltaDistX;
 	else
-		ray->distX = (ray->posX + 1 - mlx->map->playerPos.x) * ray->deltaDistX;
+		ray->distX = (ray->posX + 1 - start.x) * ray->deltaDistX;
 	if (ray->dirY < 0)
-		ray->distY = (mlx->map->playerPos.y - ray->posY) * ray->deltaDistY;
+		ray->distY = (start.y - ray->posY) * ray->deltaDistY;
 	else
-		ray->distY = (ray->posY + 1 - mlx->map->playerPos.y) * ray->deltaDistY;
+		ray->distY = (ray->posY + 1 - start.y) * ray->deltaDistY;
 	ray->stepX = 1 - 2 * (ray->dirX < 0);
 	ray->stepY = 1 - 2 * (ray->dirY < 0);
 	ray->nbStep = 0;
 }
 
-// todo send back more informations :
-//   wall bigger behind -> multisize walls
-t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int max_height)
+t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start)
 {
 	t_raydata	*res;
 	t_ray		ray;
 	int			i;
 	int			curr_size;
+	int			max_height;
 
+	max_height = MAX_HEIGHT;
+	if (catch_interract)
+		max_height = 1;
 	res = ft_calloc(max_height, sizeof(t_raydata));
 	if (!res)
 		return (NULL);
 	i = 0;
-	init_ray(&ray, mlx, angle, screenX);
+	init_ray(&ray, mlx, angle, start);
 	curr_size = 0;
 	while (curr_size < max_height && ray.nbStep < MAX_DISTANCE)
 	{
@@ -82,20 +84,23 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int max_height)
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
 			res[i].block = &(mlx->map->blocks[ray.posY][ray.posX]);
-			if ((res[i].block->type == WALL && res[i].block->data.wall > curr_size) || (res[i].block->type == DOOR && res[i].block->data.door == false && curr_size == 0))
+			if ((res[i].block->type == WALL && res[i].block->data.wall > curr_size) 
+				|| (res[i].block->type == DOOR && (res[i].block->data.door == false || catch_interract) && curr_size == 0))
 			{
 				res[i].found = true;
+				res[i].pos.x = ray.posX;
+				res[i].pos.y = ray.posY;
 				if (ray.dir == 0)
 				{
 					res[i].dist = ray.distX - ray.deltaDistX;
 					res[i].dir = ray.dir + 2 * (ray.stepX == -1);
-					res[i].imgXPercent = mlx->map->playerPos.y + res[i].dist * ray.dirY;
+					res[i].imgXPercent = start.y + res[i].dist * ray.dirY;
 				}
 				else
 				{
 					res[i].dist = ray.distY - ray.deltaDistY;
 					res[i].dir = ray.dir + 2 * (ray.stepY == -1);
-					res[i].imgXPercent = mlx->map->playerPos.x + res[i].dist * ray.dirX;
+					res[i].imgXPercent = start.x + res[i].dist * ray.dirX;
 				}
 				res[i].imgXPercent = res[i].imgXPercent - ((int) res[i].imgXPercent);
 				curr_size++;
@@ -390,7 +395,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 		j = ray->wall_start - 1;
 		if (j + mlx->map->playerPos.v < 0)
 			j = 0 - mlx->map->playerPos.v - 1;
-		imgY = ((j + 1) - (HEIGHT - wall_size) / 2) * factor;
+		imgY = ((j + 1) - (HEIGHT - ray->wall_size) / 2) * factor;
 		while (imgY < 0)
 			imgY += ((t_img *)mlx->tmp)->height;
 		while (++j < fmin(ray->wall_end, HEIGHT - mlx->map->playerPos.v))
@@ -419,9 +424,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		{
 			angle = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
 			ajust_angle(&angle);
-			ray[i] = raycast(mlx, angle, i, MAX_HEIGHT);
-			if (i == WIDTH / 2)
-				mlx->player->front_ray = ray[i][0];
+			ray[i] = raycast(mlx, angle, false, mlx->map->playerPos);
 			if (!ray[i])
 				return ;
 			correct_fish_eye(ray[i], angle, mlx);

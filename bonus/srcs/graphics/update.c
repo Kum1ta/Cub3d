@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 14:25:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 20:47:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ int	update(void *mlx_ptr)
 		if (mlx->game_server.status == CONNECTED
 			&& !client_loop_hook(&(mlx->game_server), mlx))
 			mlx->actuel_menu = MULTIPLAYER_MENU;
-		if (mlx->game_server.status == CONNECTED)
-		{
-			t_list *players = mlx->game_server.online_player;
-			printf("players list :\n");
-			while (players)
-			{
-				t_online_player *player = players->content;
-				printf("%s (%d) pos = x: %f; y: %f; z: %f; h: %f\n",
-					player->playerName, player->serverId, player->pos.x, player->pos.y, player->pos.z, player->pos.h);
-				players = players->next;
-			}
-		}
+		// if (mlx->game_server.status == CONNECTED)
+		// {
+		// 	t_list *players = mlx->game_server.online_player;
+		// 	printf("players list :\n");
+		// 	while (players)
+		// 	{
+		// 		t_online_player *player = players->content;
+		// 		printf("%s (%d) pos = x: %f; y: %f; z: %f; h: %f\n",
+		// 			player->playerName, player->serverId, player->pos.x, player->pos.y, player->pos.z, player->pos.h);
+		// 		players = players->next;
+		// 	}
+		// }
 	}
 	else
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50,

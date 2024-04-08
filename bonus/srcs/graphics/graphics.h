@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 18:45:31 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:22:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # define MIDSCREEN_POSX WIDTH / 2
 # define MIDSCREEN_POSY HEIGHT / 2
 
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
+
 typedef struct s_raydata
 {
 	float	imgXPercent;
@@ -37,13 +43,8 @@ typedef struct s_raydata
 	int		wall_size;
 	int		wall_end;
 	int		diff;
+	t_vec2	pos;
 }	t_raydata;
-
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
 
 typedef enum e_menu
 {
@@ -115,7 +116,6 @@ typedef struct s_player
 	int					ammo;
 	int					xy_item[2];
 	bool				is_reloading;
-	struct s_raydata	front_ray;
 }	t_player;
 
 typedef struct s_mlx
@@ -185,7 +185,8 @@ int		mouse_up(int button, void *mlx_ptr);
 void	mouse_move(t_mlx *mlx);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
-void	raycasting(t_mlx *mlx, int need_free);
+t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start);
+void		raycasting(t_mlx *mlx, int need_free);
 
 /* ------ main_menu.c ------------------------------------------------------ */
 void	main_menu(t_mlx *mlx, int need_free);

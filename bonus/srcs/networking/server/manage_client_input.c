@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 14:02:45 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 20:27:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,24 @@ void	act_set_pos(t_client *clients, int clientI, char *value, long long currTs)
 	}
 }
 
+void	act_set_door(t_client *clients, int clientI, char *value, long long currTs)
+{
+	int	i;
+
+	(void) currTs;
+	i = 0;
+	while (i < SV_MAX_CONNECTION)
+	{
+		if (i != clientI && clients[i].socket != -1)
+			ft_dprintf(clients[i].socket, "setDoorState:%s;", value);
+		i++;
+	}
+}
+
 static inline void	exec_req_action(t_client *clients, int clientI, char *request, long long currTs)
 {
-	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "setPos:", NULL};
-	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_set_pos};
+	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "setPos:", "setDoorState:", NULL};
+	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_set_pos, &act_set_door};
 	size_t		act_len;
 	int			act_i;
 

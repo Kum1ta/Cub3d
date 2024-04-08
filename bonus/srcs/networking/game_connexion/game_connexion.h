@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 14:30:29 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 20:33:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	receive_message(t_server *srv, char *value, void *mlx);
 void	player_disconnect(t_server *srv, char *value, void *mlx);
 void	set_player_attr(t_server *srv, char *value, void *mlx);
 void	set_player_pos(t_server *srv, char *value, void *mlx);
+void	set_door_state(t_server *srv, char *value, void *mlx);
 
 void	connect_to_server(t_server *srv);
 void	print_network_err(enum e_server_status status);
