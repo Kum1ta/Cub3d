@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 15:21:02 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:05:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,20 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle, int screenX)
 
 // todo send back more informations :
 //   wall bigger behind -> multisize walls
-t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int size)
+t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int max_height)
 {
 	t_raydata	*res;
 	t_ray		ray;
+	int			i;
+	int			curr_size;
 
-	res = ft_calloc(1, sizeof(t_raydata));
+	res = ft_calloc(max_height, sizeof(t_raydata));
 	if (!res)
 		return (NULL);
+	i = 0;
 	init_ray(&ray, mlx, angle, screenX);
-	while (!res->found && ray.nbStep < MAX_DISTANCE)
+	curr_size = 0;
+	while (curr_size < max_height && ray.nbStep < MAX_DISTANCE)
 	{
 		if (ray.distX < ray.distY)
 		{
@@ -77,23 +81,27 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int size)
 		}
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
-			res->block = &(mlx->map->blocks[ray.posY][ray.posX]);
-			if ((res->block->type == WALL && res->block->data.wall > size) || (res->block->type == DOOR && res->block->data.door == false && size == 0))
+			res[i].block = &(mlx->map->blocks[ray.posY][ray.posX]);
+			if ((res[i].block->type == WALL && res[i].block->data.wall > curr_size) || (res[i].block->type == DOOR && res[i].block->data.door == false && curr_size == 0))
 			{
-				res->found = true;
+				res[i].found = true;
 				if (ray.dir == 0)
 				{
-					res->dist = ray.distX - ray.deltaDistX;
-					res->dir = ray.dir + 2 * (ray.stepX == -1);
-					res->imgXPercent = mlx->map->playerPos.y + res->dist * ray.dirY;
+					res[i].dist = ray.distX - ray.deltaDistX;
+					res[i].dir = ray.dir + 2 * (ray.stepX == -1);
+					res[i].imgXPercent = mlx->map->playerPos.y + res[i].dist * ray.dirY;
 				}
 				else
 				{
-					res->dist = ray.distY - ray.deltaDistY;
-					res->dir = ray.dir + 2 * (ray.stepY == -1);
-					res->imgXPercent = mlx->map->playerPos.x + res->dist * ray.dirX;
+					res[i].dist = ray.distY - ray.deltaDistY;
+					res[i].dir = ray.dir + 2 * (ray.stepY == -1);
+					res[i].imgXPercent = mlx->map->playerPos.x + res[i].dist * ray.dirX;
 				}
-				res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
+				res[i].imgXPercent = res[i].imgXPercent - ((int) res[i].imgXPercent);
+				curr_size++;
+				if (res[i].block->type == WALL)
+					curr_size = res[i].block->data.wall;
+				i++;
 			}
 		}
 		ray.nbStep++;
@@ -208,32 +216,42 @@ void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
 {
 	float	radian;
 	float	ra;
+	int		i;
 
+	i = -1;
 	ra = angle_ray + 90;
 	ajust_angle(&ra);
 	radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
-	ray->dist *= cos(radian);
+	while (++i < MAX_HEIGHT)
+	{
+		ray[i].dist *= cos(radian);
+	}
 }
 
 void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 {
 	int	tmp;
+	int	i;
 
-	if (!ray->found)
+	i = -1;
+	while (++i < MAX_HEIGHT)
 	{
-		ray->wall_size = 0;
-		ray->wall_start = HEIGHT / 2;
-		ray->wall_end = HEIGHT / 2;
-		return ;
+		if (!ray[i].found)
+		{
+			ray[i].wall_size = 0;
+			ray[i].wall_start = HEIGHT / 2;
+			ray[i].wall_end = HEIGHT / 2;
+			continue ;
+		}
+		ray[i].wall_size = (HEIGHT / ray[i].dist);
+		ray[i].wall_start = (HEIGHT - ray[i].wall_size) / 2;
+		ray[i].wall_end = (HEIGHT + ray[i].wall_size) / 2;
+		if (ray[i].block->type == WALL)
+			ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (ray[i].block->data.wall - 1));
+		else
+			ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (WALL_SIZE - 1));
+		ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (WALL_SIZE - 1));
 	}
-	ray->wall_size = (HEIGHT / ray->dist);
-	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
-	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
-	if (ray->block->type == WALL)
-		ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (ray->block->data.wall - 1));
-	else
-		ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (WALL_SIZE - 1));
-	ray->wall_start = ray->wall_start - ((ray->wall_end - ray->wall_start) * (WALL_SIZE - 1));
 }
 
 void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
@@ -384,7 +402,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 
 void	raycasting(t_mlx *mlx, int need_free)
 {
-	t_raydata	*ray[WIDTH][MAX_HEIGHT];
+	t_raydata	*ray[WIDTH];
 	float		angle;
 	int			i;
 	int			j;
@@ -395,45 +413,40 @@ void	raycasting(t_mlx *mlx, int need_free)
 	i = -1;
 	while (++i < WIDTH)
 	{
-		j = -1;
-		while (++j < MAX_HEIGHT)
+		if (i % QUALITY == 0)
 		{
-			if (i % QUALITY == 0)
-			{
-				angle = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
-				ajust_angle(&angle);
-				ray[i][j] = raycast(mlx, angle, i, j);
-				if (i == WIDTH / 2)
-					mlx->player->front_ray = *(ray[i][j]);
-				if (!ray[i])
-				{
-					// free_ray(ray);
-					return ;
-				}
-				correct_fish_eye(ray[i][j], angle, mlx);
-				calcul_wall_size(mlx, ray[i][j]);
-			}
+			angle = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
+			ajust_angle(&angle);
+			ray[i] = raycast(mlx, angle, i, MAX_HEIGHT);
+			if (i == WIDTH / 2)
+				mlx->player->front_ray = ray[i][0];
+			if (!ray[i])
+				return ;
+			correct_fish_eye(ray[i], angle, mlx);
+			calcul_wall_size(mlx, ray[i]);
 		}
 	}
 	i = 0;
 	while (i < WIDTH)
 	{
-		put_celling_floor(mlx, ray[i][j], i);
 		j = MAX_HEIGHT - 1;
+		while (j > 0 && !ray[i][j].found)
+			j--;
+		put_celling_floor(mlx, ray[i] + MAX_HEIGHT - 1, i);
 		while (j >= 0)
 		{
-			if (ray[i][j]->found)
+			if (ray[i][j].found)
 			{
-				factor = HEIGHT / ray[i][j]->dist;
-				if (ray[i][j]->dir == 0)
+				factor = HEIGHT / ray[i][j].dist;
+				if (ray[i][j].dir == 0)
 					factor = (float)mlx->textures->north->height / factor;
-				else if (ray[i][j]->dir == 1)
+				else if (ray[i][j].dir == 1)
 					factor = (float)mlx->textures->east->height / factor;
-				else if (ray[i][j]->dir == 2)
+				else if (ray[i][j].dir == 2)
 					factor = (float)mlx->textures->south->height / factor;
 				else
 					factor = (float)mlx->textures->west->height / factor;
-				scalling(ray[i][j], mlx, i, factor, j);
+				scalling(ray[i] + j, mlx, i, factor, j);
 			}
 			j--;
 		}
