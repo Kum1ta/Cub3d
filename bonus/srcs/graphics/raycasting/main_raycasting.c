@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 20:46:29 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:21:02 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_raydata	*raycast(t_mlx *mlx, float angle, int screenX, int size)
 		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
 		{
 			res->block = &(mlx->map->blocks[ray.posY][ray.posX]);
-			if ((res->block->type == WALL && res->block->data.wall > size) || (res->block->type == DOOR && res->block->data.door == false)) // ici pour la detection de la hauteur du mur
+			if ((res->block->type == WALL && res->block->data.wall > size) || (res->block->type == DOOR && res->block->data.door == false && size == 0))
 			{
 				res->found = true;
 				if (ray.dir == 0)
@@ -227,8 +227,6 @@ void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 		return ;
 	}
 	ray->wall_size = (HEIGHT / ray->dist);
-	if (ray->wall_size > HEIGHT)
-		ray->wall_size = HEIGHT;
 	ray->wall_start = (HEIGHT - ray->wall_size) / 2;
 	ray->wall_end = (HEIGHT + ray->wall_size) / 2;
 	if (ray->block->type == WALL)
@@ -373,15 +371,12 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	{
 		j = ray->wall_start - 1;
 		imgY = ((j + 1) - (HEIGHT - wall_size) / 2) * factor;
+		while (imgY < 0)
+			imgY += ((t_img *)mlx->tmp)->height;
 		while (++j < ray->wall_end)
 		{
 			imgY += factor;
-			color = get_ss_color(mlx, (int) imgX, (int) imgY, (int)ray->dist);
-			if (color == 0)
-			{
-				imgY = 0;
-				color = get_ss_color(mlx, (int) imgX, (int) imgY, (int)ray->dist);
-			}
+			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
 			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
 		}
 	}

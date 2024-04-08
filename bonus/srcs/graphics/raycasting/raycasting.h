@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 17:50:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:13:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # define MAX_DISTANCE 1000
 # define MAX_HEIGHT 10
-# define WALL_SIZE 1.0
+# define WALL_SIZE 1
 # define FOV 60
 # define SHOW_FPS 1 // 0: off, 1: on
 # define ANTIALIASING_LEVEL 1 // 1: None, 2: 2x, 4: 4x, 8: 8x
