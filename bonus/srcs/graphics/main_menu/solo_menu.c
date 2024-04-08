@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:00:22 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 18:26:39 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:36:45 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	solo_menu(t_mlx *mlx, int need_free)
 	add_button_map(mlx, (int [2]){70, 315}, square_img, default_map2);
 	add_button_map(mlx, (int [2]){70, 355}, square_img, default_map3);
 
+	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 100, HEIGHT - 30, 0xFFFFFFFF, "Back");
 }

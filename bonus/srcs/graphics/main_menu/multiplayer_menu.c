@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/08 17:30:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:37:46 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, set_port_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, set_pseudo_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, connect_btn);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 + 100}, square_img, open_main_menu);
+	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
 	input_btn(mlx);
 }
 

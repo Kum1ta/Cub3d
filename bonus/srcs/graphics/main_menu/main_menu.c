@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 18:44:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:52:03 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	add_button(t_mlx *mlx, int xy[3], void *img, char *(*f)(void *, int))
 void	main_menu(t_mlx *mlx, int need_free)
 {
 	static	void		*square_img = NULL;
+	static	int			*bg = NULL;
 	static	int			loaded = 0;
 
 	if (need_free)
@@ -55,6 +56,8 @@ void	main_menu(t_mlx *mlx, int need_free)
 		if (square_img)
 			mlx_destroy_image(mlx->mlx, square_img);
 		loaded = 0;
+		if (bg)
+			mlx_destroy_image(mlx->mlx, bg);
 		return ;
 	}
 	if (!loaded)
@@ -64,14 +67,18 @@ void	main_menu(t_mlx *mlx, int need_free)
 		if (!square_img)
 			return ;
 		create_square(mlx, square_img, 200, 30);
+		bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &loaded, &loaded);
+		if (!bg)
+			return ;
 		loaded = 1;
 	}
 	put_fps(mlx, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 128);
 	mlx_string_put(mlx->mlx, mlx->win, 50, 200, 0xFFFFFFFF, "Kumilos");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, open_solo_menu);
 	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, open_multiplayer_menu);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, open_settings_menu);
-	// add_button(mlx, "Exit", 50, HEIGHT / 2 + 100, square_img);
+	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 100, HEIGHT - 30, 0xFFFFFFFF, "Exit");
 }
