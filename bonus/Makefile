@@ -21,6 +21,7 @@ SRCS			=	main.c 																\
 					graphics/raycasting/inventory/inventory.c							\
 					graphics/raycasting/main_raycasting.c								\
 					graphics/main_menu/main_menu.c										\
+					graphics/main_menu/solo_menu.c								\
 					graphics/main_menu/multiplayer_menu.c								\
 					graphics/main_menu/button_action.c									\
 					graphics/start_screen/start_screen.c								\
@@ -75,7 +76,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS) $(SV_OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
+CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
 # CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))

@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   button_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 13:53:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:43:46 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./main_menu.h"
 
-char	*start_solo_game(void *ptr, int action)
+char	*open_solo_menu(void *ptr, int action)
 {
 	t_mlx	*mlx;
 
 	if (action == 0)
-		return ("Start solo game");
+		return ("Solo");
 	if (action == 2)
 		return ((char *) 0);
 	mlx = (t_mlx *)ptr;
-	mlx->actuel_menu = GAME;
+	mlx->actuel_menu = SOLO_MENU;
 	return (NULL);
 }
 
@@ -35,6 +35,19 @@ char	*open_multiplayer_menu(void *ptr, int action)
 		return ((char *) 1);
 	mlx = (t_mlx *) ptr;
 	mlx->actuel_menu = MULTIPLAYER_MENU;
+	return (NULL);
+}
+
+char	*open_settings_menu(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	if (action == 0)
+		return ("Settings");
+	if (action == 2)
+		return ((char *) 0);
+	mlx = (t_mlx *) ptr;
+	mlx->actuel_menu = OPTIONS;
 	return (NULL);
 }
 
@@ -123,3 +136,67 @@ char	*connect_btn(void *ptr, int action)
 	}
 	return (NULL);
 }
+
+char	*argument_map(void *ptr, int action)
+{
+	static char *str = NULL;
+	t_mlx	*mlx;
+
+	if (action == -1)
+	{
+		str = ft_strdup((char *)ptr);
+		return (NULL);
+	}
+	if (action == -2)
+	{
+		free(str);
+		return (NULL);
+	}
+	if (action == 0)
+		return (str);
+	if (action == 2)
+		return ((char *) 0);
+	mlx = ptr;
+	mlx->selected_map = ARGUMENTS_MAP;
+	return (NULL);
+}
+
+char	*default_map1(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	if (action == 0)
+		return ("Name of the map 1");
+	if (action == 2)
+		return ((char *) 0);
+	mlx = ptr;
+	mlx->selected_map = MAP_1;
+	return (NULL);
+}
+
+char	*default_map2(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	if (action == 0)
+		return ("Name of the map 2");
+	if (action == 2)
+		return ((char *) 0);
+	mlx = ptr;
+	mlx->selected_map = MAP_2;
+	return (NULL);
+}
+
+char	*default_map3(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	if (action == 0)
+		return ("Name of the map 3");
+	if (action == 2)
+		return ((char *) 0);
+	mlx = ptr;
+	mlx->selected_map = MAP_3;
+	return (NULL);
+}
+

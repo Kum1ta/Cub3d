@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 14:25:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:44:24 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	update(void *mlx_ptr)
 	{
 		mlx_mouse_show();
 		main_menu(mlx, 0);
+	}
+	else if (mlx->actuel_menu == SOLO_MENU)
+	{
+		mlx_mouse_show();
+		solo_menu(mlx, 0);
 	}
 	else if (mlx->actuel_menu == MULTIPLAYER_MENU)
 	{

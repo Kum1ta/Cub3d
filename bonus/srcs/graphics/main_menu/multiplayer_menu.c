@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiplayer_menu.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 09:31:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 17:30:49 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 		square_img = mlx_new_image(mlx->mlx, 200, 30);
 		if (!square_img)
 			return ;
-		create_square(mlx, square_img);
+		create_square(mlx, square_img, 200, 30);
 		loaded = true;
 	}
 	put_fps(mlx, 0);

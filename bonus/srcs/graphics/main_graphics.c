@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/05 17:39:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 17:47:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
 
 void	inventory(t_mlx *mlx, void *img, int need_free);
+char	*argument_map(void *ptr, int action);
 
 int	window(int event, void *mlx_ptr)
 {
@@ -25,9 +26,11 @@ int	window(int event, void *mlx_ptr)
 		larg_map(mlx, 1);
 		raycasting(mlx, 1);
 		put_fps(mlx, 1);
+		argument_map(NULL, -2);
 		main_menu(mlx, 1);
 		multiplayer_menu(mlx, 1);
 		inventory(mlx, NULL, 1);
+		solo_menu(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free_all_graphics(mlx);
