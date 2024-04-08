@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 17:05:53 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 18:46:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,10 +388,12 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	while (++k < QUALITY)
 	{
 		j = ray->wall_start - 1;
+		if (j + mlx->map->playerPos.v < 0)
+			j = 0 - mlx->map->playerPos.v - 1;
 		imgY = ((j + 1) - (HEIGHT - wall_size) / 2) * factor;
 		while (imgY < 0)
 			imgY += ((t_img *)mlx->tmp)->height;
-		while (++j < ray->wall_end)
+		while (++j < fmin(ray->wall_end, HEIGHT - mlx->map->playerPos.v))
 		{
 			imgY += factor;
 			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
