@@ -6,22 +6,19 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 20:42:42 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/09 12:52:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raycasting.h"
 
 typedef struct s_ray {
-	float	rAngle;
-	float	dirX;
-	float	dirY;
 	int		posX;
 	int		posY;
-	float	distX;
-	float	distY;
-	float	deltaDistX;
-	float	deltaDistY;
+	float	dirX;
+	float	dirY;
+	t_vec2	dist;
+	t_vec2	deltaDist;
 	int		stepX;
 	int		stepY;
 	int		nbStep;
@@ -30,21 +27,23 @@ typedef struct s_ray {
 
 void	init_ray(t_ray *ray, t_mlx *mlx, float angle, t_vec4 start)
 {
-	ray->rAngle = angle * PI / 180;
-	ray->dirX = cos(ray->rAngle);
-	ray->dirY = sin(ray->rAngle);
+	float	rAngle;
+
+	rAngle = angle * PI / 180;
+	ray->dirX = cos(rAngle);
+	ray->dirY = sin(rAngle);
 	ray->posX = (int) start.x;
 	ray->posY = (int) start.y;
-	ray->deltaDistX = sqrt(1 + (ray->dirY * ray->dirY) / (ray->dirX * ray->dirX));
-	ray->deltaDistY = sqrt(1 + (ray->dirX * ray->dirX) / (ray->dirY * ray->dirY));
+	ray->deltaDist.x = sqrt(1 + (ray->dirY * ray->dirY) / (ray->dirX * ray->dirX));
+	ray->deltaDist.y = sqrt(1 + (ray->dirX * ray->dirX) / (ray->dirY * ray->dirY));
 	if (ray->dirX < 0)
-		ray->distX = (start.x - ray->posX) * ray->deltaDistX;
+		ray->dist.x = (start.x - ray->posX) * ray->deltaDist.x;
 	else
-		ray->distX = (ray->posX + 1 - start.x) * ray->deltaDistX;
+		ray->dist.x = (ray->posX + 1 - start.x) * ray->deltaDist.x;
 	if (ray->dirY < 0)
-		ray->distY = (start.y - ray->posY) * ray->deltaDistY;
+		ray->dist.y = (start.y - ray->posY) * ray->deltaDist.y;
 	else
-		ray->distY = (ray->posY + 1 - start.y) * ray->deltaDistY;
+		ray->dist.y = (ray->posY + 1 - start.y) * ray->deltaDist.y;
 	ray->stepX = 1 - 2 * (ray->dirX < 0);
 	ray->stepY = 1 - 2 * (ray->dirY < 0);
 	ray->nbStep = 0;
@@ -69,15 +68,15 @@ t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start)
 	curr_size = 0;
 	while (curr_size < max_height && ray.nbStep < MAX_DISTANCE)
 	{
-		if (ray.distX < ray.distY)
+		if (ray.dist.x < ray.dist.y)
 		{
-			ray.distX += ray.deltaDistX;
+			ray.dist.x += ray.deltaDist.x;
 			ray.posX += ray.stepX;
 			ray.dir = 0;
 		}
 		else
 		{
-			ray.distY += ray.deltaDistY;
+			ray.dist.y += ray.deltaDist.y;
 			ray.posY += ray.stepY;
 			ray.dir = 1;
 		}
@@ -92,13 +91,13 @@ t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start)
 				res[i].pos.y = ray.posY;
 				if (ray.dir == 0)
 				{
-					res[i].dist = ray.distX - ray.deltaDistX;
+					res[i].dist = ray.dist.x - ray.deltaDist.x;
 					res[i].dir = ray.dir + 2 * (ray.stepX == -1);
 					res[i].imgXPercent = start.y + res[i].dist * ray.dirY;
 				}
 				else
 				{
-					res[i].dist = ray.distY - ray.deltaDistY;
+					res[i].dist = ray.dist.y - ray.deltaDist.y;
 					res[i].dir = ray.dir + 2 * (ray.stepY == -1);
 					res[i].imgXPercent = start.x + res[i].dist * ray.dirX;
 				}
