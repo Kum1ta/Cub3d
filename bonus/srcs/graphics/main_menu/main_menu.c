@@ -37,7 +37,6 @@ void	add_button(t_mlx *mlx, int xy[3], void *img, char *(*f)(void *, int))
 		mlx_put_image_to_window(mlx->mlx, mlx->win, img, xy[0] - 10, xy[1] - 22);
 		if (mlx->mouse->pressed_left)
 		{
-			mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 			f((void *)mlx, 1);
 			mlx->menu_button_focus = (intptr_t) f((void *)mlx, 2);
 		}
@@ -47,9 +46,10 @@ void	add_button(t_mlx *mlx, int xy[3], void *img, char *(*f)(void *, int))
 
 void	main_menu(t_mlx *mlx, int need_free)
 {
-	static	void		*square_img = NULL;
-	static	int			*bg = NULL;
-	static	int			loaded = 0;
+	static void	*square_img = NULL;
+	static void	*bg = NULL;
+	static int	loaded = 0;
+	int			tmp;
 
 	if (need_free)
 	{
@@ -67,7 +67,8 @@ void	main_menu(t_mlx *mlx, int need_free)
 		if (!square_img)
 			return ;
 		create_square(mlx, square_img, 200, 30);
-		bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &loaded, &loaded);
+		tmp = 0;
+		bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &tmp, &loaded);
 		if (!bg)
 			return ;
 		loaded = 1;
@@ -80,5 +81,5 @@ void	main_menu(t_mlx *mlx, int need_free)
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, open_solo_menu);
 	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, open_multiplayer_menu);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, open_settings_menu);
-	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 100, HEIGHT - 30, 0xFFFFFFFF, "Exit");
+	add_button(mlx, (int [2]){50, HEIGHT / 2 + 100}, square_img, exit_button);
 }

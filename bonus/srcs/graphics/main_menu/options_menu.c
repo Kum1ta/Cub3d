@@ -14,9 +14,27 @@
 
 void	options_menu(t_mlx *mlx, int need_free)
 {
-	int	diff;
+	static void	*square_img = NULL;
+	static void	*bg = NULL;
+	static int	diff = 50;
+	int			tmp[2];
 
-	diff = 50;
+	if (need_free)
+	{
+		if (square_img)
+			mlx_destroy_image(mlx->mlx, square_img);
+		if (bg)
+			mlx_destroy_image(mlx->mlx, bg);
+		return ;
+	}
+	if (!square_img)
+	{
+		square_img = mlx_new_image(mlx->mlx, WIDTH - 140, 30);
+		create_square(mlx, square_img, WIDTH - 140, 30);
+		bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
+
+	}
+	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 64);
 	mlx_string_put(mlx->mlx, mlx->win, 40, 80, 0xFFFFFFFF, "Settings\b");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 36);
@@ -37,5 +55,6 @@ void	options_menu(t_mlx *mlx, int need_free)
 	mlx_string_put(mlx->mlx, mlx->win, 90, 560 + diff, 0xFFFFFFFF, "Position X : ");
 	mlx_string_put(mlx->mlx, mlx->win, 90, 590 + diff, 0xFFFFFFFF, "Position Y : ");
 
-	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 100, HEIGHT - 30, 0xFFFFFFFF, "Back");
+	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
 }
+

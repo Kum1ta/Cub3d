@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 19:47:32 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:29:37 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "enum_keys.h"
 # include "../networking/game_connexion/game_connexion.h"
 
-# define WIDTH 1900
-# define HEIGHT 900
+# define WIDTH 1024
+# define HEIGHT 768
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
 
@@ -144,7 +144,7 @@ typedef struct s_mlx
 	t_server			game_server;
 	int					just_try;
 	t_selected_map		selected_map;
-
+	t_settings			*settings;
 }	t_mlx;
 
 /* ############################ DEBUG FUNCTION ############################# */
@@ -157,7 +157,7 @@ int		window(int event, void *mlx_ptr);
 int		update(void *mlx_ptr);
 
 /* ------ init.c ----------------------------------------------------------- */
-int		init(t_mlx *mlx, t_map *map);
+int		init(t_mlx *mlx, t_map *map, t_settings *settings);
 
 /* ------ larg_map.c ------------------------------------------------------- */
 void	larg_map(t_mlx *mlx, int need_free);

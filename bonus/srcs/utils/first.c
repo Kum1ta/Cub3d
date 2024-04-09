@@ -18,21 +18,19 @@ void	put_fps(t_mlx *mlx, int need_free)
 	static int			change = 0;
 	long long			now;
 	float				fps;
-	static char			*tmp = NULL;
+	static char			tmp[4];
 
 	if (need_free)
-	{
-		free(tmp);
 		return ;
-	}
 	now = get_now_time();
 	fps = 1000000 / (now - last_time);
 	last_time = now;
 	if (change % 10 == 0)
 	{
-		if (tmp)
-			free(tmp);
-		tmp = ft_itoa(fps);
+		tmp[0] = (int)fps / 100 + '0';
+		tmp[1] = (int)fps / 10 + '0';
+		tmp[2] = (int)fps % 10 + '0';
+		tmp[3] = '\0';
 		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 55, 15, 0xFFFF0000, tmp);
 		change = 0;
 	}

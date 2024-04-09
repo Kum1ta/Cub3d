@@ -13,6 +13,7 @@
 MAKEFLAGS 		+= --silent
 
 SRCS			=	main.c 																\
+					parse_config_file/config_main.c										\
 					graphics/main_graphics.c 											\
 					graphics/load_textures/load_textures.c								\
 					graphics/free_functions/free_all.c 									\
@@ -77,7 +78,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS) $(SV_OBJS)))
 
 CC				=	gcc
 
-CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
+CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD -g
 # CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
 
 TOTAL_SRCS		= 	$(words $(SRCS))

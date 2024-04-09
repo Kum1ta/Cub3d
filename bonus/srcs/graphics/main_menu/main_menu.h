@@ -31,6 +31,7 @@ char	*default_map1(void *ptr, int action);
 char	*default_map2(void *ptr, int action);
 char	*default_map3(void *ptr, int action);
 char	*open_settings_menu(void *ptr, int action);
+char	*exit_button(void *ptr, int action);
 
 
 #endif

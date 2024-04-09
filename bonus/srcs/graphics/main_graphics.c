@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 17:47:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:29:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	inventory(t_mlx *mlx, void *img, int need_free);
 char	*argument_map(void *ptr, int action);
+void	options_menu(t_mlx *mlx, int need_free);
 
 int	window(int event, void *mlx_ptr)
 {
@@ -31,22 +32,24 @@ int	window(int event, void *mlx_ptr)
 		multiplayer_menu(mlx, 1);
 		inventory(mlx, NULL, 1);
 		solo_menu(mlx, 1);
+		options_menu(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free_all_graphics(mlx);
+		free(mlx->settings);
 		exit(0);
 	}
 	return (0);
 }
 
-void	graphics_part(t_map *map)
+void	graphics_part(t_map *map, t_settings *settings)
 {
 	t_mlx	*mlx;
 
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
 		return ;
-	if (init(mlx, map))
+	if (init(mlx, map, settings))
 	{
 		ft_printf("Cube3d: Error init()\n");
 		return ;

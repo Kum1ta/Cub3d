@@ -75,11 +75,16 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 {
 	static void	*square_img = NULL;
 	static bool	loaded = false;
+	static void	*bg = NULL;
+	static int	tmp[2];
 
 	if (need_free)
 	{
 		if (square_img)
 			mlx_destroy_image(mlx->mlx, square_img);
+		if (bg)
+			mlx_destroy_image(mlx->mlx, bg);
+		return ;
 	}
 	if (!loaded)
 	{
@@ -87,9 +92,12 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 		if (!square_img)
 			return ;
 		create_square(mlx, square_img, 200, 30);
+		if (!bg)
+			bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
 		loaded = true;
 	}
 	put_fps(mlx, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 100}, square_img, set_ip_address_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, set_port_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, set_pseudo_btn);

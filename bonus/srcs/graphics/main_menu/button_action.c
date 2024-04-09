@@ -129,6 +129,7 @@ char	*connect_btn(void *ptr, int action)
 		print_network_err(mlx->game_server.status);
 	else
 	{
+		mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 		mlx->actuel_menu = GAME;
 		dprintf(mlx->game_server.sockfd, "initPlayer:%s,%.2f,%.2f,%.2f,%.2f;",
 			mlx->game_server.playerName, mlx->map->playerPos.x, mlx->map->playerPos.y,
@@ -200,3 +201,15 @@ char	*default_map3(void *ptr, int action)
 	return (NULL);
 }
 
+char	*exit_button(void *ptr, int action)
+{
+	t_mlx	*mlx;
+
+	if (action == 0)
+		return ("Exit");
+	if (action == 2)
+		return ((char *) 0);
+	mlx = ptr;
+	window(0, mlx);
+	return (NULL);
+}
