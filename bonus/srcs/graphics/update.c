@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 20:47:22 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/09 22:54:45 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ int	update(void *mlx_ptr)
 	{
 		mlx_mouse_show();
 		main_menu(mlx, 0);
+	}
+	else if (mlx->actuel_menu == OPTIONS)
+	{
+		mlx_mouse_show();
+		options_menu(mlx, 0);
+	}
+	else if (mlx->actuel_menu == SOLO_MENU)
+	{
+		mlx_mouse_show();
+		solo_menu(mlx, 0);
 	}
 	else if (mlx->actuel_menu == MULTIPLAYER_MENU)
 	{

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 20:22:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/09 22:54:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,25 @@ typedef struct s_raydata
 	t_vec2	pos;
 }	t_raydata;
 
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
+
+typedef enum e_selected_map
+{
+	NO_MAP,
+	ARGUMENTS_MAP,
+	MAP_1,
+	MAP_2,
+	MAP_3,
+}	t_selected_map;
+
 typedef enum e_menu
 {
 	MAIN_MENU,
+	SOLO_MENU,
 	MULTIPLAYER_MENU,
 	MAP_LARG_MENU,
 	GAME,
@@ -132,7 +148,9 @@ typedef struct s_mlx
 	t_list				*keyboard;
 	void				*tmp;
 	t_server			game_server;
-	int		just_try;
+	int					just_try;
+	t_selected_map		selected_map;
+	t_settings			*settings;
 }	t_mlx;
 
 /* ############################ DEBUG FUNCTION ############################# */
@@ -145,7 +163,7 @@ int		window(int event, void *mlx_ptr);
 int		update(void *mlx_ptr);
 
 /* ------ init.c ----------------------------------------------------------- */
-int		init(t_mlx *mlx, t_map *map);
+int		init(t_mlx *mlx, t_map *map, t_settings *settings);
 
 /* ------ larg_map.c ------------------------------------------------------- */
 void	larg_map(t_mlx *mlx, int need_free);
@@ -191,8 +209,14 @@ void		raycasting(t_mlx *mlx, int need_free);
 /* ------ main_menu.c ------------------------------------------------------ */
 void	main_menu(t_mlx *mlx, int need_free);
 
-/* ------ multiplayer_menu.c ------------------------------------------------------ */
+/* ------ solo_menu.c ------------------------------------------------------ */
+void	solo_menu(t_mlx *mlx, int need_free);
+
+/* ------ multiplayer_menu.c ----------------------------------------------- */
 void	multiplayer_menu(t_mlx *mlx, int need_free);
+
+/* ------ options_menu.c --------------------------------------------------- */
+void	options_menu(t_mlx *mlx, int need_free);
 
 /* ------ start_screen.c --------------------------------------------------- */
 void	start_screen(t_mlx *mlx, int need_free);

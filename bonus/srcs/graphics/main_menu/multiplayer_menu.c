@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiplayer_menu.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 09:31:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/08 19:37:46 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,34 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 {
 	static void	*square_img = NULL;
 	static bool	loaded = false;
+	static void	*bg = NULL;
+	static int	tmp[2];
 
 	if (need_free)
 	{
 		if (square_img)
 			mlx_destroy_image(mlx->mlx, square_img);
+		if (bg)
+			mlx_destroy_image(mlx->mlx, bg);
+		return ;
 	}
 	if (!loaded)
 	{
 		square_img = mlx_new_image(mlx->mlx, 200, 30);
 		if (!square_img)
 			return ;
-		create_square(mlx, square_img);
+		create_square(mlx, square_img, 200, 30);
+		if (!bg)
+			bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
 		loaded = true;
 	}
 	put_fps(mlx, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 100}, square_img, set_ip_address_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, set_port_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, set_pseudo_btn);
 	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, connect_btn);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 + 100}, square_img, open_main_menu);
+	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
 	input_btn(mlx);
 }
 

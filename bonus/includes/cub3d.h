@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 19:00:35 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:32:36 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,21 @@ typedef struct s_map {
 	t_vec4		playerPos;
 }	t_map;
 
+typedef struct s_settings {
+	int		width;
+	int		height;
+	int		quality;
+	int		antialiasing;
+	int		show_minimap;
+	int		minimap_pos_x;
+	int		minimap_pos_y;
+	int		wall_size_mini_map;
+	int		fov;
+	int		show_fps;
+}	t_settings;
 
 /* --- main_graphics.c ----------------------------------------------------- */
-void		graphics_part(t_map *map);
+void		graphics_part(t_map *map, t_settings *settings);
 
 /* --- parse_file.c -------------------------------------------------------- */
 t_map		*parse_map(char *filename);
@@ -85,5 +97,8 @@ void		*error_ptr(char *str, void *ret);
 int			error_int(char *str, int ret);
 void		wait_us(long long time_us);
 long long	get_now_time(void);
+
+/* --- config_main.c ------------------------------------------------------- */
+t_settings	*parse_config_file(char *path);
 
 #endif
