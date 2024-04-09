@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 22:54:39 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/09 22:56:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ typedef struct s_raydata
 	int		diff;
 	t_vec2	pos;
 }	t_raydata;
-
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
 
 typedef enum e_selected_map
 {
