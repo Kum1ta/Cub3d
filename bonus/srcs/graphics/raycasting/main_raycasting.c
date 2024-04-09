@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 12:52:21 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:09:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -456,6 +456,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		}
 		i += QUALITY;
 	}
+	draw_sprites(mlx, ray);
 	show_fps(mlx);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
