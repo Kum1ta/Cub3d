@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   multiplayer_menu.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/08 19:37:46 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:26:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "main_menu.h"
 # define A_NUM 1
-# define A_POINT 1 << 1
-# define A_ALPHA 1 << 2
+# define A_POINT 2
+# define A_ALPHA 4
 
 char	get_key_ascii(int key, bool shift, int allow_char)
 {
@@ -98,11 +98,11 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 	}
 	put_fps(mlx, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 - 100}, square_img, set_ip_address_btn);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, set_port_btn);
-	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, set_pseudo_btn);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, connect_btn);
-	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 100}, square_img, set_ip_address_btn);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 50}, square_img, set_port_btn);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2}, square_img, set_pseudo_btn);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 + 50}, square_img, connect_btn);
+	add_button(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, square_img, open_main_menu);
 	input_btn(mlx);
 }
 

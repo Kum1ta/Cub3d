@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_door_state.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:28:08 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/08 20:46:55 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:38:17 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

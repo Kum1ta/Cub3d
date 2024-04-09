@@ -16,7 +16,7 @@ SRCS			=	main.c 																\
 					parse_config_file/config_main.c										\
 					graphics/main_graphics.c 											\
 					graphics/load_textures/load_textures.c								\
-					graphics/free_functions/free_all.c 									\
+					graphics/free_functions/free_all.c									\
 					graphics/free_functions/destroy_textures.c							\
 					graphics/raycasting/mini_map/mini_map.c								\
 					graphics/raycasting/inventory/inventory.c							\
@@ -36,7 +36,6 @@ SRCS			=	main.c 																\
 					graphics/entry/mouse_down.c											\
 					graphics/entry/mouse_move.c											\
 					graphics/entry/mouse_up.c											\
-					graphics/debug/info_player.c										\
 					graphics/init/init.c												\
 					graphics/update.c													\
 					networking/game_connexion/connect_server.c							\

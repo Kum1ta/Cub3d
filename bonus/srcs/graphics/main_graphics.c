@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 16:29:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:02:27 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	inventory(t_mlx *mlx, void *img, int need_free);
 char	*argument_map(void *ptr, int action);
 void	options_menu(t_mlx *mlx, int need_free);
+
+# define STG mlx->settings
 
 int	window(int event, void *mlx_ptr)
 {
@@ -35,8 +37,8 @@ int	window(int event, void *mlx_ptr)
 		options_menu(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
+		free(mlx->stg);
 		free_all_graphics(mlx);
-		free(mlx->settings);
 		exit(0);
 	}
 	return (0);
@@ -60,7 +62,7 @@ void	graphics_part(t_map *map, t_settings *settings)
 		free(mlx);
 		return ;
 	}
-	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "Kumilos - Cube3d");
+	mlx->win = mlx_new_window(mlx->mlx, mlx->stg->width, mlx->stg->height, "Kumilos - Cube3d");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
 	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, window, (void *)mlx);
 	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard_down, (void *)mlx);

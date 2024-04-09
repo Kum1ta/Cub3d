@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/03 14:11:29 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:35:10 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	draw_square(t_mlx *mlx, int size, int color, int x, int y)
 		j = 0;
 		while (j < size)
 		{
-			if (x + i < WIDTH && y + j < HEIGHT && x + i > 0 && y + j > 0)
+			if (x + i < mlx->stg->width && y + j < mlx->stg->height && x + i > 0 && y + j > 0)
 				mlx_pixel_put(mlx->mlx, mlx->win, x + i, y + j, color);
 			j++;
 		}
@@ -69,11 +69,11 @@ void	print_map(t_mlx *mlx)
 
 	y = 0;
 	i = 0;
-	while (mlx->map->blocks[i] && y < HEIGHT)
+	while (mlx->map->blocks[i] && y < mlx->stg->height)
 	{
 		j = 0;
 		x = 0;
-		while (mlx->map->blocks[i][j].type != END && x <= WIDTH)
+		while (mlx->map->blocks[i][j].type != END && x <= mlx->stg->width)
 		{
 			x = j * mlx->menu_map->size + mlx->menu_map->x;
 			y = i * mlx->menu_map->size + mlx->menu_map->y;
@@ -102,8 +102,8 @@ void	larg_map(t_mlx *mlx, int need_free)
 	calculate_target_position(mlx, angle * (PI / 180.0),
 		mlx->menu_map->size);
 	print_map(mlx);
-	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 300, 40, 0xFFFFFFFF,
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 300, 40, 0xFFFFFFFF,
 		"'tab' to return to the game");
-	mlx_string_put(mlx->mlx, mlx->win, WIDTH - 300, 50, 0xFFFFFFFF,
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 300, 50, 0xFFFFFFFF,
 		"'r' to reset the map");
 }

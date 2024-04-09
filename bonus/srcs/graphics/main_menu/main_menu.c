@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_menu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 19:52:03 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:34:18 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	main_menu(t_mlx *mlx, int need_free)
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 128);
 	mlx_string_put(mlx->mlx, mlx->win, 50, 200, 0xFFFFFFFF, "Kumilos");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 - 50}, square_img, open_solo_menu);
-	add_button(mlx, (int [2]){50, HEIGHT / 2}, square_img, open_multiplayer_menu);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 + 50}, square_img, open_settings_menu);
-	add_button(mlx, (int [2]){50, HEIGHT / 2 + 100}, square_img, exit_button);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 50}, square_img, open_solo_menu);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2}, square_img, open_multiplayer_menu);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 + 50}, square_img, open_settings_menu);
+	add_button(mlx, (int [2]){50, mlx->stg->height / 2 + 100}, square_img, exit_button);
 }

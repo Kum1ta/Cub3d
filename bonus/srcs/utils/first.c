@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 14:50:52 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:02:49 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	put_fps(t_mlx *mlx, int need_free)
 	float				fps;
 	static char			tmp[4];
 
-	if (need_free)
+	if (need_free || mlx->stg->show_fps == 0)
 		return ;
 	now = get_now_time();
 	fps = 1000000 / (now - last_time);
@@ -31,11 +31,11 @@ void	put_fps(t_mlx *mlx, int need_free)
 		tmp[1] = (int)fps / 10 + '0';
 		tmp[2] = (int)fps % 10 + '0';
 		tmp[3] = '\0';
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 55, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55, 15, 0xFFFF0000, tmp);
 		change = 0;
 	}
 	else
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH - 55, 15, 0xFFFF0000, tmp);
+		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55, 15, 0xFFFF0000, tmp);
 	change++;
 }
 
@@ -57,13 +57,6 @@ void	wait_us(long long time_us)
 	long long		time;
 	long long		time2;
 
-	static int	i = 0;
-	if (i == 0)
-	{
-		printf("\033[0;31mDon't forget to remove the function \"wait_us()\" : Forbidden function\n\033[0m");
-		i++;
-	}
-
 	gettimeofday(&tv, NULL);
 	time = tv.tv_sec * 1000000 + tv.tv_usec + time_us;
 	time2 = 0;
@@ -77,13 +70,6 @@ void	wait_us(long long time_us)
 long long	get_now_time(void)
 {
 	struct timeval	tv;
-
-	static int	i = 0;
-	if (i == 0)
-	{
-		printf("\033[0;31mDon't forget to remove the function \"get_now_time()\" : Forbidden function\n\033[0m");
-		i++;
-	}
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000000 + tv.tv_usec);

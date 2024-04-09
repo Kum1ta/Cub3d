@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 22:56:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:37:06 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 # include "enum_keys.h"
 # include "../networking/game_connexion/game_connexion.h"
 
-# define WIDTH 1024
-# define HEIGHT 768
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
 
-# define MIDSCREEN_POSX WIDTH / 2
-# define MIDSCREEN_POSY HEIGHT / 2
+# define MIDSCREEN_POSX mlx->stg->width / 2
+# define MIDSCREEN_POSY mlx->stg->height / 2
 
 typedef struct s_vec2
 {
@@ -144,11 +142,8 @@ typedef struct s_mlx
 	t_server			game_server;
 	int					just_try;
 	t_selected_map		selected_map;
-	t_settings			*settings;
+	t_settings			*stg;
 }	t_mlx;
-
-/* ############################ DEBUG FUNCTION ############################# */
-void	info_player(t_mlx *mlx);
 
 /* ------ main_graphics.c -------------------------------------------------- */
 int		window(int event, void *mlx_ptr);

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 16:33:01 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:48:15 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void	init_map(t_mlx *mlx, int size)
 	mlx->menu_map->size = size;
 	mlx->menu_map->width = bigger_x * mlx->menu_map->size;
 	mlx->menu_map->height = i * mlx->menu_map->size;
-	if ((mlx->menu_map->width > WIDTH - 100 || mlx->menu_map->height > HEIGHT - 100) && size > 10)
+	if ((mlx->menu_map->width > mlx->stg->width - 100 || mlx->menu_map->height > mlx->stg->height - 100) && size > 10)
 		init_map(mlx, size - 1);
 	else
 	{
-		mlx->menu_map->x = (WIDTH - mlx->menu_map->width) / 2;
-		mlx->menu_map->y = (HEIGHT - mlx->menu_map->height) / 2;
+		mlx->menu_map->x = (mlx->stg->width - mlx->menu_map->width) / 2;
+		mlx->menu_map->y = (mlx->stg->height - mlx->menu_map->height) / 2;
 		mlx->menu_map->initial_size = mlx->menu_map->size;
 	}
 }
@@ -54,7 +54,7 @@ static void	init_map(t_mlx *mlx, int size)
 int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 {
 	mlx->map = map;
-	mlx->settings = settings;
+	mlx->stg = settings;
 	mlx->menu_map = malloc(sizeof(t_menu_map));
 	if (!mlx->menu_map)
 		return (free_all_graphics(mlx));
@@ -65,7 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = MAIN_MENU;
+	mlx->actuel_menu = GAME;
 	mlx->selected_map = NO_MAP;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)

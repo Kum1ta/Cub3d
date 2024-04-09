@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/09 19:28:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:44:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	sort_sprites(t_sprite *sprites)
 	}
 }
 
-static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos)
+static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
 {
 	float	rAngle = fmod((plyPos.h + (360 - 90)), 360) * PI / 180;
 	float	transform;
@@ -101,8 +101,8 @@ static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos)
 	float	diffY;
 	float	dirX = cos(rAngle);
 	float	dirY = sin(rAngle);
-	float	planeX = (dirX * cos(-PI/2) - dirY * sin(-PI/2)) * (FOV * PI / 180);
-	float	planeY = (dirX * sin(-PI/2) + dirY * cos(-PI/2)) * (FOV * PI / 180);
+	float	planeX = (dirX * cos(-PI/2) - dirY * sin(-PI/2)) * (mlx->stg->fov * PI / 180);
+	float	planeY = (dirX * sin(-PI/2) + dirY * cos(-PI/2)) * (mlx->stg->fov * PI / 180);
 	float	invCam = 1 / (planeX * dirY - planeY * dirX);
 	float	depth;
 
@@ -114,32 +114,32 @@ static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos)
 			diffY = sprites->data.player->pos.y - plyPos.y;
 			transform = invCam * (dirY * diffX - dirX * diffY);
 			depth = invCam * (planeX * diffY - planeY * diffX);
-			sprites->screenX = (WIDTH / 2) * ((1 + transform / depth));
-			sprites->screenX = (WIDTH / 2) + ((WIDTH / 2) - sprites->screenX);
+			sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / depth));
+			sprites->screenX = (mlx->stg->width / 2) + ((mlx->stg->width / 2) - sprites->screenX);
 		}
 		sprites++;
 	}
 }
 
-static void	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata *ray[WIDTH])
+static void	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
-	if (sprite->screenX >= 0 && sprite->screenX <= WIDTH)
+	if (sprite->screenX >= 0 && sprite->screenX <= mlx->stg->width)
 	{
-		for (int y = (HEIGHT / 2) - 5; y < (HEIGHT / 2) + 5; y++)
+		for (int y = (mlx->stg->height / 2) - 5; y < (mlx->stg->height / 2) + 5; y++)
 			for (int x = sprite->screenX - 5; x < sprite->screenX + 5; x++)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFF0000);
 	}
-	printf("sprite pos x: %d (screenw: %d)\n", sprite->screenX, WIDTH);
+	printf("sprite pos x: %d (screenw: %d)\n", sprite->screenX, mlx->stg->width);
 }
 
-void	draw_sprites(t_mlx *mlx, t_raydata *ray[WIDTH])
+void	draw_sprites(t_mlx *mlx, t_raydata **ray)
 {
 	t_sprite	*sprites;
 	int			i;
 
 	sprites = get_sprite_list(mlx);
 	sort_sprites(sprites);
-	set_sprites_screenX(sprites, mlx->map->playerPos);
+	set_sprites_screenX(sprites, mlx->map->playerPos, mlx);
 	i = 0;
 	while (sprites[i].type != NONE)
 	{

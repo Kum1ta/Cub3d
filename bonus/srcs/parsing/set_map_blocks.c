@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   set_map_blocks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 16:52:04 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:16:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "./parsing_Int.h"
-  #include <stdio.h>
 
 static t_map_error_type	parse_map_char(t_map *map, char c, size_t x, size_t y)
 {

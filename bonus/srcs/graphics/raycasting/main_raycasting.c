@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 18:09:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:55:45 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ void	put_actual_weapon(t_mlx *mlx, void *img)
 
 	i = -1;
 	while (++i < 20)
-		mlx_set_image_pixel(mlx->mlx, img, WIDTH / 2 - 10 + i, HEIGHT / 2, 0xFF00FF00);
+		mlx_set_image_pixel(mlx->mlx, img, mlx->stg->width / 2 - 10 + i, mlx->stg->height / 2, 0xFF00FF00);
 	i = -1;
 	while (++i < 20)
-		mlx_set_image_pixel(mlx->mlx, img, WIDTH / 2, HEIGHT / 2 - 10 + i, 0xFF00FF00);
+		mlx_set_image_pixel(mlx->mlx, img, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
 		mlx_put_image_to_window(mlx->mlx, mlx->win,
 			mlx->textures->weapon_game->img,
@@ -189,12 +189,12 @@ void	fill_background(t_mlx *mlx, void *img)
 	i = -1;
 	color_ceiling = 255 << 24 | mlx->map->texture.ceiling[0] << 16 | mlx->map->texture.ceiling[1] << 8 | mlx->map->texture.ceiling[2];
 	color_floor = 255 << 24 | mlx->map->texture.floor[0] << 16 | mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
-	while (++i < WIDTH)
+	while (++i < mlx->stg->width)
 	{
 		j = -1;
-		while (++j < HEIGHT / 2)
+		while (++j < mlx->stg->height / 2)
 			mlx_set_image_pixel(mlx->mlx, img, i, j, color_ceiling);
-		while (j < HEIGHT)
+		while (j < mlx->stg->height)
 			mlx_set_image_pixel(mlx->mlx, img, i, j++, color_floor);
 	}
 }
@@ -207,12 +207,12 @@ void	ajust_angle(float *angle)
 		*angle -= 360;
 }
 
-void	free_ray(t_raydata ***ray)
+void	free_ray(t_raydata ***ray, t_mlx *mlx)
 {
 	int	i;
 
 	i = -1;
-	while (++i < WIDTH)
+	while (++i < mlx->stg->width)
 		free(ray[i]);
 }
 
@@ -243,13 +243,13 @@ void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 		if (!ray[i].found)
 		{
 			ray[i].wall_size = 0;
-			ray[i].wall_start = HEIGHT / 2;
-			ray[i].wall_end = HEIGHT / 2;
+			ray[i].wall_start = mlx->stg->height / 2;
+			ray[i].wall_end = mlx->stg->height / 2;
 			continue ;
 		}
-		ray[i].wall_size = (HEIGHT / ray[i].dist);
-		ray[i].wall_start = (HEIGHT - ray[i].wall_size) / 2;
-		ray[i].wall_end = (HEIGHT + ray[i].wall_size) / 2;
+		ray[i].wall_size = (mlx->stg->height / ray[i].dist);
+		ray[i].wall_start = (mlx->stg->height - ray[i].wall_size) / 2;
+		ray[i].wall_end = (mlx->stg->height + ray[i].wall_size) / 2;
 		if (ray[i].block->type == WALL)
 			ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (ray[i].block->data.wall - 1));
 		else
@@ -265,7 +265,7 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 	int		color;
 
 	k = -1;
-	while (++k < QUALITY)
+	while (++k < mlx->stg->quality)
 	{
 		j = -mlx->map->playerPos.v;
 		while (j < ray->wall_start)
@@ -277,7 +277,7 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 			j++;
 		}
 		j += ray->wall_size;
-		while (j < HEIGHT - mlx->map->playerPos.v)
+		while (j < mlx->stg->height - mlx->map->playerPos.v)
 		{
 			color = 255 << 24 | mlx->map->texture.floor[0] << 16
 			| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
@@ -293,7 +293,7 @@ void	show_fps(t_mlx *mlx)
 	int	x;
 	int	y;
 
-	if (SHOW_FPS)
+	if (mlx->stg->show_fps)
 	{
 		y = 0;
 		while (y < 20)
@@ -301,7 +301,7 @@ void	show_fps(t_mlx *mlx)
 			x = 0;
 			while (x < 60)
 			{
-				mlx_pixel_put(mlx->mlx, mlx->win,  WIDTH - x, y, 0x00000000);
+				mlx_pixel_put(mlx->mlx, mlx->win,  mlx->stg->width - x, y, 0x00000000);
 				x++;
 			}
 			y++;
@@ -310,11 +310,11 @@ void	show_fps(t_mlx *mlx)
 	}
 }
 
-int	choose_anti_aliasing(int distance)
+int	choose_anti_aliasing(t_mlx *mlx, int distance)
 {
 	int	lvl;
 
-	if (ANTIALIASING_LEVEL == 2)
+	if (mlx->stg->antialiasing == 2)
 	{
 		if (distance < 2)
 			lvl = 1;
@@ -324,11 +324,11 @@ int	choose_anti_aliasing(int distance)
 	else if (distance < 2)
 		lvl = 1;
 	else if (distance < 5)
-		lvl = ANTIALIASING_LEVEL / 4;
+		lvl = mlx->stg->antialiasing / 4;
 	else if (distance < 10)
-		lvl = ANTIALIASING_LEVEL / 2;
+		lvl = mlx->stg->antialiasing / 2;
 	else
-		lvl = ANTIALIASING_LEVEL;
+		lvl = mlx->stg->antialiasing;
 	return (lvl);
 }
 
@@ -348,9 +348,9 @@ int	get_ss_color(t_mlx *mlx, int x, int y, int distance)
 	int		color_tmp;
 	int		lvl;
 	
-	if (ANTIALIASING_LEVEL == 1)
+	if (mlx->stg->antialiasing == 1)
 		return (mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img, x, y));
-	lvl = choose_anti_aliasing(distance);
+	lvl = choose_anti_aliasing(mlx, distance);
 	ft_bzero(color, 3 * sizeof(int));
 	y_pos = -1;
 	while (++y_pos < lvl)
@@ -388,16 +388,16 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	else
 		mlx->tmp = mlx->textures->west;
 	imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
-	wall_size = HEIGHT / ray->dist;
-	while (++k < QUALITY)
+	wall_size = mlx->stg->height / ray->dist;
+	while (++k < mlx->stg->quality)
 	{
 		j = ray->wall_start - 1;
 		if (j + mlx->map->playerPos.v < 0)
 			j = 0 - mlx->map->playerPos.v - 1;
-		imgY = ((j + 1) - (HEIGHT - ray->wall_size) / 2) * factor;
+		imgY = ((j + 1) - (mlx->stg->height - ray->wall_size) / 2) * factor;
 		while (imgY < 0)
 			imgY += ((t_img *)mlx->tmp)->height;
-		while (++j < fmin(ray->wall_end, HEIGHT - mlx->map->playerPos.v))
+		while (++j < fmin(ray->wall_end, mlx->stg->height - mlx->map->playerPos.v))
 		{
 			imgY += factor;
 			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
@@ -408,7 +408,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 
 void	raycasting(t_mlx *mlx, int need_free)
 {
-	t_raydata	*ray[WIDTH];
+	t_raydata	*ray[1920];
 	float		angle;
 	int			i;
 	int			j;
@@ -417,11 +417,11 @@ void	raycasting(t_mlx *mlx, int need_free)
 	if (need_free)
 		return ;
 	i = -1;
-	while (++i < WIDTH)
+	while (++i < mlx->stg->width)
 	{
-		if (i % QUALITY == 0)
+		if (i % mlx->stg->quality == 0)
 		{
-			angle = (mlx->map->playerPos.h - FOV / 2 + (float)i / (float)WIDTH * FOV) - 90;
+			angle = (mlx->map->playerPos.h - mlx->stg->fov / 2 + (float)i / (float)mlx->stg->width * mlx->stg->fov) - 90;
 			ajust_angle(&angle);
 			ray[i] = raycast(mlx, angle, false, mlx->map->playerPos);
 			if (!ray[i])
@@ -431,7 +431,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		}
 	}
 	i = 0;
-	while (i < WIDTH)
+	while (i < mlx->stg->width)
 	{
 		j = MAX_HEIGHT - 1;
 		while (j > 0 && !ray[i][j].found)
@@ -441,7 +441,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		{
 			if (ray[i][j].found)
 			{
-				factor = HEIGHT / ray[i][j].dist;
+				factor = mlx->stg->height / ray[i][j].dist;
 				if (ray[i][j].dir == 0)
 					factor = (float)mlx->textures->north->height / factor;
 				else if (ray[i][j].dir == 1)
@@ -454,15 +454,16 @@ void	raycasting(t_mlx *mlx, int need_free)
 			}
 			j--;
 		}
-		i += QUALITY;
+		i += mlx->stg->quality;
 	}
 	draw_sprites(mlx, ray);
 	show_fps(mlx);
 	// item_effect(mlx);
 	// put_actual_weapon(mlx, img);
-	mini_map(mlx);
+	if (mlx->stg->show_minimap)
+		mini_map(mlx);
 	// inventory(mlx, img, 0);
 	// tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
-	// mlx_string_put(mlx->mlx, mlx->win, WIDTH - 150, HEIGHT - 210, 0xFF00FF00, tmp);
+	// mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, HEIGHT - 210, 0xFF00FF00, tmp);
 	// free(tmp);
 }

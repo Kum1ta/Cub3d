@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:49:38 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 19:02:59 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:26:42 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	inventory(t_mlx *mlx, void *img, int need_free)
 {
 	(void)mlx;
 	(void)img;
-	draw_circle(mlx, WIDTH - 200, HEIGHT - 200, 75, need_free);
+	draw_circle(mlx, mlx->stg->width - 200, mlx->stg->height - 200, 75, need_free);
 	if (need_free)
 		return ;
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->weapon_inv->img, WIDTH - 170, HEIGHT - 170);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->weapon_inv->img, mlx->stg->width - 170, mlx->stg->height - 170);
 	else if (mlx->player->actual_weapon == KNIFE_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, WIDTH - 170, HEIGHT - 170);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, mlx->stg->width - 170, mlx->stg->height - 170);
 	else if (mlx->player->actual_weapon == FIST_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fist_inv->img, WIDTH - 170, HEIGHT - 170);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fist_inv->img, mlx->stg->width - 170, mlx->stg->height - 170);
 }

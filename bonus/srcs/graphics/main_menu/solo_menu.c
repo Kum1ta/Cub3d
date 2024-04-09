@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solo_menu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:00:22 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 19:36:45 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:26:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	add_button_map(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 {
-	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + WIDTH - 140 - 5 && mlx->mouse->y > xy[1] - 20 && mlx->mouse->y < xy[1] + 10)
+	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + mlx->stg->width - 140 - 5 && mlx->mouse->y > xy[1] - 20 && mlx->mouse->y < xy[1] + 10)
 	{
 		mlx_put_image_to_window(mlx->mlx, mlx->win, img, xy[0] - 10, xy[1] - 22);
 		if (mlx->mouse->pressed_left)
@@ -39,8 +39,8 @@ void	solo_menu(t_mlx *mlx, int need_free)
 	}
 	if (!square_img)
 	{
-		square_img = mlx_new_image(mlx->mlx, WIDTH - 140, 30);
-		create_square(mlx, square_img, WIDTH - 140, 30);
+		square_img = mlx_new_image(mlx->mlx, mlx->stg->width - 140, 30);
+		create_square(mlx, square_img, mlx->stg->width - 140, 30);
 	}
 	if (!bg)
 	{
@@ -59,5 +59,5 @@ void	solo_menu(t_mlx *mlx, int need_free)
 	add_button_map(mlx, (int [2]){70, 315}, square_img, default_map2);
 	add_button_map(mlx, (int [2]){70, 355}, square_img, default_map3);
 
-	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
+	add_button(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, square_img, open_main_menu);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 19:35:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:26:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	options_menu(t_mlx *mlx, int need_free)
 	}
 	if (!square_img)
 	{
-		square_img = mlx_new_image(mlx->mlx, WIDTH - 140, 30);
-		create_square(mlx, square_img, WIDTH - 140, 30);
+		square_img = mlx_new_image(mlx->mlx, mlx->stg->width - 140, 30);
+		create_square(mlx, square_img, mlx->stg->width - 140, 30);
 		bg = mlx_png_file_to_image(mlx->mlx, "textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
 
 	}
@@ -55,6 +55,6 @@ void	options_menu(t_mlx *mlx, int need_free)
 	mlx_string_put(mlx->mlx, mlx->win, 90, 560 + diff, 0xFFFFFFFF, "Position X : ");
 	mlx_string_put(mlx->mlx, mlx->win, 90, 590 + diff, 0xFFFFFFFF, "Position Y : ");
 
-	add_button(mlx, (int [2]){WIDTH - 100, HEIGHT - 30}, square_img, open_main_menu);
+	add_button(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, square_img, open_main_menu);
 }
 

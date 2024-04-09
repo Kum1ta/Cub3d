@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 22:54:45 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 00:26:39 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	update(void *mlx_ptr)
 	{
 		mlx_mouse_show();
 		mlx->actuel_menu = NOTHING;
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50,
-			HEIGHT / 2, 0xFFFF0000, "You died");
+		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 50,
+			mlx->stg->height / 2, 0xFFFF0000, "You died");
 	}
 	else if (mlx->actuel_menu == START_GAME)
 	{
@@ -81,7 +81,7 @@ int	update(void *mlx_ptr)
 		// }
 	}
 	else
-		mlx_string_put(mlx->mlx, mlx->win, WIDTH / 2 - 50,
-			HEIGHT / 2, 0xFFFF0000, "Error");
+		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 50,
+			mlx->stg->height / 2, 0xFFFF0000, "Error");
 	return (0);
 }
