@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 21:10:43 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:35:09 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "mlx.h"
 # include "cub3d.h"
 
-# define WIDTH 1024
+# define WIDTH 1920
 # define HEIGHT 768
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/08 20:42:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:21:42 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	int					tmp;
 	float				add_val;
 	t_vec4				*ply_pos;
+	t_block				block;
 
 	move_weapon(mlx);
 	tmp = mlx->map->playerPos.h - 90;
@@ -50,20 +51,14 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 		tmp += 360;
 	angle = tmp * (PI / 180);
 	ply_pos = &(mlx->map->playerPos);
-	// move X
-	{
-		add_val = deltaX * cos(angle) - deltaY * sin(angle);
-		t_block	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
-		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
-			ply_pos->x += add_val;
-	}
-	// move Y
-	{
-		add_val = deltaX * sin(angle) + deltaY * cos(angle);
-		t_block	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
-		if (block.type != WALL && (block.type != DOOR || block.data.door == true))
-			ply_pos->y += add_val;
-	}
+	add_val = deltaX * cos(angle) - deltaY * sin(angle);
+	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
+	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
+		ply_pos->x += add_val;
+	add_val = deltaX * sin(angle) + deltaY * cos(angle);
+	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
+	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
+		ply_pos->y += add_val;
 	if (mlx->game_server.status == CONNECTED)
 		dprintf(mlx->game_server.sockfd, "setPos:%.2f,%.2f,%.2f,%.2f;",
 			ply_pos->x, ply_pos->y, ply_pos->z, ply_pos->h);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:30:31 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:02:57 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ int	load_textures(t_mlx *mlx)
 		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
 	mlx->textures->west->img = mlx_png_file_to_image(mlx->mlx, "textures/map/wall_west.png", &mlx->textures->west->width, &mlx->textures->west->height);
 	if (!mlx->textures->west->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+
+	mlx->textures->floor = malloc(sizeof(t_img));
+	if (!mlx->textures->floor)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	mlx->textures->floor->img = mlx_png_file_to_image(mlx->mlx, "textures/map/floor.png", &mlx->textures->floor->width, &mlx->textures->floor->height);
+	if (!mlx->textures->floor->img)
 		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
 
 	mlx->textures->player_ico = malloc(sizeof(t_img));

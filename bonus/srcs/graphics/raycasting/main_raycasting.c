@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:55:45 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:13:35 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,13 +248,12 @@ void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 			continue ;
 		}
 		ray[i].wall_size = (mlx->stg->height / ray[i].dist);
-		ray[i].wall_start = (mlx->stg->height - ray[i].wall_size) / 2;
-		ray[i].wall_end = (mlx->stg->height + ray[i].wall_size) / 2;
+		ray[i].wall_start = ((mlx->stg->height - ray[i].wall_size) / 2);
+		ray[i].wall_end = ray[i].wall_start + ray[i].wall_size;
 		if (ray[i].block->type == WALL)
 			ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (ray[i].block->data.wall - 1));
 		else
-			ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (WALL_SIZE - 1));
-		ray[i].wall_start = ray[i].wall_start - ((ray[i].wall_end - ray[i].wall_start) * (WALL_SIZE - 1));
+			ray[i].wall_start = ray[i].wall_start;
 	}
 }
 
@@ -276,16 +275,14 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
 			j++;
 		}
-		j += ray->wall_size;
-		while (j < mlx->stg->height - mlx->map->playerPos.v)
+		j += ray->wall_size - 1;
+		while (++j < mlx->stg->height - mlx->map->playerPos.v)
 		{
 			color = 255 << 24 | mlx->map->texture.floor[0] << 16
 			| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
 			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
-			j++;
 		}
 	}
-
 }
 
 void	show_fps(t_mlx *mlx)

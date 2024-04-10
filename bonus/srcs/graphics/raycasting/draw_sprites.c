@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 00:44:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:38:08 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ typedef struct s_sprite
 	{
 		t_online_player *player;
 	} data;
-	float	dist;
-	int		screenX;
-}	t_sprite;
+	float dist;
+	int screenX;
+} t_sprite;
 
-static inline float	get_distance_between_2dcoords(t_vec4 pos1, t_vec4 pos2)
+static inline float get_distance_between_2dcoords(t_vec4 pos1, t_vec4 pos2)
 {
 	return (powf(pos1.x - pos2.x, 2) + powf(pos1.y - pos2.y, 2));
 }
 
-static t_sprite	*get_sprite_list(t_mlx *mlx)
+static t_sprite *get_sprite_list(t_mlx *mlx)
 {
-	int			i;
-	t_list		*online_players;
-	t_sprite	*res;
+	int i;
+	t_list *online_players;
+	t_sprite *res;
 
 	i = 0;
 	if (mlx->game_server.status == CONNECTED)
@@ -67,14 +67,14 @@ static t_sprite	*get_sprite_list(t_mlx *mlx)
 	return (res);
 }
 
-static void	sort_sprites(t_sprite *sprites)
+static void sort_sprites(t_sprite *sprites)
 {
-	int			i;
-	int			j;
-	t_sprite	tmp;
+	int i;
+	int j;
+	t_sprite tmp;
 
 	if (sprites->type == NONE)
-		return ;
+		return;
 	i = 0;
 	while (sprites[i + 1].type != NONE)
 	{
@@ -93,18 +93,18 @@ static void	sort_sprites(t_sprite *sprites)
 	}
 }
 
-static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
+static void set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
 {
-	float	rAngle = fmod((plyPos.h + (360 - 90)), 360) * PI / 180;
-	float	transform;
-	float	diffX;
-	float	diffY;
-	float	dirX = cos(rAngle);
-	float	dirY = sin(rAngle);
-	float	planeX = (dirX * cos(-PI/2) - dirY * sin(-PI/2)) * (mlx->stg->fov * PI / 180);
-	float	planeY = (dirX * sin(-PI/2) + dirY * cos(-PI/2)) * (mlx->stg->fov * PI / 180);
-	float	invCam = 1 / (planeX * dirY - planeY * dirX);
-	float	depth;
+	float rAngle = fmod((plyPos.h + (360 - 90)), 360) * PI / 180;
+	float transform;
+	float diffX;
+	float diffY;
+	float dirX = cos(rAngle);
+	float dirY = sin(rAngle);
+	float planeX = 0;
+	float planeY = 0;
+	float invCam = 1 / (planeX * dirY - planeY * dirX);
+	float depth;
 
 	while (sprites->type != NONE)
 	{
@@ -121,7 +121,7 @@ static void	set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
 	}
 }
 
-static void	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
+static void draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
 	if (sprite->screenX >= 0 && sprite->screenX <= mlx->stg->width)
 	{
@@ -132,10 +132,10 @@ static void	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 	printf("sprite pos x: %d (screenw: %d)\n", sprite->screenX, mlx->stg->width);
 }
 
-void	draw_sprites(t_mlx *mlx, t_raydata **ray)
+void draw_sprites(t_mlx *mlx, t_raydata **ray)
 {
-	t_sprite	*sprites;
-	int			i;
+	t_sprite *sprites;
+	int i;
 
 	sprites = get_sprite_list(mlx);
 	sort_sprites(sprites);
@@ -148,4 +148,3 @@ void	draw_sprites(t_mlx *mlx, t_raydata **ray)
 	}
 	free(sprites);
 }
-

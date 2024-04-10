@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/02 22:19:33 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:40:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # define MAX_DISTANCE 1000
 # define WALL_SIZE 1.0
-# define FOV 60
+# define FOV 70
 
 typedef struct s_raydata
 {
