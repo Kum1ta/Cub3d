@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/22 19:10:21 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:00:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	destroy_textures(t_mlx *mlx)
 	if (mlx->textures->fire_gun && mlx->textures->fire_gun->img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->fire_gun->img);
 	free(mlx->textures->fire_gun);
+	if (mlx->textures->player.img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player.img);
 	free(mlx->textures);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 14:02:57 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:03:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_textures(t_loadeds_textures *textures)
 	textures->fist_game = NULL;
 	textures->knife_game = NULL;
 	textures->fire_gun = NULL;
+	textures->player.img = NULL;
 }
 
 int	load_textures(t_mlx *mlx)
@@ -126,6 +127,10 @@ int	load_textures(t_mlx *mlx)
 		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
 	mlx->textures->fire_gun->img = mlx_png_file_to_image(mlx->mlx, "textures/game/fire.png", &mlx->textures->fire_gun->width, &mlx->textures->fire_gun->height);
 	if (!mlx->textures->fire_gun->img)
+		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
+	
+	mlx->textures->player.img = mlx_png_file_to_image(mlx->mlx, "textures/game/player_front.png", &mlx->textures->player.width, &mlx->textures->player.height);
+	if (!mlx->textures->player.img)
 		return ((int [2]){destroy_textures(mlx), error_int("Cube3d: Error load_texture()\n", 1)}[1]);
 	
 	return (0);

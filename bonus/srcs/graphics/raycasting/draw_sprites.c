@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 17:14:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 22:48:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ typedef struct s_sprite
 	{
 		t_online_player *player;
 	} data;
-	float dist;
-	int screenX;
+	float	dist;
+	float	depth;
+	int 	screenX;
 } t_sprite;
 
 static inline float get_distance_between_2dcoords(t_vec3 pos1, t_vec3 pos2)
@@ -103,7 +104,6 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 	float planeX = mlx->map->camPlane.x;
 	float planeY = mlx->map->camPlane.y;
 	float invCam = 1 / (planeX * dirY - planeY * dirX);
-	float depth;
 
 	while (sprites->type != NONE)
 	{
@@ -112,8 +112,8 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 			diffX = sprites->data.player->pos.x - plyPos.x;
 			diffY = sprites->data.player->pos.y - plyPos.y;
 			transform = invCam * (dirY * diffX - dirX * diffY);
-			depth = invCam * (planeX * diffY - planeY * diffX);
-			sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / depth));
+			sprites->depth = invCam * (planeX * diffY - planeY * diffX);
+			sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / sprites->depth));
 		}
 		sprites++;
 	}
@@ -121,13 +121,44 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 
 static void draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
-	if (sprite->screenX >= 0 && sprite->screenX <= mlx->stg->width)
+	int	width;
+	int	height;
+	int	startX;
+	int	startY;
+	int	x;
+	int	y;
+	int	imgX;
+	int	imgY;
+	int	color;
+
+	width = mlx->stg->height / sprite->depth;
+	height = mlx->stg->height / sprite->depth;
+	if (sprite->depth > 0 && sprite->screenX + width / 2 >= 0 && sprite->screenX - width / 2 < mlx->stg->width)
 	{
-		for (int y = (mlx->stg->height / 2) - 5; y < (mlx->stg->height / 2) + 5; y++)
-			for (int x = sprite->screenX - 5; x < sprite->screenX + 5; x++)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFF0000);
+		startX = sprite->screenX - width / 2;
+		x = startX;
+		while (x - startX < width)
+		{
+			if (x >= 0 && x < mlx->stg->width && sprite->depth < ray[x]->dist)
+			{
+				imgX = ((float) (x - startX)) / ((float) width) * mlx->textures->player.width;
+				startY = mlx->stg->height / 2 - height / 2;
+				y = startY;
+				while (y - startY < height)
+				{
+					imgY = ((float) (y - startY)) / ((float) height) * mlx->textures->player.height;
+					if (y + mlx->map->camDir.z >= 0 && y + mlx->map->camDir.z < mlx->stg->height)
+					{
+						color = mlx_get_image_pixel(mlx->mlx, mlx->textures->player.img, imgX, imgY);
+						if (color >> 24 & 0xFF)
+							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);
+					}
+					y++;
+				}
+			}
+			x++;
+		}
 	}
-	printf("sprite pos x: %d (screenw: %d)\n", sprite->screenX, mlx->stg->width);
 }
 
 void draw_sprites(t_mlx *mlx, t_raydata **ray)

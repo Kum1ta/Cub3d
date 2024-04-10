@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:43:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 09:29:53 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 22:35:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ enum e_key {
 	KEY_X,
 	KEY_Y,
 	KEY_Z,
-	KEY_30,
-	KEY_31,
-	KEY_32,
-	KEY_33,
-	KEY_34,
-	KEY_35,
-	KEY_36,
-	KEY_37,
-	KEY_38,
-	KEY_39,
+	KEY_N1,
+	KEY_N2,
+	KEY_N3,
+	KEY_N4,
+	KEY_N5,
+	KEY_N6,
+	KEY_N7,
+	KEY_N8,
+	KEY_N9,
+	KEY_N0,
 	KEY_40,
 	KEY_ESC,
 	KEY_BACKSPACE,
@@ -69,7 +69,7 @@ enum e_key {
 	KEY_52,
 	KEY_53,
 	KEY_54,
-	KEY_55,
+	KEY_DOT,
 	KEY_56,
 	KEY_57,
 	KEY_58,

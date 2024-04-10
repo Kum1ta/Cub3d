@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiplayer_menu.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 00:26:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:36:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ char	get_key_ascii(int key, bool shift, int allow_char)
 		return (' ');
 	if (key >= KEY_NB1 && key <= KEY_NB9 && (allow_char & A_NUM) == A_NUM)
 		return (key - KEY_NB1 + '1');
-	if (key == KEY_NB0 && (allow_char & A_NUM) == A_NUM)
+	if (key >= KEY_N1 && key <= KEY_N9 && (allow_char & A_NUM) == A_NUM)
+		return (key - KEY_N1 + '1');
+	if ((key == KEY_NB0 || key == KEY_N0) && (allow_char & A_NUM) == A_NUM)
 		return ('0');
-	if (key == KEY_POINT && (allow_char & A_POINT) == A_POINT)
+	if ((key == KEY_POINT || key == KEY_DOT) && (allow_char & A_POINT) == A_POINT)
 		return ('.');
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 17:10:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 21:58:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_loadeds_textures
 	t_img	*fist_game;
 	t_img	*knife_game;
 	t_img	*fire_gun;
+	t_img	player;
 }	t_loadeds_textures;
 
 typedef struct s_player
