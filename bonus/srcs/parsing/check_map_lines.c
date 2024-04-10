@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 00:41:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:47:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static bool	allocate_map(t_map *map)
 	return (true);
 }
 
-static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_vec2 pos)
+static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_ivec2 pos)
 {
 	bool	escaped;
 
@@ -125,17 +125,17 @@ static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_vec
 		return (true);
 	escaped = false;
 	if (!escaped && !flagBlocks[(pos.y - 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_vec2){pos.x, pos.y - 1});
+		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1});
 	if (!escaped && !flagBlocks[(pos.y + 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_vec2){pos.x, pos.y + 1});
+		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1});
 	if (!escaped && !flagBlocks[pos.y * width + pos.x - 1])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_vec2){pos.x - 1, pos.y});
+		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y});
 	if (!escaped && !flagBlocks[pos.y * width + pos.x + 1])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_vec2){pos.x + 1, pos.y});
+		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y});
 	return (escaped);
 }
 
-t_map_error_type	check_map_lines(t_map *map, t_list *lines)
+t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
 {
 	t_map_error_type	res;
 	bool				*flagBlocks;
@@ -146,7 +146,7 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 	map->height = get_map_height(lines);
 	if (!allocate_map(map))
 		return (MAP_ERROR_ALLOC);
-	res = set_map_blocks(map, lines);
+	res = set_map_blocks(map, lines, screen_res);
 	if (res != MAP_NO_ERROR)
 		return (res);
 	if (map->playerPos.x == -1.0f)
@@ -154,7 +154,7 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 	flagBlocks = ft_calloc(map->height * map->width, sizeof(bool));
 	if (flagBlocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flagBlocks, map->width, (t_vec2){map->playerPos.x, map->playerPos.y}))
+	if (can_exit_map(map->blocks, flagBlocks, map->width, (t_ivec2){map->playerPos.x, map->playerPos.y}))
 		res = MAP_CAN_EXIT;
 	free(flagBlocks);
 	return (res);

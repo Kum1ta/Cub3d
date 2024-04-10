@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 15:13:35 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:36:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ typedef struct s_ray {
 	int		dir;
 }	t_ray;
 
-void	init_ray(t_ray *ray, t_mlx *mlx, float angle, t_vec4 start)
+void	init_ray(t_ray *ray, t_mlx *mlx, int screen_x, t_vec3 start)
 {
-	float	rAngle;
+	float	camX;
 
-	rAngle = angle * PI / 180;
-	ray->dirX = cos(rAngle);
-	ray->dirY = sin(rAngle);
+	camX = 2 * screen_x / (float) mlx->stg->width - 1;
+	ray->dirX = mlx->map->camDir.x + mlx->map->camPlane.x * camX;
+	ray->dirY = mlx->map->camDir.y + mlx->map->camPlane.y * camX;
 	ray->posX = (int) start.x;
 	ray->posY = (int) start.y;
-	ray->deltaDist.x = sqrt(1 + (ray->dirY * ray->dirY) / (ray->dirX * ray->dirX));
-	ray->deltaDist.y = sqrt(1 + (ray->dirX * ray->dirX) / (ray->dirY * ray->dirY));
+	ray->deltaDist.x = fabs(1 / ray->dirX);
+	ray->deltaDist.y = fabs(1 / ray->dirY);
 	if (ray->dirX < 0)
 		ray->dist.x = (start.x - ray->posX) * ray->deltaDist.x;
 	else
@@ -49,7 +49,7 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle, t_vec4 start)
 	ray->nbStep = 0;
 }
 
-t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start)
+t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
 {
 	t_raydata	*res;
 	t_ray		ray;
@@ -64,7 +64,7 @@ t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start)
 	if (!res)
 		return (NULL);
 	i = 0;
-	init_ray(&ray, mlx, angle, start);
+	init_ray(&ray, mlx, screen_x, start);
 	curr_size = 0;
 	while (curr_size < max_height && ray.nbStep < MAX_DISTANCE)
 	{
@@ -216,21 +216,21 @@ void	free_ray(t_raydata ***ray, t_mlx *mlx)
 		free(ray[i]);
 }
 
-void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
-{
-	float	radian;
-	float	ra;
-	int		i;
+// void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
+// {
+	// float	radian;
+	// float	ra;
+	// int		i;
 
-	i = -1;
-	ra = angle_ray + 90;
-	ajust_angle(&ra);
-	radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
-	while (++i < MAX_HEIGHT)
-	{
-		ray[i].dist *= cos(radian);
-	}
-}
+	// i = -1;
+	// ra = angle_ray + 90;
+	// ajust_angle(&ra);
+	// radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
+	// while (++i < MAX_HEIGHT)
+	// {
+	// 	ray[i].dist *= cos(radian);
+	// }
+// }
 
 void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 {
@@ -266,21 +266,21 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 	k = -1;
 	while (++k < mlx->stg->quality)
 	{
-		j = -mlx->map->playerPos.v;
+		j = -mlx->map->camDir.z;
 		while (j < ray->wall_start)
 		{
 			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16
 			| mlx->map->texture.ceiling[1] << 8
 			| mlx->map->texture.ceiling[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
 			j++;
 		}
 		j += ray->wall_size - 1;
-		while (++j < mlx->stg->height - mlx->map->playerPos.v)
+		while (++j < mlx->stg->height - mlx->map->camDir.z)
 		{
 			color = 255 << 24 | mlx->map->texture.floor[0] << 16
 			| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
 		}
 	}
 }
@@ -389,16 +389,16 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	while (++k < mlx->stg->quality)
 	{
 		j = ray->wall_start - 1;
-		if (j + mlx->map->playerPos.v < 0)
-			j = 0 - mlx->map->playerPos.v - 1;
+		if (j + mlx->map->camDir.z < 0)
+			j = 0 - mlx->map->camDir.z - 1;
 		imgY = ((j + 1) - (mlx->stg->height - ray->wall_size) / 2) * factor;
 		while (imgY < 0)
 			imgY += ((t_img *)mlx->tmp)->height;
-		while (++j < fmin(ray->wall_end, mlx->stg->height - mlx->map->playerPos.v))
+		while (++j < fmin(ray->wall_end, mlx->stg->height - mlx->map->camDir.z))
 		{
 			imgY += factor;
 			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->playerPos.v, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
 		}
 	}
 }
@@ -406,7 +406,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	t_raydata	*ray[1920];
-	float		angle;
+	// float		angle;
 	int			i;
 	int			j;
 	float		factor;
@@ -418,12 +418,12 @@ void	raycasting(t_mlx *mlx, int need_free)
 	{
 		if (i % mlx->stg->quality == 0)
 		{
-			angle = (mlx->map->playerPos.h - mlx->stg->fov / 2 + (float)i / (float)mlx->stg->width * mlx->stg->fov) - 90;
-			ajust_angle(&angle);
-			ray[i] = raycast(mlx, angle, false, mlx->map->playerPos);
+			// angle = (mlx->map->playerPos.h - mlx->stg->fov / 2 + (float)i / (float)mlx->stg->width * mlx->stg->fov) - 90;
+			// ajust_angle(&angle);
+			ray[i] = raycast(mlx, i, false, mlx->map->playerPos);
 			if (!ray[i])
 				return ;
-			correct_fish_eye(ray[i], angle, mlx);
+			// correct_fish_eye(ray[i], angle, mlx);
 			calcul_wall_size(mlx, ray[i]);
 		}
 	}

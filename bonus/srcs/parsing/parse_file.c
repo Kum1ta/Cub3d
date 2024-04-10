@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 19:00:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:20:25 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static inline void	empty_map_data(t_map *map)
 	map->texture.ceiling[1] = -1;
 	map->texture.ceiling[2] = -1;
 	map->playerPos.x = -1.0f;
+	map->camDir.x = 0;
+	map->camDir.y = 0;
+	map->camDir.z = 0;
+	map->camPlane.x = 0;
+	map->camPlane.y = 0;
 }
 
 static inline bool	is_map_valid(t_map *map)
@@ -66,7 +71,7 @@ static bool	check_file_ext(char *filename, char *ext)
 	}
 }
 
-t_map	*parse_map(char *filename)
+t_map	*parse_map(char *filename, int screen_res[2])
 {
 	t_map	*res;
 	char	fd;
@@ -86,7 +91,7 @@ t_map	*parse_map(char *filename)
 		ft_dprintf(2, "Error\n%s\n", strerror(errno));
 		return (NULL);
 	}
-	if (!parse_lines(fd, res) || !is_map_valid(res))
+	if (!parse_lines(fd, res, screen_res) || !is_map_valid(res))
 	{
 		free_map(res);
 		res = NULL;

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/08 20:33:47 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:12:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_online_player
 {
 	int		serverId;
 	char	playerName[SV_MAX_PLAYER_NAME + 1]; // forbiddenChars : ":;,"
-	t_vec4	pos;
+	t_vec3	pos;
 }	t_online_player;
 
 t_online_player	*get_player_from_source(t_list *players, int player_src);

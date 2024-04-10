@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:35:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:01:34 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ void	update_pos(t_mlx *mlx)
 	mlx->mouse->last_y = mlx->mouse->y;
 }
 
-void	calculate_target_position(t_mlx *mlx, float angle, float distance)
+void	calculate_target_position(t_mlx *mlx, t_vec3 camDir, float distance)
 {
 	t_vec2	target_pos;
 
 	target_pos.x = mlx->menu_map->x
 		+ mlx->menu_map->size * mlx->map->playerPos.x
-		+ mlx->menu_map->size / 4 + distance * cos(angle);
+		+ mlx->menu_map->size / 4 + distance * camDir.x;
 	target_pos.y = mlx->menu_map->y
 		+ mlx->menu_map->size * mlx->map->playerPos.y
-		+ mlx->menu_map->size / 4 + distance * sin(angle);
+		+ mlx->menu_map->size / 4 + distance * camDir.y;
 	mlx_pixel_put(mlx->mlx, mlx->win, target_pos.x, target_pos.y, 0xFFFF0000);
 }
 
@@ -91,15 +91,10 @@ void	print_map(t_mlx *mlx)
 
 void	larg_map(t_mlx *mlx, int need_free)
 {
-	int			angle;
-
 	if (need_free)
 		return ;
 	update_pos(mlx);
-	angle = mlx->map->playerPos.h - 90;
-	if (angle < 0)
-		angle += 360;
-	calculate_target_position(mlx, angle * (PI / 180.0),
+	calculate_target_position(mlx, mlx->map->camDir,
 		mlx->menu_map->size);
 	print_map(mlx);
 	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 300, 40, 0xFFFFFFFF,

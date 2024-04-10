@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 17:39:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:53:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@
 #  define SV_MAX_PLAYER_NAME 100
 # endif
 
-typedef struct s_vec4
+typedef struct s_vec3
 {
 	float	x;
 	float	y;
 	float	z;
-	float	h;
-}			t_vec4;
+}			t_vec3;
 
 typedef struct	s_client
 {
@@ -56,7 +55,7 @@ typedef struct	s_client
 	char		ip[INET_ADDRSTRLEN];
 	char		playerName[SV_MAX_PLAYER_NAME + 1]; // forbiddenChars : ":;,"
 	char		*req_buffer;
-	t_vec4		playerPos;
+	t_vec3		playerPos;
 	long long	last_ping;
 }	t_client;
 

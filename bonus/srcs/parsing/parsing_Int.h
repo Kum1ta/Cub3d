@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 16:44:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:47:07 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef enum e_map_line_type {
 }	t_map_line_type;
 
 
-typedef struct s_vec2 {
+typedef struct s_ivec2 {
 	size_t	x;
 	size_t	y;
-}	t_vec2;
+}	t_ivec2;
 
 typedef enum e_map_error_type {
 	MAP_NO_ERROR,
@@ -42,10 +42,10 @@ typedef enum e_map_error_type {
 	MAP_CAN_EXIT
 }	t_map_error_type;
 
-bool				parse_lines(int fd, t_map *map_data);
+bool				parse_lines(int fd, t_map *map_data, int screen_res[2]);
 t_map_error_type	add_map_line(char *line, t_list **map_lines);
 t_map_error_type	check_map_param(char *line, t_map *map_data, t_list **map_lines);
-t_map_error_type	check_map_lines(t_map *map, t_list *lines);
-t_map_error_type	set_map_blocks(t_map *map, t_list *lines);
+t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2]);
+t_map_error_type	set_map_blocks(t_map *map, t_list *lines, int screen_res[2]);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_keyboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 15:21:42 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:11:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,30 @@ void	move_weapon(t_mlx *mlx)
 
 void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
-	float				angle;
-	int					tmp;
 	float				add_val;
-	t_vec4				*ply_pos;
+	t_vec3				*ply_pos;
 	t_block				block;
 
 	move_weapon(mlx);
-	tmp = mlx->map->playerPos.h - 90;
-	if (tmp < 0)
-		tmp += 360;
-	angle = tmp * (PI / 180);
 	ply_pos = &(mlx->map->playerPos);
-	add_val = deltaX * cos(angle) - deltaY * sin(angle);
+	add_val = deltaX * mlx->map->camDir.x - deltaY * mlx->map->camDir.y;
 	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->x += add_val;
-	add_val = deltaX * sin(angle) + deltaY * cos(angle);
+	add_val = deltaX * mlx->map->camDir.y + deltaY * mlx->map->camDir.x;
 	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->y += add_val;
 	if (mlx->game_server.status == CONNECTED)
-		dprintf(mlx->game_server.sockfd, "setPos:%.2f,%.2f,%.2f,%.2f;",
-			ply_pos->x, ply_pos->y, ply_pos->z, ply_pos->h);
+		dprintf(mlx->game_server.sockfd, "setPos:%.2f,%.2f,%.2f;",
+			ply_pos->x, ply_pos->y, ply_pos->z);
 }
 
 void	interract_block(t_mlx *mlx)
 {
 	t_raydata	*front_ray;
 
-	front_ray = raycast(mlx, fmod(mlx->map->playerPos.h + (360 - 90), 360), true, mlx->map->playerPos);
+	front_ray = raycast(mlx, mlx->stg->width / 2, true, mlx->map->playerPos);
 	if (front_ray->found && front_ray->dist < 2)
 	{
 		t_block	*front_block = front_ray->block;

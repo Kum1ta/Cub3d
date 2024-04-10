@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 13:38:08 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:14:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_sprite
 	int screenX;
 } t_sprite;
 
-static inline float get_distance_between_2dcoords(t_vec4 pos1, t_vec4 pos2)
+static inline float get_distance_between_2dcoords(t_vec3 pos1, t_vec3 pos2)
 {
 	return (powf(pos1.x - pos2.x, 2) + powf(pos1.y - pos2.y, 2));
 }
@@ -93,16 +93,15 @@ static void sort_sprites(t_sprite *sprites)
 	}
 }
 
-static void set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
+static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 {
-	float rAngle = fmod((plyPos.h + (360 - 90)), 360) * PI / 180;
 	float transform;
 	float diffX;
 	float diffY;
-	float dirX = cos(rAngle);
-	float dirY = sin(rAngle);
-	float planeX = 0;
-	float planeY = 0;
+	float dirX = mlx->map->camDir.x;
+	float dirY = mlx->map->camDir.y;
+	float planeX = mlx->map->camPlane.x;
+	float planeY = mlx->map->camPlane.y;
 	float invCam = 1 / (planeX * dirY - planeY * dirX);
 	float depth;
 
@@ -115,7 +114,6 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec4 plyPos, t_mlx *mlx)
 			transform = invCam * (dirY * diffX - dirX * diffY);
 			depth = invCam * (planeX * diffY - planeY * diffX);
 			sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / depth));
-			sprites->screenX = (mlx->stg->width / 2) + ((mlx->stg->width / 2) - sprites->screenX);
 		}
 		sprites++;
 	}

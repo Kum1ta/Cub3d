@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:58:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/03 14:10:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:42:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	test_map(char *filename, int expected)
 {
 	ft_printf("\n\nTest for map %s : \n", filename);
 	int res;
-	t_map *map = parse_map(filename);
+	t_map *map = parse_map(filename, (int [2]){1, 1});
 	if (map)
 	{
 		ft_printf("\tnorth txt : %s\n", map->texture.north);

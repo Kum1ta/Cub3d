@@ -6,15 +6,15 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/08 20:27:32 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:53:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server_Int.h"
 
-static t_vec4	parse_vec4(char *str)
+static t_vec3	parse_vec3(char *str)
 {
-	t_vec4	res;
+	t_vec3	res;
 
 	res.x = ft_atof(str);
 	while (*str && *str++ != ',')
@@ -23,9 +23,6 @@ static t_vec4	parse_vec4(char *str)
 	while (*str && *str++ != ',')
 		;
 	res.z = ft_atof(str);
-	while (*str && *str++ != ',')
-		;
-	res.h = ft_atof(str);
 	return (res);
 }
 
@@ -64,17 +61,16 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 	clients[clientI].playerName[i] = 0;
 	while (value[i++] != ',')
 		;
-	clients[clientI].playerPos = parse_vec4(value + i);
+	clients[clientI].playerPos = parse_vec3(value + i);
 	i = 0;
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
 		{
 			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, value);
-			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f;",
+			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f;",
 				i, clients[i].playerName, clients[i].playerPos.x,
-				clients[i].playerPos.y, clients[i].playerPos.z,
-				clients[i].playerPos.h);
+				clients[i].playerPos.y, clients[i].playerPos.z);
 			printf("sent to %d and %d\n", i, clientI);
 		}
 		i++;
@@ -87,7 +83,7 @@ void	act_set_pos(t_client *clients, int clientI, char *value, long long currTs)
 
 	(void) currTs;
 	i = 0;
-	clients[clientI].playerPos = parse_vec4(value);
+	clients[clientI].playerPos = parse_vec3(value);
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)

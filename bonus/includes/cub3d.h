@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 16:32:36 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:41:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,17 @@ typedef struct s_texture {
 	int		ceiling[3];
 }	t_texture;
 
-typedef struct s_vec4 {
+typedef struct s_vec3 {
 	float	x;
 	float	y;
 	float	z;
-	float	h;
-	float	v;
-}	t_vec4;
+}	t_vec3;
+
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
 
 typedef struct s_map {
 	t_block		**blocks;
@@ -65,7 +69,9 @@ typedef struct s_map {
 	size_t		height;
 
 	t_texture	texture;
-	t_vec4		playerPos;
+	t_vec3		playerPos;
+	t_vec3		camDir;
+	t_vec2		camPlane;
 }	t_map;
 
 typedef struct s_settings {
@@ -85,7 +91,7 @@ typedef struct s_settings {
 void		graphics_part(t_map *map, t_settings *settings);
 
 /* --- parse_file.c -------------------------------------------------------- */
-t_map		*parse_map(char *filename);
+t_map		*parse_map(char *filename, int screen_resol[2]);
 
 /* --- free_map.c ---------------------------------------------------------- */
 void		free_blocks(t_block **blocks);

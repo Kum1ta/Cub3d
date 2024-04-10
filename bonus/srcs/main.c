@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/09 16:29:51 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:41:41 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 
 	(void)ac;
 	settings = parse_config_file(".config");
-	map = parse_map(av[1]);
+	map = parse_map(av[1], (int [2]){settings->width, settings->height});
 	if (!map)
 		return (0);
 	argument_map(av[1], -1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:37:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:10:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@
 
 # define MIDSCREEN_POSX mlx->stg->width / 2
 # define MIDSCREEN_POSY mlx->stg->height / 2
-
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
-
 typedef struct s_raydata
 {
 	float	imgXPercent;
@@ -192,7 +185,7 @@ int		mouse_up(int button, void *mlx_ptr);
 void	mouse_move(t_mlx *mlx);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
-t_raydata	*raycast(t_mlx *mlx, float angle, bool catch_interract, t_vec4 start);
+t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start);
 void		raycasting(t_mlx *mlx, int need_free);
 
 /* ------ main_menu.c ------------------------------------------------------ */

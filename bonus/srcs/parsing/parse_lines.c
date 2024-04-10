@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/13 16:45:18 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:46:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static inline bool	check_line_content(char *line, t_map *map_data, t_list **map_
 	return (res == MAP_NO_ERROR);
 }
 
-bool	parse_lines(int fd, t_map *map_data)
+bool	parse_lines(int fd, t_map *map_data, int screen_res[2])
 {
 	char				*line;
 	t_list				*map_lines;
@@ -76,7 +76,7 @@ bool	parse_lines(int fd, t_map *map_data)
 	}
 	if (!map_lines)
 		return (false);
-	res = check_map_lines(map_data, map_lines);
+	res = check_map_lines(map_data, map_lines, screen_res);
 	ft_lstclear(&map_lines, free);
 	if (res != MAP_NO_ERROR)
 		print_map_error(res);
