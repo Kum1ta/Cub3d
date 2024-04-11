@@ -6,25 +6,25 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 20:35:30 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:34:56 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../graphics.h"
 
-void	draw_square(t_mlx *mlx, int size, int color, int x, int y, void *img)
+void	draw_square(t_mlx *mlx, int size, int color, int x, int y)
 {
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < size)
+	i = x;
+	while (i < x + size)
 	{
-		j = 0;
-		while (j < size)
+		j = y;
+		while (j < y + size)
 		{
-			if (x + i >= 0 && x + i < mlx->stg->width && y + j >= 0 && y + j < mlx->stg->height)
-				mlx_set_image_pixel(mlx->mlx, img, x + i, y + j, color);
+			if (i >= 0 && i < mlx->stg->width && j >= 0 && j < mlx->stg->height - 100)
+				mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
 			j++;
 		}
 		i++;
@@ -48,32 +48,26 @@ void	update_pos(t_mlx *mlx)
 }
 
 
-void	fill_img_map(t_mlx *mlx, void *img)
+void	fill_map(t_mlx *mlx)
 {
 	int	i;
 	int	j;
-	int	x;
-	int	y;
 
 	i = 0;
-	y = mlx->menu_map->y;
-	while (i < mlx->map->height)
+	while (i < mlx->menu_map->size * mlx->map->height)
 	{
 		j = 0;
-		x = mlx->menu_map->x;
-		while (mlx->map->blocks[i][j].type != END)
+		while (j < mlx->menu_map->size * mlx->map->width)
 		{
-			if (mlx->map->blocks[i][j].type == WALL)
-				draw_square(mlx, mlx->menu_map->size, 0xFF646464, x - 5, y - 5, img);
-			else if (mlx->map->blocks[i][j].type == DOOR)
-				draw_square(mlx, mlx->menu_map->size, 0xFF989898, x - 5, y - 5, img);
-			else if (mlx->map->blocks[i][j].type == FLOOR)
-				draw_square(mlx, mlx->menu_map->size, 0xFF323232, x, y, img);
-			x += mlx->menu_map->size;
-			j++;
+			if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == WALL)
+				draw_square(mlx, mlx->menu_map->size, 0xFF454545, j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3);
+			else if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == FLOOR)
+				draw_square(mlx, mlx->menu_map->size, 0xFFA1A1A1, j + mlx->menu_map->x, i + mlx->menu_map->y);
+			else if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == DOOR)
+				draw_square(mlx, mlx->menu_map->size, 0xFF222222, j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3);
+			j += mlx->menu_map->size;
 		}
-		y += mlx->menu_map->size;
-		i++;
+		i += mlx->menu_map->size;
 	}
 }
 
@@ -95,15 +89,95 @@ void	fill_image(t_mlx *mlx, void *img, int color, int xy[2])
 	}
 }
 
+void	put_player(t_mlx *mlx)
+{
+	int	i;
+	int	k;
+
+	i = mlx->menu_map->size * mlx->map->playerPos.y;
+	k = mlx->menu_map->size * mlx->map->playerPos.x;
+	draw_square(mlx, mlx->menu_map->size / 2, 0xFF0000FF,
+		k + mlx->menu_map->x - mlx->menu_map->size / 4,
+		i + mlx->menu_map->y - mlx->menu_map->size / 4);
+}
+
+void	add_button_lm(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
+{
+	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 130 && mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
+	{
+		mlx_put_image_to_window(mlx->mlx, mlx->win, img, xy[0] - 10, xy[1] - 22);
+		if (mlx->mouse->pressed_left)
+		{
+			f((void *)mlx, 1);
+			mlx->menu_button_focus = (intptr_t) f((void *)mlx, 2);
+		}
+	}
+	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[1], 0xFFFFFFFF, f((void *)mlx, 0));
+}
+
+char	*button_resume_lm(void *mlx, int action)
+{
+	if (action == 0)
+		return ("Resume");
+	mouse_move((t_mlx *)mlx);
+	((t_mlx *)mlx)->actuel_menu = GAME;
+	return (NULL);
+}
+
+char	*button_main_lm(void *mlx, int action)
+{
+	if (action == 0)
+		return ("Back");
+	((t_mlx *)mlx)->actuel_menu = MAP_LARG_MENU;
+	return (NULL);
+}
+
+char	*button_option_lm(void *mlx, int action)
+{
+	if (action == 0)
+		return ("Options");
+	((t_mlx *)mlx)->actuel_menu = OPTIONS_LM;
+	return (NULL);
+}
+
+char	*main_menu_lm(void *mlx, int action)
+{
+	if (action == 0)
+		return ("Quit");
+	((t_mlx *)mlx)->actuel_menu = MAIN_MENU;
+	return (NULL);
+}
+
+void	options_menu_lm(t_mlx *mlx, int need_free)
+{
+	static void	*bg_word = NULL;
+
+	if (need_free)
+	{
+		if (bg_word)
+			mlx_destroy_image(mlx->mlx, bg_word);
+		return ;
+	}
+	if (!bg_word)
+	{
+		bg_word = mlx_new_image(mlx->mlx, 200, 30);
+		fill_image(mlx, bg_word, 0xEE009900, (int [2]){200, 30});
+	}
+	mlx_string_put(mlx->mlx, mlx->win, 40, 80, 0xFFFFFFFF, "Tqt c'est les settings ici");
+	add_button_lm(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, bg_word, button_main_lm);
+}
 
 void	down_bar(t_mlx *mlx, int need_free)
 {
 	static void	*img = NULL;
+	static void	*bg_word = NULL;
 
 	if (need_free)
 	{
 		if (img)
 			mlx_destroy_image(mlx->mlx, img);
+		if (bg_word)
+			mlx_destroy_image(mlx->mlx, bg_word);
 		return ;
 	}
 	if (!img)
@@ -111,34 +185,35 @@ void	down_bar(t_mlx *mlx, int need_free)
 		img = mlx_new_image(mlx->mlx, mlx->stg->width, 100);
 		fill_image(mlx, img, 0xFF212121, (int [2]){mlx->stg->width, 100});
 	}
+	if (!bg_word)
+	{
+		bg_word = mlx_new_image(mlx->mlx, 140, 30);
+		fill_image(mlx, bg_word, 0xEE009900, (int [2]){140, 30});
+	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, mlx->stg->height - 100);
+	add_button_lm(mlx, (int [2]){50, mlx->stg->height - 40}, bg_word, button_resume_lm);
+	add_button_lm(mlx, (int [2]){200, mlx->stg->height - 40}, bg_word, button_option_lm);
+	add_button_lm(mlx, (int [2]){360, mlx->stg->height - 40}, bg_word, main_menu_lm);
 }
+
 
 void	larg_map(t_mlx *mlx, int need_free)
 {
-	static void	*img = NULL;
-
 	if (need_free)
 	{
 		down_bar(mlx, 1);
-		if (img)
-			mlx_destroy_image(mlx->mlx, img);
+		options_menu_lm(mlx, 1);
 		return ;
 	}
-	if (img)
-	{
-		mlx_destroy_image(mlx->mlx, img);
-		img = NULL;
-	}
-	if (!img)
-		img = mlx_new_image(mlx->mlx, mlx->stg->width, mlx->stg->height);
 	update_pos(mlx);
-	fill_img_map(mlx, img);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, img, 0, 0);
-	mlx_string_put(mlx->mlx, mlx->win, 10, 50, 0xFFFFFFFF,
-		"'tab' to return to the game");
-	mlx_string_put(mlx->mlx, mlx->win, 10, 80, 0xFFFFFFFF,
-		"'r' to reset the map");
+	fill_map(mlx);
+	put_player(mlx);
 	down_bar(mlx, 0);
-	mlx_string_put(mlx->mlx, mlx->win, 50, mlx->stg->height - 40, 0xFFFFFFFF, "Resume");
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 14);
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 275, mlx->stg->height - 60, 0xFFFFFFFF,
+		"'tab' to return to the game");
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 210, mlx->stg->height - 40, 0xFFFFFFFF,
+		"'r' to reset the map");
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
+	
 }

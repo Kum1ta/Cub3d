@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:26:39 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:01:18 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
+
+void	options_menu_lm(t_mlx *mlx, int need_free);
 
 int	update(void *mlx_ptr)
 {
@@ -41,6 +43,11 @@ int	update(void *mlx_ptr)
 		mlx_mouse_show();
 		options_menu(mlx, 0);
 	}
+	else if (mlx->actuel_menu == OPTIONS_LM)
+	{
+		mlx_mouse_show();
+		options_menu_lm(mlx, 0);
+	}
 	else if (mlx->actuel_menu == SOLO_MENU)
 	{
 		mlx_mouse_show();
@@ -63,6 +70,9 @@ int	update(void *mlx_ptr)
 	{
 		mouse_move(mlx);
 		mlx_mouse_hide();
+		mlx->menu_map->size = mlx->menu_map->initial_size;
+		mlx->menu_map->x = (mlx->stg->width - mlx->menu_map->width) / 2;
+		mlx->menu_map->y = (mlx->stg->height - mlx->menu_map->height) / 2;
 		raycasting(mlx, 0);
 		if (mlx->game_server.status == CONNECTED
 			&& !client_loop_hook(&(mlx->game_server), mlx))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 21:58:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:58:04 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef enum e_menu
 	MAP_LARG_MENU,
 	GAME,
 	OPTIONS,
+	OPTIONS_LM, // options larg map
 	START_GAME,
 	NOTHING,
 }	t_menu;

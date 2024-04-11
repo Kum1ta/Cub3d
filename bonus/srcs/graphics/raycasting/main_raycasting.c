@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 17:36:52 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/11 19:38:57 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,8 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	int		imgX;
 	float	imgY;
 	int		color;
+	int		a_min, b_min, c_min;
+	int		a, b, c;
 
 	k = -1;
 	if (ray->dir == 0)
@@ -398,6 +400,25 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 		{
 			imgY += factor;
 			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
+			a_min = ((color & 0x00FF0000) >> 16) - 60;
+            if (a_min < 0)
+                a_min = 0;
+            b_min = ((color & 0x0000FF00) >> 8) - 60;
+            if (b_min < 0)
+                b_min = 0;
+            c_min = (color & 0x000000FF) - 60;
+            if (c_min < 0)
+                c_min = 0;
+            a = ((color & 0x00FF0000) >> 16) - ray->dist * 5;
+            if (a < a_min)
+                a = a_min;
+            b = ((color & 0x0000FF00) >> 8) - ray->dist * 5;
+            if (b < b_min)
+                b = b_min;
+            c = (color & 0x000000FF)- ray->dist * 5;
+            if (c < c_min)
+                c = c_min;
+            color = 255 << 24 | a << 16 | b << 8 | c;
 			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
 		}
 	}
