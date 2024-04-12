@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 17:11:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:22:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define AMPLITUDE_VERTICAL 5
 #define AMPLITUDE_HORIZONTAL 2
-#define FREQUENCY 0.1
+#define FREQUENCY 0.001
 #define MOVE_TIME_US 10000
 
 void	move_weapon(t_mlx *mlx)

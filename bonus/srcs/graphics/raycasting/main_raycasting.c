@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 17:18:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:19:10 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	put_actual_weapon(t_mlx *mlx)
 	while (++i < 20)
 		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		draw_image_to_window(mlx, mlx->textures->weapon_game,
+		draw_image_to_window(mlx, &mlx->textures->weapon_game,
 			mlx->player->xy_item,
 			(int [2]){mlx->stg->width, mlx->stg->height}
 		);
@@ -142,7 +142,7 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 		system("paplay --volume=65535 ./sounds/game/weapon_fire.wav &");
 		*last_time = get_now_time();
 		mlx->player->ammo--;
-		draw_image_to_window(mlx, mlx->textures->fire_gun,
+		draw_image_to_window(mlx, &mlx->textures->fire_gun,
 			(int [2]){mlx->stg->width * 0.57 - 150 / 2, mlx->stg->height * 0.55 - 150 / 2},
 			(int [2]){150, 150});
 		if (mlx->game_server.status == CONNECTED)
@@ -376,13 +376,13 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 
 	k = -1;
 	if (ray->dir == 0)
-		mlx->tmp = mlx->textures->north;
+		mlx->tmp = &mlx->textures->north;
 	else if (ray->dir == 1)
-		mlx->tmp = mlx->textures->east;
+		mlx->tmp = &mlx->textures->east;
 	else if (ray->dir == 2)
-		mlx->tmp = mlx->textures->south;
+		mlx->tmp = &mlx->textures->south;
 	else
-		mlx->tmp = mlx->textures->west;
+		mlx->tmp = &mlx->textures->west;
 	imgX = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
 	wall_size = mlx->stg->height / ray->dist;
 	while (++k < mlx->stg->quality)
@@ -455,13 +455,13 @@ void	raycasting(t_mlx *mlx, int need_free)
 			{
 				factor = mlx->stg->height / ray[i][j].dist;
 				if (ray[i][j].dir == 0)
-					factor = (float)mlx->textures->north->height / factor;
+					factor = (float)mlx->textures->north.height / factor;
 				else if (ray[i][j].dir == 1)
-					factor = (float)mlx->textures->east->height / factor;
+					factor = (float)mlx->textures->east.height / factor;
 				else if (ray[i][j].dir == 2)
-					factor = (float)mlx->textures->south->height / factor;
+					factor = (float)mlx->textures->south.height / factor;
 				else
-					factor = (float)mlx->textures->west->height / factor;
+					factor = (float)mlx->textures->west.height / factor;
 				scalling(ray[i] + j, mlx, i, factor, j);
 			}
 			j--;
