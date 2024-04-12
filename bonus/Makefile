@@ -15,6 +15,7 @@ MAKEFLAGS 		+= --silent
 SRCS			=	main.c 																\
 					parse_config_file/config_main.c										\
 					graphics/main_graphics.c 											\
+					graphics/draw_image_to_window.c 									\
 					graphics/load_textures/load_textures.c								\
 					graphics/free_functions/free_all.c									\
 					graphics/free_functions/destroy_textures.c							\
