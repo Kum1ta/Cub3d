@@ -6,14 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 17:13:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 17:21:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../game_connexion.h"
 #include "../../../graphics/graphics.h"
-#define SHOOT_DIST_DECR 5000
-#define CUT_DIST_DECR 15000
+#define SHOOT_DIST_DECR 1500
+#define CUT_DIST_DECR 5000
 
 static void	play_sound_dist(char *sound_path, int decr)
 {
@@ -23,7 +23,6 @@ static void	play_sound_dist(char *sound_path, int decr)
 	if (decr > USHRT_MAX)
 		return ;
 	sound_volume = ft_itoa(USHRT_MAX - decr);
-	// system("paplay --volume=50000 ./sounds/game/weapon_reload.wav &");
 	cmd = ft_strjoin("paplay --volume=", sound_volume);
 	free(sound_volume);
 	if (cmd)

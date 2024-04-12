@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 17:00:31 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 17:18:10 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 	if (!mlx->player->is_reloading && (mlx->mouse->pressed_left && (get_now_time() - *last_time > 150000)) && mlx->player->ammo)
 	{
 		player_touch = -1;
-		system("paplay ./sounds/game/weapon_fire.wav &");
+		system("paplay --volume=65535 ./sounds/game/weapon_fire.wav &");
 		*last_time = get_now_time();
 		mlx->player->ammo--;
 		draw_image_to_window(mlx, mlx->textures->fire_gun,
@@ -180,7 +180,7 @@ void	item_effect(t_mlx *mlx, t_sprite center_sprite)
 		weapon_effect(mlx, &last_time, center_sprite);
 	else if (mlx->player->actual_weapon == KNIFE_INV && mlx->mouse->pressed_left && get_now_time() - last_time > 500000)
 	{
-		system("paplay ./sounds/game/cut_hit.wav &");
+		system("paplay --volume=65535 ./sounds/game/cut_hit.wav &");
 		last_time = get_now_time();
 		if (mlx->game_server.status == CONNECTED)
 		{
