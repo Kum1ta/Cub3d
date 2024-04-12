@@ -6,36 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:22:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:49:34 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../graphics.h"
 #include <time.h>
 
-#define AMPLITUDE_VERTICAL 5
-#define AMPLITUDE_HORIZONTAL 2
-#define FREQUENCY 0.001
 #define MOVE_TIME_US 10000
-
-void	move_weapon(t_mlx *mlx)
-{
-	static long long	prev_time = 0;
-	long long			current_time;
-	// double				horizontal_offset;
-	double				vertical_offset;
-
-	current_time = get_now_time();
-	if (mlx->player->actual_weapon == WEAPON_INV)
-	{
-		double elapsed_time = (double)(current_time - prev_time);
-		vertical_offset = AMPLITUDE_VERTICAL * sin(FREQUENCY * elapsed_time);
-		// horizontal_offset = AMPLITUDE_HORIZONTAL * sin(2 * FREQUENCY * elapsed_time);
-		mlx->player->xy_item[1] = vertical_offset;
-		// mlx->player->xy_item[0] = horizontal_offset;
-		prev_time = current_time;
-	}
-}
 
 void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
@@ -43,7 +21,6 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	t_vec3				*ply_pos;
 	t_block				block;
 
-	move_weapon(mlx);
 	ply_pos = &(mlx->map->playerPos);
 	add_val = deltaX * mlx->map->camDir.x - deltaY * mlx->map->camDir.y;
 	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];

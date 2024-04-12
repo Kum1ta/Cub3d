@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:19:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:51:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 		*last_time = get_now_time();
 		mlx->player->ammo--;
 		draw_image_to_window(mlx, &mlx->textures->fire_gun,
-			(int [2]){mlx->stg->width * 0.57 - 150 / 2, mlx->stg->height * 0.55 - 150 / 2},
+			(int [2]){mlx->stg->width * 0.58 - 150 / 2, mlx->stg->height * 0.55 - 150 / 2},
 			(int [2]){150, 150});
 		if (mlx->game_server.status == CONNECTED)
 		{
@@ -152,6 +152,8 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 				player_touch = center_sprite.data.player->serverId;
 			dprintf(mlx->game_server.sockfd, "shoot:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
 		}
+		mlx->player->xy_item[0] = 10;
+		mlx->player->xy_item[1] = 10;
 	}
 	if (!mlx->player->is_reloading && is_key_down(mlx->keyboard, KEY_R) && get_now_time() - *last_time > 50000 && mlx->player->ammo < 30)
 	{
@@ -168,6 +170,13 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 			mlx->player->ammo = 30;
 			mlx->player->xy_item[1] = 0;
 		}
+	}
+	else
+	{
+		if (mlx->player->xy_item[0] > 0)
+			mlx->player->xy_item[0] -= 2;
+		if (mlx->player->xy_item[1] > 0)
+			mlx->player->xy_item[1] -= 2;
 	}
 }
 

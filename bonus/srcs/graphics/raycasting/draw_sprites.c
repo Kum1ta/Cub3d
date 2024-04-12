@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 17:08:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:53:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 					if (y + mlx->map->camDir.z >= 0 && y + mlx->map->camDir.z < mlx->stg->height)
 					{
 						color = mlx_get_image_pixel(mlx->mlx, mlx->textures->player.img, imgX, imgY);
-						if (color >> 24 & 0xFF)
+						if (color >> 24 & 0xFF == 0xFF)
 						{
 							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);
 							if (x == mlx->stg->width / 2 && y + mlx->map->camDir.z == mlx->stg->height / 2)
