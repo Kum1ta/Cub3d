@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 13:30:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:46:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ typedef struct s_mlx
 int		window(int event, void *mlx_ptr);
 
 /* ------ draw_image_to_window.c ------------------------------------------- */
-void	draw_image_to_window(t_mlx *mlx, t_img *img,
-							uint32_t pos[2], int size[2]);
+void	draw_image_to_window(t_mlx *mlx, t_img *img, int pos[2], int size[2]);
 
 /* ------ update.c --------------------------------------------------------- */
 int		update(void *mlx_ptr);
