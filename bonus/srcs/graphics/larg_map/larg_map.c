@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/11 19:34:56 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/12 18:08:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,16 @@ char	*button_option_lm(void *mlx, int action)
 	return (NULL);
 }
 
-char	*main_menu_lm(void *mlx, int action)
+char	*main_menu_lm(void *mlxRaw, int action)
 {
+	t_mlx *mlx;
+
 	if (action == 0)
 		return ("Quit");
-	((t_mlx *)mlx)->actuel_menu = MAIN_MENU;
+	mlx = mlxRaw;
+	mlx->actuel_menu = MAIN_MENU;
+	if (mlx->game_server.status == CONNECTED)
+		close_server(&mlx->game_server, DISCONNECTED);
 	return (NULL);
 }
 

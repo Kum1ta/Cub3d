@@ -6,13 +6,13 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:28:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:07:43 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_connexion.h"
 
-static inline void	close_server(t_server *srv, enum e_server_status status)
+void	close_server(t_server *srv, enum e_server_status status)
 {
 	srv->status = status;
 	read_request(srv->sockfd, NULL, true);

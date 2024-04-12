@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:29:04 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:08:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	act_cut(t_server *srv, char *value, void *mlx);
 void	connect_to_server(t_server *srv);
 void	print_network_err(enum e_server_status status);
 bool	client_loop_hook(t_server *srv, void *mlx);
+void	close_server(t_server *srv, enum e_server_status status);
 
 #endif
