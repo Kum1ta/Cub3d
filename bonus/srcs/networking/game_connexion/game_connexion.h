@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 17:12:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:29:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_online_player
 	int		serverId;
 	char	playerName[SV_MAX_PLAYER_NAME + 1]; // forbiddenChars : ":;,"
 	t_vec3	pos;
+	int		health;
 }	t_online_player;
 
 t_online_player	*get_player_from_source(t_list *players, int player_src);
@@ -76,7 +77,10 @@ void	receive_message(t_server *srv, char *value, void *mlx);
 void	player_disconnect(t_server *srv, char *value, void *mlx);
 void	set_player_attr(t_server *srv, char *value, void *mlx);
 void	set_player_pos(t_server *srv, char *value, void *mlx);
+void	set_player_health(t_server *srv, char *value, void *mlx);
 void	set_door_state(t_server *srv, char *value, void *mlx);
+void	act_shoot(t_server *srv, char *value, void *mlx);
+void	act_cut(t_server *srv, char *value, void *mlx);
 
 void	connect_to_server(t_server *srv);
 void	print_network_err(enum e_server_status status);

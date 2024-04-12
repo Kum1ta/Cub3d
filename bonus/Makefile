@@ -46,10 +46,10 @@ SRCS			=	main.c 																\
 					networking/game_connexion/req_actions/receive_message.c				\
 					networking/game_connexion/req_actions/set_door_state.c				\
 					networking/game_connexion/req_actions/set_player_attr.c				\
+					networking/game_connexion/req_actions/shoot.c						\
 					networking/game_connexion/players_utils/create_online_player.c		\
 					networking/game_connexion/players_utils/get_player_from_source.c	\
 					networking/utils/current_timestamp.c								\
-					networking/utils/ft_atof.c											\
 					networking/utils/read_request.c										\
 					networking/utils/socket_init.c										\
 					parsing/check_map_lines.c 											\
@@ -58,6 +58,7 @@ SRCS			=	main.c 																\
 					parsing/parse_lines.c 												\
 					parsing/set_map_blocks.c											\
 					utils/first.c 														\
+					utils/vector.c 														\
 					free_map.c 															\
 
 NAME			=	cub3d
@@ -68,7 +69,6 @@ SV_SRCS			=	networking/server/server.c								\
 					networking/server/manage_client.c						\
 					networking/server/manage_client_input.c					\
 					networking/utils/current_timestamp.c					\
-					networking/utils/ft_atof.c								\
 					networking/utils/read_request.c							\
 					networking/utils/socket_init.c							\
 

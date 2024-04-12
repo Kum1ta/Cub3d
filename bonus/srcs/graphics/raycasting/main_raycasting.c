@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/11 19:38:57 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:00:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,34 +113,45 @@ t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
 	return (res);
 }
 
-void	put_actual_weapon(t_mlx *mlx, void *img)
+void	put_actual_weapon(t_mlx *mlx)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 20)
-		mlx_set_image_pixel(mlx->mlx, img, mlx->stg->width / 2 - 10 + i, mlx->stg->height / 2, 0xFF00FF00);
+		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 10 + i, mlx->stg->height / 2, 0xFF00FF00);
 	i = -1;
 	while (++i < 20)
-		mlx_set_image_pixel(mlx->mlx, img, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
+		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		mlx_put_image_to_window(mlx->mlx, mlx->win,
-			mlx->textures->weapon_game->img,
-			mlx->player->xy_item[0],
-			mlx->player->xy_item[1]
+		draw_image_to_window(mlx, mlx->textures->weapon_game,
+			mlx->player->xy_item,
+			(int [2]){mlx->stg->width, mlx->stg->height}
 		);
 	// else if (mlx->player->actual_weapon == KNIFE_INV)
 	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, 0, 0);
 }
 
-void	weapon_effect(t_mlx *mlx, long long *last_time)
+void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 {
+	int	player_touch;
+
 	if (!mlx->player->is_reloading && (mlx->mouse->pressed_left && (get_now_time() - *last_time > 150000)) && mlx->player->ammo)
 	{
+		player_touch = -1;
 		system("paplay ./sounds/game/weapon_fire.wav &");
 		*last_time = get_now_time();
 		mlx->player->ammo--;
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->fire_gun->img, 938 + mlx->player->xy_item[0], 500 + mlx->player->xy_item[1]);
+		draw_image_to_window(mlx, mlx->textures->fire_gun,
+			(int [2]){mlx->stg->width * 0.57 - 150 / 2, mlx->stg->height * 0.55 - 150 / 2},
+			(int [2]){150, 150});
+		if (mlx->game_server.status == CONNECTED)
+		{
+			player_touch = -1;
+			if (center_sprite.type == SPRT_PLAYER)
+				player_touch = center_sprite.data.player->serverId;
+			dprintf(mlx->game_server.sockfd, "shoot:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
+		}
 	}
 	if (!mlx->player->is_reloading && is_key_down(mlx->keyboard, KEY_R) && get_now_time() - *last_time > 50000 && mlx->player->ammo < 30)
 	{
@@ -160,22 +171,24 @@ void	weapon_effect(t_mlx *mlx, long long *last_time)
 	}
 }
 
-void	item_effect(t_mlx *mlx)
+void	item_effect(t_mlx *mlx, t_sprite center_sprite)
 {
-	static int	i = 0;
-	static long long last_time = 0;
+	static long long	last_time = 0;
+	int					player_touch;
 
-	if (i == 0)
-	{
-		printf("\033[0;31mDon't forget to remove the function \"weapon_effect()\" : Forbidden fonction\n\033[0m");
-		i++;
-	}
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		weapon_effect(mlx, &last_time);
+		weapon_effect(mlx, &last_time, center_sprite);
 	else if (mlx->player->actual_weapon == KNIFE_INV && mlx->mouse->pressed_left && get_now_time() - last_time > 500000)
 	{
 		system("paplay ./sounds/game/cut_hit.wav &");
 		last_time = get_now_time();
+		if (mlx->game_server.status == CONNECTED)
+		{
+			player_touch = -1;
+			if (center_sprite.type == SPRT_PLAYER && center_sprite.dist < 2)
+				player_touch = center_sprite.data.player->serverId;
+			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
+		}
 	}
 }
 
@@ -215,22 +228,6 @@ void	free_ray(t_raydata ***ray, t_mlx *mlx)
 	while (++i < mlx->stg->width)
 		free(ray[i]);
 }
-
-// void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
-// {
-	// float	radian;
-	// float	ra;
-	// int		i;
-
-	// i = -1;
-	// ra = angle_ray + 90;
-	// ajust_angle(&ra);
-	// radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
-	// while (++i < MAX_HEIGHT)
-	// {
-	// 	ray[i].dist *= cos(radian);
-	// }
-// }
 
 void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 {
@@ -427,10 +424,10 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	t_raydata	*ray[1920];
-	// float		angle;
 	int			i;
 	int			j;
 	float		factor;
+	t_sprite	center_sprite;
 
 	if (need_free)
 		return ;
@@ -439,12 +436,9 @@ void	raycasting(t_mlx *mlx, int need_free)
 	{
 		if (i % mlx->stg->quality == 0)
 		{
-			// angle = (mlx->map->playerPos.h - mlx->stg->fov / 2 + (float)i / (float)mlx->stg->width * mlx->stg->fov) - 90;
-			// ajust_angle(&angle);
 			ray[i] = raycast(mlx, i, false, mlx->map->playerPos);
 			if (!ray[i])
 				return ;
-			// correct_fish_eye(ray[i], angle, mlx);
 			calcul_wall_size(mlx, ray[i]);
 		}
 	}
@@ -474,10 +468,10 @@ void	raycasting(t_mlx *mlx, int need_free)
 		}
 		i += mlx->stg->quality;
 	}
-	draw_sprites(mlx, ray);
+	center_sprite = draw_sprites(mlx, ray);
 	show_fps(mlx);
-	// item_effect(mlx);
-	// put_actual_weapon(mlx, img);
+	item_effect(mlx, center_sprite);
+	put_actual_weapon(mlx);
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
 	// inventory(mlx, img, 0);

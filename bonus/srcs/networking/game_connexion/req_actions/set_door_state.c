@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_door_state.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:28:08 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 00:38:17 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:10:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	set_door_state(t_server *srv, char *value, void *mlxRaw)
 	int		posY;
 	t_mlx	*mlx;
 
-	ft_printf("update door (%s) ");
 	state = ft_atoi(value) == 1;
 	posX = 0;
 	posY = 0;
@@ -31,7 +30,6 @@ void	set_door_state(t_server *srv, char *value, void *mlxRaw)
 		;
 	posY = ft_atoi(value);
 	mlx = mlxRaw;
-	ft_printf("at pos x%d y%d : %d\n", posX, posY, state);
 	if (posX < 0 || posY < 0
 		|| posX >= mlx->map->width || posY >= mlx->map->height
 		|| mlx->map->blocks[posY][posX].type != DOOR)

@@ -6,32 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 22:48:39 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:59:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
-
-typedef struct s_sprite
-{
-	enum
-	{
-		NONE,
-		SPRT_PLAYER
-	} type;
-	union
-	{
-		t_online_player *player;
-	} data;
-	float	dist;
-	float	depth;
-	int 	screenX;
-} t_sprite;
-
-static inline float get_distance_between_2dcoords(t_vec3 pos1, t_vec3 pos2)
-{
-	return (powf(pos1.x - pos2.x, 2) + powf(pos1.y - pos2.y, 2));
-}
 
 static t_sprite *get_sprite_list(t_mlx *mlx)
 {
@@ -119,18 +98,20 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 	}
 }
 
-static void draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
+static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
-	int	width;
-	int	height;
-	int	startX;
-	int	startY;
-	int	x;
-	int	y;
-	int	imgX;
-	int	imgY;
-	int	color;
+	int		width;
+	int		height;
+	int		startX;
+	int		startY;
+	int		x;
+	int		y;
+	int		imgX;
+	int		imgY;
+	int		color;
+	bool	touch_center;
 
+	touch_center = false;
 	width = mlx->stg->height / sprite->depth;
 	height = mlx->stg->height / sprite->depth;
 	if (sprite->depth > 0 && sprite->screenX + width / 2 >= 0 && sprite->screenX - width / 2 < mlx->stg->width)
@@ -151,7 +132,11 @@ static void draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 					{
 						color = mlx_get_image_pixel(mlx->mlx, mlx->textures->player.img, imgX, imgY);
 						if (color >> 24 & 0xFF)
+						{
 							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);
+							if (x == mlx->stg->width / 2 && y == mlx->stg->height / 2)
+								touch_center = true;
+						}
 					}
 					y++;
 				}
@@ -159,21 +144,27 @@ static void draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 			x++;
 		}
 	}
+	return (touch_center);
 }
 
-void draw_sprites(t_mlx *mlx, t_raydata **ray)
+t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 {
-	t_sprite *sprites;
+	t_sprite	*sprites;
+	t_sprite	center_sprite;
 	int i;
 
 	sprites = get_sprite_list(mlx);
 	sort_sprites(sprites);
 	set_sprites_screenX(sprites, mlx->map->playerPos, mlx);
 	i = 0;
+	center_sprite.type = NONE;
 	while (sprites[i].type != NONE)
 	{
-		draw_sprite(mlx, sprites + i, ray);
+		if (sprites[i].type != SPRT_PLAYER || sprites[i].data.player->health > 0)
+			if (draw_sprite(mlx, sprites + i, ray))
+				center_sprite = sprites[i];
 		i++;
 	}
 	free(sprites);
+	return (center_sprite);
 }

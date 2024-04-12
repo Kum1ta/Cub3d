@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/04 18:16:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:34:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char		*get_next_line(int fd);
 char		*get_file(char *file);
 unsigned int	ft_abs(int value);
 int			ft_isspace(char c);
+float		ft_atof(char *str);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 20:03:13 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:17:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,9 @@ void		*error_ptr(char *str, void *ret);
 int			error_int(char *str, int ret);
 void		wait_us(long long time_us);
 long long	get_now_time(void);
+float		get_distance_between_2dcoords(t_vec3 pos1, t_vec3 pos2);
+t_vec3		parse_vec3(char *str);
+
 
 /* --- config_main.c ------------------------------------------------------- */
 t_settings	*parse_config_file(char *path);

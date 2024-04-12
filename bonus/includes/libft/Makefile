@@ -6,7 +6,7 @@
 #    By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 17:20:50 by edbernar          #+#    #+#              #
-#    Updated: 2024/04/05 18:58:24 by psalame          ###   ########.fr        #
+#    Updated: 2024/04/12 16:33:56 by psalame          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS			=	Char_Compare/ft_isalnum.c \
 					Char_Compare/ft_tolower.c \
 					Char_Compare/ft_toupper.c \
 					Convertion/ft_abs.c \
+					Convertion/ft_atof.c \
 					Convertion/ft_atoi.c \
 					Convertion/ft_itoa.c \
 					Convertion/ft_atol.c \

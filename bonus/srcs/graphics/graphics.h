@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 13:46:31 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 14:14:25 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,22 @@ typedef struct s_mlx
 	t_selected_map		selected_map;
 	t_settings			*stg;
 }	t_mlx;
+
+typedef struct s_sprite
+{
+	enum
+	{
+		NONE,
+		SPRT_PLAYER
+	} type;
+	union
+	{
+		t_online_player *player;
+	} data;
+	float	dist;
+	float	depth;
+	int 	screenX;
+} t_sprite;
 
 /* ------ main_graphics.c -------------------------------------------------- */
 int		window(int event, void *mlx_ptr);
