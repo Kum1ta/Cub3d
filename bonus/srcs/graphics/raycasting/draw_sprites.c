@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:59:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/12 17:08:10 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 						if (color >> 24 & 0xFF)
 						{
 							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);
-							if (x == mlx->stg->width / 2 && y == mlx->stg->height / 2)
+							if (x == mlx->stg->width / 2 && y + mlx->map->camDir.z == mlx->stg->height / 2)
 								touch_center = true;
 						}
 					}
