@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 18:53:50 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 17:22:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,24 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 	}
 }
 
+static t_img	*get_sprite_img(t_mlx *mlx, t_sprite *sprite)
+{
+	float	dx;
+	float	dy;
+	int		rot;
+
+	if (sprite->type == SPRT_PLAYER)
+	{
+		dx = mlx->map->playerPos.x - sprite->data.player->pos.x;
+		dy = mlx->map->playerPos.y - sprite->data.player->pos.y;
+		rot = (atan(dx + dy) + acos(sprite->data.player->dir.x)) * 180 / PI;
+		while (rot < 0)
+			rot += 360;
+		return (mlx->textures->player + ((int) (rot / 90 % 4)));
+	}
+	return (NULL); 
+}
+
 static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
 	int		width;
@@ -110,11 +128,13 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 	int		imgY;
 	int		color;
 	bool	touch_center;
+	t_img	*img;
 
+	img = get_sprite_img(mlx, sprite);
 	touch_center = false;
 	width = mlx->stg->height / sprite->depth;
 	height = mlx->stg->height / sprite->depth;
-	if (sprite->depth > 0 && sprite->screenX + width / 2 >= 0 && sprite->screenX - width / 2 < mlx->stg->width)
+	if (img && sprite->depth > 0 && sprite->screenX + width / 2 >= 0 && sprite->screenX - width / 2 < mlx->stg->width)
 	{
 		startX = sprite->screenX - width / 2;
 		x = startX;
@@ -122,15 +142,15 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 		{
 			if (x >= 0 && x < mlx->stg->width && sprite->depth < ray[x]->dist)
 			{
-				imgX = ((float) (x - startX)) / ((float) width) * mlx->textures->player.width;
+				imgX = ((float) (x - startX)) / ((float) width) * img->width;
 				startY = mlx->stg->height / 2 - height / 2;
 				y = startY;
 				while (y - startY < height)
 				{
-					imgY = ((float) (y - startY)) / ((float) height) * mlx->textures->player.height;
+					imgY = ((float) (y - startY)) / ((float) height) * img->height;
 					if (y + mlx->map->camDir.z >= 0 && y + mlx->map->camDir.z < mlx->stg->height)
 					{
-						color = mlx_get_image_pixel(mlx->mlx, mlx->textures->player.img, imgX, imgY);
+						color = mlx_get_image_pixel(mlx->mlx, img->img, imgX, imgY);
 						if (color >> 24 & 0xFF == 0xFF)
 						{
 							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);

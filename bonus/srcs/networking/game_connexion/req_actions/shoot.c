@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 17:25:50 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:52:02 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 	got_touch = ft_atoi(value);
 	while (*value++ != ',')
 		;
-	origin = parse_vec3(value);
+	origin = parse_vec3(&value);
 	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
 	play_sound_dist("./sounds/game/weapon_fire.wav", dist * SHOOT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)
@@ -70,7 +70,7 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 	got_touch = ft_atoi(value);
 	while (*value++ != ',')
 		;
-	origin = parse_vec3(value);
+	origin = parse_vec3(&value);
 	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
 	play_sound_dist("./sounds/game/cut_hit.wav", dist * CUT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)

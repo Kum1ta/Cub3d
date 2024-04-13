@@ -71,6 +71,7 @@ SV_SRCS			=	networking/server/server.c								\
 					networking/utils/current_timestamp.c					\
 					networking/utils/read_request.c							\
 					networking/utils/socket_init.c							\
+					utils/vector.c 											\
 
 SV_OBJS			=	$(addprefix ./.build/, $(SV_SRCS:.c=.o))
 

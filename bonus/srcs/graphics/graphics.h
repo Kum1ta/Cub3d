@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:16:29 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:03:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_loadeds_textures
 	t_img	fist_game;
 	t_img	knife_game;
 	t_img	fire_gun;
-	t_img	player;
+	t_img	player[4];
 }	t_loadeds_textures;
 
 typedef struct s_player

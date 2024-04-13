@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   manage_client_input.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:47:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:58:48 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server_Int.h"
-
-static t_vec3	parse_vec3(char *str)
-{
-	t_vec3	res;
-
-	res.x = ft_atof(str);
-	while (*str && *str++ != ',')
-		;
-	res.y = ft_atof(str);
-	while (*str && *str++ != ',')
-		;
-	res.z = ft_atof(str);
-	return (res);
-}
 
 void	act_ping(t_client *clients, int clientI, char *value, long long currTs)
 {
@@ -49,45 +35,62 @@ void	act_send_message(t_client *clients, int clientI, char *value, long long cur
 
 void	act_init_player(t_client *clients, int clientI, char *value, long long currTs)
 {
-	int	i;
+	int			i;
+	const char	*base_str = value;
 
-	(void) currTs;
 	i = 0;
-	while (value[i] != ',' && i <= SV_MAX_PLAYER_NAME)
-	{
-		clients[clientI].playerName[i] = value[i];
-		i++;
-	}
+	while (*value && *value != ',')
+		if (i <= SV_MAX_PLAYER_NAME)
+			clients[clientI].playerName[i++] = *value++;
+	value++;
 	clients[clientI].playerName[i] = 0;
 	while (value[i++] != ',')
 		;
-	clients[clientI].playerPos = parse_vec3(value + i);
-	i = 0;
-	while (i < SV_MAX_CONNECTION)
+	clients[clientI].playerPos = parse_vec3(&value);
+	clients[clientI].playerDir = parse_vec2(&value);
+	i = -1;
+	while (++i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
 		{
-			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, value);
-			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f;",
+			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, base_str);
+			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f,%.2f;",
 				i, clients[i].playerName, clients[i].playerPos.x,
-				clients[i].playerPos.y, clients[i].playerPos.z);
+				clients[i].playerPos.y, clients[i].playerPos.z,
+				clients[i].playerDir.x, clients[i].playerDir.y);
 			printf("sent to %d and %d\n", i, clientI);
 		}
-		i++;
 	}
 }
 
 void	act_set_pos(t_client *clients, int clientI, char *value, long long currTs)
 {
 	int	i;
+	const char	*base_str = value;
 
 	(void) currTs;
 	i = 0;
-	clients[clientI].playerPos = parse_vec3(value);
+	clients[clientI].playerPos = parse_vec3(&value);
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
-			ft_dprintf(clients[i].socket, "setPlayerPos:%d,%s;", clientI, value);
+			ft_dprintf(clients[i].socket, "setPlayerPos:%d,%s;", clientI, base_str);
+		i++;
+	}
+}
+
+void	act_set_dir(t_client *clients, int clientI, char *value, long long currTs)
+{
+	int	i;
+	const char	*base_str = value;
+
+	(void) currTs;
+	i = 0;
+	clients[clientI].playerDir = parse_vec2(&value);
+	while (i < SV_MAX_CONNECTION)
+	{
+		if (i != clientI && clients[i].socket != -1)
+			ft_dprintf(clients[i].socket, "setPlayerDir:%d,%s;", clientI, base_str);
 		i++;
 	}
 }
@@ -104,7 +107,6 @@ void	act_set_health(t_client *clients, int clientI, char *value, long long currT
 		health = 100;
 	if (health < 0)
 		health = 0;
-	clients[clientI].playerPos = parse_vec3(value);
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
@@ -163,8 +165,8 @@ void	act_cut(t_client *clients, int clientI, char *value, long long currTs)
 
 static inline void	exec_req_action(t_client *clients, int clientI, char *request, long long currTs)
 {
-	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "setPos:", "setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
-	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_set_pos, &act_set_door, &act_shoot, &act_cut, &act_set_health};
+	const char	*actionsId[] = {"ping:", "sendMessage:", "initPlayer:", "setPos:", "setDir:", "setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
+	const		t_req_action_fct	act_fct[] = {&act_ping, &act_send_message, &act_init_player, &act_set_pos, &act_set_dir, &act_set_door, &act_shoot, &act_cut, &act_set_health};
 	size_t		act_len;
 	int			act_i;
 

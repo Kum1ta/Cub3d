@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 15:17:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:11:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "libft.h"
+# include "vector.h"
 # include <sys/time.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -50,18 +51,6 @@ typedef struct s_texture {
 	int		floor[3];
 	int		ceiling[3];
 }	t_texture;
-
-typedef struct s_vec3 {
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3;
-
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
 
 typedef struct s_map {
 	t_block		**blocks;
@@ -103,9 +92,6 @@ void		*error_ptr(char *str, void *ret);
 int			error_int(char *str, int ret);
 void		wait_us(long long time_us);
 long long	get_now_time(void);
-float		get_distance_between_2dcoords(t_vec3 pos1, t_vec3 pos2);
-t_vec3		parse_vec3(char *str);
-
 
 /* --- config_main.c ------------------------------------------------------- */
 t_settings	*parse_config_file(char *path);

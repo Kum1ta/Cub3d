@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:18:08 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:23:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ int	destroy_textures(t_mlx *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->textures->knife_game.img);
 	if (mlx->textures->fire_gun.img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->fire_gun.img);
-	if (mlx->textures->player.img)
-		mlx_destroy_image(mlx->mlx, mlx->textures->player.img);
+	if (mlx->textures->player[0].img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player[0].img);
+	if (mlx->textures->player[1].img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player[1].img);
+	if (mlx->textures->player[2].img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player[2].img);
+	if (mlx->textures->player[3].img)
+		mlx_destroy_image(mlx->mlx, mlx->textures->player[3].img);
 	free(mlx->textures);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_server_input.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:19:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:31:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:43:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static inline void	exec_req_action(t_server *srv, char *request, void *mlx)
 {
-	const char	*actionsId[] = {"sendMessage:", "playerDisconnect:", "setPlayerAttr:", "setPlayerPos:", "setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
-	const		t_req_action_fct	act_fct[] = {&receive_message, &player_disconnect, &set_player_attr, &set_player_pos, &set_door_state, &act_shoot, &act_cut, &set_player_health};
+	const char	*actionsId[] = {"sendMessage:", "playerDisconnect:", "setPlayerAttr:", "setPlayerPos:", "setPlayerDir:", "setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
+	const		t_req_action_fct	act_fct[] = {&receive_message, &player_disconnect, &set_player_attr, &set_player_pos, &set_player_dir, &set_door_state, &act_shoot, &act_cut, &set_player_health};
 	size_t		act_len;
 	int			act_i;
 

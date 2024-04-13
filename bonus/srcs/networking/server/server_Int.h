@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server_Int.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:53:22 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:07:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // https://www.tala-informatique.fr/wiki/index.php?title=C_socket
 # include "libft.h"
+# include "vector.h"
 # include <stdio.h>
 # include <errno.h> 
 # include <string.h> 
@@ -23,7 +24,6 @@
 # include <asm-generic/socket.h>
 # include <fcntl.h>
 # include <stdbool.h>
-# include "libft.h"
 # include <arpa/inet.h>
 
 # ifndef SV_IP
@@ -42,13 +42,6 @@
 #  define SV_MAX_PLAYER_NAME 100
 # endif
 
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}			t_vec3;
-
 typedef struct	s_client
 {
 	int			socket;
@@ -56,6 +49,7 @@ typedef struct	s_client
 	char		playerName[SV_MAX_PLAYER_NAME + 1]; // forbiddenChars : ":;,"
 	char		*req_buffer;
 	t_vec3		playerPos;
+	t_vec2		playerDir;
 	long long	last_ping;
 }	t_client;
 

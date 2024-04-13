@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player_attr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 16:28:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/13 16:47:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 	ply->playerName[i] = 0;
 	while (*value++ != ',')
 		;
-	ply->pos = parse_vec3(value);
+	ply->pos = parse_vec3(&value);
+	ply->dir = parse_vec2(&value);
 }
 
 void	set_player_pos(t_server *srv, char *value, void *mlx)
@@ -42,7 +43,20 @@ void	set_player_pos(t_server *srv, char *value, void *mlx)
 	{
 		while (*value++ != ',')
 			;
-		ply->pos = parse_vec3(value);
+		ply->pos = parse_vec3(&value);
+	}
+}
+
+void	set_player_dir(t_server *srv, char *value, void *mlx)
+{
+	t_online_player	*ply;
+
+	ply = get_player_from_source(srv->online_player, ft_atoi(value));
+	if (ply)
+	{
+		while (*value++ != ',')
+			;
+		ply->dir = parse_vec2(&value);
 	}
 }
 
