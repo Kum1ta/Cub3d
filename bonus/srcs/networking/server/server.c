@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:42:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/04 16:06:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:22:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	server_loop_hook(int sockfd, t_client *clients)
 		if (clients[i].socket != -1)
 		{
 			request = read_request(clients[i].socket, &byteRead, false);
-			if (byteRead == -1 && errno != EAGAIN) // todo check also request correct
-			{
+			if (byteRead == -1 && errno != EAGAIN)
 				ft_dprintf(2, "Error while receiving packet of %s: %s.\n", clients[i].ip, strerror(errno));
-			}
 			else
 			{
 				if (request != NULL)
@@ -51,7 +49,7 @@ void	server_loop_hook(int sockfd, t_client *clients)
 				}
 				if (byteRead == 0)
 					remove_client(clients, i);
-				else if (currentTs - clients[i].last_ping > 10000 )
+				else if (currentTs - clients[i].last_ping > 40000 )
 				{
 					printf("Disconnecting %s: timed out.\n", clients[i].ip);
 					remove_client(clients, i);

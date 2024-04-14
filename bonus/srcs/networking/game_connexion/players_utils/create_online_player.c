@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:30:15 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 14:30:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:29:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_online_player	*create_online_player(t_list **players, int server_id)
 	t_online_player	*ply;
 	t_list			*node;
 
-	printf("creating player %d\n", server_id); // debug
 	ply = malloc(sizeof(t_online_player));
 	if (!ply)
 		return (NULL);

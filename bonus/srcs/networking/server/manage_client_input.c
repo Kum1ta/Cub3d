@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_client_input.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/13 16:58:48 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:04:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 				i, clients[i].playerName, clients[i].playerPos.x,
 				clients[i].playerPos.y, clients[i].playerPos.z,
 				clients[i].playerDir.x, clients[i].playerDir.y);
-			printf("sent to %d and %d\n", i, clientI);
+			printf("sent to %d (%d) and %d (%d)\n", i, clients[i].socket, clientI, clients[clientI].socket);
 		}
 	}
 }

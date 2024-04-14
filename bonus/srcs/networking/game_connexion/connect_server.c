@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 18:07:43 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/14 13:03:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 		}
 	}
 	free(request);
-	if (time(NULL) - last_ping > 5)
+	if (time(NULL) - last_ping > 30)
 	{
 		last_ping = time(NULL);
 		dprintf(srv->sockfd, "ping:%lld;", current_timestamp());
