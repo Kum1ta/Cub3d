@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 01:02:27 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:31:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ void	graphics_part(t_map *map, t_settings *settings)
 
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
+	{
+		free_map(map);
+		free(settings);
 		return ;
+	}
 	if (init(mlx, map, settings))
 	{
 		ft_printf("Cube3d: Error init()\n");

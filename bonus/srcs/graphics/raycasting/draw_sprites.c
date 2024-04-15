@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/14 13:41:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:33:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 	}
 
 	res = malloc((i + 1) * sizeof(t_sprite));
+	if (!res)
+		return (NULL);
 	i = 0;
 	if (mlx->game_server.status == CONNECTED)
 	{
@@ -174,6 +176,8 @@ t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 	int i;
 
 	sprites = get_sprite_list(mlx);
+	if (!sprites)
+		return ;
 	sort_sprites(sprites);
 	set_sprites_screenX(sprites, mlx->map->playerPos, mlx);
 	i = 0;
