@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 13:52:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:38:28 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum e_menu
 	OPTIONS,
 	OPTIONS_LM, // options larg map
 	START_GAME,
+	WAIT_QUIT,
 	NOTHING,
 }	t_menu;
 
@@ -123,7 +124,14 @@ typedef struct s_player
 
 typedef struct s_settings_window
 {
-	int	diff;
+	int		diff;
+	bool	show_fps;
+	int		width;
+	int		height;
+	int		quality;
+	int		anti_aliasing;
+	int		show_mini_map;
+	int		pos_mini_map;
 }	t_settings_window;
 
 typedef struct s_mlx

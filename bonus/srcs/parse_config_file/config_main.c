@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:41:57 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:32:54 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,8 @@ int	*return_good_int(t_settings *settings, char *line)
 		return (&settings->antialiasing);
 	else if (!ft_strcmp("show_minimap", line))
 		return (&settings->show_minimap);
-	else if (!ft_strcmp("minimap_pos_x", line))
-		return (&settings->minimap_pos_x);
-	else if (!ft_strcmp("minimap_pos_y", line))
-		return (&settings->minimap_pos_y);
-	else if (!ft_strcmp("wall_size_mini_map", line))
-		return (&settings->wall_size_mini_map);
-	else if (!ft_strcmp("fov", line))
-		return (&settings->fov);
+	else if (!ft_strcmp("minimap_pos", line))
+		return (&settings->minimap_pos);
 	else if (!ft_strcmp("show_fps", line))
 		return (&settings->show_fps);
 	return (NULL);
@@ -116,11 +110,8 @@ static void	*create_default_config(char *path)
 \nquality=1\
 \nantialiasing=1\
 \nshow_minimap=1\
-\nminimap_pos_x=10\
-\nminimap_pos_y=10\
-\nwall_size_mini_map=20\
-\nfov=60\
-\nshow_fps=1\n", 135);
+\nminimap_pos=0\
+\nshow_fps=1\n", 87);
 	close(fd);
 	return (path);
 }
@@ -132,10 +123,7 @@ void	init_settings(t_settings *settings)
 	settings->quality = -1;
 	settings->antialiasing = -1;
 	settings->show_minimap = -1;
-	settings->minimap_pos_x = -1;
-	settings->minimap_pos_y = -1;
-	settings->wall_size_mini_map = -1;
-	settings->fov = -1;
+	settings->minimap_pos = -1;
 	settings->show_fps = -1;
 }
 
@@ -143,9 +131,7 @@ t_settings	*verification_settings(t_settings *settings)
 {
 	if (settings->width < 0 || settings->height < 0 || settings->quality < 0
 		|| settings->antialiasing < 0 || settings->show_minimap < 0
-		|| settings->minimap_pos_x < 0 || settings->minimap_pos_y < 0
-		|| settings->wall_size_mini_map < 0 || settings->fov < 0
-		|| settings->show_fps < 0)
+		|| settings->minimap_pos < 0 || settings->show_fps < 0)
 	{
 		free(settings);
 		return (error_config("Error in config file", NULL));
@@ -172,5 +158,20 @@ t_settings	*parse_config_file(char *path)
 	if (!settings)
 		return (NULL);	
 	settings = verification_settings(settings);
+	if (settings->minimap_pos == 0)
+	{
+		settings->minimap_pos_x = 25;
+		settings->minimap_pos_y = 25;
+	}
+	else if (settings->minimap_pos == 1)
+	{
+		settings->minimap_pos_x = settings->width - 375;
+		settings->minimap_pos_y = 25;
+	}
+	else if (settings->minimap_pos == 2)
+	{
+		settings->minimap_pos_x = 25;
+		settings->minimap_pos_y = settings->height - 225;
+	}
 	return (settings);
 }

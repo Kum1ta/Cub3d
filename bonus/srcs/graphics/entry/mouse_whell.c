@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:39:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 13:18:25 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:04:45 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	settings_wheel(int button, t_mlx *mlx)
 {
 	if (button == 1 && mlx->stg_win.diff < 0)
 		mlx->stg_win.diff += 20;
-	else if (button == 2)
+	else if (button == 2 && mlx->stg_win.diff > -600)
 		mlx->stg_win.diff -= 20;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/13 16:11:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:26:32 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ typedef struct s_settings {
 	int		quality;
 	int		antialiasing;
 	int		show_minimap;
+	int		minimap_pos;
 	int		minimap_pos_x;
 	int		minimap_pos_y;
-	int		wall_size_mini_map;
-	int		fov;
 	int		show_fps;
 }	t_settings;
 
