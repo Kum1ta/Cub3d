@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 23:15:22 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 23:56:31 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ typedef enum e_menu
 	MAP_LARG_MENU,
 	GAME,
 	OPTIONS,
-	OPTIONS_LM, // options larg map
+	OPTIONS_LM,
 	START_GAME,
+	DEAD_SCREEN,
 	WAIT_QUIT,
 	NOTHING,
 }	t_menu;
@@ -239,5 +240,8 @@ void	options_menu(t_mlx *mlx, int need_free);
 
 /* ------ start_screen.c --------------------------------------------------- */
 void	start_screen(t_mlx *mlx, int need_free);
+
+/* ------ dead_screen.c ---------------------------------------------------- */
+void	dead_screen(t_mlx *mlx, int need_free);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 14:45:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 23:58:19 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	window(int event, void *mlx_ptr)
 		inventory(mlx, NULL, 1);
 		solo_menu(mlx, 1);
 		options_menu(mlx, 1);
+		dead_screen(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free_all_graphics(mlx);

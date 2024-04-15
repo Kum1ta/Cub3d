@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 22:31:57 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 00:01:28 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = OPTIONS_LM;
+	mlx->actuel_menu = DEAD_SCREEN;
 	mlx->selected_map = NO_MAP;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)

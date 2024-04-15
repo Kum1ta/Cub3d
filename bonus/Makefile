@@ -37,6 +37,7 @@ SRCS			=	main.c 																\
 					graphics/entry/mouse_down.c											\
 					graphics/entry/mouse_move.c											\
 					graphics/entry/mouse_up.c											\
+					graphics/dead_screen/dead_screen.c									\
 					graphics/init/init.c												\
 					graphics/update.c													\
 					networking/game_connexion/connect_server.c							\
