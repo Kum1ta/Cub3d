@@ -6,13 +6,21 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/11 19:01:18 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:59:02 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
 
 void	options_menu_lm(t_mlx *mlx, int need_free);
+
+static void	wait_quit(t_mlx *mlx)
+{
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 300,
+		mlx->stg->height / 2 - 100, 0xFFFFFFFF, "You need to quit the game for reload");
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 175,
+		mlx->stg->height / 2 - 50, 0xFFFFFFFF, "Press 'esc' to quit");
+}
 
 int	update(void *mlx_ptr)
 {
@@ -57,6 +65,11 @@ int	update(void *mlx_ptr)
 	{
 		mlx_mouse_show();
 		multiplayer_menu(mlx, 0);
+	}
+	else if (mlx->actuel_menu == WAIT_QUIT)
+	{
+		mlx_mouse_show();
+		wait_quit(mlx);
 	}
 	else if (mlx->actuel_menu == MAP_LARG_MENU)
 	{

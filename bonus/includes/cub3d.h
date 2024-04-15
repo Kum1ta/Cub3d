@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 17:49:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:41:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ typedef struct s_settings {
 	int		quality;
 	int		antialiasing;
 	int		show_minimap;
+	int		minimap_pos;
 	int		minimap_pos_x;
 	int		minimap_pos_y;
-	int		wall_size_mini_map;
-	int		fov;
 	int		show_fps;
 }	t_settings;
 
