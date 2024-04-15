@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 21:41:45 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 23:15:22 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef enum e_inventory
 	KNIFE_INV,
 	FIST_INV,
 }	t_inventory;
+
+typedef enum e_selected
+{
+	NOT_SELECTED,
+	SELECTED,
+}	t_selected;
 
 typedef struct s_mouse
 {

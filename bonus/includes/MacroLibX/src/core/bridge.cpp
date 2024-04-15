@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bridge.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maldavid <kbz_8.dev@akel-engine.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:35:20 by maldavid          #+#    #+#             */
-/*   Updated: 2024/03/23 21:20:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/02/23 22:37:24 by maldavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ extern "C"
 
 	void* mlx_new_window(void* mlx, int w, int h, const char* title)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		if(w <= 0 || h <= 0)
 		{
 			mlx::core::error::report(e_kind::fatal_error, "invalid window size (%d x %d)", w, h);
@@ -57,21 +57,21 @@ extern "C"
 
 	int	mlx_loop_hook(void* mlx, int (*f)(void*), void* param)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->loopHook(f, param);
 		return 0;
 	}
 
 	int mlx_loop(void* mlx)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->run();
 		return 0;
 	}
 
 	int mlx_loop_end(void* mlx)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->loopEnd();
 		return 0;
 	}
@@ -90,28 +90,28 @@ extern "C"
 
 	int mlx_mouse_move(void* mlx, void* win, int x, int y)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->mouseMove(win, x, y);
 		return 0;
 	}
 
 	int mlx_mouse_get_pos(void* mlx, int* x, int* y)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->getMousePos(x, y);
 		return 0;
 	}
 
 	int mlx_on_event(void* mlx, void* win, mlx_event_type event, int (*funct_ptr)(int, void*), void* param)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->onEvent(win, static_cast<int>(event), funct_ptr, param);
 		return 0;
 	}
 
 	void* mlx_new_image(void* mlx, int width, int height)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		if (width <= 0 || height <= 0)
 			mlx::core::error::report(e_kind::fatal_error, "invalid image size (%d x %d)", width, height);
 		return static_cast<mlx::core::Application*>(mlx)->newTexture(width, height);
@@ -119,7 +119,7 @@ extern "C"
 
 	int mlx_get_image_pixel(void* mlx, void* img, int x, int y)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		int color = static_cast<mlx::core::Application*>(mlx)->getTexturePixel(img, x, y);
 		unsigned char color_bits[4];
 		color_bits[0] = (color & 0x000000FF);
@@ -131,7 +131,7 @@ extern "C"
 
 	void mlx_set_image_pixel(void* mlx, void* img, int x, int y, int color)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		unsigned char color_bits[4];
 		color_bits[0] = (color & 0x00FF0000) >> 16;
 		color_bits[1] = (color & 0x0000FF00) >> 8;
@@ -142,14 +142,14 @@ extern "C"
 
 	int mlx_put_image_to_window(void* mlx, void* win, void* img, int x, int y)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->texturePut(win, img, x, y);
 		return 0;
 	}
 
 	int mlx_destroy_image(void* mlx, void* img)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->destroyTexture(img);
 		return 0;
 	}
@@ -198,7 +198,7 @@ extern "C"
 
 	int mlx_pixel_put(void* mlx, void* win, int x, int y, int color)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		unsigned char color_bits[4];
 		color_bits[0] = (color & 0x00FF0000) >> 16;
 		color_bits[1] = (color & 0x0000FF00) >> 8;
@@ -210,7 +210,7 @@ extern "C"
 
 	int mlx_string_put(void* mlx, void* win, int x, int y, int color, char* str)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		unsigned char color_bits[4];
 		color_bits[0] = (color & 0x00FF0000) >> 16;
 		color_bits[1] = (color & 0x0000FF00) >> 8;
@@ -259,21 +259,21 @@ extern "C"
 
 	int mlx_clear_window(void* mlx, void* win)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->clearGraphicsSupport(win);
 		return 0;
 	}
 
 	int mlx_destroy_window(void* mlx, void* win)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		static_cast<mlx::core::Application*>(mlx)->destroyGraphicsSupport(win);
 		return 0;
 	}
 
 	int mlx_destroy_display(void* mlx)
 	{
-		// MLX_CHECK_APPLICATION_POINTER(mlx);
+		MLX_CHECK_APPLICATION_POINTER(mlx);
 		delete static_cast<mlx::core::Application*>(mlx);
 		mlx::Render_Core::get().destroy();
 		__mlx_ptr = nullptr;

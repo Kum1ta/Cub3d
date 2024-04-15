@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 19:39:48 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 23:15:10 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./main_menu.h"
-
-typedef enum e_selected
-{
-	NOT_SELECTED,
-	SELECTED,
-}	t_selected;
 
 void	init_button(t_mlx *mlx, t_selected (*selected)[22])
 {
