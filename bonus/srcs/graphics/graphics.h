@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 13:55:39 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:35:51 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ typedef struct s_mlx
 	t_selected_map		selected_map;
 	t_settings			*stg;
 	t_settings_window	stg_win;
-
 }	t_mlx;
 
 typedef struct s_sprite

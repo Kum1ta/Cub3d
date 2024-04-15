@@ -49,6 +49,7 @@ SRCS			=	main.c 																\
 					networking/game_connexion/req_actions/shoot.c						\
 					networking/game_connexion/players_utils/create_online_player.c		\
 					networking/game_connexion/players_utils/get_player_from_source.c	\
+					networking/game_connexion/set_popup.c								\
 					networking/utils/current_timestamp.c								\
 					networking/utils/read_request.c										\
 					networking/utils/socket_init.c										\

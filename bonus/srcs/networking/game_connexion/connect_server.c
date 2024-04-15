@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/14 13:03:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:39:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	close_server(t_server *srv, enum e_server_status status)
 		srv->sockfd = 0;
 	}
 	ft_lstclear(&(srv->online_player), &free);
+	free(srv->popup.str);
+	srv->popup.str = NULL;
 }
 
 bool	client_loop_hook(t_server *srv, void *mlx)
@@ -57,6 +59,8 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 
 void	connect_to_server(t_server *srv)
 {
+	srv->popup.str = NULL;
+	srv->popup.end_at = 0;
 	srv->port = ft_atoi(srv->port_str);
 	if (!create_socket(&(srv->sockfd)))
 	{

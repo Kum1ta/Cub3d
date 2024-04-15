@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 13:46:57 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:53:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 			mlx->player->health = 0;
 		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
 		system("paplay --volume=20000 ./sounds/game/take_damage.wav &");
+		if (mlx->player->health == 0)
+			ft_dprintf(srv->sockfd, "sendMessage: killed by NAME_TODO;");
 	}
 }
 
@@ -79,5 +81,7 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 		mlx->player->health = 0;
 		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
 		system("paplay --volume=20000 ./sounds/game/take_damage.wav &");
+		if (mlx->player->health == 0)
+			ft_dprintf(srv->sockfd, "sendMessage: killed by NAME_TODO;");
 	}
 }

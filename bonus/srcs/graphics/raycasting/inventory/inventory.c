@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:49:38 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:19:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:29:30 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ static void	draw_circle(t_mlx *mlx, int x, int y, int radius, int need_free)
 }
 
 
-void	inventory(t_mlx *mlx, void *img, int need_free)
+void	inventory(t_mlx *mlx, int need_free)
 {
 	(void)mlx;
-	(void)img;
 	draw_circle(mlx, mlx->stg->width - 200, mlx->stg->height - 200, 75, need_free);
 	if (need_free)
 		return ;

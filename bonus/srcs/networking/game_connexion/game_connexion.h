@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_connexion.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/13 16:48:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:44:54 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,20 @@ enum e_server_status
 	ERR_FAILED_CONNEXION,
 };
 
+typedef struct
+{
+	char		*str;
+	long long	end_at;
+}	t_popup;
+
 typedef struct s_server
 {
 	// server informations
 	char					ip[16];
 	char					port_str[6];
 	char					playerName[SV_MAX_PLAYER_NAME + 1];
+	t_popup					popup;
+	
 	uint16_t				port;
 	enum e_server_status	status;
 	t_list					*online_player;
@@ -88,5 +96,6 @@ void	connect_to_server(t_server *srv);
 void	print_network_err(enum e_server_status status);
 bool	client_loop_hook(t_server *srv, void *mlx);
 void	close_server(t_server *srv, enum e_server_status status);
+void	set_popup(t_server *srv, char *str);
 
 #endif

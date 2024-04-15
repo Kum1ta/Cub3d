@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:30:49 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 17:32:48 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:36:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,28 @@ bool	lst_add_pos(t_list *lst, bool *flagBlocks, int width, t_ivec2 pos)
 
 bool	can_exit_map(t_block **blocks, bool *flagBlocks, int width, t_ivec2 pos)
 {
+	t_list	*prev_pos;
 	t_list	*lst_pos;
-	t_list	*current_pos;
 	bool	res;
 
 	lst_pos = new_node_pos(pos.x, pos.y);
 	if (!lst_pos)
 		return (true);
-	current_pos = lst_pos;
 	res = false;
-	while (!res && current_pos)
+	while (!res && lst_pos)
 	{
-		pos = get_node_pos(current_pos);
+		pos = get_node_pos(lst_pos);
 		if (!blocks[pos.y] || blocks[pos.y][pos.x].type == END || blocks[pos.y][pos.x].type == EMPTY || ((pos.x == 0 || pos.y == 0) && blocks[pos.y][pos.x].type != WALL))
 			res = true;
 		else if (blocks[pos.y][pos.x].type != WALL
-			&& (!lst_add_pos(current_pos, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y})
-			|| !lst_add_pos(current_pos, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y})
-			|| !lst_add_pos(current_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1})
-			|| !lst_add_pos(current_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1})))
+			&& (!lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y})
+			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y})
+			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1})
+			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1})))
 			res = true;
-		current_pos = current_pos->next;
+		prev_pos = lst_pos;
+		lst_pos = lst_pos->next;
+		free(prev_pos);
 	}
-	ft_lstclear(&lst_pos, NULL);
 	return (res);
 }

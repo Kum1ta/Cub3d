@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player_attr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/13 16:47:50 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:51:06 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 	int				src;
 	t_online_player	*ply;
 	int				i;
+	char			*popup_str;
 
 	src = ft_atoi(value);
 	while (*value++ != ',')
@@ -32,6 +33,9 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 		;
 	ply->pos = parse_vec3(&value);
 	ply->dir = parse_vec2(&value);
+	popup_str = ft_strjoin(ply->playerName, " joined the server.");
+	if (popup_str)
+		set_popup(srv, popup_str);
 }
 
 void	set_player_pos(t_server *srv, char *value, void *mlx)

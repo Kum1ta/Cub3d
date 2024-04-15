@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:53:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 10:05:21 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:49:41 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	receive_message(t_server *srv, char *value, void *mlx)
 	int				from_src;
 	t_online_player	*from_ply;
 	char			*player_name;
+	char			*popup_str;
 
-	(void) mlx;
 	from_src = ft_atoi(value);
 	while (ft_isdigit(*(value++)))
 		;
@@ -26,5 +26,9 @@ void	receive_message(t_server *srv, char *value, void *mlx)
 	player_name = NULL;
 	if (from_ply)
 		player_name = from_ply->playerName;
-	ft_printf("Received message from %s (%d) : '%s'\n", player_name, from_src, value);
+	else
+		player_name = "???";
+	popup_str = ft_strjoin(player_name, value);
+	if (popup_str)
+		set_popup(srv, popup_str);
 }

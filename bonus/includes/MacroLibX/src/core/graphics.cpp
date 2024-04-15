@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maldavid <kbz_8.dev@akel-engine.com>       +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 15:13:55 by maldavid          #+#    #+#             */
-/*   Updated: 2024/01/11 04:38:53 by maldavid         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:00:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ namespace mlx
 			VK_NULL_HANDLE
 		};
 
+		_pixel_put_pipeline.render(sets, *_renderer);
+		
 		for(auto& data : _drawlist)
 			data->render(sets, *_renderer);
 
-		_pixel_put_pipeline.render(sets, *_renderer);
 
 		_renderer->endFrame();
 

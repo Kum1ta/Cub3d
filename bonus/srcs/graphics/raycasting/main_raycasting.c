@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 16:55:25 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:14:29 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,28 +295,6 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 	}
 }
 
-void	show_fps(t_mlx *mlx)
-{
-	int	x;
-	int	y;
-
-	if (mlx->stg->show_fps)
-	{
-		y = 0;
-		while (y < 20)
-		{
-			x = 0;
-			while (x < 60)
-			{
-				mlx_pixel_put(mlx->mlx, mlx->win,  mlx->stg->width - x, y, 0x00000000);
-				x++;
-			}
-			y++;
-		}
-		put_fps(mlx, 0);
-	}
-}
-
 int	choose_anti_aliasing(t_mlx *mlx, int distance)
 {
 	int	lvl;
@@ -434,6 +412,23 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	}
 }
 
+void	show_popup(t_mlx *mlx)
+{
+	if (mlx->game_server.status == CONNECTED && mlx->game_server.popup.str)
+	{
+		if (get_now_time() >= mlx->game_server.popup.end_at)
+		{
+			free(mlx->game_server.popup.str);
+			mlx->game_server.popup.str = NULL;
+		}
+		else
+		{
+			mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
+			mlx_string_put(mlx->mlx, mlx->win, 0, mlx->stg->height / 2, 0xFF00FF00, mlx->game_server.popup.str);
+		}
+	}
+}
+
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	t_raydata	*ray[1920];
@@ -482,13 +477,15 @@ void	raycasting(t_mlx *mlx, int need_free)
 		i += mlx->stg->quality;
 	}
 	center_sprite = draw_sprites(mlx, ray);
-	show_fps(mlx);
+	put_fps(mlx, 0);
 	item_effect(mlx, center_sprite);
 	put_actual_weapon(mlx);
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
-	// inventory(mlx, img, 0);
-	// tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
-	// mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, HEIGHT - 210, 0xFF00FF00, tmp);
-	// free(tmp);
+	// inventory(mlx, 0);
+
+	char	*tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, mlx->stg->height - 210, 0xFF00FF00, tmp);
+	free(tmp);
+	show_popup(mlx);
 }
