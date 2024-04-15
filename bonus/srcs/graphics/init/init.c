@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 20:06:15 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:10:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	mlx->player->xy_item[0] = 0;
 	mlx->player->xy_item[1] = 0;
 	mlx->map->camDir.z = 0;
+	mlx->stg_win.diff = 0;
 	return (0);
 }
