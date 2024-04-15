@@ -1,7 +1,7 @@
-NO ./textures/wall_wall.png
-SO ./textures/wall_south.png
-WE ./textures/wall_west.png
-EA ./textures/wall_east.png
+NO ./textures/map/wall_north.png
+SO ./textures/map/wall_south.png
+WE ./textures/map/wall_west.png
+EA ./textures/map/wall_east.png
 
 C 30,136,243
 F 207,207,207

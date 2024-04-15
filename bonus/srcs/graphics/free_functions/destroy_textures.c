@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/13 15:23:24 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:00:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ int	destroy_textures(t_mlx *mlx)
 	if (!mlx || !mlx->textures)
 		return (0);
 	wall_texture_destroy(mlx);
-	if (mlx->textures->floor.img)
-		mlx_destroy_image(mlx->mlx, mlx->textures->floor.img);
-	if (mlx->textures->ceiling.img)
-		mlx_destroy_image(mlx->mlx, mlx->textures->ceiling.img);
-	if (mlx->textures->player_ico.img)
-		mlx_destroy_image(mlx->mlx, mlx->textures->player_ico.img);
 	if (mlx->textures->fist_inv.img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->fist_inv.img);
 	if (mlx->textures->knife_inv.img)
@@ -43,8 +37,6 @@ int	destroy_textures(t_mlx *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->textures->weapon_inv.img);
 	if (mlx->textures->weapon_game.img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->weapon_game.img);
-	if (mlx->textures->fist_game.img)
-		mlx_destroy_image(mlx->mlx, mlx->textures->fist_game.img);
 	if (mlx->textures->knife_game.img)
 		mlx_destroy_image(mlx->mlx, mlx->textures->knife_game.img);
 	if (mlx->textures->fire_gun.img)

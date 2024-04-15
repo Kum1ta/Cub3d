@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 13:52:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:55:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,10 @@ typedef struct s_loadeds_textures
 	t_img	south;
 	t_img	east;
 	t_img	west;
-	t_img	floor;
-	t_img	ceiling;
-	t_img	player_ico;
 	t_img	weapon_inv;
 	t_img	fist_inv;
 	t_img	knife_inv;
 	t_img	weapon_game;
-	t_img	fist_game;
 	t_img	knife_game;
 	t_img	fire_gun;
 	t_img	player[4];
