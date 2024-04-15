@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/13 16:52:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:33:45 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 		if (mlx->player->health < 0)
 			mlx->player->health = 0;
 		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
+		system("paplay --volume=20000 ./sounds/game/take_damage.mp3 &");
 	}
 }
 
@@ -77,5 +78,6 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 	{
 		mlx->player->health = 0;
 		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
+		system("paplay --volume=20000 ./sounds/game/take_damage.mp3 &");
 	}
 }
