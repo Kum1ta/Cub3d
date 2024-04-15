@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 13:28:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:47:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 			if (center_sprite.type == SPRT_PLAYER)
 				player_touch = center_sprite.data.player->serverId;
 			if (player_touch != -1)
-				system("paplay --volume=30000 ./sounds/game/hit.mp3 &");
+				system("paplay --volume=30000 ./sounds/game/hit.wav &");
 			dprintf(mlx->game_server.sockfd, "shoot:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
 		}
 		mlx->player->xy_item[0] = 10;
@@ -199,7 +199,7 @@ void	item_effect(t_mlx *mlx, t_sprite center_sprite)
 			if (center_sprite.type == SPRT_PLAYER && center_sprite.dist < 2)
 				player_touch = center_sprite.data.player->serverId;
 			if (player_touch != -1)
-				system("paplay --volume=30000 ./sounds/game/hit.mp3 &");
+				system("paplay --volume=30000 ./sounds/game/hit.wav &");
 			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
 		}
 	}
