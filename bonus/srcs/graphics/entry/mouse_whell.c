@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_whell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:39:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/30 16:44:27 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:18:25 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ static void	game_wheel(int button, t_mlx *mlx)
 		mlx->player->actual_weapon++;
 }
 
+static void	settings_wheel(int button, t_mlx *mlx)
+{
+	if (button == 1 && mlx->stg_win.diff < 0)
+		mlx->stg_win.diff += 20;
+	else if (button == 2)
+		mlx->stg_win.diff -= 20;
+}
+
 int	mouse_whell(int button, void *mlx_ptr)
 {
 	t_mlx	*mlx;
@@ -37,5 +45,7 @@ int	mouse_whell(int button, void *mlx_ptr)
 		larg_map_menu_wheel(button, mlx);
 	if (mlx->actuel_menu == GAME)
 		game_wheel(button, mlx);
+	if (mlx->actuel_menu == OPTIONS)
+		settings_wheel(button, mlx);
 	return (0);
 }

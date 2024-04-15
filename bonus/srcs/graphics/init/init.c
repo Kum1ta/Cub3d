@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/13 15:30:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:52:36 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = MAIN_MENU;
+	mlx->actuel_menu = OPTIONS;
 	mlx->selected_map = NO_MAP;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
@@ -77,5 +77,6 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	mlx->player->xy_item[0] = 0;
 	mlx->player->xy_item[1] = 0;
 	mlx->map->camDir.z = 0;
+	mlx->stg_win.diff = 0;
 	return (0);
 }
