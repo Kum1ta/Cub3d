@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 14:33:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:34:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,12 +176,12 @@ t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 	int i;
 
 	sprites = get_sprite_list(mlx);
+	center_sprite.type = NONE;
 	if (!sprites)
-		return ;
+		return (center_sprite);
 	sort_sprites(sprites);
 	set_sprites_screenX(sprites, mlx->map->playerPos, mlx);
 	i = 0;
-	center_sprite.type = NONE;
 	while (sprites[i].type != NONE)
 	{
 		if (sprites[i].type != SPRT_PLAYER || sprites[i].data.player->health > 0)
