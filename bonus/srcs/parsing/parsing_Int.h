@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:47:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:50:30 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef enum e_map_line_type {
 
 
 typedef struct s_ivec2 {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 }	t_ivec2;
 
 typedef enum e_map_error_type {
@@ -47,5 +47,6 @@ t_map_error_type	add_map_line(char *line, t_list **map_lines);
 t_map_error_type	check_map_param(char *line, t_map *map_data, t_list **map_lines);
 t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2]);
 t_map_error_type	set_map_blocks(t_map *map, t_list *lines, int screen_res[2]);
+bool				can_exit_map(t_block **blocks, bool *flagBlocks, int width, t_ivec2 pos);
 
 #endif

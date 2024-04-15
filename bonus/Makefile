@@ -52,14 +52,15 @@ SRCS			=	main.c 																\
 					networking/utils/current_timestamp.c								\
 					networking/utils/read_request.c										\
 					networking/utils/socket_init.c										\
-					parsing/check_map_lines.c 											\
-					parsing/check_map_param.c 											\
-					parsing/parse_file.c 												\
-					parsing/parse_lines.c 												\
+					parsing/can_exit_map.c												\
+					parsing/check_map_lines.c											\
+					parsing/check_map_param.c											\
+					parsing/parse_file.c												\
+					parsing/parse_lines.c												\
 					parsing/set_map_blocks.c											\
-					utils/first.c 														\
-					utils/vector.c 														\
-					free_map.c 															\
+					utils/first.c														\
+					utils/vector.c														\
+					free_map.c															\
 
 NAME			=	cub3d
 

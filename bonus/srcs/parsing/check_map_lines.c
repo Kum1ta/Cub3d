@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:47:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 17:30:01 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,29 +112,6 @@ static bool	allocate_map(t_map *map)
 	return (true);
 }
 
-static bool	can_exit_map(t_block **blocks, bool *flagBlocks, size_t width, t_ivec2 pos)
-{
-	bool	escaped;
-
-	if (blocks[pos.y] == NULL)
-		return (true);
-	if (blocks[pos.y][pos.x].type == END || blocks[pos.y][pos.x].type == EMPTY || blocks[pos.y][pos.x].type == WALL)
-		return (blocks[pos.y][pos.x].type != WALL);
-	flagBlocks[pos.y * width + pos.x] = true;
-	if (pos.y == 0 || pos.x == 0 || blocks[pos.y + 1] == NULL)
-		return (true);
-	escaped = false;
-	if (!escaped && !flagBlocks[(pos.y - 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1});
-	if (!escaped && !flagBlocks[(pos.y + 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1});
-	if (!escaped && !flagBlocks[pos.y * width + pos.x - 1])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y});
-	if (!escaped && !flagBlocks[pos.y * width + pos.x + 1])
-		escaped = can_exit_map(blocks, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y});
-	return (escaped);
-}
-
 t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
 {
 	t_map_error_type	res;
@@ -151,10 +128,10 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
 		return (res);
 	if (map->playerPos.x == -1.0f)
 		return (MAP_NO_ERROR);
-	flagBlocks = ft_calloc(map->height * map->width, sizeof(bool));
+	flagBlocks = ft_calloc((map->height + 1) * (map->width + 1), sizeof(bool));
 	if (flagBlocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flagBlocks, map->width, (t_ivec2){map->playerPos.x, map->playerPos.y}))
+	if (can_exit_map(map->blocks, flagBlocks, map->width + 1, (t_ivec2){map->playerPos.x, map->playerPos.y}))
 		res = MAP_CAN_EXIT;
 	free(flagBlocks);
 	return (res);

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 14:31:21 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:45:07 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	window(int event, void *mlx_ptr)
 		options_menu(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
-		free(mlx->stg);
 		free_all_graphics(mlx);
 		exit(0);
 	}
@@ -63,7 +62,7 @@ void	graphics_part(t_map *map, t_settings *settings)
 	mlx->mlx = mlx_init();
 	if (load_textures(mlx))
 	{
-		free(mlx);
+		free_all_graphics(mlx);
 		return ;
 	}
 	mlx->win = mlx_new_window(mlx->mlx, mlx->stg->width, mlx->stg->height, "Kumilos - Cube3d");
