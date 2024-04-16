@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 11:19:55 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 12:50:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	put_fps(t_mlx *mlx, int need_free)
 	last_time = now;
 	if (change % 10 == 0)
 	{
-		tmp[0] = (int)fps / 100 + '0';
-		tmp[1] = (int)fps / 10 + '0';
+		tmp[0] = (int)fps / 100 % 10 + '0';
+		tmp[1] = (int)fps / 10 % 10 + '0';
 		tmp[2] = (int)fps % 10 + '0';
 		tmp[3] = '\0';
 		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55, 15, 0xFFFF0000, tmp);
