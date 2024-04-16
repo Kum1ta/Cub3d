@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 16:20:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:52:00 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,12 @@ void	put_actual_weapon(t_mlx *mlx)
 			mlx->player->xy_item,
 			(int [2]){mlx->stg->width, mlx->stg->height}
 		);
-	// else if (mlx->player->actual_weapon == KNIFE_INV)
-	// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->textures->knife_inv->img, 0, 0);
+	else if (mlx->player->actual_weapon == KNIFE_INV)
+		draw_image_to_window(mlx, &mlx->textures->knife_game,
+			(int [2]){mlx->stg->width - 300 - mlx->player->xy_item[0],
+				mlx->stg->height - 250 - mlx->player->xy_item[1]},
+			(int [2]){400, 400}
+		);
 }
 
 void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
@@ -182,17 +186,14 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 	}
 }
 
-void	item_effect(t_mlx *mlx, t_sprite center_sprite)
+void	knife_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 {
-	static long long	last_time = 0;
-	int					player_touch;
+	int	player_touch;
 
-	if (mlx->player->actual_weapon == WEAPON_INV)
-		weapon_effect(mlx, &last_time, center_sprite);
-	else if (mlx->player->actual_weapon == KNIFE_INV && mlx->mouse->pressed_left && get_now_time() - last_time > 500000)
+	if (mlx->mouse->pressed_left && get_now_time() - *last_time > 500000)
 	{
 		system("paplay --volume=65535 ./sounds/game/cut_hit.wav &");
-		last_time = get_now_time();
+		*last_time = get_now_time();
 		if (mlx->game_server.status == CONNECTED)
 		{
 			player_touch = -1;
@@ -200,9 +201,28 @@ void	item_effect(t_mlx *mlx, t_sprite center_sprite)
 				player_touch = center_sprite.data.player->serverId;
 			if (player_touch != -1)
 				system("paplay --volume=30000 ./sounds/game/hit.wav &");
-			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
+			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;",
+			player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y,
+			mlx->map->playerPos.z);
 		}
+		mlx->player->xy_item[0] = 150;
+		mlx->player->xy_item[1] = 150;
+		return ;
 	}
+	if (mlx->player->xy_item[0] > 0)
+		mlx->player->xy_item[0] -= 10;
+	if (mlx->player->xy_item[1] > 0)
+		mlx->player->xy_item[1] -= 10;
+}
+
+void	item_effect(t_mlx *mlx, t_sprite center_sprite)
+{
+	static long long	last_time = 0;
+
+	if (mlx->player->actual_weapon == WEAPON_INV)
+		weapon_effect(mlx, &last_time, center_sprite);
+	else if (mlx->player->actual_weapon == KNIFE_INV)
+		knife_effect(mlx, &last_time, center_sprite);
 }
 
 void	fill_background(t_mlx *mlx, void *img)
