@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 15:26:42 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 21:14:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	mini_map(t_mlx *mlx);
 void	inventory(t_mlx *mlx, int need_free);
 
 /* ---- draw_sprites.c ------------------------------------------------------ */
-t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray);
+t_sprite	draw_sprites(t_mlx *mlx, t_raydata *ray[1920]);
 
 /* ---- popup.c ------------------------------------------------------------- */
 void	show_popup(t_mlx *mlx);
