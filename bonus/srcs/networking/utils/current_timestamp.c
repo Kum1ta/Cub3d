@@ -6,11 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:19:06 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 09:37:26 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:42:06 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <sys/time.h>
+#include <sys/time.h>
 
 long long	current_timestamp(void)
 {

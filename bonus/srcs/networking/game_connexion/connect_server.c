@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 14:15:26 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:51:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@ void	close_server(t_server *srv, enum e_server_status status)
 bool	client_loop_hook(t_server *srv, void *mlx)
 {
 	char			*request;
-	int				byteRead;
+	int				byte_read;
 	static time_t	last_ping = 0;
 
-	request = read_request(srv->sockfd, &byteRead, false);
-	if (byteRead == -1 && errno != EAGAIN)
-	{
-		ft_dprintf(2, "Error while receiving packet from server: %s.\n", strerror(errno));
-	}
+	request = read_request(srv->sockfd, &byte_read, false);
+	if (byte_read == -1 && errno != EAGAIN)
+		ft_dprintf(2, "Error while receiving packet from server: %s.\n",
+			strerror(errno));
 	else
 	{
 		if (request != NULL)
 			manage_server_request(srv, request, mlx);
-		if (byteRead == 0)
+		if (byte_read == 0)
 		{
 			close_server(srv, DISCONNECTED);
 			ft_printf("Disconnected from server.\n");
@@ -49,10 +48,9 @@ bool	client_loop_hook(t_server *srv, void *mlx)
 	}
 	free(request);
 	if (time(NULL) - last_ping > 30)
-	{
-		last_ping = time(NULL);
 		dprintf(srv->sockfd, "ping:%lld;", current_timestamp());
-	}
+	if (time(NULL) - last_ping > 30)
+		last_ping = time(NULL);
 	return (true);
 }
 
@@ -72,7 +70,8 @@ void	connect_to_server(t_server *srv)
 		close_server(srv, ERR_INVALID_ADDRESS);
 		return ;
 	}
-	if (connect(srv->sockfd, (struct sockaddr *) &(srv->addr), sizeof(srv->addr)) != 0)
+	if (connect(srv->sockfd, (struct sockaddr *) &(srv->addr),
+			sizeof(srv->addr)) != 0)
 	{
 		close_server(srv, ERR_FAILED_CONNEXION);
 		return ;

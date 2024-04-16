@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:53:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 13:52:24 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:00:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	receive_message(t_server *srv, char *value, void *mlx)
 	from_ply = get_player_from_source(srv->online_player, from_src);
 	player_name = NULL;
 	if (from_ply)
-		player_name = from_ply->playerName;
+		player_name = from_ply->player_name;
 	else
 		player_name = "???";
 	popup_str = ft_strjoin(player_name, value);

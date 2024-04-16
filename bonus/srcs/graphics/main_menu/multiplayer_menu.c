@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 22:36:22 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:59:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	input_btn(t_mlx *mlx)
 		catch_input(mlx, mlx->game_server.port_str, 5, A_NUM);
 	else if (mlx->menu_button_focus == (intptr_t) set_pseudo_btn(NULL, 2))
 	{
-		catch_input(mlx, mlx->game_server.playerName,
+		catch_input(mlx, mlx->game_server.player_name,
 			SV_MAX_PLAYER_NAME, A_NUM | A_POINT | A_ALPHA);
 	}
 }

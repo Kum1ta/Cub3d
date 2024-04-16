@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 13:36:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:01:30 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	take_damage(t_mlx *mlx, int damage, int from_player)
 				from_player);
 		if (ply)
 			ft_dprintf(mlx->game_server.sockfd,
-				"sendMessage: killed by %s;", ply->playerName);
+				"sendMessage: killed by %s;", ply->player_name);
 		else
 			ft_dprintf(mlx->game_server.sockfd,
 				"sendMessage: killed by (%d);", from_player);

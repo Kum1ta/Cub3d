@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:28:08 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/12 15:10:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:52:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 void	set_door_state(t_server *srv, char *value, void *mlxRaw)
 {
 	bool	state;
-	int		posX;
-	int		posY;
+	int		pos_x;
+	int		pos_y;
 	t_mlx	*mlx;
 
 	state = ft_atoi(value) == 1;
-	posX = 0;
-	posY = 0;
+	pos_x = 0;
+	pos_y = 0;
 	while (*value && *value++ != ',')
 		;
-	posX = ft_atoi(value);
+	pos_x = ft_atoi(value);
 	while (*value && *value++ != ',')
 		;
-	posY = ft_atoi(value);
+	pos_y = ft_atoi(value);
 	mlx = mlxRaw;
-	if (posX < 0 || posY < 0
-		|| posX >= mlx->map->width || posY >= mlx->map->height
-		|| mlx->map->blocks[posY][posX].type != DOOR)
+	if (pos_x < 0 || pos_y < 0
+		|| pos_x >= mlx->map->width || pos_y >= mlx->map->height
+		|| mlx->map->blocks[pos_y][pos_x].type != DOOR)
 		return ;
-	mlx->map->blocks[posY][posX].data.door = state;
+	mlx->map->blocks[pos_y][pos_x].data.door = state;
 }

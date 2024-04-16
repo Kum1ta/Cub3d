@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:29:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:59:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ char	*set_pseudo_btn(void *ptr, int action)
 	mlx = ptr;
 	if (action == 0)
 	{
-		if (mlx->game_server.playerName[0] == 0)
+		if (mlx->game_server.player_name[0] == 0)
 			return ("PSEUDO");
 		else
-			return (mlx->game_server.playerName);
+			return (mlx->game_server.player_name);
 	}
 	if (action == 2)
 		return ((char *) 5);
@@ -132,7 +132,7 @@ char	*connect_btn(void *ptr, int action)
 		mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 		mlx->actuel_menu = GAME;
 		dprintf(mlx->game_server.sockfd, "initPlayer:%s,%.2f,%.2f,%.2f,%.2f,%.2f;",
-			mlx->game_server.playerName, mlx->map->playerPos.x, mlx->map->playerPos.y,
+			mlx->game_server.player_name, mlx->map->playerPos.x, mlx->map->playerPos.y,
 			mlx->map->playerPos.z, mlx->map->camDir.x, mlx->map->camDir.y);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:36:04 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/06 09:37:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:44:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ char	*read_request(int socketfd, int *byteRead, bool clear)
 		free(request);
 	if (clear)
 		return (NULL);
-	do
+	*byteRead = 1;
+	while (*byteRead > 0)
 	{
 		*byteRead = read(socketfd, buffer, BUFFER_READ_SIZE);
 		buffer[*byteRead] = 0;
 		if (*byteRead > 0)
 			request = ft_strfjoin(request, buffer);
-	} while (*byteRead > 0);
+	}
 	set_prev_buffer(&request, prev_buffer + socketfd);
 	return (request);
 }

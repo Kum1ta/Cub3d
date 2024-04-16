@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:39:34 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:59:11 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 		{
 			player_touch = -1;
 			if (center_sprite.type == SPRT_PLAYER)
-				player_touch = center_sprite.data.player->serverId;
+				player_touch = center_sprite.data.player->server_id;
 			if (player_touch != -1)
 				system("paplay --volume=30000 ./sounds/game/hit.wav &");
 			dprintf(mlx->game_server.sockfd, "shoot:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
@@ -198,7 +198,7 @@ void	knife_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 		{
 			player_touch = -1;
 			if (center_sprite.type == SPRT_PLAYER && center_sprite.dist < 2)
-				player_touch = center_sprite.data.player->serverId;
+				player_touch = center_sprite.data.player->server_id;
 			if (player_touch != -1)
 				system("paplay --volume=30000 ./sounds/game/hit.wav &");
 			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;",

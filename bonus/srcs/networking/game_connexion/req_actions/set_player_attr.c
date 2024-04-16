@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 14:45:39 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:01:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 		ply = create_online_player(&(srv->online_player), src);
 	i = 0;
 	while (i < SV_MAX_PLAYER_NAME && *value != ',')
-		ply->playerName[i++] = *value++;
-	ply->playerName[i] = 0;
+		ply->player_name[i++] = *value++;
+	ply->player_name[i] = 0;
 	while (*value++ != ',')
 		;
 	ply->pos = parse_vec3(&value);
 	ply->dir = parse_vec2(&value);
-	popup_str = ft_strjoin(ply->playerName, " joined the server.");
+	popup_str = ft_strjoin(ply->player_name, " joined the server.");
 	if (popup_str)
 		add_popup(srv, popup_str);
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:30:15 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/14 13:29:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:01:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_online_player	*create_online_player(t_list **players, int server_id)
 		free(ply);
 		return (NULL);
 	}
-	ply->serverId = server_id;
+	ply->server_id = server_id;
 	node->content = ply;
 	ft_lstadd_back(players, node);
 	return (ply);

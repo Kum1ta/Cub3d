@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:40:44 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 15:19:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:46:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	clear_popup(t_server *srv, bool force)
 {
 	t_list	*popup;
 
-	ft_lstremoveif(&srv->popup, (void *) (intptr_t) force,
+	ft_lstremoveif(&srv->popup, (void *)(intptr_t) force,
 		&popup_free, &popup_must_delete);
 }
