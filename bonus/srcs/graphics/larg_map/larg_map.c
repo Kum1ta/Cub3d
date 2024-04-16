@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 23:41:09 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:36:39 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,10 @@ char	*button_main_lm(void *mlx, int action)
 	if (action == 0)
 		return ("Back");
 	((t_mlx *)mlx)->actuel_menu = MAP_LARG_MENU;
+	((t_mlx *)mlx)->stg_win.width = ((t_mlx *)mlx)->stg->width;
+	((t_mlx *)mlx)->stg_win.height = ((t_mlx *)mlx)->stg->height;
+	((t_mlx *)mlx)->stg_win.show_mini_map = ((t_mlx *)mlx)->stg->show_minimap;
+	((t_mlx *)mlx)->stg_win.pos_mini_map = ((t_mlx *)mlx)->stg->minimap_pos;
 	change_config_file_lm(&((t_mlx *)mlx)->stg_win);
 	((t_mlx *)mlx)->stg->show_fps = ((t_mlx *)mlx)->stg_win.show_fps;
 	((t_mlx *)mlx)->stg->antialiasing = ((t_mlx *)mlx)->stg_win.anti_aliasing;
@@ -275,16 +279,6 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22])
 		(*selected)[1] = SELECTED;
 	else
 		(*selected)[0] = SELECTED;
-	if (mlx->stg->width == 800 && mlx->stg->height == 600)
-		(*selected)[2] = SELECTED;
-	else if (mlx->stg->width == 1024 && mlx->stg->height == 768)
-		(*selected)[3] = SELECTED;
-	else if (mlx->stg->width == 1280 && mlx->stg->height == 800)
-		(*selected)[4] = SELECTED;
-	else if (mlx->stg->width == 1600 && mlx->stg->height == 900)
-		(*selected)[5] = SELECTED;
-	else if (mlx->stg->width == 1920 && mlx->stg->height == 1080)
-		(*selected)[6] = SELECTED;
 	if (mlx->stg->quality == 5)
 		(*selected)[7] = SELECTED;
 	else if (mlx->stg->quality == 3)
@@ -301,16 +295,6 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22])
 		(*selected)[13] = SELECTED;
 	else if (mlx->stg->antialiasing == 8)
 		(*selected)[14] = SELECTED;
-	if (mlx->stg->show_minimap)
-		(*selected)[16] = SELECTED;
-	else
-		(*selected)[15] = SELECTED;
-	if (mlx->stg->minimap_pos == 0)
-		(*selected)[17] = SELECTED;
-	else if (mlx->stg->minimap_pos == 1)
-		(*selected)[18] = SELECTED;
-	else if (mlx->stg->minimap_pos == 2)
-		(*selected)[19] = SELECTED;
 }
 
 void	list_button_quality_lm(t_mlx *mlx, int xy[2])

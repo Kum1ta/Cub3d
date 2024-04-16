@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 18:14:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:31:18 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = GAME;
-	mlx->selected_map = NO_MAP;
+	mlx->actuel_menu = MAIN_MENU;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
 		return (free_all_graphics(mlx));

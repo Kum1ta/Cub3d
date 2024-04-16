@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 18:27:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:27:57 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,9 @@ typedef struct s_raydata
 	t_vec2	pos;
 }	t_raydata;
 
-typedef enum e_selected_map
-{
-	NO_MAP,
-	ARGUMENTS_MAP,
-	MAP_1,
-	MAP_2,
-	MAP_3,
-}	t_selected_map;
-
 typedef enum e_menu
 {
 	MAIN_MENU,
-	SOLO_MENU,
 	MULTIPLAYER_MENU,
 	MAP_LARG_MENU,
 	GAME,
@@ -153,7 +143,6 @@ typedef struct s_mlx
 	void				*tmp;
 	t_server			game_server;
 	int					just_try;
-	t_selected_map		selected_map;
 	t_settings			*stg;
 	t_settings_window	stg_win;
 }	t_mlx;

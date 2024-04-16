@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 14:32:12 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:29:31 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,5 @@ int	main(int ac, char **av)
 		free(settings);
 		return (1);
 	}
-	argument_map(av[1], -1);
 	graphics_part(map, settings);
 }

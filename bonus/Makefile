@@ -25,7 +25,6 @@ SRCS			=	main.c 																\
 					graphics/raycasting/show_popup.c									\
 					graphics/raycasting/draw_sprites.c									\
 					graphics/main_menu/main_menu.c										\
-					graphics/main_menu/solo_menu.c										\
 					graphics/main_menu/multiplayer_menu.c								\
 					graphics/main_menu/options_menu.c									\
 					graphics/main_menu/button_action.c									\
