@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 17:37:42 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:55:17 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	load_textures(t_mlx *mlx)
 		|| !load_texture(mlx->mlx, mlx->map->texture.south, &mlx->textures->south)
 		|| !load_texture(mlx->mlx, mlx->map->texture.east, &mlx->textures->east)
 		|| !load_texture(mlx->mlx, mlx->map->texture.west, &mlx->textures->west)
+		|| !load_texture(mlx->mlx, "textures/game/door.png", &mlx->textures->door)
 		|| !load_texture(mlx->mlx, "textures/inventory/weapon.png", &mlx->textures->weapon_inv)
 		|| !load_texture(mlx->mlx, "textures/inventory/fist.png", &mlx->textures->fist_inv)
 		|| !load_texture(mlx->mlx, "textures/inventory/knife.png", &mlx->textures->knife_inv)

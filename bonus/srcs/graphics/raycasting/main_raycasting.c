@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 17:52:00 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:57:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,7 +386,9 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	int		a, b, c;
 
 	k = -1;
-	if (ray->dir == 0)
+	if (ray->block->type == DOOR)
+		mlx->tmp = &mlx->textures->door;
+	else if (ray->dir == 0)
 		mlx->tmp = &mlx->textures->north;
 	else if (ray->dir == 1)
 		mlx->tmp = &mlx->textures->east;
@@ -465,7 +467,9 @@ void	raycasting(t_mlx *mlx, int need_free)
 			if (ray[i][j].found)
 			{
 				factor = mlx->stg->height / ray[i][j].dist;
-				if (ray[i][j].dir == 0)
+				if (ray[i][j].block->type == DOOR)
+					factor = (float)mlx->textures->door.height / factor;
+				else if (ray[i][j].dir == 0)
 					factor = (float)mlx->textures->north.height / factor;
 				else if (ray[i][j].dir == 1)
 					factor = (float)mlx->textures->east.height / factor;
