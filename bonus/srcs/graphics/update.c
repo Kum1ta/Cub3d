@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 23:58:05 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:12:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	update(void *mlx_ptr)
 	mlx_clear_window(mlx->mlx, mlx->win);
 	keyboard(mlx);
 	mlx_mouse_get_pos(mlx->mlx, &mlx->mouse->x, &mlx->mouse->y);
-	if (mlx->player->health <= 0)
+	if (mlx->actuel_menu == DEAD_SCREEN)
+		dead_screen(mlx, 0);
+	else if (mlx->player->health <= 0)
 	{
 		mlx_mouse_show();
 		mlx->actuel_menu = DEAD_SCREEN;
@@ -39,8 +41,6 @@ int	update(void *mlx_ptr)
 	{
 		start_screen(mlx, 0);
 	}
-	else if (mlx->actuel_menu == DEAD_SCREEN)
-		dead_screen(mlx, 0);
 	else if (mlx->actuel_menu == MAIN_MENU)
 	{
 		mlx_mouse_show();

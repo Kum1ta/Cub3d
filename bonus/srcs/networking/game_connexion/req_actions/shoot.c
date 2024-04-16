@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 19:53:50 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:36:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,41 @@ static void	play_sound_dist(char *sound_path, int decr)
 	free(cmd);
 }
 
+static void	take_damage(t_mlx *mlx, int damage, int from_player)
+{
+	t_online_player	*ply;
+	char			*tmp;
+
+	mlx->player->health -= damage;
+	if (mlx->player->health < 0)
+		mlx->player->health = 0;
+	ft_dprintf(mlx->game_server.sockfd, "setHealth:%d;", mlx->player->health);
+	system("paplay --volume=20000 ./sounds/game/take_damage.wav &");
+	if (mlx->player->health == 0)
+	{
+		ply = get_player_from_source(mlx->game_server.online_player,
+				from_player);
+		if (ply)
+			ft_dprintf(mlx->game_server.sockfd,
+				"sendMessage: killed by %s;", ply->playerName);
+		else
+			ft_dprintf(mlx->game_server.sockfd,
+				"sendMessage: killed by (%d);", from_player);
+	}
+}
+
 void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 {
+	int			from_player;
 	int			got_touch;
 	t_vec3		origin;
 	float		dist;
 	t_mlx		*mlx;
 
 	mlx = mlxRaw;
+	from_player = ft_atoi(value);
+	while (*value++ != ',')
+		;
 	got_touch = ft_atoi(value);
 	while (*value++ != ',')
 		;
@@ -51,25 +78,21 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
 	play_sound_dist("./sounds/game/weapon_fire.wav", dist * SHOOT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)
-	{
-		mlx->player->health = mlx->player->health - 10;
-		if (mlx->player->health < 0)
-			mlx->player->health = 0;
-		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
-		system("paplay --volume=20000 ./sounds/game/take_damage.wav &");
-		if (mlx->player->health == 0)
-			ft_dprintf(srv->sockfd, "sendMessage: killed by NAME_TODO;");
-	}
+		take_damage(mlx, 33, from_player);
 }
 
 void	act_cut(t_server *srv, char *value, void *mlxRaw)
 {
+	int			from_player;
 	int			got_touch;
 	t_vec3		origin;
 	float		dist;
 	t_mlx		*mlx;
 
 	mlx = mlxRaw;
+	from_player = ft_atoi(value);
+	while (*value++ != ',')
+		;
 	got_touch = ft_atoi(value);
 	while (*value++ != ',')
 		;
@@ -77,11 +100,5 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
 	play_sound_dist("./sounds/game/cut_hit.wav", dist * CUT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)
-	{
-		mlx->player->health = 0;
-		ft_dprintf(srv->sockfd, "setHealth:%d;", mlx->player->health);
-		system("paplay --volume=20000 ./sounds/game/take_damage.wav &");
-		if (mlx->player->health == 0)
-			ft_dprintf(srv->sockfd, "sendMessage: killed by NAME_TODO;");
-	}
+		take_damage(mlx, mlx->player->health, from_player);
 }

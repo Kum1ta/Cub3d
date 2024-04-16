@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/14 13:04:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:24:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	act_shoot(t_client *clients, int clientI, char *value, long long currTs)
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
-			ft_dprintf(clients[i].socket, "shoot:%d,%s;", player_id == i, value);
+			ft_dprintf(clients[i].socket, "shoot:%d,%d,%s;", clientI, player_id == i, value);
 		i++;
 	}
 }
@@ -158,7 +158,7 @@ void	act_cut(t_client *clients, int clientI, char *value, long long currTs)
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
-			ft_dprintf(clients[i].socket, "cut:%d,%s;", player_id == i, value);
+			ft_dprintf(clients[i].socket, "cut:%d,%d,%s;", clientI, player_id == i, value);
 		i++;
 	}
 }

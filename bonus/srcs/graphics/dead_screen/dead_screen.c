@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dead_screen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:48:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 00:02:40 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:46:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ char	*respwan_button(void *ptr, int action)
 {
 	t_mlx	*mlx;
 
-	mlx = (t_mlx *)ptr;
 	if (action == 0 || action == 2)
 		return ("Respawn");
+	mlx = (t_mlx *)ptr;
 	mlx->player->health = 100;
+	if (mlx->game_server.status == CONNECTED)
+		ft_dprintf(mlx->game_server.sockfd, "setHealth:%d;", mlx->player->health);
 	mlx->actuel_menu = GAME;
 	mlx_mouse_hide();
 	return (NULL);
@@ -65,7 +67,12 @@ char	*exit_button_ds(void *ptr, int action)
 	if (action == 0 || action == 2)
 		return ("Exit");
 	if (action == 1)
+	{
 		mlx->actuel_menu = MAIN_MENU;
+		mlx->player->health = 100;
+		if (mlx->game_server.status == CONNECTED)
+			close_server(&(mlx->game_server), DISCONNECTED);
+	}
 	return (NULL);
 }
 

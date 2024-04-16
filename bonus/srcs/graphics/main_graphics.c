@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_graphics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 23:58:19 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:21:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	window(int event, void *mlx_ptr)
 		dead_screen(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
+		if (mlx->game_server.status == CONNECTED)
+			close_server(&(mlx->game_server), DISCONNECTED);
 		free_all_graphics(mlx);
 		exit(0);
 	}

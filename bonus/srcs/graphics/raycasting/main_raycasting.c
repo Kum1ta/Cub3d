@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 20:14:29 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 15:21:02 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,23 +412,6 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	}
 }
 
-void	show_popup(t_mlx *mlx)
-{
-	if (mlx->game_server.status == CONNECTED && mlx->game_server.popup.str)
-	{
-		if (get_now_time() >= mlx->game_server.popup.end_at)
-		{
-			free(mlx->game_server.popup.str);
-			mlx->game_server.popup.str = NULL;
-		}
-		else
-		{
-			mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
-			mlx_string_put(mlx->mlx, mlx->win, 0, mlx->stg->height / 2, 0xFF00FF00, mlx->game_server.popup.str);
-		}
-	}
-}
-
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	t_raydata	*ray[1920];
@@ -485,7 +468,9 @@ void	raycasting(t_mlx *mlx, int need_free)
 	// inventory(mlx, 0);
 
 	char	*tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 20.0f);
 	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, mlx->stg->height - 210, 0xFF00FF00, tmp);
 	free(tmp);
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
 	show_popup(mlx);
 }

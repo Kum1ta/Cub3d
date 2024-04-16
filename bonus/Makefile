@@ -22,6 +22,7 @@ SRCS			=	main.c 																\
 					graphics/raycasting/mini_map/mini_map.c								\
 					graphics/raycasting/inventory/inventory.c							\
 					graphics/raycasting/main_raycasting.c								\
+					graphics/raycasting/show_popup.c									\
 					graphics/raycasting/draw_sprites.c									\
 					graphics/main_menu/main_menu.c										\
 					graphics/main_menu/solo_menu.c										\
@@ -50,7 +51,7 @@ SRCS			=	main.c 																\
 					networking/game_connexion/req_actions/shoot.c						\
 					networking/game_connexion/players_utils/create_online_player.c		\
 					networking/game_connexion/players_utils/get_player_from_source.c	\
-					networking/game_connexion/set_popup.c								\
+					networking/game_connexion/add_popup.c								\
 					networking/utils/current_timestamp.c								\
 					networking/utils/read_request.c										\
 					networking/utils/socket_init.c										\

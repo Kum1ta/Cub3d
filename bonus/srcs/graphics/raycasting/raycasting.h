@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 19:29:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:47:32 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ void	inventory(t_mlx *mlx, int need_free);
 
 /* ---- draw_sprites.c ------------------------------------------------------ */
 t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray);
+
+/* ---- popup.c ------------------------------------------------------------- */
+void	show_popup(t_mlx *mlx);
 
 #endif

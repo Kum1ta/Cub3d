@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:53:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 19:49:41 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:52:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	receive_message(t_server *srv, char *value, void *mlx)
 		player_name = "???";
 	popup_str = ft_strjoin(player_name, value);
 	if (popup_str)
-		set_popup(srv, popup_str);
+		add_popup(srv, popup_str);
 }

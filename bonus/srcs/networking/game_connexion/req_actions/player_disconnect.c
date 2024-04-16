@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:03:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 19:48:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:52:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	player_disconnect(t_server *srv, char *value, void *mlx)
 	{
 		popup_str = ft_strjoin(player->playerName, " disconnected.");
 		if (popup_str)
-			set_popup(srv, popup_str);
+			add_popup(srv, popup_str);
 	}
 	ft_lstremoveif(&srv->online_player, (void *) (intptr_t) player_src, &free, &cmp_ply);
 }

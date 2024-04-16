@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 19:51:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:45:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 	ply->dir = parse_vec2(&value);
 	popup_str = ft_strjoin(ply->playerName, " joined the server.");
 	if (popup_str)
-		set_popup(srv, popup_str);
+		add_popup(srv, popup_str);
 }
 
 void	set_player_pos(t_server *srv, char *value, void *mlx)
