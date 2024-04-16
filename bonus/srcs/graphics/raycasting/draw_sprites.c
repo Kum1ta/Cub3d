@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 21:15:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:47:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static t_img *get_sprite_img(t_mlx *mlx, t_sprite *sprite)
 	return (NULL);
 }
 
-static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata *ray[1920])
+static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
 	int		width;
 	int		height;
@@ -169,7 +169,7 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata *ray[1920])
 	return (touch_center);
 }
 
-t_sprite	draw_sprites(t_mlx *mlx, t_raydata *ray[1920])
+t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 {
 	t_sprite	*sprites;
 	t_sprite	center_sprite;

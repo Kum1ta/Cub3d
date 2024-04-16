@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:59:11 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:46:33 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,14 +436,18 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 
 void	raycasting(t_mlx *mlx, int need_free)
 {
-	t_raydata	*ray[1920];
-	int			i;
-	int			j;
-	float		factor;
-	t_sprite	center_sprite;
+	static t_raydata	**ray;
+	int					i;
+	int					j;
+	float				factor;
+	t_sprite			center_sprite;
 
 	if (need_free)
+		free(ray);
+	if (need_free)
 		return ;
+	while (!ray)
+		ray = malloc(mlx->stg->width * sizeof(t_raydata *));
 	i = -1;
 	while (++i < mlx->stg->width)
 	{
@@ -451,7 +455,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		{
 			ray[i] = raycast(mlx, i, false, mlx->map->playerPos);
 			if (!ray[i])
-				return ;
+				continue ;
 			calcul_wall_size(mlx, ray[i]);
 		}
 	}
@@ -464,7 +468,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		put_celling_floor(mlx, ray[i] + MAX_HEIGHT - 1, i);
 		while (j >= 0)
 		{
-			if (ray[i][j].found)
+			if (ray[i] && ray[i][j].found)
 			{
 				factor = mlx->stg->height / ray[i][j].dist;
 				if (ray[i][j].block->type == DOOR)
@@ -496,4 +500,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	free(tmp);
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
 	show_popup(mlx);
+	i = -1;
+	while (++i < mlx->stg->width)
+		free(ray[i]);
 }
