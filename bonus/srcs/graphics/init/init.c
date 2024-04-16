@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 10:31:37 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 12:41:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = MAIN_MENU;
+	mlx->actuel_menu = START_GAME;
 	mlx->selected_map = NO_MAP;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
