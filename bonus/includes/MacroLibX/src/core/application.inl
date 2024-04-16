@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:49:46 by maldavid          #+#    #+#             */
-/*   Updated: 2024/04/16 12:41:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:16:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@
 		core::error::report(e_kind::error, "invalid image ptr (NULL)"); \
 		retval; \
 	} \
-	else {}
+	else if(std::find_if(_textures.begin(), _textures.end(), [=](const Texture& texture) \
+                       { \
+                               return &texture == img; \
+                       }) == _textures.end()) \
+       { \
+               core::error::report(e_kind::error, "invalid image ptr"); \
+               retval; \
+       } else {}
 
 namespace mlx::core
 {
@@ -80,14 +87,14 @@ namespace mlx::core
 	void* Application::newGraphicsSuport(std::size_t w, std::size_t h, const char* title)
 	{
 		MLX_PROFILE_FUNCTION();
-		// auto it = std::find_if(_textures.begin(), _textures.end(), [=](const Texture& texture)
-		// {
-		// 	return &texture == reinterpret_cast<Texture*>(const_cast<char*>(title));
-		// });
-		// if(it != _textures.end())
-		// 	_graphics.emplace_back(std::make_unique<GraphicsSupport>(w, h, reinterpret_cast<Texture*>(const_cast<char*>(title)), _graphics.size()));
-		// else
-		// {
+		auto it = std::find_if(_textures.begin(), _textures.end(), [=](const Texture& texture)
+		{
+			return &texture == reinterpret_cast<Texture*>(const_cast<char*>(title));
+		});
+		if(it != _textures.end())
+			_graphics.emplace_back(std::make_unique<GraphicsSupport>(w, h, reinterpret_cast<Texture*>(const_cast<char*>(title)), _graphics.size()));
+		else
+		{
 			if(title == NULL)
 			{
 				core::error::report(e_kind::fatal_error, "invalid window title (NULL)");
@@ -95,7 +102,7 @@ namespace mlx::core
 			}
 			_graphics.emplace_back(std::make_unique<GraphicsSupport>(w, h, title, _graphics.size()));
 			_in->addWindow(_graphics.back()->getWindow());
-		// }
+		}
 		return static_cast<void*>(&_graphics.back()->getID());
 	}
 

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 15:21:02 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 15:27:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -465,8 +465,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	put_actual_weapon(mlx);
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
-	// inventory(mlx, 0);
-
+	inventory(mlx, 0);
 	char	*tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 20.0f);
 	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, mlx->stg->height - 210, 0xFF00FF00, tmp);
