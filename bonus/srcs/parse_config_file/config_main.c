@@ -6,11 +6,30 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 17:32:54 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:38:53 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_atoi_s(const char *str)
+{
+	int	nbr;
+	int	i;
+
+	i = 0;
+	nbr = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (-1);
+		nbr = nbr * 10 + (str[i] - 48);
+		if (nbr > 2147483647)
+			return (-1);
+		i++;
+	}
+	return (nbr);
+}
 
 int	is_not_digit(char *str)
 {
@@ -89,7 +108,7 @@ static t_settings	*parse_config(char *path, t_settings *settings)
 			return (error_config("Error in config file", settings));
 		}
 		line[ft_strlen(line)] = '=';
-		*a = ft_atoi(ft_strchr(line, '=') + 1);
+		*a = ft_atoi_s(ft_strchr(line, '=') + 1);
 		free(line);
 	}
 	free(line);
@@ -129,9 +148,13 @@ void	init_settings(t_settings *settings)
 
 t_settings	*verification_settings(t_settings *settings)
 {
-	if (settings->width < 0 || settings->height < 0 || settings->quality < 0
-		|| settings->antialiasing < 0 || settings->show_minimap < 0
-		|| settings->minimap_pos < 0 || settings->show_fps < 0)
+	if (settings->width < 800 || settings->width > 1920
+		|| settings->height < 600 || settings->height > 1080
+		|| settings->quality < 1 || settings->quality > 10
+		|| settings->antialiasing < 1 || settings->antialiasing > 8
+		|| settings->show_minimap < 0 || settings->show_minimap > 1
+		|| settings->minimap_pos < 0 || settings->minimap_pos > 2
+		|| settings->show_fps < 0 || settings->show_fps > 1)
 	{
 		free(settings);
 		return (error_config("Error in config file", NULL));
@@ -158,20 +181,13 @@ t_settings	*parse_config_file(char *path)
 	if (!settings)
 		return (NULL);	
 	settings = verification_settings(settings);
-	if (settings->minimap_pos == 0)
-	{
-		settings->minimap_pos_x = 25;
-		settings->minimap_pos_y = 25;
-	}
-	else if (settings->minimap_pos == 1)
-	{
+	if (!settings)
+		return (NULL);
+	settings->minimap_pos_x = 25;
+	settings->minimap_pos_y = 25;
+	if (settings->minimap_pos == 1)
 		settings->minimap_pos_x = settings->width - 375;
-		settings->minimap_pos_y = 25;
-	}
 	else if (settings->minimap_pos == 2)
-	{
-		settings->minimap_pos_x = 25;
 		settings->minimap_pos_y = settings->height - 225;
-	}
 	return (settings);
 }
