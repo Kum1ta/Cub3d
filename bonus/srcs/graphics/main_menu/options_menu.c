@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 23:15:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:37:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.inl                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maldavid <kbz_8.dev@akel-engine.com>       +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 15:13:55 by maldavid          #+#    #+#             */
-/*   Updated: 2023/04/02 15:26:16 by maldavid         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:47:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ namespace mlx
 	void GraphicsSupport::clearRenderData() noexcept
 	{
 		MLX_PROFILE_FUNCTION();
-		_drawlist.clear();
+		_drawStrList.clear();
+		_drawImgList.clear();
 		_pixel_put_pipeline.clear();
 		_text_manager.clear();
 		_texture_manager.clear();
@@ -39,11 +40,11 @@ namespace mlx
 		std::pair<DrawableResource*, bool> res = _text_manager.registerText(x, y, color, str);
 		if(!res.second) // if this is not a completly new text draw
 		{
-			auto it = std::find(_drawlist.begin(), _drawlist.end(), res.first);
-			if(it != _drawlist.end())
-				_drawlist.erase(it);
+			auto it = std::find(_drawStrList.begin(), _drawStrList.end(), res.first);
+			if(it != _drawStrList.end())
+				_drawStrList.erase(it);
 		}
-		_drawlist.push_back(res.first);
+		_drawStrList.push_back(res.first);
 	}
 
 	void GraphicsSupport::texturePut(Texture* texture, int x, int y)
@@ -52,11 +53,11 @@ namespace mlx
 		auto res = _texture_manager.registerTexture(texture, x, y);
 		if(!res.second) // if this is not a completly new texture draw
 		{
-			auto it = std::find(_drawlist.begin(), _drawlist.end(), res.first);
-			if(it != _drawlist.end())
-				_drawlist.erase(it);
+			auto it = std::find(_drawImgList.begin(), _drawImgList.end(), res.first);
+			if(it != _drawImgList.end())
+				_drawImgList.erase(it);
 		}
-		_drawlist.push_back(res.first);
+		_drawImgList.push_back(res.first);
 	}
 
 	void GraphicsSupport::loadFont(const std::filesystem::path& filepath, float scale)

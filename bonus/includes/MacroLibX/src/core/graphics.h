@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maldavid <kbz_8.dev@akel-engine.com>       +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:49:49 by maldavid          #+#    #+#             */
-/*   Updated: 2024/01/11 15:47:05 by maldavid         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:47:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ namespace mlx
 		private:
 			PixelPutPipeline _pixel_put_pipeline;
 
-			std::vector<DrawableResource*> _drawlist;
+			std::vector<DrawableResource*> _drawStrList;
+			std::vector<DrawableResource*> _drawImgList;
 			
 			TextManager _text_manager;
 			TextureManager _texture_manager;

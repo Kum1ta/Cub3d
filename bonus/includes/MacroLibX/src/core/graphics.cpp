@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maldavid <kbz_8.dev@akel-engine.com>       +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 15:13:55 by maldavid          #+#    #+#             */
-/*   Updated: 2024/01/11 04:38:53 by maldavid         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:47:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ namespace mlx
 			VK_NULL_HANDLE
 		};
 
-		for(auto& data : _drawlist)
+		for(auto& data : _drawImgList)
 			data->render(sets, *_renderer);
-
 		_pixel_put_pipeline.render(sets, *_renderer);
+		for(auto& data : _drawStrList)
+			data->render(sets, *_renderer);
 
 		_renderer->endFrame();
 
-		for(auto& data : _drawlist)
+		for(auto& data : _drawImgList)
+			data->resetUpdate();
+		for(auto& data : _drawStrList)
 			data->resetUpdate();
 
 		#ifdef GRAPHICS_MEMORY_DUMP
