@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 13:24:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 21:18:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 	i = 0;
 	while (*value && *value != ',')
 		if (i <= SV_MAX_PLAYER_NAME)
-			clients[clientI].playerName[i++] = *value++;
+			clients[clientI].player_name[i++] = *value++;
 	value++;
-	clients[clientI].playerName[i] = 0;
+	clients[clientI].player_name[i] = 0;
 	while (value[i++] != ',')
 		;
-	clients[clientI].playerPos = parse_vec3(&value);
-	clients[clientI].playerDir = parse_vec2(&value);
+	clients[clientI].player_pos = parse_vec3(&value);
+	clients[clientI].player_dir = parse_vec2(&value);
 	i = -1;
 	while (++i < SV_MAX_CONNECTION)
 	{
@@ -55,9 +55,9 @@ void	act_init_player(t_client *clients, int clientI, char *value, long long curr
 		{
 			ft_dprintf(clients[i].socket, "setPlayerAttr:%d,%s;", clientI, base_str);
 			dprintf(clients[clientI].socket, "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f,%.2f;",
-				i, clients[i].playerName, clients[i].playerPos.x,
-				clients[i].playerPos.y, clients[i].playerPos.z,
-				clients[i].playerDir.x, clients[i].playerDir.y);
+				i, clients[i].player_name, clients[i].player_pos.x,
+				clients[i].player_pos.y, clients[i].player_pos.z,
+				clients[i].player_dir.x, clients[i].player_dir.y);
 			printf("sent to %d (%d) and %d (%d)\n", i, clients[i].socket, clientI, clients[clientI].socket);
 		}
 	}
@@ -70,7 +70,7 @@ void	act_set_pos(t_client *clients, int clientI, char *value, long long currTs)
 
 	(void) currTs;
 	i = 0;
-	clients[clientI].playerPos = parse_vec3(&value);
+	clients[clientI].player_pos = parse_vec3(&value);
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
@@ -86,7 +86,7 @@ void	act_set_dir(t_client *clients, int clientI, char *value, long long currTs)
 
 	(void) currTs;
 	i = 0;
-	clients[clientI].playerDir = parse_vec2(&value);
+	clients[clientI].player_dir = parse_vec2(&value);
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && clients[i].socket != -1)
