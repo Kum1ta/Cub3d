@@ -6,13 +6,13 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 13:21:57 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 18:27:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
 
-void	inventory(t_mlx *mlx, void *img, int need_free);
+void	inventory(t_mlx *mlx, int need_free);
 char	*argument_map(void *ptr, int action);
 void	options_menu(t_mlx *mlx, int need_free);
 
@@ -32,7 +32,7 @@ int	window(int event, void *mlx_ptr)
 		argument_map(NULL, -2);
 		main_menu(mlx, 1);
 		multiplayer_menu(mlx, 1);
-		inventory(mlx, NULL, 1);
+		inventory(mlx, 1);
 		solo_menu(mlx, 1);
 		options_menu(mlx, 1);
 		dead_screen(mlx, 1);
