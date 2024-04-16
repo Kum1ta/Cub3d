@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 21:49:46 by maldavid          #+#    #+#             */
-/*   Updated: 2024/04/16 16:16:52 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:45:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 	{ \
 		core::error::report(e_kind::error, "invalid image ptr (NULL)"); \
 		retval; \
-	} \
+	} else {}
+	// } \
 	else if(std::find_if(_textures.begin(), _textures.end(), [=](const Texture& texture) \
                        { \
                                return &texture == img; \

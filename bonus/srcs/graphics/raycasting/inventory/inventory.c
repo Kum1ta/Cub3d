@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:49:38 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 16:10:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 16:44:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,29 @@ static void	draw_circle(t_mlx *mlx, int x, int y, int radius, int need_free)
 			{
 				dist = (radius - i) * (radius - i) + (radius - j) * (radius - j);
 				if (dist <= radius * radius)
-					mlx_set_image_pixel(mlx->mlx, img.img, j + 2, i + 2, 0xF0343434);
+					mlx_set_image_pixel(mlx->mlx, img.img, j + 2, i + 2, 0xFF343434);
 				else if (dist <= (radius + 2) * (radius + 2))
-					mlx_set_image_pixel(mlx->mlx, img.img, j + 2, i + 2, 0xF091a3b0);
+					mlx_set_image_pixel(mlx->mlx, img.img, j + 2, i + 2, 0xFF91a3b0);
 				j++;
 			}
 			i++;
 		}
 	}
 	if (img.img)
-		draw_image_to_window(mlx, &img, (int [2]){150, 150}, (int [2]){img.width, img.height});
+		draw_image_to_window(mlx, &img, (int [2]){x, y}, (int [2]){img.width, img.height});
 }
 
 
 void	inventory(t_mlx *mlx, int need_free)
 {
 	(void)mlx;
-	// draw_circle(mlx, mlx->stg->width - 200, mlx->stg->height - 200, 75, need_free);
+	draw_circle(mlx, mlx->stg->width - 200, mlx->stg->height - 200, 75, need_free);
 	if (need_free)
 		return ;
 	if (mlx->player->actual_weapon == WEAPON_INV)
-		draw_image_to_window(mlx, mlx->textures->weapon_inv.img, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->weapon_inv.width, mlx->textures->weapon_inv.height});
+		draw_image_to_window(mlx, &mlx->textures->weapon_inv, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->weapon_inv.width, mlx->textures->weapon_inv.height});
 	else if (mlx->player->actual_weapon == KNIFE_INV)
-		draw_image_to_window(mlx, mlx->textures->knife_inv.img, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->knife_inv.width, mlx->textures->knife_inv.height});
+		draw_image_to_window(mlx, &mlx->textures->knife_inv, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->knife_inv.width, mlx->textures->knife_inv.height});
 	else if (mlx->player->actual_weapon == FIST_INV)
-		draw_image_to_window(mlx, mlx->textures->fist_inv.img, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->fist_inv.width, mlx->textures->fist_inv.height});
+		draw_image_to_window(mlx, &mlx->textures->fist_inv, (int [2]){mlx->stg->width - 170, mlx->stg->height - 170}, (int [2]){mlx->textures->fist_inv.width, mlx->textures->fist_inv.height});
 }
