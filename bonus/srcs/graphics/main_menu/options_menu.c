@@ -6,57 +6,57 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 10:37:35 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:01:45 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./main_menu.h"
 
-void	init_button(t_mlx *mlx, t_selected (*selected)[22])
+void	init_button(t_mlx *mlx, t_selected selected[22])
 {
 	int	i;
 
 	i = -1;
 	if (mlx->stg->show_fps)
-		(*selected)[1] = SELECTED;
+		selected[1] = SELECTED;
 	else
-		(*selected)[0] = SELECTED;
-	if (mlx->stg->width == 800 && mlx->stg->height == 600)
-		(*selected)[2] = SELECTED;
-	else if (mlx->stg->width == 1024 && mlx->stg->height == 768)
-		(*selected)[3] = SELECTED;
+		selected[0] = SELECTED;
+	if (mlx->stg->width == 1024 && mlx->stg->height == 768)
+		selected[3] = SELECTED;
 	else if (mlx->stg->width == 1280 && mlx->stg->height == 800)
-		(*selected)[4] = SELECTED;
+		selected[4] = SELECTED;
 	else if (mlx->stg->width == 1600 && mlx->stg->height == 900)
-		(*selected)[5] = SELECTED;
+		selected[5] = SELECTED;
 	else if (mlx->stg->width == 1920 && mlx->stg->height == 1080)
-		(*selected)[6] = SELECTED;
-	if (mlx->stg->quality == 5)
-		(*selected)[7] = SELECTED;
-	else if (mlx->stg->quality == 3)
-		(*selected)[8] = SELECTED;
-	else if (mlx->stg->quality == 2)
-		(*selected)[9] = SELECTED;
-	else if (mlx->stg->quality == 1)
-		(*selected)[10] = SELECTED;
-	if (mlx->stg->antialiasing == 1)
-		(*selected)[11] = SELECTED;
-	else if (mlx->stg->antialiasing == 2)
-		(*selected)[12] = SELECTED;
-	else if (mlx->stg->antialiasing == 4)
-		(*selected)[13] = SELECTED;
-	else if (mlx->stg->antialiasing == 8)
-		(*selected)[14] = SELECTED;
-	if (mlx->stg->show_minimap)
-		(*selected)[16] = SELECTED;
+		selected[6] = SELECTED;
 	else
-		(*selected)[15] = SELECTED;
-	if (mlx->stg->minimap_pos == 0)
-		(*selected)[17] = SELECTED;
-	else if (mlx->stg->minimap_pos == 1)
-		(*selected)[18] = SELECTED;
+		selected[2] = SELECTED;
+	if (mlx->stg->quality == 5)
+		selected[7] = SELECTED;
+	else if (mlx->stg->quality == 3)
+		selected[8] = SELECTED;
+	else if (mlx->stg->quality == 2)
+		selected[9] = SELECTED;
+	else
+		selected[10] = SELECTED;
+	if (mlx->stg->antialiasing == 1)
+		selected[11] = SELECTED;
+	else if (mlx->stg->antialiasing == 2)
+		selected[12] = SELECTED;
+	else if (mlx->stg->antialiasing == 4)
+		selected[13] = SELECTED;
+	else
+		selected[14] = SELECTED;
+	if (mlx->stg->show_minimap)
+		selected[16] = SELECTED;
+	else
+		selected[15] = SELECTED;
+	if (mlx->stg->minimap_pos == 1)
+		selected[18] = SELECTED;
 	else if (mlx->stg->minimap_pos == 2)
-		(*selected)[19] = SELECTED;
+		selected[19] = SELECTED;
+	else
+		selected[17] = SELECTED;
 }
 
 int	add_case(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
@@ -69,7 +69,7 @@ int	add_case(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
 	x = pos[0] - 1;
 	if (!init)
 	{
-		init_button(mlx, &selected);
+		init_button(mlx, selected);
 		init = 1;
 	}
 	while (++x < pos[2])
