@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 16:07:34 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:10:13 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ typedef struct s_client
 	long long	last_ping;
 }	t_client;
 
+typedef struct s_health_kit
+{
+	t_vec3		pos;
+	int			id;
+}	t_health_kit;
+
+typedef struct s_server
+{
+	int			sockfd;
+	t_client	clients[SV_MAX_CONNECTION];
+	long long	current_ts;
+	int			kit_id;
+	t_list		*kits;
+}	t_server;
+
 // utils
 bool		create_socket(int *sockfd);
 char		*read_request(int socketfd, int *byteRead, bool clear);
@@ -63,31 +78,23 @@ bool		add_client(t_client *clients,
 				int clientSock,
 				char ip[INET_ADDRSTRLEN]);
 void		remove_client(t_client *clients, int clientI);
-void		try_accept_client(int sockfd, t_client *clients);
+void		try_accept_client(t_server *srv);
 
-typedef void	(*t_req_action_fct)(t_client *, int, char *, long long);
+typedef void	(*t_req_action_fct)(t_server *, int, char *);
 
-void		manage_client_request(t_client *clients,
-				int clientI,
-				char *request,
-				long long currTs);
+void		manage_client_request(t_server *srv, int clientI, char *request);
 
 float		ft_atof(char *str);
 
 // req
-void		act_init_player(t_client *clients, int client_i,
-				char *value, long long currTs);
-void		act_set_pos(t_client *clients, int client_i,
-				char *value, long long currTs);
-void		act_set_dir(t_client *clients, int client_i,
-				char *value, long long currTs);
-void		act_set_health(t_client *clients, int clientI,
-				char *value, long long currTs);
-void		act_set_door(t_client *clients, int clientI,
-				char *value, long long currTs);
-void		act_cut(t_client *clients, int clientI, char *value,
-				long long currTs);
-void		act_shoot(t_client *clients, int clientI,
-				char *value, long long currTs);
+void		act_init_player(t_server *srv, int client_i, char *value);
+void		act_set_pos(t_server *srv, int client_i, char *value);
+void		act_set_dir(t_server *srv, int client_i, char *value);
+void		act_set_health(t_server *srv, int clientI, char *value);
+void		act_set_door(t_server *srv, int clientI, char *value);
+void		act_cut(t_server *srv, int clientI, char *value);
+void		act_shoot(t_server *srv, int clientI, char *value);
+void		act_add_health_kit(t_server *srv, int clientI, char *value);
+void		act_take_health_kit(t_server *srv, int clientI, char *value);
 
 #endif

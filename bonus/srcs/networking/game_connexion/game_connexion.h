@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:25:35 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 20:50:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:17:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,19 @@ typedef struct s_popup
 	long long	end_at;
 }	t_popup;
 
+typedef struct s_health_kit
+{
+	t_vec3		pos;
+	int			id;
+}	t_health_kit;
+
 typedef struct s_server
 {
 	char					ip[16];
 	char					port_str[6];
 	char					player_name[SV_MAX_PLAYER_NAME + 1];
 	t_list					*popup;
+	t_list					*kits;
 
 	uint16_t				port;
 	enum e_server_status	status;
@@ -88,6 +95,8 @@ void			set_player_health(t_server *srv, char *value, void *mlx);
 void			set_door_state(t_server *srv, char *value, void *mlx);
 void			act_shoot(t_server *srv, char *value, void *mlx);
 void			act_cut(t_server *srv, char *value, void *mlx);
+void			add_health_kit(t_server *srv, char *value, void *mlx);
+void			remove_health_kit(t_server *srv, char *value, void *mlx);
 
 void			connect_to_server(t_server *srv);
 void			print_network_err(enum e_server_status status);

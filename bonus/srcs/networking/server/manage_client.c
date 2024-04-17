@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:21:14 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 14:36:35 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:24:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	remove_client(t_client *clients, int clientI)
 	}
 }
 
-void	try_accept_client(int sockfd, t_client *clients)
+void	try_accept_client(t_server *srv)
 {
 	int					client_sock;
 	struct sockaddr_in	client_adress;
@@ -70,11 +70,12 @@ void	try_accept_client(int sockfd, t_client *clients)
 	char				ip[INET_ADDRSTRLEN];
 
 	addr_len = sizeof(client_adress);
-	client_sock = accept(sockfd, (struct sockaddr *) &client_adress, &addr_len);
+	client_sock = accept(srv->sockfd, (struct sockaddr *) &client_adress,
+		&addr_len);
 	if (client_sock != -1)
 	{
 		inet_ntop(AF_INET, &(client_adress.sin_addr), ip, INET_ADDRSTRLEN);
-		if (!add_client(clients, client_sock, ip))
+		if (!add_client(srv->clients, client_sock, ip))
 		{
 			ft_printf("Can't connect %s: server is full.\n", ip);
 			close(client_sock);

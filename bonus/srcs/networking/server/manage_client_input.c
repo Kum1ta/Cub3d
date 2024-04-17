@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 16:04:42 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:34:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,38 @@
 #define ACTIONS_NAME 
 #define ACTIONS_FCT 
 
-static void	act_ping(t_client *clients, int clientI,
-					char *value, long long currTs)
+static void	act_ping(t_server *srv, int clientI, char *value)
 {
 	const long long	client_ts = atoll(value);
 
 	dprintf(1, "Latency of client %s: %lld\n",
-		clients[clientI].ip, currTs - client_ts);
-	clients[clientI].last_ping = client_ts;
+		srv->clients[clientI].ip, srv->current_ts - client_ts);
+	srv->clients[clientI].last_ping = client_ts;
 }
 
-static void	act_send_message(t_client *clients, int clientI,
-							char *value, long long currTs)
+static void	act_send_message(t_server *srv, int clientI, char *value)
 {
 	int	i;
 
-	(void) currTs;
 	i = 0;
 	while (i < SV_MAX_CONNECTION)
 	{
-		if (i != clientI && clients[i].socket != -1)
-			ft_dprintf(clients[i].socket, "sendMessage:%d-%s;", clientI, value);
+		if (i != clientI && srv->clients[i].socket != -1)
+			ft_dprintf(srv->clients[i].socket, "sendMessage:%d-%s;",
+				clientI, value);
 		i++;
 	}
 }
 
-static inline void	exec_req_action(t_client *clients, int clientI,
-									char *request, long long currTs)
+static inline void	exec_req_action(t_server *srv, int clientI,
+									char *request)
 {
 	const char				*actions_id[] = {"ping:", "sendMessage:",
 		"initPlayer:", "setPos:", "setDir:", "setDoorState:", "shoot:", "cut:",
-		"setHealth:", NULL};
+		"setHealth:", "addHealthKit:", "takeHealthKit:", NULL};
 	const t_req_action_fct	act_fct[] = {&act_ping, &act_send_message,
 		&act_init_player, &act_set_pos, &act_set_dir, &act_set_door, &act_shoot,
-		&act_cut, &act_set_health};
+		&act_cut, &act_set_health, &act_add_health_kit, &act_take_health_kit};
 	size_t					act_len;
 	int						act_i;
 
@@ -59,7 +57,7 @@ static inline void	exec_req_action(t_client *clients, int clientI,
 		act_len = ft_strlen(actions_id[act_i]);
 		if (ft_strncmp(actions_id[act_i], request, act_len) == 0)
 		{
-			act_fct[act_i](clients, clientI, request + act_len, currTs);
+			act_fct[act_i](srv, clientI, request + act_len);
 			return ;
 		}
 		act_i++;
@@ -67,8 +65,7 @@ static inline void	exec_req_action(t_client *clients, int clientI,
 	dprintf(2, "Unknown request type received.\n");
 }
 
-void	manage_client_request(t_client *clients, int clientI,
-								char *request, long long currTs)
+void	manage_client_request(t_server *srv, int clientI, char *request)
 {
 	char	**request_data;
 	int		i;
@@ -81,7 +78,7 @@ void	manage_client_request(t_client *clients, int clientI,
 		i = 0;
 		while (request_data[i])
 		{
-			exec_req_action(clients, clientI, request_data[i], currTs);
+			exec_req_action(srv, clientI, request_data[i]);
 			i++;
 		}
 		free_split(request_data, 0);

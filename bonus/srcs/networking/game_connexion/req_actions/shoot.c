@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:25:59 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:15:10 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	take_damage(t_mlx *mlx, int damage, int from_player)
 		else
 			ft_dprintf(mlx->game_server.sockfd,
 				"sendMessage: killed by (%d);", from_player);
+		ft_dprintf(mlx->game_server.sockfd, "addHealthKit:;");
 	}
 }
 
