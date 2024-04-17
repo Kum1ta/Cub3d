@@ -6,14 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 18:49:34 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:18:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../graphics.h"
 #include <time.h>
 
-#define MOVE_TIME_US 10000
+#define MOVE_TIME_US 1/40*1000000
 
 void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
@@ -55,7 +55,7 @@ void	interract_block(t_mlx *mlx)
 void	game_keyboard(t_mlx *mlx)
 {
 	static long long	lastMove;
-	float add = 0.1;
+	float add = 0.15;
 	float addX;
 	float addY;
 

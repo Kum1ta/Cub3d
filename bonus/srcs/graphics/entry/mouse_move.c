@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_move.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42.fr>            +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:38:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/13 16:51:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:17:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../graphics.h"
-#define MOUSE_MOVE_TIME_US 1000
+#define MOUSE_MOVE_TIME_US 1/40*1000000
 #define MOUSEMOVE_SENSIBILITY_X 0.004
 #define MOUSEMOVE_SENSIBILITY_Y 1
 

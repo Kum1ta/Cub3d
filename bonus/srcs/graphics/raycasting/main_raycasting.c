@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 16:49:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:15:19 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
 	max_height = MAX_HEIGHT;
 	if (catch_interract)
 		max_height = 1;
-	res = calloc(max_height, sizeof(t_raydata));
+	res = malloc(max_height * sizeof(t_raydata));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -110,6 +110,8 @@ t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
 		}
 		ray.nbStep++;
 	}
+	while (i < max_height)
+		res[i++].found = false;
 	return (res);
 }
 
@@ -360,6 +362,8 @@ int	get_ss_color(t_mlx *mlx, int x, int y, int distance)
 	int		color_tmp;
 	int		lvl;
 	
+	if (mlx->no_texture_mod)
+		return (0xFFAA0011);
 	if (mlx->stg->antialiasing == 1)
 		return (mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img, x, y));
 	lvl = choose_anti_aliasing(mlx, distance);
@@ -513,5 +517,8 @@ void	raycasting(t_mlx *mlx, int need_free)
 	show_popup(mlx);
 	i = -1;
 	while (++i < mlx->stg->width)
-		free(ray[i]);
+	{
+		if (i % mlx->stg->quality == 0)
+			free(ray[i]);
+	}
 }

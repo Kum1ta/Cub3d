@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/06 13:48:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:06:38 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	keyboard_down(int key, void *mlx_ptr)
 	if (key == 43 && mlx->actuel_menu == GAME)
 		mlx->actuel_menu = MAP_LARG_MENU;
 	else if (key == 43 && mlx->actuel_menu == MAP_LARG_MENU)
+	{
 		mlx->actuel_menu = GAME;
+		mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2);
+	}
 	if (!is_key_down(mlx->keyboard, key))
 		ft_lstadd_back(&(mlx->keyboard), ft_lstnew((void *)(intptr_t) key));
 	else

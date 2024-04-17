@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:36:39 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:07:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,16 @@ void	add_button_lm(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[1], 0xFFFFFFFF, f((void *)mlx, 0));
 }
 
-char	*button_resume_lm(void *mlx, int action)
+char	*button_resume_lm(void *mlx_raw, int action)
 {
-	if (action == 0)
+	t_mlx	*mlx;
+
+	if (action == 0 || action == 1)
 		return ("Resume");
-	mouse_move((t_mlx *)mlx);
-	((t_mlx *)mlx)->actuel_menu = GAME;
+	mlx = mlx_raw;
+	mouse_move(mlx);
+	mlx->actuel_menu = GAME;
+	mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2);
 	return (NULL);
 }
 

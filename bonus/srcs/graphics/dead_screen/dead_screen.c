@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:48:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 14:46:50 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:06:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*respwan_button(void *ptr, int action)
 	if (mlx->game_server.status == CONNECTED)
 		ft_dprintf(mlx->game_server.sockfd, "setHealth:%d;", mlx->player->health);
 	mlx->actuel_menu = GAME;
+	mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2);
 	mlx_mouse_hide();
 	return (NULL);
 }
