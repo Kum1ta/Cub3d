@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:35:07 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 20:10:25 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:38:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	act_add_health_kit(t_server *srv, int clientI, char *value)
 		return ;
 	kit = (void *)node + sizeof(t_list);
 	node->content = kit;
-	kit->pos = srv->clients[i].player_pos;
+	kit->pos = srv->clients[clientI].player_pos;
 	kit->id = srv->kit_id++;
 	node->next = srv->kits;
 	srv->kits = node;

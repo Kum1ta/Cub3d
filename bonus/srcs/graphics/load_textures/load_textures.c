@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 17:55:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:55:54 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	load_textures(t_mlx *mlx)
 		|| !load_texture(mlx->mlx, "textures/game/player_front.png", &mlx->textures->player[0])
 		|| !load_texture(mlx->mlx, "textures/game/player_right.png", &mlx->textures->player[1])
 		|| !load_texture(mlx->mlx, "textures/game/player_back.png", &mlx->textures->player[2])
-		|| !load_texture(mlx->mlx, "textures/game/player_left.png", &mlx->textures->player[3]))
+		|| !load_texture(mlx->mlx, "textures/game/player_left.png", &mlx->textures->player[3])
+		|| !load_texture(mlx->mlx, "textures/game/health_kit.png", &mlx->textures->health_kit))
 	{
 		destroy_textures(mlx);
 		return (error_int("Cube3d: Error load_texture()\n", 1));

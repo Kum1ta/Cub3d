@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 21:48:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:57:11 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_loadeds_textures
 	t_img	knife_game;
 	t_img	fire_gun;
 	t_img	player[4];
+	t_img	health_kit;
 }	t_loadeds_textures;
 
 typedef struct s_player

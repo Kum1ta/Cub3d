@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:14:44 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 20:24:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:41:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	add_health_kit(t_server *srv, char *value, void *mlx)
 	node->next = srv->kits;
 	srv->kits = node;
 	kit->id = ft_atoi(value);
-	while (*value++ != ';')
+	while (*value && *value++ != ',')
 		;
 	kit->pos = parse_vec3(&value);
 }
