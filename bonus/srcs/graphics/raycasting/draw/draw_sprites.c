@@ -6,11 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:33:37 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
+#include "../raycasting.h"
 
 static t_sprite *get_sprite_list(t_mlx *mlx)
 {

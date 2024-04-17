@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 18:11:18 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:08:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,27 @@ typedef struct s_ray
 }	t_ray;
 
 /* ---- mini_map.c ---------------------------------------------------------- */
-void	mini_map(t_mlx *mlx);
+void		mini_map(t_mlx *mlx);
 
 /* ---- inventory.c --------------------------------------------------------- */
-void	inventory(t_mlx *mlx, int need_free);
+void		inventory(t_mlx *mlx, int need_free);
 
 /* ---- item_effect.c ------------------------------------------------------- */
-void	item_effect(t_mlx *mlx, t_sprite center_sprite);
+void		item_effect(t_mlx *mlx, t_sprite center_sprite);
 
 /* ---- put_actual_weapon.c ------------------------------------------------- */
-void	put_actual_item(t_mlx *mlx);
+void		put_actual_item(t_mlx *mlx);
+
+/* ---- supersampling.c ----------------------------------------------------- */
+int			get_ss_color(t_mlx *mlx, int x, int y, int distance);
+
+/* ---- draw_wall_line.c ---------------------------------------------------- */
+void		scalling(t_raydata *ray, t_mlx *mlx, int i, int size);
 
 /* ---- draw_sprites.c ------------------------------------------------------ */
 t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray);
 
 /* ---- popup.c ------------------------------------------------------------- */
-void	show_popup(t_mlx *mlx);
+void		show_popup(t_mlx *mlx);
 
 #endif
