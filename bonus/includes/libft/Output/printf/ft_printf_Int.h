@@ -6,12 +6,12 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:33:44 by psalame           #+#    #+#             */
-/*   Updated: 2024/03/11 23:45:53 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:23:23 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_INT
-# define FT_PRINTF_INT
+#ifndef FT_PRINTF_INT_H
+# define FT_PRINTF_INT_H
 # include "../../libft.h"
 # include <stdarg.h>
 # include <stdbool.h>

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 17:30:01 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:26:07 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,12 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
 	res = set_map_blocks(map, lines, screen_res);
 	if (res != MAP_NO_ERROR)
 		return (res);
-	if (map->playerPos.x == -1.0f)
+	if (map->player_pos.x == -1.0f)
 		return (MAP_NO_ERROR);
 	flagBlocks = ft_calloc((map->height + 1) * (map->width + 1), sizeof(bool));
 	if (flagBlocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flagBlocks, map->width + 1, (t_ivec2){map->playerPos.x, map->playerPos.y}))
+	if (can_exit_map(map->blocks, flagBlocks, map->width + 1, (t_ivec2){map->player_pos.x, map->player_pos.y}))
 		res = MAP_CAN_EXIT;
 	free(flagBlocks);
 	return (res);

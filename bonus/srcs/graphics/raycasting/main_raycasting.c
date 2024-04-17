@@ -6,233 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:15:19 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:10:11 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raycasting.h"
-
-typedef struct s_ray {
-	int		posX;
-	int		posY;
-	float	dirX;
-	float	dirY;
-	t_vec2	dist;
-	t_vec2	deltaDist;
-	int		stepX;
-	int		stepY;
-	int		nbStep;
-	int		dir;
-}	t_ray;
-
-void	init_ray(t_ray *ray, t_mlx *mlx, int screen_x, t_vec3 start)
-{
-	float	camX;
-
-	camX = 2 * screen_x / (float) mlx->stg->width - 1;
-	ray->dirX = mlx->map->camDir.x + mlx->map->camPlane.x * camX;
-	ray->dirY = mlx->map->camDir.y + mlx->map->camPlane.y * camX;
-	ray->posX = (int) start.x;
-	ray->posY = (int) start.y;
-	ray->deltaDist.x = fabs(1 / ray->dirX);
-	ray->deltaDist.y = fabs(1 / ray->dirY);
-	if (ray->dirX < 0)
-		ray->dist.x = (start.x - ray->posX) * ray->deltaDist.x;
-	else
-		ray->dist.x = (ray->posX + 1 - start.x) * ray->deltaDist.x;
-	if (ray->dirY < 0)
-		ray->dist.y = (start.y - ray->posY) * ray->deltaDist.y;
-	else
-		ray->dist.y = (ray->posY + 1 - start.y) * ray->deltaDist.y;
-	ray->stepX = 1 - 2 * (ray->dirX < 0);
-	ray->stepY = 1 - 2 * (ray->dirY < 0);
-	ray->nbStep = 0;
-}
-
-t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
-{
-	t_raydata	*res;
-	t_ray		ray;
-	int			i;
-	int			curr_size;
-	int			max_height;
-
-	max_height = MAX_HEIGHT;
-	if (catch_interract)
-		max_height = 1;
-	res = malloc(max_height * sizeof(t_raydata));
-	if (!res)
-		return (NULL);
-	i = 0;
-	init_ray(&ray, mlx, screen_x, start);
-	curr_size = 0;
-	while (curr_size < max_height && ray.nbStep < MAX_DISTANCE)
-	{
-		if (ray.dist.x < ray.dist.y)
-		{
-			ray.dist.x += ray.deltaDist.x;
-			ray.posX += ray.stepX;
-			ray.dir = 0;
-		}
-		else
-		{
-			ray.dist.y += ray.deltaDist.y;
-			ray.posY += ray.stepY;
-			ray.dir = 1;
-		}
-		if (ray.posX >= 0 && ray.posY >= 0 && ray.posX < mlx->map->width && ray.posY < mlx->map->height)
-		{
-			res[i].block = &(mlx->map->blocks[ray.posY][ray.posX]);
-			if ((res[i].block->type == WALL && res[i].block->data.wall > curr_size) 
-				|| (res[i].block->type == DOOR && (res[i].block->data.door == false || catch_interract) && curr_size == 0))
-			{
-				res[i].found = true;
-				res[i].pos.x = ray.posX;
-				res[i].pos.y = ray.posY;
-				if (ray.dir == 0)
-				{
-					res[i].dist = ray.dist.x - ray.deltaDist.x;
-					res[i].dir = ray.dir + 2 * (ray.stepX == -1);
-					res[i].imgXPercent = start.y + res[i].dist * ray.dirY;
-				}
-				else
-				{
-					res[i].dist = ray.dist.y - ray.deltaDist.y;
-					res[i].dir = ray.dir + 2 * (ray.stepY == -1);
-					res[i].imgXPercent = start.x + res[i].dist * ray.dirX;
-				}
-				res[i].imgXPercent = res[i].imgXPercent - ((int) res[i].imgXPercent);
-				curr_size++;
-				if (res[i].block->type == WALL)
-					curr_size = res[i].block->data.wall;
-				i++;
-			}
-		}
-		ray.nbStep++;
-	}
-	while (i < max_height)
-		res[i++].found = false;
-	return (res);
-}
-
-void	put_actual_weapon(t_mlx *mlx)
-{
-	int	i;
-
-	i = -1;
-	while (++i < 20)
-		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2 - 10 + i, mlx->stg->height / 2, 0xFF00FF00);
-	i = -1;
-	while (++i < 20)
-		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
-	if (mlx->player->actual_weapon == WEAPON_INV)
-	{
-		int	wpn_size[2];
-
-		wpn_size[0] = mlx->textures->weapon_game.width * mlx->stg->width / 1920;
-		wpn_size[1] = mlx->textures->weapon_game.height * mlx->stg->height / 1080;
-		draw_image_to_window(mlx, &mlx->textures->weapon_game,
-			(int [2]){mlx->stg->width - wpn_size[0] + mlx->player->xy_item[0],
-				mlx->stg->height - wpn_size[1] + mlx->player->xy_item[1]},
-			wpn_size
-		);
-	}
-	else if (mlx->player->actual_weapon == KNIFE_INV)
-		draw_image_to_window(mlx, &mlx->textures->knife_game,
-			(int [2]){mlx->stg->width - 300 - mlx->player->xy_item[0],
-				mlx->stg->height - 250 - mlx->player->xy_item[1]},
-			(int [2]){400, 400}
-		);
-}
-
-void	weapon_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
-{
-	int	player_touch;
-
-	if (!mlx->player->is_reloading && (mlx->mouse->pressed_left && (get_now_time() - *last_time > 150000)) && mlx->player->ammo)
-	{
-		player_touch = -1;
-		system("paplay --volume=65535 ./sounds/game/weapon_fire.wav &");
-		*last_time = get_now_time();
-		mlx->player->ammo--;
-		draw_image_to_window(mlx, &mlx->textures->fire_gun,
-			(int [2]){mlx->stg->width * 0.58 - 150 / 2, mlx->stg->height * 0.55 - 150 / 2},
-			(int [2]){150, 150});
-		if (mlx->game_server.status == CONNECTED)
-		{
-			player_touch = -1;
-			if (center_sprite.type == SPRT_PLAYER)
-				player_touch = center_sprite.data.player->server_id;
-			if (player_touch != -1)
-				system("paplay --volume=30000 ./sounds/game/hit.wav &");
-			dprintf(mlx->game_server.sockfd, "shoot:%d,%.2f,%.2f,%.2f;", player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y, mlx->map->playerPos.z);
-		}
-		mlx->player->xy_item[0] = 10;
-		mlx->player->xy_item[1] = 10;
-	}
-	if (!mlx->player->is_reloading && is_key_down(mlx->keyboard, KEY_R) && get_now_time() - *last_time > 50000 && mlx->player->ammo < 30)
-	{
-		system("paplay --volume=50000 ./sounds/game/weapon_reload.wav &");
-		*last_time = get_now_time();
-		mlx->player->is_reloading = true;
-	}
-	if (mlx->player->is_reloading)
-	{
-		mlx->player->xy_item[1] += 3;
-		if (*last_time + 1700000 < get_now_time())
-		{
-			mlx->player->is_reloading = false;
-			mlx->player->ammo = 30;
-			mlx->player->xy_item[1] = 0;
-		}
-	}
-	else
-	{
-		if (mlx->player->xy_item[0] > 0)
-			mlx->player->xy_item[0] -= 2;
-		if (mlx->player->xy_item[1] > 0)
-			mlx->player->xy_item[1] -= 2;
-	}
-}
-
-void	knife_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
-{
-	int	player_touch;
-
-	if (mlx->mouse->pressed_left && get_now_time() - *last_time > 500000)
-	{
-		system("paplay --volume=65535 ./sounds/game/cut_hit.wav &");
-		*last_time = get_now_time();
-		if (mlx->game_server.status == CONNECTED)
-		{
-			player_touch = -1;
-			if (center_sprite.type == SPRT_PLAYER && center_sprite.dist < 2)
-				player_touch = center_sprite.data.player->server_id;
-			if (player_touch != -1)
-				system("paplay --volume=30000 ./sounds/game/hit.wav &");
-			dprintf(mlx->game_server.sockfd, "cut:%d,%.2f,%.2f,%.2f;",
-			player_touch, mlx->map->playerPos.x, mlx->map->playerPos.y,
-			mlx->map->playerPos.z);
-		}
-		mlx->player->xy_item[0] = 150;
-		mlx->player->xy_item[1] = 150;
-		return ;
-	}
-	if (mlx->player->xy_item[0] > 0)
-		mlx->player->xy_item[0] -= 10;
-	if (mlx->player->xy_item[1] > 0)
-		mlx->player->xy_item[1] -= 10;
-}
-
-void	item_effect(t_mlx *mlx, t_sprite center_sprite)
-{
-	static long long	last_time = 0;
-
-	if (mlx->player->actual_weapon == WEAPON_INV)
-		weapon_effect(mlx, &last_time, center_sprite);
-	else if (mlx->player->actual_weapon == KNIFE_INV)
-		knife_effect(mlx, &last_time, center_sprite);
-}
 
 void	fill_background(t_mlx *mlx, void *img)
 {
@@ -305,21 +83,21 @@ void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
 	k = -1;
 	while (++k < mlx->stg->quality)
 	{
-		j = -mlx->map->camDir.z;
+		j = -mlx->map->cam_dir.z;
 		while (j < ray->wall_start)
 		{
 			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16
 			| mlx->map->texture.ceiling[1] << 8
 			| mlx->map->texture.ceiling[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->cam_dir.z, color);
 			j++;
 		}
 		j += ray->wall_size - 1;
-		while (++j < mlx->stg->height - mlx->map->camDir.z)
+		while (++j < mlx->stg->height - mlx->map->cam_dir.z)
 		{
 			color = 255 << 24 | mlx->map->texture.floor[0] << 16
 			| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->cam_dir.z, color);
 		}
 	}
 }
@@ -412,12 +190,12 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	while (++k < mlx->stg->quality)
 	{
 		j = ray->wall_start - 1;
-		if (j + mlx->map->camDir.z < 0)
-			j = 0 - mlx->map->camDir.z - 1;
+		if (j + mlx->map->cam_dir.z < 0)
+			j = 0 - mlx->map->cam_dir.z - 1;
 		imgY = ((j + 1) - (mlx->stg->height - ray->wall_size) / 2) * factor;
 		while (imgY < 0)
 			imgY += ((t_img *)mlx->tmp)->height;
-		while (++j < fmin(ray->wall_end, mlx->stg->height - mlx->map->camDir.z))
+		while (++j < fmin(ray->wall_end, mlx->stg->height - mlx->map->cam_dir.z))
 		{
 			imgY += factor;
 			color = get_ss_color(mlx, (int) imgX, ((int) imgY) % ((t_img *)mlx->tmp)->height, (int)ray->dist);
@@ -440,7 +218,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
             if (c < c_min)
                 c = c_min;
             color = 255 << 24 | a << 16 | b << 8 | c;
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->camDir.z, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i + k, j + mlx->map->cam_dir.z, color);
 		}
 	}
 }
@@ -477,7 +255,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	{
 		if (i % mlx->stg->quality == 0)
 		{
-			ray[i] = raycast(mlx, i, false, mlx->map->playerPos);
+			ray[i] = raycast(mlx, i, false, mlx->map->player_pos);
 			if (!ray[i])
 				continue ;
 			calcul_wall_size(mlx, ray[i]);
@@ -509,7 +287,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	center_sprite = draw_sprites(mlx, ray);
 	put_fps(mlx, 0);
 	item_effect(mlx, center_sprite);
-	put_actual_weapon(mlx);
+	put_actual_item(mlx);
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
 	inventory(mlx, 0);

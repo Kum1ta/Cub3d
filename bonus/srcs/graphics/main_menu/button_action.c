@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:08:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ char	*connect_btn(void *ptr, int action)
 		mlx->actuel_menu = GAME;
 		mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2);
 		dprintf(mlx->game_server.sockfd, "initPlayer:%s,%.2f,%.2f,%.2f,%.2f,%.2f;",
-			mlx->game_server.player_name, mlx->map->playerPos.x, mlx->map->playerPos.y,
-			mlx->map->playerPos.z, mlx->map->camDir.x, mlx->map->camDir.y);
+			mlx->game_server.player_name, mlx->map->player_pos.x, mlx->map->player_pos.y,
+			mlx->map->player_pos.z, mlx->map->cam_dir.x, mlx->map->cam_dir.y);
 	}
 	return (NULL);
 }

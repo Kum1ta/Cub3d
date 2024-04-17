@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 21:41:31 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 # include <math.h>
 # include <SDL2/SDL.h>
 
-typedef struct s_mlx t_mlx;
+typedef struct s_mlx	t_mlx;
 
-enum e_blocktype {
+enum e_blocktype
+{
 	EMPTY,
 	END,
 	WALL,
@@ -31,18 +32,20 @@ enum e_blocktype {
 	FLOOR
 };
 
-union u_blockdata {
+union u_blockdata
+{
 	bool	door;
 	int		wall;
 };
 
-
-typedef struct s_block {
+typedef struct s_block
+{
 	enum e_blocktype	type;
 	union u_blockdata	data;
 }	t_block;
 
-typedef struct s_texture {
+typedef struct s_texture
+{
 	char	*north;
 	char	*south;
 	char	*east;
@@ -52,18 +55,20 @@ typedef struct s_texture {
 	int		ceiling[3];
 }	t_texture;
 
-typedef struct s_map {
+typedef struct s_map
+{
 	t_block		**blocks;
 	size_t		width;
 	size_t		height;
 
 	t_texture	texture;
-	t_vec3		playerPos;
-	t_vec3		camDir;
-	t_vec2		camPlane;
+	t_vec3		player_pos;
+	t_vec3		cam_dir;
+	t_vec2		cam_plane;
 }	t_map;
 
-typedef struct s_settings {
+typedef struct s_settings
+{
 	int		width;
 	int		height;
 	int		quality;

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:07:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:25:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	put_player(t_mlx *mlx)
 	int	i;
 	int	k;
 
-	i = mlx->menu_map->size * mlx->map->playerPos.y;
-	k = mlx->menu_map->size * mlx->map->playerPos.x;
+	i = mlx->menu_map->size * mlx->map->player_pos.y;
+	k = mlx->menu_map->size * mlx->map->player_pos.x;
 	draw_square(mlx, mlx->menu_map->size / 2, 0xFF0000FF,
 		k + mlx->menu_map->x - mlx->menu_map->size / 4,
 		i + mlx->menu_map->y - mlx->menu_map->size / 4);

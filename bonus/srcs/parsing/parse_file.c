@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 17:20:25 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static inline void	empty_map_data(t_map *map)
 	map->texture.ceiling[0] = -1;
 	map->texture.ceiling[1] = -1;
 	map->texture.ceiling[2] = -1;
-	map->playerPos.x = -1.0f;
-	map->camDir.x = 0;
-	map->camDir.y = 0;
-	map->camDir.z = 0;
-	map->camPlane.x = 0;
-	map->camPlane.y = 0;
+	map->player_pos.x = -1.0f;
+	map->cam_dir.x = 0;
+	map->cam_dir.y = 0;
+	map->cam_dir.z = 0;
+	map->cam_plane.x = 0;
+	map->cam_plane.y = 0;
 }
 
 static inline bool	is_map_valid(t_map *map)
@@ -41,7 +41,7 @@ static inline bool	is_map_valid(t_map *map)
 	bool res;
 
 	res = map->texture.north && map->texture.south
-		&& map->texture.east && map->texture.west && map->playerPos.x != -1.0f
+		&& map->texture.east && map->texture.west && map->player_pos.x != -1.0f
 		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1;
 	if (!res)
 		ft_dprintf(2, "Error\nMissing map parameter.\n");

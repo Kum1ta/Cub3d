@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:18:59 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	t_vec3				*ply_pos;
 	t_block				block;
 
-	ply_pos = &(mlx->map->playerPos);
-	add_val = deltaX * mlx->map->camDir.x - deltaY * mlx->map->camDir.y;
+	ply_pos = &(mlx->map->player_pos);
+	add_val = deltaX * mlx->map->cam_dir.x - deltaY * mlx->map->cam_dir.y;
 	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->x += add_val;
-	add_val = deltaX * mlx->map->camDir.y + deltaY * mlx->map->camDir.x;
+	add_val = deltaX * mlx->map->cam_dir.y + deltaY * mlx->map->cam_dir.x;
 	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->y += add_val;
@@ -39,7 +39,7 @@ void	interract_block(t_mlx *mlx)
 {
 	t_raydata	*front_ray;
 
-	front_ray = raycast(mlx, mlx->stg->width / 2, true, mlx->map->playerPos);
+	front_ray = raycast(mlx, mlx->stg->width / 2, true, mlx->map->player_pos);
 	if (front_ray->found && front_ray->dist < 2)
 	{
 		t_block	*front_block = front_ray->block;

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:38:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:17:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@ void	mouse_move(t_mlx *mlx)
 	move_x = (mouseX - MIDSCREEN_POSX) * MOUSEMOVE_SENSIBILITY_X;
 	if (move_x != 0)
 	{
-		tmp = mlx->map->camDir.x;
-		mlx->map->camDir.x = (mlx->map->camDir.x * cos(move_x)) - (mlx->map->camDir.y * sin(move_x));
-		mlx->map->camDir.y = (tmp * sin(move_x)) + (mlx->map->camDir.y * cos(move_x));
-		tmp = mlx->map->camPlane.x;
-		mlx->map->camPlane.x = (mlx->map->camPlane.x * cos(move_x)) - (mlx->map->camPlane.y * sin(move_x));
-		mlx->map->camPlane.y = (tmp * sin(move_x)) + (mlx->map->camPlane.y * cos(move_x));
+		tmp = mlx->map->cam_dir.x;
+		mlx->map->cam_dir.x = (mlx->map->cam_dir.x * cos(move_x)) - (mlx->map->cam_dir.y * sin(move_x));
+		mlx->map->cam_dir.y = (tmp * sin(move_x)) + (mlx->map->cam_dir.y * cos(move_x));
+		tmp = mlx->map->cam_plane.x;
+		mlx->map->cam_plane.x = (mlx->map->cam_plane.x * cos(move_x)) - (mlx->map->cam_plane.y * sin(move_x));
+		mlx->map->cam_plane.y = (tmp * sin(move_x)) + (mlx->map->cam_plane.y * cos(move_x));
 		if (mlx->game_server.status == CONNECTED)
-			dprintf(mlx->game_server.sockfd, "setDir:%.2f,%.2f;", mlx->map->camDir.x, mlx->map->camDir.y);
+			dprintf(mlx->game_server.sockfd, "setDir:%.2f,%.2f;", mlx->map->cam_dir.x, mlx->map->cam_dir.y);
 		mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 	}
 	move_y = (mouseY - MIDSCREEN_POSY) * MOUSEMOVE_SENSIBILITY_Y;
 	if (move_y != 0)
 	{
-		mlx->map->camDir.z -= move_y;
-		if (mlx->map->camDir.z < -1000)
-			mlx->map->camDir.z = -1000;
-		if (mlx->map->camDir.z > 1000)
-			mlx->map->camDir.z = 1000;
+		mlx->map->cam_dir.z -= move_y;
+		if (mlx->map->cam_dir.z < -1000)
+			mlx->map->cam_dir.z = -1000;
+		if (mlx->map->cam_dir.z > 1000)
+			mlx->map->cam_dir.z = 1000;
 		mlx_mouse_move(mlx->mlx, mlx->win, MIDSCREEN_POSX, MIDSCREEN_POSY);
 	}
 }

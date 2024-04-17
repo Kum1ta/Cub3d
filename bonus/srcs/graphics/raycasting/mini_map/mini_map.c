@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/15 17:02:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:25:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	print_square(t_mlx *mlx, int x, int y)
 	y_map = -1;
 	while (++y_map < 20 - 1)
 	{
-		x_calc = (mlx->stg->minimap_pos_x + 155) + ((x - mlx->map->playerPos.x) * 20);
-		y_calc = (mlx->stg->minimap_pos_y + 91) + ((y - mlx->map->playerPos.y) * 20);
+		x_calc = (mlx->stg->minimap_pos_x + 155) + ((x - mlx->map->player_pos.x) * 20);
+		y_calc = (mlx->stg->minimap_pos_y + 91) + ((y - mlx->map->player_pos.y) * 20);
 		x_map = -1;
 		while (++x_map < 20 - 1 && y_calc + y_map < mlx->stg->minimap_pos_y + 180
 			&& y_calc + y_map > mlx->stg->minimap_pos_y + 1 && x_calc + x_map < mlx->stg->minimap_pos_x + 350)

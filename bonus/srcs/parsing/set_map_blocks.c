@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:50:18 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,30 @@ static t_map_error_type	parse_map_char(t_map *map, char c, t_ivec2 pos, int scre
 	else if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 	{
 		map->blocks[pos.y][pos.x].type = FLOOR;
-		if (map->playerPos.x != -1.0f)
+		if (map->player_pos.x != -1.0f)
 			return (MAP_DUPLICATE_PLAYER_POS);
-		map->playerPos.x = pos.x;
-		map->playerPos.y = pos.y;
-		map->playerPos.z = 0.0f;
+		map->player_pos.x = pos.x;
+		map->player_pos.y = pos.y;
+		map->player_pos.z = 0.0f;
 		if (c == 'N')
 		{
-			map->camDir.y = -1;
-			map->camPlane.x = (float)screen_res[0] / (float)screen_res[1] - 1;
+			map->cam_dir.y = -1;
+			map->cam_plane.x = (float)screen_res[0] / (float)screen_res[1] - 1;
 		}
 		else if (c == 'S')
 		{
-			map->camDir.y = 1;
-			map->camPlane.x = -((float)screen_res[0] / (float)screen_res[1] - 1);
+			map->cam_dir.y = 1;
+			map->cam_plane.x = -((float)screen_res[0] / (float)screen_res[1] - 1);
 		}
 		else if (c == 'E')
 		{
-			map->camDir.x = 1;
-			map->camPlane.y = (float)screen_res[0] / (float)screen_res[1] - 1;
+			map->cam_dir.x = 1;
+			map->cam_plane.y = (float)screen_res[0] / (float)screen_res[1] - 1;
 		}
 		else
 		{
-			map->camDir.x = -1;
-			map->camPlane.y = -((float)screen_res[0] / (float)screen_res[1] - 1);
+			map->cam_dir.x = -1;
+			map->cam_plane.y = -((float)screen_res[0] / (float)screen_res[1] - 1);
 		}
 	}
 	else if (c == 'D')

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:58:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:42:15 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:25:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	test_map(char *filename, int expected)
 		ft_printf("\twest txt : %s\n", map->texture.west);
 		ft_printf("\tfloor color R: %d, G: %d, B: %d\n", map->texture.floor[0], map->texture.floor[1], map->texture.floor[2]);
 		ft_printf("\tceiling color R: %d, G: %d, B: %d\n", map->texture.ceiling[0], map->texture.ceiling[1], map->texture.ceiling[2]);
-		printf("\tplayer pos : x: %f, y: %f, z: %f, h: %f\n", map->playerPos.x, map->playerPos.y, map->playerPos.z, map->playerPos.h);
+		printf("\tplayer pos : x: %f, y: %f, z: %f, h: %f\n", map->player_pos.x, map->player_pos.y, map->player_pos.z, map->player_pos.h);
 		size_t	i = 0;
 		while (map->blocks[i])
 		{

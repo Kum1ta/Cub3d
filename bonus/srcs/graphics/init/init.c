@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:04:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->menu_map)
 		return (free_all_graphics(mlx));
 	init_map(mlx, 50);
-	map->playerPos.x += 0.25;
-	map->playerPos.y += 0.25;
+	map->player_pos.x += 0.25;
+	map->player_pos.y += 0.25;
 	mlx->mouse = malloc(sizeof(t_mouse));
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
@@ -75,7 +75,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	mlx->player->is_reloading = false;
 	mlx->player->xy_item[0] = 0;
 	mlx->player->xy_item[1] = 0;
-	mlx->map->camDir.z = 0;
+	mlx->map->cam_dir.z = 0;
 	mlx->stg_win.diff = 0;
 	mlx->no_texture_mod = 0;
 	return (0);

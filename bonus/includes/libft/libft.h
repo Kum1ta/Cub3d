@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:02:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/12 16:34:08 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:28:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include <stdint.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include "./File/gnl/get_next_line.h"
@@ -82,7 +83,6 @@ int			ft_lstsize(t_list *lst);
 int			ft_isnumber(char *str);
 char		*get_next_line(int fd);
 char		*get_file(char *file);
-unsigned int	ft_abs(int value);
 int			ft_isspace(char c);
 float		ft_atof(char *str);
 int			ft_isascii(int c);
@@ -90,7 +90,7 @@ int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
 int			ft_isprint(int c);
-unsigned int	ft_abs(int value);
+uint32_t	ft_abs(int value);
 char		*ft_itoa(int n);
 
 #endif

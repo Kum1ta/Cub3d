@@ -21,7 +21,10 @@ SRCS			=	main.c 																\
 					graphics/free_functions/destroy_textures.c							\
 					graphics/raycasting/mini_map/mini_map.c								\
 					graphics/raycasting/inventory/inventory.c							\
+					graphics/raycasting/inventory/item_effect.c							\
+					graphics/raycasting/inventory/put_actual_item.c						\
 					graphics/raycasting/main_raycasting.c								\
+					graphics/raycasting/raycast.c										\
 					graphics/raycasting/show_popup.c									\
 					graphics/raycasting/draw_sprites.c									\
 					graphics/main_menu/main_menu.c										\

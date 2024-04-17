@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 21:47:19 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:11:18 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,32 @@
 # define MAX_DISTANCE 1000
 # define MAX_HEIGHT 10
 
+typedef struct s_ray
+{
+	int		pos_x;
+	int		pos_y;
+	float	dir_x;
+	float	dir_y;
+	t_vec2	dist;
+	t_vec2	delta_dist;
+	int		step_x;
+	int		step_y;
+	int		nb_step;
+	int		dir;
+	int		curr_size;
+}	t_ray;
+
 /* ---- mini_map.c ---------------------------------------------------------- */
 void	mini_map(t_mlx *mlx);
 
 /* ---- inventory.c --------------------------------------------------------- */
 void	inventory(t_mlx *mlx, int need_free);
+
+/* ---- item_effect.c ------------------------------------------------------- */
+void	item_effect(t_mlx *mlx, t_sprite center_sprite);
+
+/* ---- put_actual_weapon.c ------------------------------------------------- */
+void	put_actual_item(t_mlx *mlx);
 
 /* ---- draw_sprites.c ------------------------------------------------------ */
 t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray);

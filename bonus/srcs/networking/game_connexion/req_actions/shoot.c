@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 21:01:30 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:25:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 	while (*value++ != ',')
 		;
 	origin = parse_vec3(&value);
-	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
+	dist = get_distance_between_2dcoords(origin, mlx->map->player_pos);
 	play_sound_dist("./sounds/game/weapon_fire.wav", dist * SHOOT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)
 		take_damage(mlx, 33, from_player);
@@ -97,7 +97,7 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 	while (*value++ != ',')
 		;
 	origin = parse_vec3(&value);
-	dist = get_distance_between_2dcoords(origin, mlx->map->playerPos);
+	dist = get_distance_between_2dcoords(origin, mlx->map->player_pos);
 	play_sound_dist("./sounds/game/cut_hit.wav", dist * CUT_DIST_DECR);
 	if (got_touch && mlx->player->health > 0)
 		take_damage(mlx, mlx->player->health, from_player);

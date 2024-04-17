@@ -6,13 +6,11 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:02:12 by edbernar          #+#    #+#             */
-/*   Updated: 2024/03/12 18:20:37 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:23:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-
-// todo check if I invalid write/read in each cases possibles!!!!!
 
 static inline int	is_sep(const char *s, int i, char *skip)
 {

@@ -6,13 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 13:19:03 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 16:29:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:09:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
 
-void	draw_image_to_window(t_mlx *mlx, t_img *img, int pos[2], int size[2])
+void	draw_image_to_window(t_mlx *mlx, t_img *img,
+							const int pos[2], int size[2])
 {
 	int	x;
 	int	y;

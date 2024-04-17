@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 21:47:05 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 		{
 			res[i].type = SPRT_PLAYER;
 			res[i].data.player = online_players->content;
-			res[i].dist = get_distance_between_2dcoords(mlx->map->playerPos, res[i].data.player->pos);
+			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].data.player->pos);
 			i++;
 			online_players = online_players->next;
 		}
@@ -80,10 +80,10 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 	float transform;
 	float diffX;
 	float diffY;
-	float dirX = mlx->map->camDir.x;
-	float dirY = mlx->map->camDir.y;
-	float planeX = mlx->map->camPlane.x;
-	float planeY = mlx->map->camPlane.y;
+	float dirX = mlx->map->cam_dir.x;
+	float dirY = mlx->map->cam_dir.y;
+	float planeX = mlx->map->cam_plane.x;
+	float planeY = mlx->map->cam_plane.y;
 	float invCam = 1 / (planeX * dirY - planeY * dirX);
 
 	while (sprites->type != NONE)
@@ -108,8 +108,8 @@ static t_img *get_sprite_img(t_mlx *mlx, t_sprite *sprite)
 
 	if (sprite->type == SPRT_PLAYER)
 	{
-		dx = mlx->map->playerPos.x - sprite->data.player->pos.x;
-		dy = mlx->map->playerPos.y - sprite->data.player->pos.y;
+		dx = mlx->map->player_pos.x - sprite->data.player->pos.x;
+		dy = mlx->map->player_pos.y - sprite->data.player->pos.y;
 		rot = (atan2(dy, dx) + atan2(sprite->data.player->dir.y, sprite->data.player->dir.x)) * 180 / PI;
 		while (rot < 0)
 			rot += 360;
@@ -150,13 +150,13 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 				while (y - startY < height)
 				{
 					imgY = ((float) (y - startY)) / ((float) height) * img->height;
-					if (y + mlx->map->camDir.z >= 0 && y + mlx->map->camDir.z < mlx->stg->height)
+					if (y + mlx->map->cam_dir.z >= 0 && y + mlx->map->cam_dir.z < mlx->stg->height)
 					{
 						color = mlx_get_image_pixel(mlx->mlx, img->img, imgX, imgY);
 						if (color >> 24 & 0xFF == 0xFF)
 						{
-							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->camDir.z, color);
-							if (x == mlx->stg->width / 2 && y + mlx->map->camDir.z == mlx->stg->height / 2)
+							mlx_pixel_put(mlx->mlx, mlx->win, x, y + mlx->map->cam_dir.z, color);
+							if (x == mlx->stg->width / 2 && y + mlx->map->cam_dir.z == mlx->stg->height / 2)
 								touch_center = true;
 						}
 					}
@@ -180,7 +180,7 @@ t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 	if (!sprites)
 		return (center_sprite);
 	sort_sprites(sprites);
-	set_sprites_screenX(sprites, mlx->map->playerPos, mlx);
+	set_sprites_screenX(sprites, mlx->map->player_pos, mlx);
 	i = 0;
 	while (sprites[i].type != NONE)
 	{
