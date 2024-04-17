@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   supersampling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:44:52 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 18:45:36 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:41:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	get_ss_color(t_mlx *mlx, int x, int y, int distance)
 	int		color_tmp;
 	int		lvl;
 	
-	if (mlx->no_texture_mod)
+	if (mlx->stg->texture)
 		return (0xFFAA0011);
 	if (mlx->stg->antialiasing == 1)
 		return (mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img, x, y));

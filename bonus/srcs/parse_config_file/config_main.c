@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 13:38:53 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:23:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	*return_good_int(t_settings *settings, char *line)
 		return (&settings->minimap_pos);
 	else if (!ft_strcmp("show_fps", line))
 		return (&settings->show_fps);
+	else if (!ft_strcmp("texture", line))
+		return (&settings->texture);
 	return (NULL);
 }
 
@@ -130,7 +132,8 @@ static void	*create_default_config(char *path)
 \nantialiasing=1\
 \nshow_minimap=1\
 \nminimap_pos=0\
-\nshow_fps=1\n", 87);
+\nshow_fps=1\
+\ntexture=0\n", 97);
 	close(fd);
 	return (path);
 }
@@ -144,6 +147,7 @@ void	init_settings(t_settings *settings)
 	settings->show_minimap = -1;
 	settings->minimap_pos = -1;
 	settings->show_fps = -1;
+	settings->texture = -1;
 }
 
 t_settings	*verification_settings(t_settings *settings)
@@ -154,7 +158,8 @@ t_settings	*verification_settings(t_settings *settings)
 		|| settings->antialiasing < 1 || settings->antialiasing > 8
 		|| settings->show_minimap < 0 || settings->show_minimap > 1
 		|| settings->minimap_pos < 0 || settings->minimap_pos > 2
-		|| settings->show_fps < 0 || settings->show_fps > 1)
+		|| settings->show_fps < 0 || settings->show_fps > 1
+		|| settings->texture < 0 || settings->texture > 1)
 	{
 		free(settings);
 		return (error_config("Error in config file", NULL));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 21:47:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:31:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void	init_button(t_mlx *mlx, t_selected selected[22])
 		selected[19] = SELECTED;
 	else
 		selected[17] = SELECTED;
+	if (mlx->stg->texture)
+		selected[21] = SELECTED;
+	else
+		selected[20] = SELECTED;
 }
 
 int	add_case(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
@@ -177,6 +181,14 @@ void	list_position_mini_map(t_mlx *mlx, int xy[2])
 		mlx->stg_win.pos_mini_map = 2;
 }
 
+void	list_button_texture(t_mlx *mlx, int xy[2])
+{
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", 20, (int [2]){20, 21}))
+		mlx->stg_win.texture = 0;
+	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", 21, (int [2]){20, 21}))
+		mlx->stg_win.texture = 1;
+}
+
 void	change_config_file(t_settings_window *stg)
 {
 	int		fd;
@@ -188,7 +200,7 @@ void	change_config_file(t_settings_window *stg)
 	if (fd == -1)
 		return ;
 	i = 0;
-	while (i < 7)
+	while (i < 8)
 	{
 		if (i == 0)
 		{
@@ -224,6 +236,11 @@ void	change_config_file(t_settings_window *stg)
 		{
 			tmp = ft_itoa(stg->pos_mini_map);
 			line = ft_strjoin("minimap_pos=", tmp);
+		}
+		else if (i == 7)
+		{
+			tmp = ft_itoa(stg->texture);
+			line = ft_strjoin("texture=", tmp);
 		}
 		free(tmp);
 		tmp = ft_strjoin(line, "\n");
@@ -275,24 +292,26 @@ void	options_menu(t_mlx *mlx, int need_free)
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 36);
 	mlx_string_put(mlx->mlx, mlx->win, 70, 155 + diff, 0xFFFFFFFF, "Basics");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
-	mlx_string_put(mlx->mlx, mlx->win, 80, 200 + diff, 0xFFFFFFFF, "Show fps : ");
+	mlx_string_put(mlx->mlx, mlx->win, 80, 200 + diff, 0xFFFFFFFF, "Show fps :");
 	list_button_fps(mlx, (int [2]){270, 185 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 80, 235 + diff, 0xFFFFFFFF, "Texture  :");
+	list_button_texture(mlx, (int [2]){270, 220 + diff});
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 36);
-	mlx_string_put(mlx->mlx, mlx->win, 70, 265 + diff, 0xFFFFFFFF, "Graphics");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 285 + diff, 0xFFFFFFFF, "Graphics");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
-	mlx_string_put(mlx->mlx, mlx->win, 90, 310 + diff, 0xFFFFFFFF, "Resolution");
-	list_button_resolution(mlx, (int [2]){90, 330 + diff});
-	mlx_string_put(mlx->mlx, mlx->win, 90, 420 + diff, 0xFFFFFFFF, "Quality");
-	list_button_quality(mlx, (int [2]){90, 440 + diff});
-	mlx_string_put(mlx->mlx, mlx->win, 90, 500 + diff, 0xFFFFFFFF, "Anti aliasing (SS)");
-	list_button_aa(mlx, (int [2]){90, 520 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 330 + diff, 0xFFFFFFFF, "Resolution");
+	list_button_resolution(mlx, (int [2]){90, 350 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 440 + diff, 0xFFFFFFFF, "Quality");
+	list_button_quality(mlx, (int [2]){90, 460 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 520 + diff, 0xFFFFFFFF, "Anti aliasing (SS)");
+	list_button_aa(mlx, (int [2]){90, 540 + diff});
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 36);
-	mlx_string_put(mlx->mlx, mlx->win, 70, 610 + diff, 0xFFFFFFFF, "Mini map");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 630 + diff, 0xFFFFFFFF, "Mini map");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24);
-	mlx_string_put(mlx->mlx, mlx->win, 90, 660 + diff, 0xFFFFFFFF, "Show       : ");
-	list_button_mini_map(mlx, (int [2]){300, 645 + diff});
-	mlx_string_put(mlx->mlx, mlx->win, 90, 690 + diff, 0xFFFFFFFF, "Position");
-	list_position_mini_map(mlx, (int [2]){93, 705 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 680 + diff, 0xFFFFFFFF, "Show       :");
+	list_button_mini_map(mlx, (int [2]){300, 665 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 710 + diff, 0xFFFFFFFF, "Position");
+	list_position_mini_map(mlx, (int [2]){93, 725 + diff});
 	add_button(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, square_img, back_main_menu);
 }
 
