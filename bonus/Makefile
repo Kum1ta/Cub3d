@@ -38,6 +38,7 @@ SRCS			=	main.c 																\
 					graphics/entry/keyboard/keyboard.c									\
 					graphics/entry/keyboard/game_keyboard.c								\
 					graphics/entry/keyboard/map_larg_menu_keyboard.c					\
+					graphics/entry/keyboard/key_down_type.c											\
 					graphics/entry/mouse_whell.c										\
 					graphics/entry/mouse_down.c											\
 					graphics/entry/mouse_move.c											\

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:56:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:41:38 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:58:00 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,24 @@ static void	init_mouse(t_mouse *mouse)
 
 static void	init_map(t_mlx *mlx, int size)
 {
-	int	i;
-	int	j;
+	int	i[2];
 	int	bigger_x;
 
-	i = -1;
+	i[0] = -1;
 	bigger_x = 0;
-	while (mlx->map->blocks[++i])
+	while (mlx->map->blocks[++i[0]])
 	{
-		j = 0;
-		while (mlx->map->blocks[i][j].type != END)
-			j++;
-		if (j > bigger_x)
-			bigger_x = j;
+		i[1] = 0;
+		while (mlx->map->blocks[i[0]][i[1]].type != END)
+			i[1]++;
+		if (i[1] > bigger_x)
+			bigger_x = i[1];
 	}
 	mlx->menu_map->size = size;
 	mlx->menu_map->width = bigger_x * mlx->menu_map->size;
-	mlx->menu_map->height = i * mlx->menu_map->size;
-	if ((mlx->menu_map->width > mlx->stg->width - 100 || mlx->menu_map->height > mlx->stg->height - 100) && size > 10)
+	mlx->menu_map->height = i[0] * mlx->menu_map->size;
+	if ((mlx->menu_map->width > mlx->stg->width - 100
+			|| mlx->menu_map->height > mlx->stg->height - 100) && size > 10)
 		init_map(mlx, size - 1);
 	else
 	{

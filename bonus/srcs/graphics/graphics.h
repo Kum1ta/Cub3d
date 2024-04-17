@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 20:49:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:48:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,8 +195,7 @@ int		destroy_textures(t_mlx *mlx);
 int		keyboard_down(int key, void *mlx_ptr);
 int		keyboard_up(int key, void *mlx_ptr);
 int		keyboard(t_mlx *mlx);
-bool	is_key_down(t_list *keyboard, int key);
-bool	is_key_just_down(t_list *keyboard, int key);
+void	set_key_not_just_down(t_list *keyboard, int key);
 
 /* ------ gane_keyboard.c -------------------------------------------------- */
 void	game_keyboard(t_mlx *mlx);
@@ -237,5 +236,9 @@ void	start_screen(t_mlx *mlx, int need_free);
 
 /* ------ dead_screen.c ---------------------------------------------------- */
 void	dead_screen(t_mlx *mlx, int need_free);
+
+/* ------ key_down_type.c -------------------------------------------------- */
+bool	is_key_just_down(t_list *keyboard, int key);
+bool	is_key_down(t_list *keyboard, int key);
 
 #endif
