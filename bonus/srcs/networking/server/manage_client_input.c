@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:34:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:19:19 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static void	act_send_message(t_server *srv, int clientI, char *value)
 	}
 }
 
-static inline void	exec_req_action(t_server *srv, int clientI,
-									char *request)
+static inline void	exec_req_action(t_server *srv, int clientI, char *request)
 {
 	const char				*actions_id[] = {"ping:", "sendMessage:",
 		"initPlayer:", "setPos:", "setDir:", "setDoorState:", "shoot:", "cut:",

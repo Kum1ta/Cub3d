@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 20:49:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:44:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 {
 	int i;
 	t_list *online_players;
-	// t_list *kits;
+	t_list *kits;
 	t_sprite *res;
 
 	i = 0;
@@ -28,12 +28,12 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 			i++;
 			online_players = online_players->next;
 		}
-		// kits = mlx->game_server.kits;
-		// while (kits)
-		// {
-		// 	i++;
-		// 	kits = kits->next;
-		// }
+		kits = mlx->game_server.kits;
+		while (kits)
+		{
+			i++;
+			kits = kits->next;
+		}
 	}
 
 	res = malloc((i + 1) * sizeof(t_sprite));
@@ -51,13 +51,15 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 			i++;
 			online_players = online_players->next;
 		}
-		// kits = mlx->game_server.kits;
-		// while (kits)
-		// {
-		// 	res[i].type = SPRT_PLAYER;
-		// 	i++;
-		// 	kits = kits->next;
-		// }
+		kits = mlx->game_server.kits;
+		while (kits)
+		{
+			res[i].type = SPRT_HEALTH_KIT;
+			res[i].data.kit = kits->content;
+			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].data.kit->pos);
+			i++;
+			kits = kits->next;
+		}
 	}
 	res[i].type = NONE;
 	return (res);
@@ -106,10 +108,15 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 		{
 			diffX = sprites->data.player->pos.x - plyPos.x;
 			diffY = sprites->data.player->pos.y - plyPos.y;
-			transform = invCam * (dirY * diffX - dirX * diffY);
-			sprites->depth = invCam * (planeX * diffY - planeY * diffX);
-			sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / sprites->depth));
 		}
+		else
+		{
+			diffX = sprites->data.kit->pos.x - plyPos.x;
+			diffY = sprites->data.kit->pos.y - plyPos.y;
+		}
+		transform = invCam * (dirY * diffX - dirX * diffY);
+		sprites->depth = invCam * (planeX * diffY - planeY * diffX);
+		sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / sprites->depth));
 		sprites++;
 	}
 }
@@ -129,6 +136,8 @@ static t_img *get_sprite_img(t_mlx *mlx, t_sprite *sprite)
 			rot += 360;
 		return (mlx->textures->player + ((int)(rot / 90 % 4)));
 	}
+	else if (sprite->type == SPRT_HEALTH_KIT)
+		return (&mlx->textures->health_kit);
 	return (NULL);
 }
 

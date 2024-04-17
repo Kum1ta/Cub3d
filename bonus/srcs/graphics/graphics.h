@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 20:49:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:55:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_loadeds_textures
 	t_img	knife_game;
 	t_img	fire_gun;
 	t_img	player[4];
+	t_img	health_kit;
 }	t_loadeds_textures;
 
 typedef struct s_player
