@@ -71,6 +71,8 @@ OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 SV_SRCS			=	networking/server/server.c								\
 					networking/server/manage_client.c						\
 					networking/server/manage_client_input.c					\
+					networking/server/req_actions/set.c						\
+					networking/server/req_actions/shoot.c					\
 					networking/utils/current_timestamp.c					\
 					networking/utils/read_request.c							\
 					networking/utils/socket_init.c							\

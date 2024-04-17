@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 21:46:33 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:49:09 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start)
 	max_height = MAX_HEIGHT;
 	if (catch_interract)
 		max_height = 1;
-	res = ft_calloc(max_height, sizeof(t_raydata));
+	res = calloc(max_height, sizeof(t_raydata));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -124,10 +124,17 @@ void	put_actual_weapon(t_mlx *mlx)
 	while (++i < 20)
 		mlx_pixel_put(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2 - 10 + i, 0xFF00FF00);
 	if (mlx->player->actual_weapon == WEAPON_INV)
+	{
+		int	wpn_size[2];
+
+		wpn_size[0] = mlx->textures->weapon_game.width * mlx->stg->width / 1920;
+		wpn_size[1] = mlx->textures->weapon_game.height * mlx->stg->height / 1080;
 		draw_image_to_window(mlx, &mlx->textures->weapon_game,
-			mlx->player->xy_item,
-			(int [2]){mlx->stg->width, mlx->stg->height}
+			(int [2]){mlx->stg->width - wpn_size[0] + mlx->player->xy_item[0],
+				mlx->stg->height - wpn_size[1] + mlx->player->xy_item[1]},
+			wpn_size
 		);
+	}
 	else if (mlx->player->actual_weapon == KNIFE_INV)
 		draw_image_to_window(mlx, &mlx->textures->knife_game,
 			(int [2]){mlx->stg->width - 300 - mlx->player->xy_item[0],
@@ -434,6 +441,19 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor, int size)
 	}
 }
 
+void	put_ammo(t_mlx *mlx)
+{
+	static char	str[] = "00 / 30";
+
+	if (mlx->player->actual_weapon != WEAPON_INV)
+		return ;
+	str[0] = mlx->player->ammo / 10 + '0';
+	str[1] = mlx->player->ammo % 10 + '0';
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 20.0f);
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, mlx->stg->height - 210, 0xFF00FF00, str);
+	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
+}
+
 void	raycasting(t_mlx *mlx, int need_free)
 {
 	static t_raydata	**ray;
@@ -457,35 +477,30 @@ void	raycasting(t_mlx *mlx, int need_free)
 			if (!ray[i])
 				continue ;
 			calcul_wall_size(mlx, ray[i]);
-		}
-	}
-	i = 0;
-	while (i < mlx->stg->width)
-	{
-		j = MAX_HEIGHT - 1;
-		while (j > 0 && !ray[i][j].found)
-			j--;
-		put_celling_floor(mlx, ray[i] + MAX_HEIGHT - 1, i);
-		while (j >= 0)
-		{
-			if (ray[i] && ray[i][j].found)
+			j = MAX_HEIGHT - 1;
+			while (j > 0 && !ray[i][j].found)
+				j--;
+			put_celling_floor(mlx, ray[i] + MAX_HEIGHT - 1, i);
+			while (j >= 0)
 			{
-				factor = mlx->stg->height / ray[i][j].dist;
-				if (ray[i][j].block->type == DOOR)
-					factor = (float)mlx->textures->door.height / factor;
-				else if (ray[i][j].dir == 0)
-					factor = (float)mlx->textures->north.height / factor;
-				else if (ray[i][j].dir == 1)
-					factor = (float)mlx->textures->east.height / factor;
-				else if (ray[i][j].dir == 2)
-					factor = (float)mlx->textures->south.height / factor;
-				else
-					factor = (float)mlx->textures->west.height / factor;
-				scalling(ray[i] + j, mlx, i, factor, j);
+				if (ray[i] && ray[i][j].found)
+				{
+					factor = mlx->stg->height / ray[i][j].dist;
+					if (ray[i][j].block->type == DOOR)
+						factor = (float)mlx->textures->door.height / factor;
+					else if (ray[i][j].dir == 0)
+						factor = (float)mlx->textures->north.height / factor;
+					else if (ray[i][j].dir == 1)
+						factor = (float)mlx->textures->east.height / factor;
+					else if (ray[i][j].dir == 2)
+						factor = (float)mlx->textures->south.height / factor;
+					else
+						factor = (float)mlx->textures->west.height / factor;
+					scalling(ray[i] + j, mlx, i, factor, j);
+				}
+				j--;
 			}
-			j--;
 		}
-		i += mlx->stg->quality;
 	}
 	center_sprite = draw_sprites(mlx, ray);
 	put_fps(mlx, 0);
@@ -494,11 +509,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
 	inventory(mlx, 0);
-	char	*tmp = ft_strjoin_gnl(ft_itoa(mlx->player->ammo), " / 30");
-	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 20.0f);
-	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 150, mlx->stg->height - 210, 0xFF00FF00, tmp);
-	free(tmp);
-	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
+	put_ammo(mlx);
 	show_popup(mlx);
 	i = -1;
 	while (++i < mlx->stg->width)
