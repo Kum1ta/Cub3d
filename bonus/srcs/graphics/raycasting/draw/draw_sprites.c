@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 18:33:37 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 20:49:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 {
 	int i;
 	t_list *online_players;
+	// t_list *kits;
 	t_sprite *res;
 
 	i = 0;
@@ -27,6 +28,12 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 			i++;
 			online_players = online_players->next;
 		}
+		// kits = mlx->game_server.kits;
+		// while (kits)
+		// {
+		// 	i++;
+		// 	kits = kits->next;
+		// }
 	}
 
 	res = malloc((i + 1) * sizeof(t_sprite));
@@ -44,6 +51,13 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 			i++;
 			online_players = online_players->next;
 		}
+		// kits = mlx->game_server.kits;
+		// while (kits)
+		// {
+		// 	res[i].type = SPRT_PLAYER;
+		// 	i++;
+		// 	kits = kits->next;
+		// }
 	}
 	res[i].type = NONE;
 	return (res);

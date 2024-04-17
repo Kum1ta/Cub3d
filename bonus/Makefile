@@ -53,6 +53,7 @@ SRCS			=	main.c 																\
 					networking/game_connexion/req_actions/set_door_state.c				\
 					networking/game_connexion/req_actions/set_player_attr.c				\
 					networking/game_connexion/req_actions/shoot.c						\
+					networking/game_connexion/req_actions/health_kit.c					\
 					networking/game_connexion/players_utils/create_online_player.c		\
 					networking/game_connexion/players_utils/get_player_from_source.c	\
 					networking/game_connexion/add_popup.c								\

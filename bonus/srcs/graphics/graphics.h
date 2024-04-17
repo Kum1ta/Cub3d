@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:39:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:49:06 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,13 @@ typedef struct s_sprite
 	enum
 	{
 		NONE,
-		SPRT_PLAYER
+		SPRT_PLAYER,
+		SPRT_HEALTH_KIT
 	} type;
 	union
 	{
 		t_online_player *player;
+		t_health_kit *kit;
 	} data;
 	float	dist;
 	float	depth;
