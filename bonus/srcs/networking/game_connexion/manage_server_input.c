@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:19:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 20:46:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:08:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 static inline void	exec_req_action(t_server *srv, char *request, void *mlx)
 {
-	const char				*actions_id[] = {"sendMessage:", "playerDisconnect:", "setPlayerAttr:", "setPlayerPos:", "setPlayerDir:", "setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
-	const t_req_action_fct	act_fct[] = {&receive_message, &player_disconnect, &set_player_attr, &set_player_pos, &set_player_dir, &set_door_state, &act_shoot, &act_cut, &set_player_health};
+	const char				*actions_id[] = {"sendMessage:",
+		"playerDisconnect:", "setPlayerAttr:", "setPlayerPos:", "setPlayerDir:",
+		"setDoorState:", "shoot:", "cut:", "setHealth:", NULL};
+	const t_req_action_fct	act_fct[] = {&receive_message, &player_disconnect,
+		&set_player_attr, &set_player_pos, &set_player_dir, &set_door_state,
+		&act_shoot, &act_cut, &set_player_health};
 	size_t					act_len;
 	int						act_i;
 

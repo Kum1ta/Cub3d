@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:42:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/14 13:22:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:41:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,53 @@ void	error_socket(char *errval, int sockfd, char *special_err_msg)
 	exit(1);
 }
 
+static void	catch_client_request(t_client *clients, int i, long long current_ts)
+{
+	int		byte_read;
+	char	*request;
+
+	request = read_request(clients[i].socket, &byte_read, false);
+	if (byte_read == -1 && errno != EAGAIN)
+		ft_dprintf(2, "Error while receiving packet of %s: %s.\n",
+			clients[i].ip, strerror(errno));
+	else
+	{
+		if (request != NULL)
+			manage_client_request(clients, i, request, current_ts);
+		if (byte_read == 0)
+			remove_client(clients, i);
+		else if (current_ts - clients[i].last_ping > 40000)
+		{
+			printf("Disconnecting %s: timed out.\n", clients[i].ip);
+			remove_client(clients, i);
+		}
+	}
+	free(request);
+}
+
 void	server_loop_hook(int sockfd, t_client *clients)
 {
 	int			i;
-	char		*request;
-	int			byteRead;
-	long long	currentTs;
+	long long	current_ts;
 
 	try_accept_client(sockfd, clients);
 	i = 0;
-	currentTs = current_timestamp();
+	current_ts = current_timestamp();
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (clients[i].socket != -1)
-		{
-			request = read_request(clients[i].socket, &byteRead, false);
-			if (byteRead == -1 && errno != EAGAIN)
-				ft_dprintf(2, "Error while receiving packet of %s: %s.\n", clients[i].ip, strerror(errno));
-			else
-			{
-				if (request != NULL)
-				{
-					printf("received request of %s: '%s'.\n", clients[i].ip, request);
-					manage_client_request(clients, i, request, currentTs);
-				}
-				if (byteRead == 0)
-					remove_client(clients, i);
-				else if (currentTs - clients[i].last_ping > 40000 )
-				{
-					printf("Disconnecting %s: timed out.\n", clients[i].ip);
-					remove_client(clients, i);
-				}
-			}
-			free(request);
-		}
+			catch_client_request(clients, i, current_ts);
 		i++;
 	}
+	usleep(100);
 }
 
 int	main(int ac, char **av)
 {
-	int		sockfd;
-	struct	sockaddr_in addr;
-	t_client	clients[SV_MAX_CONNECTION];
-	char	*ip;
+	int					sockfd;
+	struct sockaddr_in	addr;
+	t_client			clients[SV_MAX_CONNECTION];
+	char				*ip;
 
 	if (ac > 1)
 		ip = av[1];
@@ -86,8 +89,5 @@ int	main(int ac, char **av)
 	init_clients_tab(clients);
 	printf("Server is now listening on '%s:%d'\n", ip, SV_PORT);
 	while (1)
-	{
 		server_loop_hook(sockfd, clients);
-		usleep(100);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 20:54:51 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:07:34 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,21 @@ void		manage_client_request(t_client *clients,
 				long long currTs);
 
 float		ft_atof(char *str);
+
+// req
+void		act_init_player(t_client *clients, int client_i,
+				char *value, long long currTs);
+void		act_set_pos(t_client *clients, int client_i,
+				char *value, long long currTs);
+void		act_set_dir(t_client *clients, int client_i,
+				char *value, long long currTs);
+void		act_set_health(t_client *clients, int clientI,
+				char *value, long long currTs);
+void		act_set_door(t_client *clients, int clientI,
+				char *value, long long currTs);
+void		act_cut(t_client *clients, int clientI, char *value,
+				long long currTs);
+void		act_shoot(t_client *clients, int clientI,
+				char *value, long long currTs);
 
 #endif

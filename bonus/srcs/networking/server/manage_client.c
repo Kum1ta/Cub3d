@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:21:14 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 20:58:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:36:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	try_accept_client(int sockfd, t_client *clients)
 	int					client_sock;
 	struct sockaddr_in	client_adress;
 	unsigned int		addr_len;
-	char 				ip[INET_ADDRSTRLEN];
+	char				ip[INET_ADDRSTRLEN];
 
 	addr_len = sizeof(client_adress);
 	client_sock = accept(sockfd, (struct sockaddr *) &client_adress, &addr_len);
