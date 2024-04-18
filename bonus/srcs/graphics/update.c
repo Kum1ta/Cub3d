@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:53:45 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 16:56:39 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:22:15 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	other_screen(t_mlx *mlx)
 void	choose_screen(t_mlx *mlx)
 {
 	if (mlx->game_server.status == CONNECTED
-			&& !client_loop_hook(&(mlx->game_server), mlx))
-			mlx->actuel_menu = MULTIPLAYER_MENU;
+		&& !client_loop_hook(&(mlx->game_server), mlx))
+		mlx->actuel_menu = MULTIPLAYER_MENU;
 	if (mlx->actuel_menu == DEAD_SCREEN)
 		dead_screen(mlx, 0);
 	else if (mlx->player->health <= 0)

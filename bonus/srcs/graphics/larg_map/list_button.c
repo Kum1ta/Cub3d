@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:22:23 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:46:25 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:17:17 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int list[3])
 			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2]
 				&& mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3]
 				&& selected[list[2]] == NOT_SELECTED)
-				not_selected_button(mlx, selected, xy, list);
+				not_selected_button_lm(mlx, selected, xy, list);
 			else if (selected[list[2]] == SELECTED)
 				mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F0FF000);
 		}

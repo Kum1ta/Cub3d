@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 16:55:09 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:14:02 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,9 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 	put_fps(mlx, 0);
 	multi_fonction_init_end(mlx, (int *[2]){&loaded, &need_free},
 		&square_img, &bg);
-	if (!bg)
-		printf("C'est cassé\n");
-	else
-		mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
+	if (need_free)
+		return ;
+	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 100},
 		square_img, set_ip_address_btn);
 	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 50},

@@ -6,13 +6,13 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:26:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:39:02 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:16:59 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "larg_map.h"
 
-void	not_selected_button(t_mlx *mlx, t_selected selected[22],
+void	not_selected_button_lm(t_mlx *mlx, t_selected selected[22],
 		int xy[2], int list[3])
 {
 	mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F101010);
