@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:41:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:59:45 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../graphics.h"
 
-static bool	load_texture(void *mlx, char *path, t_img *img)
+static bool	load_texture(void *mlx, const char *path, t_img *img)
 {
-	img->img = mlx_png_file_to_image(mlx, path, &img->width, &img->height);
+	img->img = mlx_png_file_to_image(mlx, (char *) path, &img->width, &img->height);
 	return (img->img != NULL);
 }
 
@@ -32,7 +32,7 @@ static inline bool	load_wall_textures(t_mlx *mlx)
 
 static inline bool	load_game_textures(t_mlx *mlx)
 {
-	const char	*txts_path = {"textures/game/door.png",
+	const char	*txts_path[] = {"textures/game/door.png",
 		"textures/inventory/weapon.png",
 		"textures/inventory/fist.png",
 		"textures/inventory/knife.png",
@@ -60,7 +60,6 @@ int	load_textures(t_mlx *mlx)
 	mlx->textures = ft_calloc(1, sizeof(t_loadeds_textures));
 	if (!mlx->textures
 		|| !load_wall_textures(mlx)
-		|| !load_game_textures(mlx)
 		|| !load_game_textures(mlx))
 	{
 		destroy_textures(mlx);

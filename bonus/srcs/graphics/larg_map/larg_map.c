@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:35:27 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:47:07 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	add_button_lm(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 130
 		&& mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
 	{
-		mlx_put_image_to_window(mlx->mlx, mlx->win, img,
-			xy[0] - 10, xy[1] - 22);
+		if (img != NULL)
+			mlx_put_image_to_window(mlx->mlx, mlx->win, img,
+				xy[0] - 10, xy[1] - 22);
 		if (mlx->mouse->pressed_left)
 		{
 			f((void *)mlx, 1);

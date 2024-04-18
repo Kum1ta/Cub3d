@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:46:42 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:46:43 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

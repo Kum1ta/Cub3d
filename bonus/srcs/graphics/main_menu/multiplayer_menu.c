@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 17:14:02 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:44:49 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	multi_fonction_init_end(t_mlx *mlx, int *i[2],
 		if (!*bg)
 			*bg = mlx_png_file_to_image(mlx->mlx,
 					"textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
-		*i[1] = true;
+		*i[1] = 1;
 	}
 }
 
@@ -104,11 +104,11 @@ void	multiplayer_menu(t_mlx *mlx, int need_free)
 	static int	loaded = false;
 	static void	*bg = NULL;
 
-	put_fps(mlx, 0);
-	multi_fonction_init_end(mlx, (int *[2]){&loaded, &need_free},
+	multi_fonction_init_end(mlx, (int *[2]){&need_free, &loaded},
 		&square_img, &bg);
 	if (need_free)
 		return ;
+	put_fps(mlx, 0);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	add_button(mlx, (int [2]){50, mlx->stg->height / 2 - 100},
 		square_img, set_ip_address_btn);

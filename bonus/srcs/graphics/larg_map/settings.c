@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:18:09 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:49:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:23:17 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	fill_image(t_mlx *mlx, void *img, int color, int xy[2])
 
 void	init_bg(t_mlx *mlx, t_img *bg, void **bg_word)
 {
-	bg_word = mlx_new_image(mlx->mlx, 200, 30);
-	fill_image(mlx, bg_word, 0xEE009900, (int [2]){200, 30});
+	*bg_word = mlx_new_image(mlx->mlx, 200, 30);
+	fill_image(mlx, *bg_word, 0xEE009900, (int [2]){200, 30});
 	bg->img = mlx_png_file_to_image(mlx->mlx,
 			"textures/main_menu/bg_main_menu.png", &bg->width, &bg->height);
 	if (!bg->img)

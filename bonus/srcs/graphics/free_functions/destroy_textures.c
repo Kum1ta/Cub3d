@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:28:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:59:12 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 static inline void	_destroy_textures(t_mlx *mlx)
 {
-	const t_img	*imgs[] = {&mlx->textures->weapon_inv,
-		&mlx->textures->knife_inv,
+	const t_img	*imgs[] = {&mlx->textures->door,
+		&mlx->textures->weapon_inv, &mlx->textures->knife_inv,
 		&mlx->textures->fist_inv, &mlx->textures->weapon_game,
 		&mlx->textures->knife_game, &mlx->textures->fire_gun,
 		&mlx->textures->player[0], &mlx->textures->player[1],
 		&mlx->textures->player[2], &mlx->textures->player[3],
 		&mlx->textures->health_kit, &mlx->textures->north,
-		&mlx->textures->south, &mlx->textures->east, &mlx->textures->west};
+		&mlx->textures->south, &mlx->textures->east, &mlx->textures->west,
+		NULL};
 	int			i;
 
 	i = -1;
 	while (imgs[++i])
 		if (imgs[i]->img)
+		{
+			printf("destroying image %d\n", i);
 			mlx_destroy_image(mlx->mlx, imgs[i]->img);
+		}
 }
 
 int	destroy_textures(t_mlx *mlx)
