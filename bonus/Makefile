@@ -27,7 +27,10 @@ SRCS			=	main.c 																\
 					graphics/raycasting/raycast.c										\
 					graphics/raycasting/show_popup.c									\
 					graphics/raycasting/draw/supersampling.c							\
-					graphics/raycasting/draw/draw_sprites.c								\
+					graphics/raycasting/draw/sprites/draw_sprites.c						\
+					graphics/raycasting/draw/sprites/draw_sprite.c						\
+					graphics/raycasting/draw/sprites/get_sprites_list.c					\
+					graphics/raycasting/draw/sprites/set_sprites_attr.c					\
 					graphics/raycasting/draw/draw_wall_line.c							\
 					graphics/main_menu/main_menu.c										\
 					graphics/main_menu/multiplayer_menu.c								\

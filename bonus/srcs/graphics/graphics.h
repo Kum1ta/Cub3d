@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 14:43:51 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:56:27 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ typedef struct s_sprite
 	float	dist;
 	float	depth;
 	int		screen_x;
+	int		screen_size[2];
+	t_img	*txt;
 }	t_sprite;
 
 /* ------ main_graphics.c -------------------------------------------------- */
