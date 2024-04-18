@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   item_effect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:51:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:26:24 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:25:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	knife_effect(t_mlx *mlx, long long *last_time, t_sprite center_sprite)
 		if (mlx->game_server.status == CONNECTED)
 		{
 			player_touch = -1;
-			if (center_sprite.e_type == SPRT_PLAYER && center_sprite.dist < 2)
+			if (center_sprite.e_type == SPRT_PLAYER && center_sprite.dist < 6)
 				player_touch = center_sprite.u_data.player->server_id;
 			if (player_touch != -1)
 				system("paplay --volume=30000 ./sounds/game/hit.wav &");

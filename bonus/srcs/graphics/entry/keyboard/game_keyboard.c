@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:13:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:24:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,27 @@ void	interract_block(t_mlx *mlx)
 	t_raydata	*front_ray;
 
 	front_ray = raycast(mlx, mlx->stg->width / 2, true, mlx->map->player_pos);
-	if (front_ray->found && front_ray->dist < 2)
+	if (front_ray->found && front_ray->dist < 2
+		&& (mlx->center_sprite.e_type == NONE
+			|| mlx->center_sprite.depth >= front_ray->dist))
 	{
 		t_block	*front_block = front_ray->block;
 		if (front_block->type == DOOR)
 		{
 			front_block->data.door = !front_block->data.door;
 			if (mlx->game_server.status == CONNECTED)
-				ft_dprintf(mlx->game_server.sockfd, "setDoorState:%d,%d,%d;", front_block->data.door, (int) front_ray->pos.x, (int) front_ray->pos.y);
+				ft_dprintf(mlx->game_server.sockfd, "setDoorState:%d,%d,%d;",
+					front_block->data.door, (int) front_ray->pos.x,
+					(int) front_ray->pos.y);
 		}
+	}
+	else if (mlx->center_sprite.e_type == SPRT_HEALTH_KIT
+		&& mlx->center_sprite.depth < 6)
+	{
+		mlx->player->health = 100;
+		if (mlx->game_server.status == CONNECTED)
+			ft_dprintf(mlx->game_server.sockfd, "takeHealthKit:%d;",
+				mlx->center_sprite.u_data.kit->id);
 	}
 }
 

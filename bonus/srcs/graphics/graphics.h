@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:00:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:55:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,25 +132,6 @@ typedef struct s_settings_window
 	int		sensibility_y;
 }	t_settings_window;
 
-typedef struct s_mlx
-{
-	t_mouse				*mouse;
-	t_map				*map;
-	t_menu_map			*menu_map;
-	t_loadeds_textures	*textures;
-	t_player			*player;
-	void				*mlx;
-	void				*win;
-	t_menu				actuel_menu;
-	int					menu_button_focus;
-	t_list				*keyboard;
-	void				*tmp;
-	t_server			game_server;
-	int					just_try;
-	t_settings			*stg;
-	t_settings_window	stg_win;
-}	t_mlx;
-
 typedef struct s_sprite
 {
 	enum
@@ -170,6 +151,26 @@ typedef struct s_sprite
 	int		screen_size[2];
 	t_img	*txt;
 }	t_sprite;
+
+typedef struct s_mlx
+{
+	t_mouse				*mouse;
+	t_map				*map;
+	t_menu_map			*menu_map;
+	t_loadeds_textures	*textures;
+	t_player			*player;
+	void				*mlx;
+	void				*win;
+	t_menu				actuel_menu;
+	int					menu_button_focus;
+	t_list				*keyboard;
+	void				*tmp;
+	t_server			game_server;
+	int					just_try;
+	t_settings			*stg;
+	t_settings_window	stg_win;
+	t_sprite			center_sprite;
+}	t_mlx;
 
 /* ------ main_graphics.c -------------------------------------------------- */
 int			window(int event, void *mlx_ptr);

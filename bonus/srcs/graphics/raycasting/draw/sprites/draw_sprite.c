@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:23:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:42:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ static inline bool	draw_sprite_line(t_mlx *mlx, t_sprite *sprite,
 	return (touch_center);
 }
 
+static inline float	get_quality_ray_dist(t_mlx *mlx, t_raydata **ray, int x)
+{
+	float	dist;
+
+	x = x / mlx->stg->quality;
+	x = x * mlx->stg->quality;
+	return (ray[x]->dist);
+}
+
 bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 {
 	t_drawsprt_attr	draw_data;
@@ -75,7 +84,8 @@ bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 			&& draw_data.pos_x < mlx->stg->width)
 		{
 			if (draw_data.pos_x >= 0 
-				&& sprite->depth < ray[draw_data.pos_x]->dist)
+				&& sprite->depth
+					< get_quality_ray_dist(mlx, ray, draw_data.pos_x))
 				touch_center |= draw_sprite_line(mlx, sprite, &draw_data);
 			draw_data.pos_x++;
 		}
