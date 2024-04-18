@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:30:49 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 17:36:38 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:00:46 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ bool	lst_add_pos(t_list *lst, bool *flagBlocks, int width, t_ivec2 pos)
 	return (true);
 }
 
+static inline bool	propagate_pos(t_list *lst_pos, bool *flagBlocks,
+								int width, t_ivec2 pos)
+{
+	return (lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y})
+	&& lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y})
+	&& lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1})
+	&& lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1}));
+}
+
 bool	can_exit_map(t_block **blocks, bool *flagBlocks, int width, t_ivec2 pos)
 {
 	t_list	*prev_pos;
@@ -60,13 +69,13 @@ bool	can_exit_map(t_block **blocks, bool *flagBlocks, int width, t_ivec2 pos)
 	while (!res && lst_pos)
 	{
 		pos = get_node_pos(lst_pos);
-		if (!blocks[pos.y] || blocks[pos.y][pos.x].type == END || blocks[pos.y][pos.x].type == EMPTY || ((pos.x == 0 || pos.y == 0) && blocks[pos.y][pos.x].type != WALL))
+		if (!blocks[pos.y] || blocks[pos.y][pos.x].type == END
+			|| blocks[pos.y][pos.x].type == EMPTY
+			|| ((pos.x == 0 || pos.y == 0)
+				&& blocks[pos.y][pos.x].type != WALL))
 			res = true;
 		else if (blocks[pos.y][pos.x].type != WALL
-			&& (!lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x + 1, pos.y})
-			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x - 1, pos.y})
-			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y + 1})
-			|| !lst_add_pos(lst_pos, flagBlocks, width, (t_ivec2){pos.x, pos.y - 1})))
+			&& !propagate_pos(lst_pos, flagBlocks, width, pos))
 			res = true;
 		prev_pos = lst_pos;
 		lst_pos = lst_pos->next;
