@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:31:41 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:20:25 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,8 +251,6 @@ void	change_config_file(t_settings_window *stg)
 	}
 	close(fd);
 }
-
-int	main(int ac, char **av);
 
 char	*back_main_menu(void *mlx, int action)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:23:58 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:17:55 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int	*return_good_int(t_settings *settings, char *line)
 		return (&settings->minimap_pos);
 	else if (!ft_strcmp("show_fps", line))
 		return (&settings->show_fps);
+	else if (!ft_strcmp("sensibility_x", line))
+		return (&settings->sensibility_x);
+	else if (!ft_strcmp("sensibility_y", line))
+		return (&settings->sensibility_y);
 	else if (!ft_strcmp("texture", line))
 		return (&settings->texture);
 	return (NULL);
@@ -133,6 +137,8 @@ static void	*create_default_config(char *path)
 \nshow_minimap=1\
 \nminimap_pos=0\
 \nshow_fps=1\
+\nsensibility_x=50\
+\nsensibility_y=50\
 \ntexture=0\n", 97);
 	close(fd);
 	return (path);
@@ -148,6 +154,8 @@ void	init_settings(t_settings *settings)
 	settings->minimap_pos = -1;
 	settings->show_fps = -1;
 	settings->texture = -1;
+	settings->sensibility_x = -1;
+	settings->sensibility_y = -1;
 }
 
 t_settings	*verification_settings(t_settings *settings)
@@ -159,7 +167,9 @@ t_settings	*verification_settings(t_settings *settings)
 		|| settings->show_minimap < 0 || settings->show_minimap > 1
 		|| settings->minimap_pos < 0 || settings->minimap_pos > 2
 		|| settings->show_fps < 0 || settings->show_fps > 1
-		|| settings->texture < 0 || settings->texture > 1)
+		|| settings->texture < 0 || settings->texture > 1
+		|| settings->sensibility_x < 0 || settings->sensibility_x > 200
+		|| settings->sensibility_y < 0 || settings->sensibility_y > 200)
 	{
 		free(settings);
 		return (error_config("Error in config file", NULL));

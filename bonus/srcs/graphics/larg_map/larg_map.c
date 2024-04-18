@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:49:22 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:22:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	change_config_file_lm(t_settings_window *stg)
 	if (fd == -1)
 		return ;
 	i = 0;
-	while (i < 8)
+	while (i < 10)
 	{
 		if (i == 0)
 		{
@@ -181,6 +181,16 @@ void	change_config_file_lm(t_settings_window *stg)
 			tmp = ft_itoa(stg->texture);
 			line = ft_strjoin("texture=", tmp);
 		}
+		else if (i == 8)
+		{
+			tmp = ft_itoa(stg->sensibility_y);
+			line = ft_strjoin("sensibility_x=", tmp);
+		}
+		else if (i == 9)
+		{
+			tmp = ft_itoa(stg->sensibility_y);
+			line = ft_strjoin("sensibility_y=", tmp);
+		}
 		free(tmp);
 		tmp = ft_strjoin(line, "\n");
 		write(fd, tmp, ft_strlen(tmp));
@@ -200,12 +210,14 @@ char	*button_main_lm(void *mlx, int action)
 	((t_mlx *)mlx)->stg_win.width = ((t_mlx *)mlx)->stg->width;
 	((t_mlx *)mlx)->stg_win.height = ((t_mlx *)mlx)->stg->height;
 	((t_mlx *)mlx)->stg_win.show_mini_map = ((t_mlx *)mlx)->stg->show_minimap;
-	((t_mlx *)mlx)->stg_win.pos_mini_map = ((t_mlx *)mlx)->stg->minimap_pos;
 	change_config_file_lm(&((t_mlx *)mlx)->stg_win);
 	((t_mlx *)mlx)->stg->show_fps = ((t_mlx *)mlx)->stg_win.show_fps;
 	((t_mlx *)mlx)->stg->antialiasing = ((t_mlx *)mlx)->stg_win.anti_aliasing;
 	((t_mlx *)mlx)->stg->quality = ((t_mlx *)mlx)->stg_win.quality;
 	((t_mlx *)mlx)->stg->texture = ((t_mlx *)mlx)->stg_win.texture;
+	((t_mlx *)mlx)->stg->sensibility_x = ((t_mlx *)mlx)->stg_win.sensibility_x;
+	((t_mlx *)mlx)->stg->sensibility_y = ((t_mlx *)mlx)->stg_win.sensibility_y;
+	
 
 	return (NULL);
 }
@@ -345,6 +357,40 @@ void	list_button_texture_lm(t_mlx *mlx, int xy[2])
 		mlx->stg_win.texture = 1;
 }
 
+static inline void	draw_circle(t_mlx *mlx, int x, int y, int radius)
+{
+	int	i;
+	int	j;
+	int	dist;
+
+	i = 0;
+	while (i < 2 * radius)
+	{
+		j = 0;
+		while (j < 2 * radius)
+		{
+			dist = (radius - i) * (radius - i) + (radius - j) * (radius - j);
+			if (dist <= radius * radius)
+				mlx_pixel_put(mlx->mlx, mlx->win, x + i - radius, y + j - radius, 0xFF0000FF);
+			j++;
+		}
+		i++;
+	}
+}
+
+static inline void	draw_line(t_mlx *mlx, int x, int y, int size)
+{
+	while (size >= 0)
+		mlx_pixel_put(mlx->mlx, mlx->win, x + size--, y, 0xFF0000FF);
+}
+
+void	btn_scroll(t_mlx *mlx, int x, int y, int *edit_value)
+{
+	draw_circle(mlx, x + *edit_value, y, 10);
+	draw_line(mlx, x, y, 200);
+	printf("%d\n", *edit_value);
+}
+
 void	options_menu_lm(t_mlx *mlx, int need_free)
 {
 	static void		*bg_word = NULL;
@@ -385,6 +431,10 @@ void	options_menu_lm(t_mlx *mlx, int need_free)
 	list_button_quality_lm(mlx, (int [2]){90, 345 + diff});
 	mlx_string_put(mlx->mlx, mlx->win, 90, 400 + diff, 0xFFFFFFFF, "Anti aliasing (SS)");
 	list_button_aa_lm(mlx, (int [2]){90, 415 + diff});
+	mlx_string_put(mlx->mlx, mlx->win, 90, 475 + diff, 0xFFFFFFFF, "Sensibility X");
+	btn_scroll(mlx, 320, 468 + diff, &mlx->stg_win.sensibility_x);
+	mlx_string_put(mlx->mlx, mlx->win, 90, 510 + diff, 0xFFFFFFFF, "Sensibility Y");
+	btn_scroll(mlx, 320, 503 + diff, &mlx->stg_win.sensibility_y);
 	add_button_lm(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, bg_word, button_main_lm);
 }
 

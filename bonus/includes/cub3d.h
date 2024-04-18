@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:58:17 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:22:29 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:10:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_settings
 	int		minimap_pos_y;
 	int		show_fps;
 	int		texture;
+	int		sensibility_y;
+	int		sensibility_x;
 }	t_settings;
 
 /* --- main_graphics.c ----------------------------------------------------- */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 21:57:11 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 10:21:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ typedef struct s_settings_window
 	int		show_mini_map;
 	int		pos_mini_map;
 	int		texture;
+	int		sensibility_x;
+	int		sensibility_y;
 }	t_settings_window;
 
 typedef struct s_mlx
