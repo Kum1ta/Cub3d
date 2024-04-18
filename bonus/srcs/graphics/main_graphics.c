@@ -6,17 +6,11 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:29:53 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:14:44 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
-
-void	inventory(t_mlx *mlx, int need_free);
-char	*argument_map(void *ptr, int action);
-void	options_menu(t_mlx *mlx, int need_free);
-
-# define STG mlx->settings
 
 int	window(int event, void *mlx_ptr)
 {
@@ -44,6 +38,17 @@ int	window(int event, void *mlx_ptr)
 	return (0);
 }
 
+void	mlx_init_event(t_mlx *mlx)
+{
+	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, window, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard_down, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYUP, &keyboard_up, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEWHEEL, &mouse_whell, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEDOWN, &mouse_down, (void *)mlx);
+	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEUP, &mouse_up, (void *)mlx);
+	mlx_loop_hook(mlx->mlx, update, mlx);
+}
+
 void	graphics_part(t_map *map, t_settings *settings)
 {
 	t_mlx	*mlx;
@@ -66,14 +71,9 @@ void	graphics_part(t_map *map, t_settings *settings)
 		free_all_graphics(mlx);
 		return ;
 	}
-	mlx->win = mlx_new_window(mlx->mlx, mlx->stg->width, mlx->stg->height, "Kumilos - Cube3d");
+	mlx->win = mlx_new_window(mlx->mlx, mlx->stg->width,
+			mlx->stg->height, "Kumilos - Cube3d");
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_WINDOW_EVENT, window, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYDOWN, &keyboard_down, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_KEYUP, &keyboard_up, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEWHEEL, &mouse_whell, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEDOWN, &mouse_down, (void *)mlx);
-	mlx_on_event(mlx->mlx, mlx->win, MLX_MOUSEUP, &mouse_up, (void *)mlx);
-	mlx_loop_hook(mlx->mlx, update, mlx);
+	mlx_init_event(mlx);
 	mlx_loop(mlx->mlx);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:29:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:57:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:24:13 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ static inline void	get_wall_data(t_ray *ray, t_raydata *res, t_vec3 start)
 	{
 		res->dist = ray->dist.x - ray->delta_dist.x;
 		res->dir = ray->dir + 2 * (ray->step_x == -1);
-		res->imgXPercent = start.y + res->dist * ray->dir_y;
+		res->img_x_percent = start.y + res->dist * ray->dir_y;
 	}
 	else
 	{
 		res->dist = ray->dist.y - ray->delta_dist.y;
 		res->dir = ray->dir + 2 * (ray->step_y == -1);
-		res->imgXPercent = start.x + res->dist * ray->dir_x;
+		res->img_x_percent = start.x + res->dist * ray->dir_x;
 	}
-	res->imgXPercent = res->imgXPercent - ((int) res->imgXPercent);
+	res->img_x_percent = res->img_x_percent - ((int) res->img_x_percent);
 	ray->curr_size++;
 	if (res->block->type == WALL)
 		ray->curr_size = res->block->data.wall;

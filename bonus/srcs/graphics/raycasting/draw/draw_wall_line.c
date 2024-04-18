@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:23:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:11:06 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:24:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int x, int size)
 
 	img_pos.z = get_scalling_factor(ray, mlx);
 	k = -1;
-	img_pos.x = ray->imgXPercent * ((t_img *)mlx->tmp)->width;
+	img_pos.x = ray->img_x_percent * ((t_img *)mlx->tmp)->width;
 	wall_size = mlx->stg->height / ray->dist;
 	while (++k < mlx->stg->quality)
 	{

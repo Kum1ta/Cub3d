@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:05:00 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 21:44:24 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:28:38 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,23 @@ static t_sprite *get_sprite_list(t_mlx *mlx)
 		online_players = mlx->game_server.online_player;
 		while (online_players)
 		{
-			res[i].type = SPRT_PLAYER;
-			res[i].data.player = online_players->content;
-			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].data.player->pos);
+			res[i].e_type = SPRT_PLAYER;
+			res[i].u_data.player = online_players->content;
+			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].u_data.player->pos);
 			i++;
 			online_players = online_players->next;
 		}
 		kits = mlx->game_server.kits;
 		while (kits)
 		{
-			res[i].type = SPRT_HEALTH_KIT;
-			res[i].data.kit = kits->content;
-			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].data.kit->pos);
+			res[i].e_type = SPRT_HEALTH_KIT;
+			res[i].u_data.kit = kits->content;
+			res[i].dist = get_distance_between_2dcoords(mlx->map->player_pos, res[i].u_data.kit->pos);
 			i++;
 			kits = kits->next;
 		}
 	}
-	res[i].type = NONE;
+	res[i].e_type = NONE;
 	return (res);
 }
 
@@ -71,13 +71,13 @@ static void sort_sprites(t_sprite *sprites)
 	int j;
 	t_sprite tmp;
 
-	if (sprites->type == NONE)
+	if (sprites->e_type == NONE)
 		return;
 	i = 0;
-	while (sprites[i + 1].type != NONE)
+	while (sprites[i + 1].e_type != NONE)
 	{
 		j = i + 1;
-		while (sprites[j].type != NONE)
+		while (sprites[j].e_type != NONE)
 		{
 			if (sprites[j].dist > sprites[i].dist)
 			{
@@ -91,7 +91,7 @@ static void sort_sprites(t_sprite *sprites)
 	}
 }
 
-static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
+static void set_sprites_screen_x(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 {
 	float transform;
 	float diffX;
@@ -102,21 +102,21 @@ static void set_sprites_screenX(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 	float planeY = mlx->map->cam_plane.y;
 	float invCam = 1 / (planeX * dirY - planeY * dirX);
 
-	while (sprites->type != NONE)
+	while (sprites->e_type != NONE)
 	{
-		if (sprites->type == SPRT_PLAYER)
+		if (sprites->e_type == SPRT_PLAYER)
 		{
-			diffX = sprites->data.player->pos.x - plyPos.x;
-			diffY = sprites->data.player->pos.y - plyPos.y;
+			diffX = sprites->u_data.player->pos.x - plyPos.x;
+			diffY = sprites->u_data.player->pos.y - plyPos.y;
 		}
 		else
 		{
-			diffX = sprites->data.kit->pos.x - plyPos.x;
-			diffY = sprites->data.kit->pos.y - plyPos.y;
+			diffX = sprites->u_data.kit->pos.x - plyPos.x;
+			diffY = sprites->u_data.kit->pos.y - plyPos.y;
 		}
 		transform = invCam * (dirY * diffX - dirX * diffY);
 		sprites->depth = invCam * (planeX * diffY - planeY * diffX);
-		sprites->screenX = (mlx->stg->width / 2) * ((1 + transform / sprites->depth));
+		sprites->screen_x = (mlx->stg->width / 2) * ((1 + transform / sprites->depth));
 		sprites++;
 	}
 }
@@ -127,16 +127,16 @@ static t_img *get_sprite_img(t_mlx *mlx, t_sprite *sprite)
 	float	dy;
 	int		rot;
 
-	if (sprite->type == SPRT_PLAYER)
+	if (sprite->e_type == SPRT_PLAYER)
 	{
-		dx = mlx->map->player_pos.x - sprite->data.player->pos.x;
-		dy = mlx->map->player_pos.y - sprite->data.player->pos.y;
-		rot = (atan2(dy, dx) + atan2(sprite->data.player->dir.y, sprite->data.player->dir.x)) * 180 / PI;
+		dx = mlx->map->player_pos.x - sprite->u_data.player->pos.x;
+		dy = mlx->map->player_pos.y - sprite->u_data.player->pos.y;
+		rot = (atan2(dy, dx) + atan2(sprite->u_data.player->dir.y, sprite->u_data.player->dir.x)) * 180 / PI;
 		while (rot < 0)
 			rot += 360;
 		return (mlx->textures->player + ((int)(rot / 90 % 4)));
 	}
-	else if (sprite->type == SPRT_HEALTH_KIT)
+	else if (sprite->e_type == SPRT_HEALTH_KIT)
 		return (&mlx->textures->health_kit);
 	return (NULL);
 }
@@ -159,9 +159,9 @@ static bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 	touch_center = false;
 	width = mlx->stg->height / sprite->depth;
 	height = mlx->stg->height / sprite->depth;
-	if (img && sprite->depth > 0 && sprite->screenX + width / 2 >= 0 && sprite->screenX - width / 2 < mlx->stg->width)
+	if (img && sprite->depth > 0 && sprite->screen_x + width / 2 >= 0 && sprite->screen_x - width / 2 < mlx->stg->width)
 	{
-		startX = sprite->screenX - width / 2;
+		startX = sprite->screen_x - width / 2;
 		x = startX;
 		while (x - startX < width)
 		{
@@ -199,15 +199,15 @@ t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray)
 	int i;
 
 	sprites = get_sprite_list(mlx);
-	center_sprite.type = NONE;
+	center_sprite.e_type = NONE;
 	if (!sprites)
 		return (center_sprite);
 	sort_sprites(sprites);
-	set_sprites_screenX(sprites, mlx->map->player_pos, mlx);
+	set_sprites_screen_x(sprites, mlx->map->player_pos, mlx);
 	i = 0;
-	while (sprites[i].type != NONE)
+	while (sprites[i].e_type != NONE)
 	{
-		if (sprites[i].type != SPRT_PLAYER || sprites[i].data.player->health > 0)
+		if (sprites[i].e_type != SPRT_PLAYER || sprites[i].u_data.player->health > 0)
 			if (draw_sprite(mlx, sprites + i, ray))
 				center_sprite = sprites[i];
 		i++;

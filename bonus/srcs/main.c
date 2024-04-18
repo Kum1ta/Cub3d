@@ -6,19 +6,16 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 20:29:31 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:08:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*argument_map(void *ptr, int action);
-
-
 static int	verif_start_video(void)
 {
 	char	str[37];
-	int	i;
+	int		i;
 
 	i = 0;
 	ft_strncpy(str, "textures/main_menu/video/1/000.png\0", 36);

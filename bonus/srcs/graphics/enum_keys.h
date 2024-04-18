@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enum_keys.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:43:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 22:35:24 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:11:21 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ enum e_key {
 	KEY_POINT,
 };
 
-#define KEY_SHIFT 225
+# define KEY_SHIFT 225
 
 #endif

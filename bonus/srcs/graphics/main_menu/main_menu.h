@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_menu.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:42:26 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:33:54 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:10:13 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	create_square(t_mlx *mlx, void *img, int width, int height);
 
 char	*open_solo_menu(void *ptr, int action);
 void	solo_menu(t_mlx *mlx, int need_free);
-char	*argument_map(void *ptr, int action);
 char	*open_multiplayer_menu(void *ptr, int action);
 char	*open_main_menu(void *ptr, int action);
 char	*set_ip_address_btn(void *ptr, int action);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 10:21:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:31:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
 
-# define MIDSCREEN_POSX mlx->stg->width / 2
-# define MIDSCREEN_POSY mlx->stg->height / 2
 typedef struct s_raydata
 {
-	float	imgXPercent;
+	float	img_x_percent;
 	bool	found;
 	t_block	*block;
 	float	dist;
@@ -158,90 +156,94 @@ typedef struct s_sprite
 		NONE,
 		SPRT_PLAYER,
 		SPRT_HEALTH_KIT
-	} type;
+	} e_type;
 	union
 	{
-		t_online_player *player;
-		t_health_kit *kit;
-	} data;
+		t_online_player	*player;
+		t_health_kit	*kit;
+	} u_data;
 	float	dist;
 	float	depth;
-	int 	screenX;
-} t_sprite;
+	int		screen_x;
+}	t_sprite;
 
 /* ------ main_graphics.c -------------------------------------------------- */
-int		window(int event, void *mlx_ptr);
+int			window(int event, void *mlx_ptr);
 
 /* ------ draw_image_to_window.c ------------------------------------------- */
-void	draw_image_to_window(t_mlx *mlx, t_img *img,
-							const int pos[2], int size[2]);
+void		draw_image_to_window(t_mlx *mlx, t_img *img,
+				const int pos[2], int size[2]);
 
 /* ------ update.c --------------------------------------------------------- */
-int		update(void *mlx_ptr);
+int			update(void *mlx_ptr);
 
 /* ------ init.c ----------------------------------------------------------- */
-int		init(t_mlx *mlx, t_map *map, t_settings *settings);
+int			init(t_mlx *mlx, t_map *map, t_settings *settings);
 
 /* ------ larg_map.c ------------------------------------------------------- */
-void	larg_map(t_mlx *mlx, int need_free);
+void		larg_map(t_mlx *mlx, int need_free);
 
 /* ------ load_textures.c -------------------------------------------------- */
-int		load_textures(t_mlx *mlx);
+int			load_textures(t_mlx *mlx);
 
 /* ------ free_all.c ------------------------------------------------------- */
-int		free_all_graphics(t_mlx *mlx);
+int			free_all_graphics(t_mlx *mlx);
 
 /* ------ destroy_textures.c ----------------------------------------------- */
-int		destroy_textures(t_mlx *mlx);
+int			destroy_textures(t_mlx *mlx);
 
 /* ------ keyboard.c ------------------------------------------------------- */
-int		keyboard_down(int key, void *mlx_ptr);
-int		keyboard_up(int key, void *mlx_ptr);
-int		keyboard(t_mlx *mlx);
-void	set_key_not_just_down(t_list *keyboard, int key);
+int			keyboard_down(int key, void *mlx_ptr);
+int			keyboard_up(int key, void *mlx_ptr);
+int			keyboard(t_mlx *mlx);
+void		set_key_not_just_down(t_list *keyboard, int key);
 
 /* ------ gane_keyboard.c -------------------------------------------------- */
-void	game_keyboard(t_mlx *mlx);
+void		game_keyboard(t_mlx *mlx);
 
 /* ------ map_larg_menu_keyboard.c ----------------------------------------- */
-void	larg_map_keyboard(t_mlx *mlx);
+void		larg_map_keyboard(t_mlx *mlx);
 
 /* ------ mouse_wheel.c ---------------------------------------------------- */
-int		mouse_whell(int button, void *mlx_ptr);
+int			mouse_whell(int button, void *mlx_ptr);
 
 /* ------ mouse_down.c ----------------------------------------------------- */
-int		mouse_down(int button, void *mlx_ptr);
+int			mouse_down(int button, void *mlx_ptr);
 
 /* ------ mouse_up.c ------------------------------------------------------- */
-int		mouse_up(int button, void *mlx_ptr);
+int			mouse_up(int button, void *mlx_ptr);
 
 /* ------ mouse_move.c ----------------------------------------------------- */
-void	mouse_move(t_mlx *mlx);
+void		mouse_move(t_mlx *mlx);
 
 /* ------ main_raycasting.c ------------------------------------------------ */
-t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract, t_vec3 start);
 void		raycasting(t_mlx *mlx, int need_free);
+t_raydata	*raycast(t_mlx *mlx, int screen_x, bool catch_interract,
+				t_vec3 start);
 
 /* ------ main_menu.c ------------------------------------------------------ */
-void	main_menu(t_mlx *mlx, int need_free);
-
-/* ------ solo_menu.c ------------------------------------------------------ */
-void	solo_menu(t_mlx *mlx, int need_free);
+void		main_menu(t_mlx *mlx, int need_free);
 
 /* ------ multiplayer_menu.c ----------------------------------------------- */
-void	multiplayer_menu(t_mlx *mlx, int need_free);
+void		multiplayer_menu(t_mlx *mlx, int need_free);
 
 /* ------ options_menu.c --------------------------------------------------- */
-void	options_menu(t_mlx *mlx, int need_free);
+void		options_menu(t_mlx *mlx, int need_free);
 
 /* ------ start_screen.c --------------------------------------------------- */
-void	start_screen(t_mlx *mlx, int need_free);
+void		start_screen(t_mlx *mlx, int need_free);
 
 /* ------ dead_screen.c ---------------------------------------------------- */
-void	dead_screen(t_mlx *mlx, int need_free);
+void		dead_screen(t_mlx *mlx, int need_free);
 
 /* ------ key_down_type.c -------------------------------------------------- */
-bool	is_key_just_down(t_list *keyboard, int key);
-bool	is_key_down(t_list *keyboard, int key);
+bool		is_key_just_down(t_list *keyboard, int key);
+bool		is_key_down(t_list *keyboard, int key);
+
+/* ----- inventory.c ------------------------------------------------------- */
+void		inventory(t_mlx *mlx, int need_free);
+
+/* ----- options_menu.c ---------------------------------------------------- */
+void		options_menu(t_mlx *mlx, int need_free);
 
 #endif
