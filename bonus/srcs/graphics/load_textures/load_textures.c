@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 20:55:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:41:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,50 @@ static bool	load_texture(void *mlx, char *path, t_img *img)
 	return (img->img != NULL);
 }
 
+static inline bool	load_wall_textures(t_mlx *mlx)
+{
+	return (load_texture(mlx->mlx, mlx->map->texture.north,
+			&mlx->textures->north)
+		&& load_texture(mlx->mlx, mlx->map->texture.south,
+			&mlx->textures->south)
+		&& load_texture(mlx->mlx, mlx->map->texture.east,
+			&mlx->textures->east)
+		&& load_texture(mlx->mlx, mlx->map->texture.west,
+			&mlx->textures->west));
+}
+
+static inline bool	load_game_textures(t_mlx *mlx)
+{
+	const char	*txts_path = {"textures/game/door.png",
+		"textures/inventory/weapon.png",
+		"textures/inventory/fist.png",
+		"textures/inventory/knife.png",
+		"textures/game/weapon.png",
+		"textures/game/knife.png",
+		"textures/game/fire.png",
+		"textures/game/player_front.png",
+		"textures/game/player_right.png",
+		"textures/game/player_back.png",
+		"textures/game/player_left.png",
+		"textures/game/health_kit.png", NULL};
+	t_img		*txt;
+	int			i;
+
+	txt = &mlx->textures->door;
+	i = 0;
+	while (txts_path[i])
+		if (!load_texture(mlx->mlx, txts_path[i++], txt++))
+			return (false);
+	return (true);
+}
+
 int	load_textures(t_mlx *mlx)
 {
 	mlx->textures = ft_calloc(1, sizeof(t_loadeds_textures));
 	if (!mlx->textures
-		|| !load_texture(mlx->mlx, mlx->map->texture.north, &mlx->textures->north)
-		|| !load_texture(mlx->mlx, mlx->map->texture.south, &mlx->textures->south)
-		|| !load_texture(mlx->mlx, mlx->map->texture.east, &mlx->textures->east)
-		|| !load_texture(mlx->mlx, mlx->map->texture.west, &mlx->textures->west)
-		|| !load_texture(mlx->mlx, "textures/game/door.png", &mlx->textures->door)
-		|| !load_texture(mlx->mlx, "textures/inventory/weapon.png", &mlx->textures->weapon_inv)
-		|| !load_texture(mlx->mlx, "textures/inventory/fist.png", &mlx->textures->fist_inv)
-		|| !load_texture(mlx->mlx, "textures/inventory/knife.png", &mlx->textures->knife_inv)
-		|| !load_texture(mlx->mlx, "textures/game/weapon.png", &mlx->textures->weapon_game)
-		|| !load_texture(mlx->mlx, "textures/game/knife.png", &mlx->textures->knife_game)
-		|| !load_texture(mlx->mlx, "textures/game/fire.png", &mlx->textures->fire_gun)
-		|| !load_texture(mlx->mlx, "textures/game/player_front.png", &mlx->textures->player[0])
-		|| !load_texture(mlx->mlx, "textures/game/player_right.png", &mlx->textures->player[1])
-		|| !load_texture(mlx->mlx, "textures/game/player_back.png", &mlx->textures->player[2])
-		|| !load_texture(mlx->mlx, "textures/game/player_left.png", &mlx->textures->player[3])
-		|| !load_texture(mlx->mlx, "textures/game/health_kit.png", &mlx->textures->health_kit))
+		|| !load_wall_textures(mlx)
+		|| !load_game_textures(mlx)
+		|| !load_game_textures(mlx))
 	{
 		destroy_textures(mlx);
 		return (error_int("Cube3d: Error load_texture()\n", 1));

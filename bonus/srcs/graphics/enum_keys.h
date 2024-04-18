@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   enum_keys.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:43:55 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:11:21 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:33:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUM_KEYS_H
 # define ENUM_KEYS_H
 
-enum e_key {
+enum e_key
+{
 	KEY_0,
 	KEY_1,
 	KEY_2,
