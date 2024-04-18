@@ -6,14 +6,14 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:17:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 16:24:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:18:30 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../graphics.h"
 #include <time.h>
 
-#define MOVE_TIME_US 1/30*1000000
+#define MOVE_TIME_US 33333.33
 
 void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 {
@@ -23,11 +23,11 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 
 	ply_pos = &(mlx->map->player_pos);
 	add_val = deltaX * mlx->map->cam_dir.x - deltaY * mlx->map->cam_dir.y;
-	block = mlx->map->blocks[(int) ply_pos->y][(int) (ply_pos->x + add_val)];
+	block = mlx->map->blocks[(int)ply_pos->y][(int)(ply_pos->x + add_val)];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->x += add_val;
 	add_val = deltaX * mlx->map->cam_dir.y + deltaY * mlx->map->cam_dir.x;
-	block = mlx->map->blocks[(int) (ply_pos->y + add_val)][(int) ply_pos->x];
+	block = mlx->map->blocks[(int)(ply_pos->y + add_val)][(int)ply_pos->x];
 	if (block.type != WALL && (block.type != DOOR || block.data.door == true))
 		ply_pos->y += add_val;
 	if (mlx->game_server.status == CONNECTED)
@@ -44,13 +44,12 @@ void	interract_block(t_mlx *mlx)
 		&& (mlx->center_sprite.e_type == NONE
 			|| mlx->center_sprite.depth >= front_ray->dist))
 	{
-		t_block	*front_block = front_ray->block;
-		if (front_block->type == DOOR)
+		if (front_ray->block->type == DOOR)
 		{
-			front_block->data.door = !front_block->data.door;
+			front_ray->block->data.door = !front_ray->block->data.door;
 			if (mlx->game_server.status == CONNECTED)
 				ft_dprintf(mlx->game_server.sockfd, "setDoorState:%d,%d,%d;",
-					front_block->data.door, (int) front_ray->pos.x,
+					front_ray->block->data.door, (int) front_ray->pos.x,
 					(int) front_ray->pos.y);
 		}
 	}
@@ -64,25 +63,37 @@ void	interract_block(t_mlx *mlx)
 	}
 }
 
+static inline bool	is_moving_diag(t_mlx *mlx)
+{
+	return ((is_key_down(mlx->keyboard, KEY_W)
+			&& is_key_down(mlx->keyboard, KEY_A))
+		|| (is_key_down(mlx->keyboard, KEY_W)
+			&& is_key_down(mlx->keyboard, KEY_D))
+		|| (is_key_down(mlx->keyboard, KEY_S)
+			&& is_key_down(mlx->keyboard, KEY_A))
+		|| (is_key_down(mlx->keyboard, KEY_S)
+			&& is_key_down(mlx->keyboard, KEY_D)));
+}
+
 void	game_keyboard(t_mlx *mlx)
 {
-	static long long	lastMove;
-	float add = 0.12;
-	float addX;
-	float addY;
+	static long long	last_move;
+	float				add;
+	float				add_x;
+	float				add_y;
 
-	if (get_now_time() - lastMove < MOVE_TIME_US)
+	add = 0.12;
+	if (get_now_time() - last_move < MOVE_TIME_US)
 		return ;
-	lastMove = get_now_time();
-	if ((is_key_down(mlx->keyboard, KEY_W) && is_key_down(mlx->keyboard, KEY_A))
-		|| (is_key_down(mlx->keyboard, KEY_W) && is_key_down(mlx->keyboard, KEY_D))
-		|| (is_key_down(mlx->keyboard, KEY_S) && is_key_down(mlx->keyboard, KEY_A))
-		|| (is_key_down(mlx->keyboard, KEY_S) && is_key_down(mlx->keyboard, KEY_D)))
+	last_move = get_now_time();
+	if (is_moving_diag(mlx))
 		add = add / 1.5;
-	addX = (is_key_down(mlx->keyboard, KEY_W) + -is_key_down(mlx->keyboard, KEY_S)) * add;
-	addY = (is_key_down(mlx->keyboard, KEY_D) + -is_key_down(mlx->keyboard, KEY_A)) * add;
-	if (addX || addY)
-		move_player(mlx, addX, addY);
+	add_x = (is_key_down(mlx->keyboard, KEY_W)
+			- is_key_down(mlx->keyboard, KEY_S)) * add;
+	add_y = (is_key_down(mlx->keyboard, KEY_D)
+			- is_key_down(mlx->keyboard, KEY_A)) * add;
+	if (add_x || add_y)
+		move_player(mlx, add_x, add_y);
 	if (is_key_down(mlx->keyboard, KEY_UP))
 		mlx->just_try += 25;
 	if (is_key_down(mlx->keyboard, KEY_DOWN))
