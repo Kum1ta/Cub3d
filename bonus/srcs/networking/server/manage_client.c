@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:21:14 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:24:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:42:40 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	try_accept_client(t_server *srv)
 
 	addr_len = sizeof(client_adress);
 	client_sock = accept(srv->sockfd, (struct sockaddr *) &client_adress,
-		&addr_len);
+			&addr_len);
 	if (client_sock != -1)
 	{
 		inet_ntop(AF_INET, &(client_adress.sin_addr), ip, INET_ADDRSTRLEN);
