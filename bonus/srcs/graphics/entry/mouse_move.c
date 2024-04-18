@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:38:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 14:53:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:19:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	vertical_move(t_mlx *mlx, int mouseY)
 {
 	float	move_y;
 
-	move_y = (mouseY -  mlx->stg->height / 2) * MOUSEMOVE_SENSIBILITY_Y;
+	move_y = (mouseY - mlx->stg->height / 2) * MOUSEMOVE_SENSIBILITY_Y;
 	move_y = move_y * mlx->stg->sensibility_y / 100;
 	if (move_y != 0)
 	{
@@ -28,7 +28,8 @@ void	vertical_move(t_mlx *mlx, int mouseY)
 			mlx->map->cam_dir.z = -1000;
 		if (mlx->map->cam_dir.z > 1000)
 			mlx->map->cam_dir.z = 1000;
-		mlx_mouse_move(mlx->mlx, mlx->win,  mlx->stg->width / 2,  mlx->stg->height / 2);
+		mlx_mouse_move(mlx->mlx, mlx->win,
+			mlx->stg->width / 2, mlx->stg->height / 2);
 	}
 }
 
@@ -54,7 +55,8 @@ void	horizontal_move(t_mlx *mlx, int mouseX)
 		if (mlx->game_server.status == CONNECTED)
 			dprintf(mlx->game_server.sockfd, "setDir:%.2f,%.2f;",
 				mlx->map->cam_dir.x, mlx->map->cam_dir.y);
-		mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2,  mlx->stg->height / 2);
+		mlx_mouse_move(mlx->mlx, mlx->win,
+			mlx->stg->width / 2, mlx->stg->height / 2);
 	}
 }
 
