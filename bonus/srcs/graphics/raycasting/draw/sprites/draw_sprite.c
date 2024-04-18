@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 16:42:21 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:31:56 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ bool	draw_sprite(t_mlx *mlx, t_sprite *sprite, t_raydata **ray)
 		while (draw_data.pos_x - draw_data.start_x < sprite->screen_size[0]
 			&& draw_data.pos_x < mlx->stg->width)
 		{
-			if (draw_data.pos_x >= 0 
+			if (draw_data.pos_x >= 0
 				&& sprite->depth
-					< get_quality_ray_dist(mlx, ray, draw_data.pos_x))
+				< get_quality_ray_dist(mlx, ray, draw_data.pos_x))
 				touch_center |= draw_sprite_line(mlx, sprite, &draw_data);
 			draw_data.pos_x++;
 		}
