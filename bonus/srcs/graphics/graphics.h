@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 13:31:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:04:48 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ typedef struct s_sprite
 	float	dist;
 	float	depth;
 	int		screen_x;
+	int		screen_size[2];
+	t_img	*txt;
 }	t_sprite;
 
 /* ------ main_graphics.c -------------------------------------------------- */
