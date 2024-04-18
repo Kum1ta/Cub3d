@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:16:42 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 14:17:30 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:48:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	set_sprites_screen_x(t_sprite *sprites, t_vec3 plyPos, t_mlx *mlx)
 		}
 		transform = inv_cam * (dir->y * diff.x - dir->x * diff.y);
 		sprites->depth = inv_cam * (plane->x * diff.y - plane->y * diff.x);
+		if (sprites->depth == 0.0f)
+			sprites->depth = INT_MAX;
 		sprites->screen_x = (mlx->stg->width / 2)
 			* ((1 + transform / sprites->depth));
 		sprites++;
