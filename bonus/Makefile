@@ -35,7 +35,8 @@ SRCS			=	main.c 																\
 					graphics/main_menu/main_menu.c										\
 					graphics/main_menu/multiplayer_menu.c								\
 					graphics/main_menu/options_menu.c									\
-					graphics/main_menu/button_action.c									\
+					graphics/main_menu/button_action_one.c								\
+					graphics/main_menu/button_action_two.c								\
 					graphics/start_screen/start_screen.c								\
 					graphics/larg_map/larg_map.c										\
 					graphics/larg_map/button_action.c									\

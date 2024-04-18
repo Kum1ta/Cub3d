@@ -6,18 +6,18 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:18:26 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:45:28 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:48:50 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef LARG_MAP_H
-#  define LARG_MAP_H
+#ifndef LARG_MAP_H
+# define LARG_MAP_H
 
 # include "../graphics.h"
 
 /* ---- larg_map.c ---------------------------------------------------------- */
 void	add_button_lm(t_mlx *mlx, int xy[2], void *img,
-		char *(*f)(void *, int));
+			char *(*f)(void *, int));
 void	change_config_file_lm(t_settings_window *stg);
 
 /* ---- settings.c ---------------------------------------------------------- */
@@ -43,7 +43,7 @@ void	init_antialiasing(t_mlx *mlx, t_selected (*selected)[22]);
 
 /* ---- button_action.c ----------------------------------------------------- */
 void	not_selected_button(t_mlx *mlx, t_selected selected[22],
-		int xy[2], int list[3]);
+			int xy[2], int list[3]);
 char	*button_resume_lm(void *mlx_raw, int action);
 char	*button_option_lm(void *mlx, int action);
 char	*main_menu_lm(void *mlxRaw, int action);
@@ -54,4 +54,4 @@ void	draw_square(t_mlx *mlx, int size, int color, int xy[2]);
 void	put_player(t_mlx *mlx);
 void	fill_map(t_mlx *mlx);
 
-# endif
+#endif

@@ -6,12 +6,11 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:24:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:25:48 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:49:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "larg_map.h"
-
 
 void	init_antialiasing(t_mlx *mlx, t_selected (*selected)[22])
 {
