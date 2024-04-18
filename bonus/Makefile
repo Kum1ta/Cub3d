@@ -85,22 +85,7 @@ NAME			=	cub3d
 
 OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
-SV_SRCS			=	networking/server/server.c								\
-					networking/server/manage_client.c						\
-					networking/server/manage_client_input.c					\
-					networking/server/req_actions/health_kit.c				\
-					networking/server/req_actions/set.c						\
-					networking/server/req_actions/shoot.c					\
-					networking/utils/current_timestamp.c					\
-					networking/utils/read_request.c							\
-					networking/utils/socket_init.c							\
-					utils/vector.c 											\
-
-SV_OBJS			=	$(addprefix ./.build/, $(SV_SRCS:.c=.o))
-
-SV_NAME			=	cub3d_server
-
-OBJ_DIR			=	$(sort $(dir $(OBJS) $(SV_OBJS)))
+OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	gcc
 
@@ -166,7 +151,7 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
 		echo "┌───────────────────────────────────────┐"; \
 		echo "│███████████████████████████████████████│"; \
 		echo "└───────────────────────────────────────┘"; \
-		gcc ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS} -lSDL2; \
+		${CC} ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS} -lSDL2; \
 		echo "[ 100% ]\033[32m Compilation $(NAME) completed !\033[0m"; \
 		echo "\n\033[32mThe program \"$(NAME)\" is ready !\033[0m"; \
 	else \
@@ -174,26 +159,8 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
 	fi
 
 ${SV_NAME} : libft $(OBJ_DIR) ${SV_OBJS}
-	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
-		tput cuu1; \
-		tput el; \
-		tput cuu1; \
-		tput el; \
-		tput cuu1; \
-		tput el; \
-		tput cuu1; \
-		tput el; \
-	fi
-	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
-		echo "┌───────────────────────────────────────┐"; \
-		echo "│███████████████████████████████████████│"; \
-		echo "└───────────────────────────────────────┘"; \
-		gcc ${SV_OBJS} -o ${SV_NAME} ${CFLAGS}; \
-		echo "[ 100% ]\033[32m Compilation $(SV_NAME) completed !\033[0m"; \
-		echo "\n\033[32mThe program \"$(SV_NAME)\" is ready !\033[0m"; \
-	else \
-		echo "\033[32mThe program \"$(SV_NAME)\" is already ready !\033[0m"; \
-	fi
+	make -f Makefile_SV
+
 
 clean :
 	@rm -f ${OBJS}
@@ -204,6 +171,7 @@ clean :
 	@echo "Files successfully cleaned."
 	@echo "────────────────────────────────"
 	@rm -rf .build
+	@make -f Makefile_SV clean
 
 fclean :
 	@rm -f ${OBJS}
@@ -215,6 +183,7 @@ fclean :
 	@echo "Files successfully cleaned."
 	@echo "────────────────────────────────"
 	@rm -rf .build
+	@make -f Makefile_SV fclean
 
 re	: fclean all
 

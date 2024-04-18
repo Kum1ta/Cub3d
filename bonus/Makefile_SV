@@ -1,0 +1,46 @@
+NAME			=	cub3d_server
+
+SRCS			=	networking/server/server.c								\
+					networking/server/manage_client.c						\
+					networking/server/manage_client_input.c					\
+					networking/server/req_actions/health_kit.c				\
+					networking/server/req_actions/set.c						\
+					networking/server/req_actions/shoot.c					\
+					networking/utils/current_timestamp.c					\
+					networking/utils/read_request.c							\
+					networking/utils/socket_init.c							\
+					utils/vector.c 											\
+
+OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
+
+OBJ_DIR			=	$(sort $(dir $(OBJS)))
+
+CC				=	gcc
+
+CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD -g
+
+all : ${NAME}
+
+./.build/%.o : ./srcs/%.c
+	$(CC) -c $(CFLAGS) "$<" -o "$@"
+
+libft :
+	@make -C "./includes/libft/"
+
+$(OBJ_DIR):
+	@mkdir -p $@
+
+${NAME} : libft $(OBJ_DIR) ${OBJS}
+	${CC} ${OBJS} -o ${NAME} ${CFLAGS}
+
+clean:
+	rm -rf ${OBJS}
+
+fclean:
+	rm -rf ${NAME}
+
+re	: fclean all
+
+-include $(OBJS:.o=.d)
+
+.PHONY : libft re fclean all clean
