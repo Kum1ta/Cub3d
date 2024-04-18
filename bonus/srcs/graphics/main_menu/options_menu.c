@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:04:25 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:28:20 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_quality_settings(t_mlx *mlx, t_selected selected[22])
 		selected[20] = SELECTED;
 }
 
-void	init_button(t_mlx *mlx, t_selected selected[22])
+void	init_button(t_mlx *mlx, t_selected selected[22], int *init)
 {
 	int	i;
 
@@ -78,131 +78,162 @@ void	init_button(t_mlx *mlx, t_selected selected[22])
 	init_quality_settings(mlx, selected);
 	mlx->stg_win.sensibility_x = mlx->stg->sensibility_x;
 	mlx->stg_win.sensibility_y = mlx->stg->sensibility_y;
+	*init = 1;
+}
+
+void	not_selected_button(t_mlx *mlx, t_selected selected[22],
+		int xy[2], int list[3])
+{
+	mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F101010);
+	if (mlx->mouse->pressed_left)
+	{
+		while (list[0] <= list[1])
+			selected[list[0]++] = NOT_SELECTED;
+		selected[list[2]] = SELECTED;
+		mlx->mouse->pressed_left = 0;
+	}
 }
 
 int	add_case(t_mlx *mlx, int pos[4], char *str, int list[3])
 {
 	static t_selected	selected[22];
 	static int			init = 0;
-	int					x;
-	int					y;
+	int					xy[2];
 
-	x = pos[0] - 1;
+	xy[0] = pos[0] - 1;
 	if (!init)
+		init_button(mlx, selected, &init);
+	while (++xy[0] < pos[2])
 	{
-		init_button(mlx, selected);
-		init = 1;
-	}
-	while (++x < pos[2])
-	{
-		y = pos[1] - 1;
-		while (++y < pos[3])
+		xy[1] = pos[1] - 1;
+		while (++xy[1] < pos[3])
 		{
-			if (x == pos[0] || x == pos[2] - 1 || y == pos[1] || y == pos[3] - 1)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFFFF);
-			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2] && mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3] && selected[nbr_case] == NOT_SELECTED)
-			{
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x5F101010);
-				if (mlx->mouse->pressed_left)
-				{
-					while (list[0] <= list[1])
-						selected[list[0]++] = NOT_SELECTED;
-					selected[nbr_case] = SELECTED;
-					mlx->mouse->pressed_left = 0;
-				}
-			}
-			else if (selected[nbr_case] == SELECTED)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x5F0FF000);
+			if (xy[0] == pos[0] || xy[0] == pos[2] - 1
+				|| xy[1] == pos[1] || xy[1] == pos[3] - 1)
+				mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0xFFFFFFFF);
+			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2]
+				&& mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3]
+				&& selected[list[2]] == NOT_SELECTED)
+				not_selected_button(mlx, selected, xy, list);
+			else if (selected[list[2]] == SELECTED)
+				mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F0FF000);
 		}
 	}
-	mlx_string_put(mlx->mlx, mlx->win, pos[0] + 30, pos[1] + 17, 0xFFFFFFFF, str);
-	return (selected[nbr_case] == SELECTED);
+	mlx_string_put(mlx->mlx, mlx->win, pos[0] + 30, pos[1] + 17, WHITE, str);
+	return (selected[list[2]] == SELECTED);
 }
 
 void	list_button_fps(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", (int [3]){0, 1, 0}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"Off", (int [3]){0, 1, 0}))
 		mlx->stg_win.show_fps = 0;
-	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", (int [3]){0, 1, 1}))
+	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20},
+		"On", (int [3]){0, 1, 1}))
 		mlx->stg_win.show_fps = 1;
 }
 
-void	list_button_resolution(t_mlx *mlx, int xy[2])
+void	list_bigger_resolution(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "800x600", (int [3]){2, 6, 2}))
-	{
-		mlx->stg_win.width = 800;
-		mlx->stg_win.height = 600;
-	}
-	if (add_case(mlx, (int [4]){xy[0] + 170, xy[1], xy[0] + 190, xy[1] + 20}, "1024x768", (int [3]){2, 6, 3}))
-	{
-		mlx->stg_win.width = 1024;
-		mlx->stg_win.height = 768;
-	}
-	if (add_case(mlx, (int [4]){xy[0] + 350, xy[1], xy[0] + 370, xy[1] + 20}, "1280x800", (int [3]){2, 6, 4}))
-	{
-		mlx->stg_win.width = 1280;
-		mlx->stg_win.height = 800;
-	}
-	if (add_case(mlx, (int [4]){xy[0] + 530, xy[1], xy[0] + 550, xy[1] + 20}, "1600x900", (int [3]){2, 6, 5}))
+	if (add_case(mlx, (int [4]){xy[0] + 530, xy[1], xy[0] + 550, xy[1] + 20},
+		"1600x900", (int [3]){2, 6, 5}))
 	{
 		mlx->stg_win.width = 1600;
 		mlx->stg_win.height = 900;
 	}
-	if (add_case(mlx, (int [4]){xy[0], xy[1] + 30, xy[0] + 20, xy[1] + 50}, "1920x1080", (int [3]){2, 6, 6}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1] + 30, xy[0] + 20, xy[1] + 50},
+		"1920x1080", (int [3]){2, 6, 6}))
 	{
 		mlx->stg_win.width = 1920;
 		mlx->stg_win.height = 1080;
 	}
 }
 
+void	list_button_resolution(t_mlx *mlx, int xy[2])
+{
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"800x600", (int [3]){2, 6, 2}))
+	{
+		mlx->stg_win.width = 800;
+		mlx->stg_win.height = 600;
+	}
+	if (add_case(mlx, (int [4]){xy[0] + 170, xy[1], xy[0] + 190, xy[1] + 20},
+		"1024x768", (int [3]){2, 6, 3}))
+	{
+		mlx->stg_win.width = 1024;
+		mlx->stg_win.height = 768;
+	}
+	if (add_case(mlx, (int [4]){xy[0] + 350, xy[1], xy[0] + 370, xy[1] + 20},
+		"1280x800", (int [3]){2, 6, 4}))
+	{
+		mlx->stg_win.width = 1280;
+		mlx->stg_win.height = 800;
+	}
+	list_bigger_resolution(mlx, xy);
+}
+
 void	list_button_quality(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Very low", (int [3]){7, 10, 7}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"Very low", (int [3]){7, 10, 7}))
 		mlx->stg_win.quality = 5;
-	if (add_case(mlx, (int [4]){xy[0] + 180, xy[1], xy[0] + 200, xy[1] + 20}, "Low", (int [3]){7, 10, 8}))
+	if (add_case(mlx, (int [4]){xy[0] + 180, xy[1], xy[0] + 200, xy[1] + 20},
+		"Low", (int [3]){7, 10, 8}))
 		mlx->stg_win.quality = 3;
-	if (add_case(mlx, (int [4]){xy[0] + 275, xy[1], xy[0] + 295, xy[1] + 20}, "Medium", (int [3]){7, 10, 9}))
+	if (add_case(mlx, (int [4]){xy[0] + 275, xy[1], xy[0] + 295, xy[1] + 20},
+		"Medium", (int [3]){7, 10, 9}))
 		mlx->stg_win.quality = 2;
-	if (add_case(mlx, (int [4]){xy[0] + 425, xy[1], xy[0] + 445, xy[1] + 20}, "High", (int [3]){7, 10, 10}))
+	if (add_case(mlx, (int [4]){xy[0] + 425, xy[1], xy[0] + 445, xy[1] + 20},
+		"High", (int [3]){7, 10, 10}))
 		mlx->stg_win.quality = 1;
 }
 
 void	list_button_aa(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "x1", (int [3]){11, 14, 11}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"x1", (int [3]){11, 14, 11}))
 		mlx->stg_win.anti_aliasing = 1;
-	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "x2", (int [3]){11, 14, 12}))
+	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20},
+		"x2", (int [3]){11, 14, 12}))
 		mlx->stg_win.anti_aliasing = 2;
-	if (add_case(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20}, "x4", (int [3]){11, 14, 13}))
+	if (add_case(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20},
+		"x4", (int [3]){11, 14, 13}))
 		mlx->stg_win.anti_aliasing = 4;
-	if (add_case(mlx, (int [4]){xy[0] + 300, xy[1], xy[0] + 320, xy[1] + 20}, "x8", (int [3]){11, 14, 14}))
+	if (add_case(mlx, (int [4]){xy[0] + 300, xy[1], xy[0] + 320, xy[1] + 20},
+		"x8", (int [3]){11, 14, 14}))
 		mlx->stg_win.anti_aliasing = 8;
 }
 
 void	list_button_mini_map(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", (int [3]){15, 16, 15}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"Off", (int [3]){15, 16, 15}))
 		mlx->stg_win.show_mini_map = 0;
-	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", (int [3]){15, 16, 16}))
+	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20},
+		"On", (int [3]){15, 16, 16}))
 		mlx->stg_win.show_mini_map = 1;
 }
 
 void	list_position_mini_map(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "top-left", (int [3]){17, 19, 17}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"top-left", (int [3]){17, 19, 17}))
 		mlx->stg_win.pos_mini_map = 0;
-	if (add_case(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20}, "top-right", (int [3]){17, 19, 18}))
+	if (add_case(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20},
+		"top-right", (int [3]){17, 19, 18}))
 		mlx->stg_win.pos_mini_map = 1;
-	if (add_case(mlx, (int [4]){xy[0] + 400, xy[1], xy[0] + 420, xy[1] + 20}, "bottom-left", (int [3]){17, 19, 19}))
+	if (add_case(mlx, (int [4]){xy[0] + 400, xy[1], xy[0] + 420, xy[1] + 20},
+		"bottom-left", (int [3]){17, 19, 19}))
 		mlx->stg_win.pos_mini_map = 2;
 }
 
 void	list_button_texture(t_mlx *mlx, int xy[2])
 {
-	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", (int [3]){20, 21, 20}))
+	if (add_case(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
+		"Off", (int [3]){20, 21, 20}))
 		mlx->stg_win.texture = 0;
-	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", (int [3]){20, 21, 21}))
+	if (add_case(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20},
+		"On", (int [3]){20, 21, 21}))
 		mlx->stg_win.texture = 1;
 }
 
@@ -339,4 +370,3 @@ void	options_menu(t_mlx *mlx, int need_free)
 	list_position_mini_map(mlx, (int [2]){93, 725 + diff});
 	add_button(mlx, (int [2]){mlx->stg->width - 100, mlx->stg->height - 30}, square_img, back_main_menu);
 }
-

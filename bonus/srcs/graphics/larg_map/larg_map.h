@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:18:26 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:48:50 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:17:09 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22], int *init);
 void	init_antialiasing(t_mlx *mlx, t_selected (*selected)[22]);
 
 /* ---- button_action.c ----------------------------------------------------- */
-void	not_selected_button(t_mlx *mlx, t_selected selected[22],
+void	not_selected_button_lm(t_mlx *mlx, t_selected selected[22],
 			int xy[2], int list[3]);
 char	*button_resume_lm(void *mlx_raw, int action);
 char	*button_option_lm(void *mlx, int action);
