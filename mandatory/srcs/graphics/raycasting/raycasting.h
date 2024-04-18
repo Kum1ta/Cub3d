@@ -31,7 +31,8 @@ typedef struct s_raydata
 	int		diff;
 }	t_raydata;
 
-typedef struct s_ray {
+typedef struct s_ray
+{
 	float	r_angle;
 	float	dirx;
 	float	diry;

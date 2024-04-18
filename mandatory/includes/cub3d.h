@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -20,16 +20,18 @@
 # include <math.h>
 # include <SDL2/SDL.h>
 
-typedef struct s_mlx t_mlx;
+typedef struct s_mlx	t_mlx;
 
-typedef enum e_block {
+typedef enum e_block
+{
 	EMPTY,
 	END,
 	WALL,
 	FLOOR
 }	t_block;
 
-typedef struct s_texture {
+typedef struct s_texture
+{
 	char	*north;
 	char	*south;
 	char	*east;
@@ -39,22 +41,23 @@ typedef struct s_texture {
 	int		ceiling[3];
 }	t_texture;
 
-typedef struct s_vec4 {
+typedef struct s_vec4
+{
 	float	x;
 	float	y;
 	float	z;
 	float	h;
 }	t_vec4;
 
-typedef struct s_map {
+typedef struct s_map
+{
 	t_block		**blocks;
 	size_t		width;
 	size_t		height;
 
 	t_texture	texture;
-	t_vec4		playerPos;
+	t_vec4		player_pos;
 }	t_map;
-
 
 /* --- main_graphics.c ----------------------------------------------------- */
 void		graphics_part(t_map *map);

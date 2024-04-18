@@ -17,18 +17,18 @@ void	init_ray(t_ray *ray, t_mlx *mlx, float angle)
 	ray->r_angle = angle * PI / 180;
 	ray->dirx = cos(ray->r_angle);
 	ray->diry = sin(ray->r_angle);
-	ray->posx = (int) mlx->map->playerPos.x;
-	ray->posy = (int) mlx->map->playerPos.y;
+	ray->posx = (int) mlx->map->player_pos.x;
+	ray->posy = (int) mlx->map->player_pos.y;
 	ray->deltadx = sqrt(1 + (ray->diry * ray->diry) / (ray->dirx * ray->dirx));
 	ray->deltady = sqrt(1 + (ray->dirx * ray->dirx) / (ray->diry * ray->diry));
 	if (ray->dirx < 0)
-		ray->distx = (mlx->map->playerPos.x - ray->posx) * ray->deltadx;
+		ray->distx = (mlx->map->player_pos.x - ray->posx) * ray->deltadx;
 	else
-		ray->distx = (ray->posx + 1 - mlx->map->playerPos.x) * ray->deltadx;
+		ray->distx = (ray->posx + 1 - mlx->map->player_pos.x) * ray->deltadx;
 	if (ray->diry < 0)
-		ray->disty = (mlx->map->playerPos.y - ray->posy) * ray->deltady;
+		ray->disty = (mlx->map->player_pos.y - ray->posy) * ray->deltady;
 	else
-		ray->disty = (ray->posy + 1 - mlx->map->playerPos.y) * ray->deltady;
+		ray->disty = (ray->posy + 1 - mlx->map->player_pos.y) * ray->deltady;
 	ray->stepx = 1 - 2 * (ray->dirx < 0);
 	ray->stepy = 1 - 2 * (ray->diry < 0);
 	ray->nbstep = 0;
@@ -56,13 +56,13 @@ void	calcul_raydata(t_mlx *mlx, t_ray ray, t_raydata *res)
 	{
 		res->dist = ray.distx - ray.deltadx;
 		res->dir = ray.dir + 2 * (ray.stepx == -1);
-		res->imgx_percent = mlx->map->playerPos.y + res->dist * ray.diry;
+		res->imgx_percent = mlx->map->player_pos.y + res->dist * ray.diry;
 	}
 	else
 	{
 		res->dist = ray.disty - ray.deltady;
 		res->dir = ray.dir + 2 * (ray.stepy == -1);
-		res->imgx_percent = mlx->map->playerPos.x + res->dist * ray.dirx;
+		res->imgx_percent = mlx->map->player_pos.x + res->dist * ray.dirx;
 	}
 }
 

@@ -131,13 +131,13 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 	res = set_map_blocks(map, lines);
 	if (res != MAP_NO_ERROR)
 		return (res);
-	if (map->playerPos.x == -1.0f)
+	if (map->player_pos.x == -1.0f)
 		return (MAP_NO_ERROR);
 	flag_blocks = ft_calloc(map->height * map->width, sizeof(bool));
 	if (flag_blocks == NULL)
 		return (MAP_ERROR_ALLOC);
 	if (can_exit_map(map->blocks, flag_blocks, map->width,
-			(t_vec2){map->playerPos.x, map->playerPos.y}))
+			(t_vec2){map->player_pos.x, map->player_pos.y}))
 		res = MAP_CAN_EXIT;
 	free(flag_blocks);
 	return (res);

@@ -36,6 +36,6 @@ void	correct_fish_eye(t_raydata *ray, float angle_ray, t_mlx *mlx)
 
 	ra = angle_ray + 90;
 	ajust_angle(&ra);
-	radian = (mlx->map->playerPos.h - ra) * (PI / 180.0f);
+	radian = (mlx->map->player_pos.h - ra) * (PI / 180.0f);
 	ray->dist *= cos(radian);
 }

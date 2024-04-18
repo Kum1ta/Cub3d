@@ -17,18 +17,21 @@
 
 # define WHITESPACE_CHARS " \a\b\t\v\f\n\r"
 
-typedef enum e_map_line_type {
+typedef enum e_map_line_type
+{
 	LTYPE_DATA,
 	LTYPE_EMPTY,
 	LTYPE_MAP
 }	t_map_line_type;
 
-typedef struct s_vec2 {
+typedef struct s_vec2
+{
 	size_t	x;
 	size_t	y;
 }	t_vec2;
 
-typedef enum e_map_error_type {
+typedef enum e_map_error_type
+{
 	MAP_NO_ERROR,
 	MAP_ERROR_ALLOC,
 	MAP_INVALID_IDENTIFIER,

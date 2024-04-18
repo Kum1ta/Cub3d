@@ -17,12 +17,12 @@ void	move_player(t_mlx *mlx, float deltaX, float deltaY)
 	float	angle;
 	int		tmp;
 
-	tmp = mlx->map->playerPos.h - 90;
+	tmp = mlx->map->player_pos.h - 90;
 	if (tmp < 0)
 		tmp += 360;
 	angle = tmp * (PI / 180);
-	mlx->map->playerPos.x += deltaX * cos(angle) - deltaY * sin(angle);
-	mlx->map->playerPos.y += deltaX * sin(angle) + deltaY * cos(angle);
+	mlx->map->player_pos.x += deltaX * cos(angle) - deltaY * sin(angle);
+	mlx->map->player_pos.y += deltaX * sin(angle) + deltaY * cos(angle);
 }
 
 void	game_keyboard(t_mlx *mlx)
@@ -43,11 +43,11 @@ void	game_keyboard(t_mlx *mlx)
 	if (mlx->keyboard->d)
 		move_player(mlx, 0, add);
 	if (mlx->keyboard->left)
-		mlx->map->playerPos.h -= 5.0;
+		mlx->map->player_pos.h -= 5.0;
 	if (mlx->keyboard->right)
-		mlx->map->playerPos.h += 5.0;
-	if (mlx->map->playerPos.h >= 360)
-		mlx->map->playerPos.h -= 360;
-	if (mlx->map->playerPos.h < 0)
-		mlx->map->playerPos.h += 360;
+		mlx->map->player_pos.h += 5.0;
+	if (mlx->map->player_pos.h >= 360)
+		mlx->map->player_pos.h -= 360;
+	if (mlx->map->player_pos.h < 0)
+		mlx->map->player_pos.h += 360;
 }

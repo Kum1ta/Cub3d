@@ -28,7 +28,7 @@ static inline void	empty_map_data(t_map *map)
 	map->texture.ceiling[0] = -1;
 	map->texture.ceiling[1] = -1;
 	map->texture.ceiling[2] = -1;
-	map->playerPos.x = -1.0f;
+	map->player_pos.x = -1.0f;
 }
 
 static inline bool	is_map_valid(t_map *map)
@@ -36,7 +36,7 @@ static inline bool	is_map_valid(t_map *map)
 	bool	res;
 
 	res = map->texture.north && map->texture.south
-		&& map->texture.east && map->texture.west && map->playerPos.x != -1.0f
+		&& map->texture.east && map->texture.west && map->player_pos.x != -1.0f
 		&& map->texture.floor[0] != -1 && map->texture.ceiling[0] != -1;
 	if (!res)
 		ft_dprintf(2, "Error\nMissing map parameter.\n");

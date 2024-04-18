@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_INT
-# define FT_PRINTF_INT
+#ifndef FT_PRINTF_INT_H
+# define FT_PRINTF_INT_H
 # include "../../libft.h"
 # include <stdarg.h>
 # include <stdbool.h>

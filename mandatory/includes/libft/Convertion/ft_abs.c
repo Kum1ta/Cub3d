@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_abs(int value)
+#include <stdint.h>
+
+uint16_t	ft_abs(int value)
 {
 	unsigned int	res;
 

@@ -24,19 +24,19 @@ static t_map_error_type	parse_map_char(t_map *map, char c, size_t x, size_t y)
 	else if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 	{
 		map->blocks[y][x] = FLOOR;
-		if (map->playerPos.x != -1.0f)
+		if (map->player_pos.x != -1.0f)
 			return (MAP_DUPLICATE_PLAYER_POS);
-		map->playerPos.x = x;
-		map->playerPos.y = y;
-		map->playerPos.z = 0.0f;
+		map->player_pos.x = x;
+		map->player_pos.y = y;
+		map->player_pos.z = 0.0f;
 		if (c == 'N')
-			map->playerPos.h = 0.0f;
+			map->player_pos.h = 0.0f;
 		else if (c == 'E')
-			map->playerPos.h = 90.0f;
+			map->player_pos.h = 90.0f;
 		else if (c == 'S')
-			map->playerPos.h = 180.0f;
+			map->player_pos.h = 180.0f;
 		else
-			map->playerPos.h = 270.0f;
+			map->player_pos.h = 270.0f;
 	}
 	return (MAP_NO_ERROR);
 }

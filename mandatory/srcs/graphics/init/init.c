@@ -65,8 +65,8 @@ int	init(t_mlx *mlx, t_map *map)
 	if (!mlx->menu_map)
 		return (free_all_graphics(mlx));
 	init_map(mlx, 50);
-	map->playerPos.x += 0.25;
-	map->playerPos.y += 0.25;
+	map->player_pos.x += 0.25;
+	map->player_pos.y += 0.25;
 	mlx->actuel_menu = GAME;
 	mlx->keyboard = malloc(sizeof(t_keyboard));
 	if (!mlx->keyboard)

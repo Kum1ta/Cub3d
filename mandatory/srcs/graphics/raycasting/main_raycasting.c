@@ -121,7 +121,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 	i = -1;
 	while (++i < WIDTH)
 	{
-		angle[i] = (mlx->map->playerPos.h - FOV / 2
+		angle[i] = (mlx->map->player_pos.h - FOV / 2
 				+ (float)i / (float)WIDTH * FOV) - 90;
 		ajust_angle(&angle[i]);
 		ray[i] = raycast(mlx, angle[i]);
