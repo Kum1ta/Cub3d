@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 13:31:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:43:51 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ int			update(void *mlx_ptr);
 int			init(t_mlx *mlx, t_map *map, t_settings *settings);
 
 /* ------ larg_map.c ------------------------------------------------------- */
+int			add_case_lm(t_mlx *mlx, int pos[4], char *str, int list[3]);
+void		init_button_lm(t_mlx *mlx, t_selected (*selected)[22], int *init);
 void		larg_map(t_mlx *mlx, int need_free);
 
 /* ------ load_textures.c -------------------------------------------------- */

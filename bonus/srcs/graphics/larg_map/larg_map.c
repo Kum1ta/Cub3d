@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   larg_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 13:00:47 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:47:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../graphics.h"
 
-void	draw_square(t_mlx *mlx, int size, int color, int x, int y)
+void	draw_square(t_mlx *mlx, int size, int color, int xy[2])
 {
 	int	i;
 	int	j;
 
-	i = x;
-	while (i < x + size)
+	i = xy[0];
+	while (i < xy[0] + size)
 	{
-		j = y;
-		while (j < y + size)
+		j = xy[1];
+		while (j < xy[1] + size)
 		{
-			if (i >= 0 && i < mlx->stg->width && j >= 0 && j < mlx->stg->height - 100)
+			if (i >= 0 && i < mlx->stg->width
+				&& j >= 0 && j < mlx->stg->height - 100)
 				mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
 			j++;
 		}
@@ -47,7 +48,6 @@ void	update_pos(t_mlx *mlx)
 	mlx->mouse->last_y = mlx->mouse->y;
 }
 
-
 void	fill_map(t_mlx *mlx)
 {
 	int	i;
@@ -59,12 +59,18 @@ void	fill_map(t_mlx *mlx)
 		j = 0;
 		while (j < mlx->menu_map->size * mlx->map->width)
 		{
-			if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == WALL)
-				draw_square(mlx, mlx->menu_map->size, 0xFF454545, j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3);
-			else if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == FLOOR)
-				draw_square(mlx, mlx->menu_map->size, 0xFFA1A1A1, j + mlx->menu_map->x, i + mlx->menu_map->y);
-			else if (mlx->map->blocks[i / mlx->menu_map->size][j / mlx->menu_map->size].type == DOOR)
-				draw_square(mlx, mlx->menu_map->size, 0xFF222222, j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3);
+			if (mlx->map->blocks[i / mlx->menu_map->size][j
+				/ mlx->menu_map->size].type == WALL)
+				draw_square(mlx, mlx->menu_map->size, 0xFF454545, (int [2])
+				{j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3});
+			else if (mlx->map->blocks[i / mlx->menu_map->size][j
+				/ mlx->menu_map->size].type == FLOOR)
+				draw_square(mlx, mlx->menu_map->size, 0xFFA1A1A1, (int [2])
+				{j + mlx->menu_map->x, i + mlx->menu_map->y});
+			else if (mlx->map->blocks[i / mlx->menu_map->size][j
+				/ mlx->menu_map->size].type == DOOR)
+				draw_square(mlx, mlx->menu_map->size, 0xFF222222, (int [2])
+				{j + mlx->menu_map->x - 3, i + mlx->menu_map->y - 3});
 			j += mlx->menu_map->size;
 		}
 		i += mlx->menu_map->size;
@@ -97,22 +103,25 @@ void	put_player(t_mlx *mlx)
 	i = mlx->menu_map->size * mlx->map->player_pos.y;
 	k = mlx->menu_map->size * mlx->map->player_pos.x;
 	draw_square(mlx, mlx->menu_map->size / 2, 0xFF0000FF,
-		k + mlx->menu_map->x - mlx->menu_map->size / 4,
-		i + mlx->menu_map->y - mlx->menu_map->size / 4);
+		(int [2]){k + mlx->menu_map->x - mlx->menu_map->size / 4,
+		i + mlx->menu_map->y - mlx->menu_map->size / 4});
 }
 
 void	add_button_lm(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 {
-	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 130 && mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
+	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 130
+		&& mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)
 	{
-		mlx_put_image_to_window(mlx->mlx, mlx->win, img, xy[0] - 10, xy[1] - 22);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, img,
+			xy[0] - 10, xy[1] - 22);
 		if (mlx->mouse->pressed_left)
 		{
 			f((void *)mlx, 1);
 			mlx->menu_button_focus = (intptr_t) f((void *)mlx, 2);
 		}
 	}
-	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[1], 0xFFFFFFFF, f((void *)mlx, 0));
+	mlx_string_put(mlx->mlx, mlx->win, xy[0], xy[1],
+		0xFFFFFFFF, f((void *)mlx, 0));
 }
 
 char	*button_resume_lm(void *mlx_raw, int action)
@@ -122,7 +131,8 @@ char	*button_resume_lm(void *mlx_raw, int action)
 	if (action == 0 || action == 1)
 		return ("Resume");
 	mlx = mlx_raw;
-	mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2, mlx->stg->height / 2);
+	mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2,
+		mlx->stg->height / 2);
 	mlx->mouse->pressed_left = 0;
 	mlx->actuel_menu = GAME;
 	return (NULL);
@@ -130,75 +140,31 @@ char	*button_resume_lm(void *mlx_raw, int action)
 
 void	change_config_file_lm(t_settings_window *stg)
 {
-	int		fd;
-	char	*line;
-	char	*tmp;
-	int		i;
+	char		*tmp[2];
+	int			i[2];
+	const char	key[10][15] = {"show_fps=", "width=", "height=", "quality=",
+		"antialiasing=", "show_minimap=", "minimap_pos=", "texture=",
+		"sensibility_x=", "sensibility_y="};
+	const int	value[10] = {stg->show_fps, stg->width, stg->height,
+		stg->quality, stg->anti_aliasing, stg->show_mini_map,
+		stg->pos_mini_map, stg->texture, stg->sensibility_x,
+		stg->sensibility_y};
 
-	fd = open(".config", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
+	i[0] = open(".config", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (i[0] == -1)
 		return ;
-	i = 0;
-	while (i < 10)
+	i[1] = -1;
+	while (++i[1] < 10)
 	{
-		if (i == 0)
-		{
-			tmp = ft_itoa(stg->show_fps);
-			line = ft_strjoin("show_fps=", tmp);
-		}
-		else if (i == 1)
-		{
-			tmp = ft_itoa(stg->width);
-			line = ft_strjoin("width=", tmp);
-		}
-		else if (i == 2)
-		{
-			tmp = ft_itoa(stg->height);
-			line = ft_strjoin("height=", tmp);
-		}
-		else if (i == 3)
-		{
-			tmp = ft_itoa(stg->quality);
-			line = ft_strjoin("quality=", tmp);
-		}
-		else if (i == 4)
-		{
-			tmp = ft_itoa(stg->anti_aliasing);
-			line = ft_strjoin("antialiasing=", tmp);
-		}
-		else if (i == 5)
-		{
-			tmp = ft_itoa(stg->show_mini_map);
-			line = ft_strjoin("show_minimap=", tmp);
-		}
-		else if (i == 6)
-		{
-			tmp = ft_itoa(stg->pos_mini_map);
-			line = ft_strjoin("minimap_pos=", tmp);
-		}
-		else if (i == 7)
-		{
-			tmp = ft_itoa(stg->texture);
-			line = ft_strjoin("texture=", tmp);
-		}
-		else if (i == 8)
-		{
-			tmp = ft_itoa(stg->sensibility_x);
-			line = ft_strjoin("sensibility_x=", tmp);
-		}
-		else if (i == 9)
-		{
-			tmp = ft_itoa(stg->sensibility_y);
-			line = ft_strjoin("sensibility_y=", tmp);
-		}
-		free(tmp);
-		tmp = ft_strjoin(line, "\n");
-		write(fd, tmp, ft_strlen(tmp));
-		free(line);
-		free(tmp);
-		i++;
+		tmp[0] = ft_strdup(key[i[1]]);
+		tmp[1] = ft_itoa(value[i[1]]);
+		tmp[0] = ft_strjoin_gnl(tmp[0], tmp[1]);
+		free(tmp[1]);
+		tmp[0] = ft_strjoin_gnl(tmp[0], "\n");
+		write(i[0], tmp[0], ft_strlen(tmp[0]));
+		free(tmp[0]);
 	}
-	close(fd);
+	close(i[0]);
 }
 
 char	*button_main_lm(void *mlx, int action)
@@ -217,8 +183,6 @@ char	*button_main_lm(void *mlx, int action)
 	((t_mlx *)mlx)->stg->texture = ((t_mlx *)mlx)->stg_win.texture;
 	((t_mlx *)mlx)->stg->sensibility_x = ((t_mlx *)mlx)->stg_win.sensibility_x;
 	((t_mlx *)mlx)->stg->sensibility_y = ((t_mlx *)mlx)->stg_win.sensibility_y;
-	
-
 	return (NULL);
 }
 
@@ -232,7 +196,7 @@ char	*button_option_lm(void *mlx, int action)
 
 char	*main_menu_lm(void *mlxRaw, int action)
 {
-	t_mlx *mlx;
+	t_mlx	*mlx;
 
 	if (action == 0)
 		return ("Quit");
@@ -243,19 +207,30 @@ char	*main_menu_lm(void *mlxRaw, int action)
 	return (NULL);
 }
 
-/**************************************************************************/
-int		add_case_lm(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2]);
-void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22]);
-
 void	list_button_fps_lm(t_mlx *mlx, int xy[2])
 {
-	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", 0, (int [2]){0, 1}))
+	if (add_case_lm(mlx, (int [4]){xy[0], xy[1],
+			xy[0] + 20, xy[1] + 20}, "Off", (int [3]){0, 1, 0}))
 		mlx->stg_win.show_fps = 0;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", 1, (int [2]){0, 1}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 100,
+			xy[1], xy[0] + 120, xy[1] + 20}, "On", (int [3]){0, 1, 1}))
 		mlx->stg_win.show_fps = 1;
 }
 
-int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
+void	not_selected_button(t_mlx *mlx, t_selected selected[22],
+		int xy[2], int list[3])
+{
+	mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F101010);
+	if (mlx->mouse->pressed_left)
+	{
+		while (list[0] <= list[1])
+			selected[list[0]++] = NOT_SELECTED;
+		selected[list[2]] = SELECTED;
+		mlx->mouse->pressed_left = 0;
+	}
+}
+
+int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int list[3])
 {
 	static t_selected	selected[22];
 	static int			init = 0;
@@ -264,41 +239,34 @@ int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
 
 	x = pos[0] - 1;
 	if (!init)
-	{
-		init_button_lm(mlx, &selected);
-		init = 1;
-	}
+		init_button_lm(mlx, &selected, &init);
 	while (++x < pos[2])
 	{
 		y = pos[1] - 1;
 		while (++y < pos[3])
 		{
-			if (x == pos[0] || x == pos[2] - 1 || y == pos[1] || y == pos[3] - 1)
+			if (x == pos[0] || x == pos[2] - 1
+				|| y == pos[1] || y == pos[3] - 1)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFFFF);
-			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2] && mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3] && selected[nbr_case] == NOT_SELECTED)
-			{
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x5F101010);
-				if (mlx->mouse->pressed_left)
-				{
-					while (list[0] <= list[1])
-						selected[list[0]++] = NOT_SELECTED;
-					selected[nbr_case] = SELECTED;
-					mlx->mouse->pressed_left = 0;
-				}
-			}
-			else if (selected[nbr_case] == SELECTED)
+			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2]
+				&& mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3]
+				&& selected[list[2]] == NOT_SELECTED)
+				not_selected_button(mlx, selected, (int [2]){x, y}, list);
+			else if (selected[list[2]] == SELECTED)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x5F0FF000);
 		}
 	}
-	mlx_string_put(mlx->mlx, mlx->win, pos[0] + 30, pos[1] + 17, 0xFFFFFFFF, str);
-	return (selected[nbr_case] == SELECTED);
+	mlx_string_put(mlx->mlx, mlx->win, pos[0] + 30,
+		pos[1] + 17, 0xFFFFFFFF, str);
+	return (selected[list[2]] == SELECTED);
 }
 
-void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22])
+void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22], int *init)
 {
 	int	i;
 
 	i = -1;
+	*init = 1;
 	if (mlx->stg->show_fps)
 		(*selected)[1] = SELECTED;
 	else
@@ -329,33 +297,33 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22])
 
 void	list_button_quality_lm(t_mlx *mlx, int xy[2])
 {
-	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Very low", 7, (int [2]){7, 10}))
+	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Very low", (int [3]){7, 10, 7}))
 		mlx->stg_win.quality = 5;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 180, xy[1], xy[0] + 200, xy[1] + 20}, "Low", 8, (int [2]){7, 10}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 180, xy[1], xy[0] + 200, xy[1] + 20}, "Low", (int [3]){7, 10, 8}))
 		mlx->stg_win.quality = 3;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 275, xy[1], xy[0] + 295, xy[1] + 20}, "Medium", 9, (int [2]){7, 10}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 275, xy[1], xy[0] + 295, xy[1] + 20}, "Medium", (int [3]){7, 10, 9}))
 		mlx->stg_win.quality = 2;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 425, xy[1], xy[0] + 445, xy[1] + 20}, "High", 10, (int [2]){7, 10}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 425, xy[1], xy[0] + 445, xy[1] + 20}, "High", (int [3]){7, 10, 10}))
 		mlx->stg_win.quality = 1;
 }
 
 void	list_button_aa_lm(t_mlx *mlx, int xy[2])
 {
-	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "x1", 11, (int [2]){11, 14}))
+	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "x1", (int [3]){11, 14, 11}))
 		mlx->stg_win.anti_aliasing = 1;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "x2", 12, (int [2]){11, 14}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "x2", (int [3]){11, 14, 12}))
 		mlx->stg_win.anti_aliasing = 2;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20}, "x4", 13, (int [2]){11, 14}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 200, xy[1], xy[0] + 220, xy[1] + 20}, "x4", (int [3]){11, 14, 13}))
 		mlx->stg_win.anti_aliasing = 4;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 300, xy[1], xy[0] + 320, xy[1] + 20}, "x8", 14, (int [2]){11, 14}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 300, xy[1], xy[0] + 320, xy[1] + 20}, "x8", (int [3]){11, 14, 14}))
 		mlx->stg_win.anti_aliasing = 8;
 }
 
 void	list_button_texture_lm(t_mlx *mlx, int xy[2])
 {
-	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", 15, (int [2]){15, 16}))
+	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20}, "Off", (int [3]){15, 16, 15}))
 		mlx->stg_win.texture = 0;
-	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", 16, (int [2]){15, 16}))
+	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20}, "On", (int [3]){15, 16, 16}))
 		mlx->stg_win.texture = 1;
 }
 
