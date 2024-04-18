@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 14:56:27 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:00:49 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 # define TIME_PER_FRAME_US 0
 # define PI 3.14159265
+
+# define WHITE 0xFFFFFFFF
 
 typedef struct s_raydata
 {

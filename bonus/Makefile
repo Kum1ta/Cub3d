@@ -38,10 +38,16 @@ SRCS			=	main.c 																\
 					graphics/main_menu/button_action.c									\
 					graphics/start_screen/start_screen.c								\
 					graphics/larg_map/larg_map.c										\
+					graphics/larg_map/button_action.c									\
+					graphics/larg_map/draw_map.c										\
+					graphics/larg_map/init.c											\
+					graphics/larg_map/list_button.c										\
+					graphics/larg_map/sensibility.c										\
+					graphics/larg_map/settings.c										\
 					graphics/entry/keyboard/keyboard.c									\
 					graphics/entry/keyboard/game_keyboard.c								\
 					graphics/entry/keyboard/map_larg_menu_keyboard.c					\
-					graphics/entry/keyboard/key_down_type.c											\
+					graphics/entry/keyboard/key_down_type.c								\
 					graphics/entry/mouse_whell.c										\
 					graphics/entry/mouse_down.c											\
 					graphics/entry/mouse_move.c											\
