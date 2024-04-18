@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 13:12:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:46:42 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	raycasting(t_mlx *mlx, int need_free)
 {
 	static t_raydata	**ray;
 	int					i;
-	t_sprite			center_sprite;
 
 	if (need_free)
 		free(ray);
@@ -118,9 +117,9 @@ void	raycasting(t_mlx *mlx, int need_free)
 	while (!ray)
 		ray = malloc(mlx->stg->width * sizeof(t_raydata *));
 	send_rays(mlx, ray);
-	center_sprite = draw_sprites(mlx, ray);
+	mlx->center_sprite = draw_sprites(mlx, ray);
 	put_fps(mlx, 0);
-	item_effect(mlx, center_sprite);
+	item_effect(mlx, mlx->center_sprite);
 	put_actual_item(mlx);
 	if (mlx->stg->show_minimap)
 		mini_map(mlx);
