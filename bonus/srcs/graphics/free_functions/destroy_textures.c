@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:07:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 18:59:12 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:56:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ static inline void	_destroy_textures(t_mlx *mlx)
 	i = -1;
 	while (imgs[++i])
 		if (imgs[i]->img)
-		{
-			printf("destroying image %d\n", i);
 			mlx_destroy_image(mlx->mlx, imgs[i]->img);
-		}
 }
 
 int	destroy_textures(t_mlx *mlx)

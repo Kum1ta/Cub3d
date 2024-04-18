@@ -14,6 +14,8 @@ MAKEFLAGS 		+= --silent
 
 SRCS			=	main.c 																\
 					parse_config_file/config_main.c										\
+					parse_config_file/utils.c											\
+					parse_config_file/config_parser.c									\
 					graphics/main_graphics.c 											\
 					graphics/draw_image_to_window.c 									\
 					graphics/load_textures/load_textures.c								\
@@ -37,6 +39,10 @@ SRCS			=	main.c 																\
 					graphics/main_menu/options_menu.c									\
 					graphics/main_menu/button_action_one.c								\
 					graphics/main_menu/button_action_two.c								\
+					graphics/main_menu/options_list_button_one.c						\
+					graphics/main_menu/options_list_button_two.c						\
+					graphics/main_menu/options_seleted.c								\
+					graphics/main_menu/options_part.c									\
 					graphics/start_screen/start_screen.c								\
 					graphics/larg_map/larg_map.c										\
 					graphics/larg_map/button_action.c									\

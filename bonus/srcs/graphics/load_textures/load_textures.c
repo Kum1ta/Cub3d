@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:31:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 18:59:45 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 23:56:30 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static bool	load_texture(void *mlx, const char *path, t_img *img)
 {
-	img->img = mlx_png_file_to_image(mlx, (char *) path, &img->width, &img->height);
+	img->img = mlx_png_file_to_image(mlx, (char *) path,
+			&img->width, &img->height);
 	return (img->img != NULL);
 }
 
