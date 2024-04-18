@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/10 16:46:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:01:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_map_error_type	add_map_line(char *line, t_list **map_lines)
 	return (MAP_NO_ERROR);
 }
 
-static inline bool	check_line_content(char *line, t_map *map_data, t_list **map_lines)
+static inline bool	check_line_content(char *line, t_map *map_data,
+										t_list **map_lines)
 {
 	t_map_error_type	res;
 

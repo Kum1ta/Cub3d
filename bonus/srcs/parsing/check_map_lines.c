@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:26:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:24:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ static bool	allocate_map(t_map *map)
 	return (true);
 }
 
-t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
+t_map_error_type	check_map_lines(t_map *map, t_list *lines,
+									int screen_res[2])
 {
 	t_map_error_type	res;
-	bool				*flagBlocks;
+	bool				*flag_blocks;
 
 	if (!is_all_lines_valid(lines))
 		return (MAP_INVALID_CHARACTER);
@@ -128,11 +129,12 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines, int screen_res[2])
 		return (res);
 	if (map->player_pos.x == -1.0f)
 		return (MAP_NO_ERROR);
-	flagBlocks = ft_calloc((map->height + 1) * (map->width + 1), sizeof(bool));
-	if (flagBlocks == NULL)
+	flag_blocks = ft_calloc((map->height + 1) * (map->width + 1), sizeof(bool));
+	if (flag_blocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flagBlocks, map->width + 1, (t_ivec2){map->player_pos.x, map->player_pos.y}))
+	if (can_exit_map(map->blocks, flag_blocks, map->width + 1,
+			(t_ivec2){map->player_pos.x, map->player_pos.y}))
 		res = MAP_CAN_EXIT;
-	free(flagBlocks);
+	free(flag_blocks);
 	return (res);
 }

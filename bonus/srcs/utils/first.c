@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/16 21:54:49 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:35:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	put_fps(t_mlx *mlx, int need_free)
 		tmp[1] = (int)fps / 10 % 10 + '0';
 		tmp[2] = (int)fps % 10 + '0';
 		tmp[3] = '\0';
-		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55, 15, 0xFFFF0000, tmp);
 		change = 0;
 	}
-	else
-		mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55, 15, 0xFFFF0000, tmp);
+	mlx_string_put(mlx->mlx, mlx->win, mlx->stg->width - 55,
+		15, 0xFFFF0000, tmp);
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 24.0f);
 	change++;
 }

@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 17:27:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:01:27 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static inline void	empty_map_data(t_map *map)
 
 static inline bool	is_map_valid(t_map *map)
 {
-	bool res;
+	bool	res;
 
 	res = map->texture.north && map->texture.south
 		&& map->texture.east && map->texture.west && map->player_pos.x != -1.0f

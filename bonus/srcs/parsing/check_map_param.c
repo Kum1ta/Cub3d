@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:27:23 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/15 15:21:28 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:27:18 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static inline t_map_line_type	get_line_type(char *line)
 			return (LTYPE_MAP);
 		else
 			return (LTYPE_DATA);
-		
 	}
 	return (LTYPE_EMPTY);
 }
@@ -84,7 +83,6 @@ static bool	set_map_color_param(int color[3], char *color_str)
 	return (color[2] != -1);
 }
 
-
 static t_map_error_type	set_map_param(char **data, t_map *map_data)
 {
 	void	*param_ptr;
@@ -113,7 +111,8 @@ static t_map_error_type	set_map_param(char **data, t_map *map_data)
 	return (MAP_NO_ERROR);
 }
 
-t_map_error_type	check_map_param(char *line, t_map *map_data, t_list **map_lines)
+t_map_error_type	check_map_param(char *line, t_map *map_data,
+									t_list **map_lines)
 {
 	char				**data;
 	t_map_line_type		type;
