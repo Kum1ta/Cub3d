@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   supersampling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:44:52 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:41:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:20:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,37 @@ static inline int	choose_anti_aliasing(t_mlx *mlx, int distance)
 	return (lvl);
 }
 
+static inline void	calc_ss_color(t_mlx *mlx, int pos[2],
+						int shift_pos[2], int color[3])
+{
+	int	color_tmp;
+
+	color_tmp = mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img,
+			min(pos[0] + shift_pos[0], ((t_img *)mlx->tmp)->width),
+			min(pos[1] + shift_pos[1], ((t_img *)mlx->tmp)->height));
+	color[0] += (color_tmp & 0x00FF0000) >> 16;
+	color[2] += (color_tmp & 0x0000FF00) >> 8;
+	color[1] += color_tmp & 0x000000FF;
+}
+
 int	get_ss_color(t_mlx *mlx, int x, int y, int distance)
 {
 	int		color[3];
-	int		x_pos;
-	int		y_pos;
-	int		color_tmp;
+	int		shift_pos[2];
 	int		lvl;
-	
+
 	if (mlx->stg->texture)
 		return (0xFFAA0011);
 	if (mlx->stg->antialiasing == 1)
 		return (mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img, x, y));
 	lvl = choose_anti_aliasing(mlx, distance);
 	ft_bzero(color, 3 * sizeof(int));
-	y_pos = -1;
-	while (++y_pos < lvl)
+	shift_pos[1] = -1;
+	while (++shift_pos[1] < lvl)
 	{
-		x_pos = -1;
-		while (++x_pos < lvl)
-		{
-			color_tmp = mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img,
-				min(x + x_pos, ((t_img *)mlx->tmp)->width), min(y + y_pos, ((t_img *)mlx->tmp)->height));
-			color[0] += (color_tmp & 0x00FF0000) >> 16;
-			color[2] += (color_tmp & 0x0000FF00) >> 8;
-			color[1] += color_tmp & 0x000000FF;
-		}
+		shift_pos[0] = -1;
+		while (++shift_pos[0] < lvl)
+			calc_ss_color(mlx, (int [2]){x, y}, shift_pos, color);
 	}
 	return (255 << 24 | (color[0] / (lvl * lvl)) << 16
 		| (color[2] / (lvl * lvl)) << 8 | (color[1] / (lvl * lvl)));

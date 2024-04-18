@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 17:25:57 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:13:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	put_health(t_mlx *mlx)
 	while (y < 199 + mlx->stg->minimap_pos_y)
 	{
 		x = 0 + mlx->stg->minimap_pos_x + 1;
-		while (x < 350 + mlx->stg->minimap_pos_x && x < health + mlx->stg->minimap_pos_x + 1)
+		while (x < 350 + mlx->stg->minimap_pos_x
+			&& x < health + mlx->stg->minimap_pos_x + 1)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFD93A3A);
 			x++;
@@ -48,7 +49,6 @@ void	draw_player_pos(t_mlx *mlx)
 		}
 		y++;
 	}
-	
 }
 
 void	print_square(t_mlx *mlx, int x, int y)
@@ -61,14 +61,19 @@ void	print_square(t_mlx *mlx, int x, int y)
 	y_map = -1;
 	while (++y_map < 20 - 1)
 	{
-		x_calc = (mlx->stg->minimap_pos_x + 155) + ((x - mlx->map->player_pos.x) * 20);
-		y_calc = (mlx->stg->minimap_pos_y + 91) + ((y - mlx->map->player_pos.y) * 20);
+		x_calc = (mlx->stg->minimap_pos_x + 155)
+			+ ((x - mlx->map->player_pos.x) * 20);
+		y_calc = (mlx->stg->minimap_pos_y + 91)
+			+ ((y - mlx->map->player_pos.y) * 20);
 		x_map = -1;
-		while (++x_map < 20 - 1 && y_calc + y_map < mlx->stg->minimap_pos_y + 180
-			&& y_calc + y_map > mlx->stg->minimap_pos_y + 1 && x_calc + x_map < mlx->stg->minimap_pos_x + 350)
+		while (++x_map < 20 - 1
+			&& y_calc + y_map < mlx->stg->minimap_pos_y + 180
+			&& y_calc + y_map > mlx->stg->minimap_pos_y + 1
+			&& x_calc + x_map < mlx->stg->minimap_pos_x + 350)
 		{
 			if (x_calc + x_map > mlx->stg->minimap_pos_x + 1)
-				mlx_pixel_put(mlx->mlx, mlx->win, x_calc + x_map, y_calc + y_map, 0xFF534B4B);
+				mlx_pixel_put(mlx->mlx, mlx->win, x_calc + x_map,
+					y_calc + y_map, 0xFF534B4B);
 		}
 	}
 }
@@ -85,7 +90,7 @@ void	draw_map(t_mlx *mlx)
 		while (++x < mlx->menu_map->width / mlx->menu_map->size)
 		{
 			if (mlx->map->blocks[y][x].type == WALL)
-				print_square(mlx, x + 1 , y);
+				print_square(mlx, x + 1, y);
 		}
 	}
 	draw_player_pos(mlx);
@@ -101,9 +106,11 @@ void	mini_map(t_mlx *mlx)
 	{
 		x = 0 + mlx->stg->minimap_pos_x;
 		mlx_pixel_put(mlx->mlx, mlx->win, x++, y, 0xF091a3b0);
-		while (x < 350 + mlx->stg->minimap_pos_x && x <  mlx->stg->width)
+		while (x < 350 + mlx->stg->minimap_pos_x && x < mlx->stg->width)
 		{
-			if (y == 199 + mlx->stg->minimap_pos_y || y == 0 + mlx->stg->minimap_pos_y || y == 180 + mlx->stg->minimap_pos_y)
+			if (y == 199 + mlx->stg->minimap_pos_y
+				|| y == 0 + mlx->stg->minimap_pos_y
+				|| y == 180 + mlx->stg->minimap_pos_y)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xF091a3b0);
 			else
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xF0343434);

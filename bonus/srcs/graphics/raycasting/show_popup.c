@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:46:51 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 16:43:11 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:12:24 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	show_popup(t_mlx *mlx)
 		{
 			popup_data = popup_node->content;
 			mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 15.0f);
-			mlx_string_put(mlx->mlx, mlx->win, 10, pos, 0xFF00FF00, popup_data->str);
+			mlx_string_put(mlx->mlx, mlx->win, 10, pos, 0xFF00FF00,
+				popup_data->str);
 			pos += pos_increment;
 			popup_node = popup_node->next;
 		}
