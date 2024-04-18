@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 11:20:25 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 12:58:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	init_button(t_mlx *mlx, t_selected selected[22])
 		selected[21] = SELECTED;
 	else
 		selected[20] = SELECTED;
+	mlx->stg_win.sensibility_x = mlx->stg->sensibility_x;
+	mlx->stg_win.sensibility_y = mlx->stg->sensibility_y;
 }
 
 int	add_case(t_mlx *mlx, int pos[4], char *str, int nbr_case, int list[2])
@@ -200,7 +202,7 @@ void	change_config_file(t_settings_window *stg)
 	if (fd == -1)
 		return ;
 	i = 0;
-	while (i < 8)
+	while (i < 10)
 	{
 		if (i == 0)
 		{
@@ -241,6 +243,16 @@ void	change_config_file(t_settings_window *stg)
 		{
 			tmp = ft_itoa(stg->texture);
 			line = ft_strjoin("texture=", tmp);
+		}
+		else if (i == 8)
+		{
+			tmp = ft_itoa(stg->sensibility_x);
+			line = ft_strjoin("sensibility_x=", tmp);
+		}
+		else if (i == 9)
+		{
+			tmp = ft_itoa(stg->sensibility_y);
+			line = ft_strjoin("sensibility_y=", tmp);
 		}
 		free(tmp);
 		tmp = ft_strjoin(line, "\n");

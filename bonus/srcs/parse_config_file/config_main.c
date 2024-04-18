@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 10:17:55 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 12:59:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ static void	*create_default_config(char *path)
 	fd = open(path, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 		return (error_config("Can't create config file", NULL));
-	write(fd, "width=1024\
+	ft_putstr_fd("width=1024\
 \nheight=768\
 \nquality=1\
 \nantialiasing=1\
@@ -139,7 +139,7 @@ static void	*create_default_config(char *path)
 \nshow_fps=1\
 \nsensibility_x=50\
 \nsensibility_y=50\
-\ntexture=0\n", 97);
+\ntexture=0\n", fd);
 	close(fd);
 	return (path);
 }

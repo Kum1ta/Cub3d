@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:39:07 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 11:22:21 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:00:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void	change_config_file_lm(t_settings_window *stg)
 		}
 		else if (i == 8)
 		{
-			tmp = ft_itoa(stg->sensibility_y);
+			tmp = ft_itoa(stg->sensibility_x);
 			line = ft_strjoin("sensibility_x=", tmp);
 		}
 		else if (i == 9)
@@ -323,6 +323,8 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22])
 		(*selected)[16] = SELECTED;
 	else
 		(*selected)[15] = SELECTED;
+	mlx->stg_win.sensibility_x = mlx->stg->sensibility_x;
+	mlx->stg_win.sensibility_y = mlx->stg->sensibility_y;
 }
 
 void	list_button_quality_lm(t_mlx *mlx, int xy[2])
@@ -371,7 +373,7 @@ static inline void	draw_circle(t_mlx *mlx, int x, int y, int radius)
 		{
 			dist = (radius - i) * (radius - i) + (radius - j) * (radius - j);
 			if (dist <= radius * radius)
-				mlx_pixel_put(mlx->mlx, mlx->win, x + i - radius, y + j - radius, 0xFF0000FF);
+				mlx_pixel_put(mlx->mlx, mlx->win, x + i - radius, y + j - radius, 0xFFFFFFFF);
 			j++;
 		}
 		i++;
@@ -381,14 +383,28 @@ static inline void	draw_circle(t_mlx *mlx, int x, int y, int radius)
 static inline void	draw_line(t_mlx *mlx, int x, int y, int size)
 {
 	while (size >= 0)
-		mlx_pixel_put(mlx->mlx, mlx->win, x + size--, y, 0xFF0000FF);
+		mlx_pixel_put(mlx->mlx, mlx->win, x + size--, y, 0xFFFFFFFF);
 }
 
 void	btn_scroll(t_mlx *mlx, int x, int y, int *edit_value)
 {
-	draw_circle(mlx, x + *edit_value, y, 10);
+	const int	radius = 10;
+	int			mouse_pos[2];
+
+	mlx_mouse_get_pos(mlx->mlx, mouse_pos, mouse_pos + 1);
+	if (mlx->mouse->pressed_left
+		&& mouse_pos[0] >= x + *edit_value - radius
+		&& mouse_pos[0] <= x + *edit_value + radius
+		&& mouse_pos[1] >= y - radius && mouse_pos[1] <= y + radius)
+		{
+			*edit_value = mouse_pos[0] - x;
+			if (*edit_value < 0)
+				*edit_value = 0;
+			else if (*edit_value > 200)
+				*edit_value = 200;
+		}
+	draw_circle(mlx, x + *edit_value, y, radius);
 	draw_line(mlx, x, y, 200);
-	printf("%d\n", *edit_value);
 }
 
 void	options_menu_lm(t_mlx *mlx, int need_free)
