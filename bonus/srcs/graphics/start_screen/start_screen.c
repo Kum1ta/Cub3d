@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_screen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:20:11 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/10 00:34:51 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:41:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
