@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   receive_message.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:53:46 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 21:00:38 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:08:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	receive_message(t_server *srv, char *value, void *mlx)
 	char			*player_name;
 	char			*popup_str;
 
+	(void)mlx;
 	from_src = ft_atoi(value);
 	while (ft_isdigit(*(value++)))
 		;

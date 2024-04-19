@@ -15,9 +15,9 @@ OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
 OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
-CC				=	gcc
+CC				=	cc
 
-CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD -g
+CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
 
 all : ${NAME}
 
@@ -36,7 +36,7 @@ ${NAME} : libft $(OBJ_DIR) ${OBJS}
 clean:
 	rm -rf ${OBJS}
 
-fclean:
+fclean: clean
 	rm -rf ${NAME}
 
 re	: fclean all

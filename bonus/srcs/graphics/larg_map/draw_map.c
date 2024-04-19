@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:29:40 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:46:48 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:07:24 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	put_player(t_mlx *mlx)
 
 void	fill_map(t_mlx *mlx)
 {
-	int	i;
-	int	j;
+	unsigned long	i;
+	unsigned long	j;
 
 	i = 0;
 	while (i < mlx->menu_map->size * mlx->map->height)

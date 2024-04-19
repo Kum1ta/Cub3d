@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 18:46:43 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:04:48 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_ray(t_raydata ***ray, t_mlx *mlx)
 
 void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 {
-	int	tmp;
 	int	i;
 
 	i = -1;
@@ -98,7 +97,7 @@ static inline void	send_rays(t_mlx *mlx, t_raydata **ray)
 			while (j >= 0)
 			{
 				if (ray[i] && ray[i][j].found)
-					scalling(ray[i] + j, mlx, i, j);
+					scalling(ray[i] + j, mlx, i);
 				j--;
 			}
 		}

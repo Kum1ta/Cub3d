@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 13:19:03 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:38:18 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:13:28 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	draw_image_to_window(t_mlx *mlx, t_img *img,
 		{
 			imgy = ((float)y / (float)size[1]) * img->height;
 			clr = mlx_get_image_pixel(mlx->mlx, img->img, imgx, imgy);
-			if (clr >> 24 & 0xFF == 0xFF && pos[0] + x >= 0 && pos[1] + y >= 0)
+			if ((clr >> 24 & 0xFF) == 0xFF && pos[0] + x >= 0
+				&& pos[1] + y >= 0)
 				mlx_pixel_put(mlx->mlx, mlx->win, pos[0] + x, pos[1] + y, clr);
 			y++;
 		}

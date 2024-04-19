@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_popup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:40:44 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 20:46:38 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:11:09 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static inline void	popup_free(void *popupRaw)
 
 void	clear_popup(t_server *srv, bool force)
 {
-	t_list	*popup;
-
 	ft_lstremoveif(&srv->popup, (void *)(intptr_t) force,
 		&popup_free, &popup_must_delete);
 }

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   set_map_blocks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:26:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:12:33 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "./parsing_Int.h"
 
-static inline bool	set_ply_dir(t_map *map, char dir, int screen_res[2])
+static inline void	set_ply_dir(t_map *map, char dir, int screen_res[2])
 {
 	if (dir == 'N')
 	{

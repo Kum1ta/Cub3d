@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_menu.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:58:46 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 00:10:56 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:33:37 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,16 @@ char	*back_main_menu(void *mlx, int action)
 	return (NULL);
 }
 
-void	init_options_menu(t_mlx *mlx, void *square_img, void *bg, int tmp[2])
+void	init_options_menu(t_mlx *mlx, void **square_img, void **bg, int tmp[2])
 {
-	square_img = mlx_new_image(mlx->mlx, mlx->stg->width - 140, 30);
-	create_square(mlx, square_img, mlx->stg->width - 140, 30);
-	bg = mlx_png_file_to_image(mlx->mlx,
-			"textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
+	if (!*square_img)
+	{
+		*square_img = mlx_new_image(mlx->mlx, mlx->stg->width - 140, 30);
+		create_square(mlx, *square_img, mlx->stg->width - 140, 30);
+	}
+	if (!*bg)
+		*bg = mlx_png_file_to_image(mlx->mlx,
+				"textures/main_menu/bg_main_menu.png", &tmp[0], &tmp[1]);
 }
 
 void	options_menu(t_mlx *mlx, int need_free)
@@ -74,10 +78,10 @@ void	options_menu(t_mlx *mlx, int need_free)
 			mlx_destroy_image(mlx->mlx, bg);
 		return ;
 	}
-	if (!square_img)
-		init_options_menu(mlx, square_img, bg, tmp);
+	init_options_menu(mlx, &square_img, &bg, tmp);
 	diff = 50 + mlx->stg_win.diff;
-	mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
+	if (bg)
+		mlx_put_image_to_window(mlx->mlx, mlx->win, bg, 0, 0);
 	mlx_set_font_scale(mlx->mlx, mlx->win, "fonts/rubik.ttf", 64);
 	mlx_string_put(mlx->mlx, mlx->win, 40,
 		80 + mlx->stg_win.diff, 0xFFFFFFFF, "Settings\b");

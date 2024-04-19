@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 13:08:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:57:33 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	verif_start_video(void)
 	return (0);
 }
 
-static int	verif_file(t_map *map, char *file)
+static int	verif_file(t_map *map)
 {
 	int			i;
 	const char	*lst[13] = {
@@ -74,7 +74,7 @@ int	main(int ac, char **av)
 		free(settings);
 		return (1);
 	}
-	if (verif_file(map, av[1]))
+	if (verif_file(map))
 	{
 		free_map(map);
 		free(settings);

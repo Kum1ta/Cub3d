@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   item_effect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:51:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 16:25:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 12:58:43 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static inline void	weapon_shoot(t_mlx *mlx, long long *last_time,
 		mlx->stg->height * 0.55 - 150 / 2};
 
 	player_touch = -1;
-	fire_pos[0];
 	system("paplay --volume=65535 ./sounds/game/weapon_fire.wav &");
 	*last_time = get_now_time();
 	mlx->player->ammo--;

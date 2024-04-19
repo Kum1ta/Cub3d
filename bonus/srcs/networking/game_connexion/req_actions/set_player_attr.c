@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player_attr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/16 21:01:17 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:09:17 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 	int				i;
 	char			*popup_str;
 
+	(void)mlx;
 	src = ft_atoi(value);
 	while (*value++ != ',')
 		;
@@ -42,6 +43,7 @@ void	set_player_pos(t_server *srv, char *value, void *mlx)
 {
 	t_online_player	*ply;
 
+	(void)mlx;
 	ply = get_player_from_source(srv->online_player, ft_atoi(value));
 	if (ply)
 	{
@@ -55,6 +57,7 @@ void	set_player_dir(t_server *srv, char *value, void *mlx)
 {
 	t_online_player	*ply;
 
+	(void)mlx;
 	ply = get_player_from_source(srv->online_player, ft_atoi(value));
 	if (ply)
 	{
@@ -68,6 +71,7 @@ void	set_player_health(t_server *srv, char *value, void *mlx)
 {
 	t_online_player	*ply;
 
+	(void)mlx;
 	ply = get_player_from_source(srv->online_player, ft_atoi(value));
 	if (ply)
 	{

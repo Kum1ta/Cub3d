@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 19:08:09 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:05:11 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		put_actual_item(t_mlx *mlx);
 int			get_ss_color(t_mlx *mlx, int x, int y, int distance);
 
 /* ---- draw_wall_line.c ---------------------------------------------------- */
-void		scalling(t_raydata *ray, t_mlx *mlx, int i, int size);
+void		scalling(t_raydata *ray, t_mlx *mlx, int i);
 
 /* ---- draw_sprites.c ------------------------------------------------------ */
 t_sprite	draw_sprites(t_mlx *mlx, t_raydata **ray);

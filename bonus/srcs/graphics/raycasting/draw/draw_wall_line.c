@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:23:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:24:29 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:02:41 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static inline int	get_scalling_y(t_raydata *ray, t_mlx *mlx,
 	return (y);
 }
 
-void	scalling(t_raydata *ray, t_mlx *mlx, int x, int size)
+void	scalling(t_raydata *ray, t_mlx *mlx, int x)
 {
 	int		y;
 	int		k;

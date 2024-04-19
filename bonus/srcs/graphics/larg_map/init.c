@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:24:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 15:49:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:35:59 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22], int *init)
 	else if (mlx->stg->quality == 1)
 		(*selected)[10] = SELECTED;
 	if (mlx->stg->texture)
-		(*selected)[16] = SELECTED;
-	else
 		(*selected)[15] = SELECTED;
+	else
+		(*selected)[16] = SELECTED;
 	init_antialiasing(mlx, selected);
 	mlx->stg_win.sensibility_x = mlx->stg->sensibility_x;
 	mlx->stg_win.sensibility_y = mlx->stg->sensibility_y;

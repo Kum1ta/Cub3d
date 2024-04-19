@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:11:43 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 20:15:10 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:10:14 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	play_sound_dist(char *sound_path, int decr)
 static void	take_damage(t_mlx *mlx, int damage, int from_player)
 {
 	t_online_player	*ply;
-	char			*tmp;
 
 	mlx->player->health -= damage;
 	if (mlx->player->health < 0)
@@ -68,6 +67,7 @@ void	act_shoot(t_server *srv, char *value, void *mlxRaw)
 	float		dist;
 	t_mlx		*mlx;
 
+	(void)srv;
 	mlx = mlxRaw;
 	from_player = ft_atoi(value);
 	while (*value++ != ',')
@@ -90,6 +90,7 @@ void	act_cut(t_server *srv, char *value, void *mlxRaw)
 	float		dist;
 	t_mlx		*mlx;
 
+	(void)srv;
 	mlx = mlxRaw;
 	from_player = ft_atoi(value);
 	while (*value++ != ',')

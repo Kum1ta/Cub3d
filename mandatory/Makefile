@@ -38,10 +38,9 @@ OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
 OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
-CC				=	gcc
+CC				=	cc
 
-# CFLAGS			=	-Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2 -MD
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -lSDL2
+CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 
@@ -102,7 +101,7 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
         echo "┌───────────────────────────────────────┐"; \
 		echo "│███████████████████████████████████████│"; \
 		echo "└───────────────────────────────────────┘"; \
-		gcc ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS}; \
+		$(CC) ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS} -L./includes/libft -lft -lm -lSDL2; \
 		echo "[ 100% ]\033[32m Compilation $(NAME) completed !\033[0m"; \
 		echo "\n\033[32mThe program \"$(NAME)\" is ready !\033[0m"; \
 	else \

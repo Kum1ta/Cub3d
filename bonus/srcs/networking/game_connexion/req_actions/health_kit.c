@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   health_kit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:14:44 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 21:41:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:10:56 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	add_health_kit(t_server *srv, char *value, void *mlx)
 	t_list			*node;
 	t_health_kit	*kit;
 
+	(void)mlx;
 	node = malloc(sizeof(t_list) + sizeof(t_health_kit));
 	if (!node)
 		return ;
@@ -39,6 +40,7 @@ void	remove_health_kit(t_server *srv, char *value, void *mlx)
 {
 	int	id;
 
+	(void)mlx;
 	id = ft_atoi(value);
 	ft_lstremoveif(&srv->kits, (void *)(intptr_t) id, NULL, &cmp_kit_id);
 }

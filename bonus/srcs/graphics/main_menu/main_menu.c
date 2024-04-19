@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:36:01 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 18:36:24 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:50:37 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	create_square(t_mlx *mlx, void *img, int width, int height)
 	}
 }
 
-void	add_button(t_mlx *mlx, int xy[3], void *img, char *(*f)(void *, int))
+void	add_button(t_mlx *mlx, int xy[2], void *img, char *(*f)(void *, int))
 {
 	if (mlx->mouse->x > xy[0] - 10 && mlx->mouse->x < xy[0] + 190
 		&& mlx->mouse->y > xy[1] - 30 && mlx->mouse->y < xy[1] + 10)

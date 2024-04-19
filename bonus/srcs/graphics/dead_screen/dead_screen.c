@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:48:15 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/17 21:17:23 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:24:16 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	dead_screen(t_mlx *mlx, int need_free)
 
 	if (need_free)
 	{
-		mlx_destroy_image(mlx->mlx, square);
+		if (square)
+			mlx_destroy_image(mlx->mlx, square);
 		return ;
 	}
 	if (!square)

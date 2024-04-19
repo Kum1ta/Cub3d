@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:22:23 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:17:17 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:35:40 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	list_button_texture_lm(t_mlx *mlx, int xy[2])
 {
 	if (add_case_lm(mlx, (int [4]){xy[0], xy[1], xy[0] + 20, xy[1] + 20},
 		"Off", (int [3]){15, 16, 15}))
-		mlx->stg_win.texture = 0;
+		mlx->stg_win.texture = 1;
 	if (add_case_lm(mlx, (int [4]){xy[0] + 100, xy[1], xy[0] + 120, xy[1] + 20},
 		"On", (int [3]){15, 16, 16}))
-		mlx->stg_win.texture = 1;
+		mlx->stg_win.texture = 0;
 }
 
 int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int list[3])

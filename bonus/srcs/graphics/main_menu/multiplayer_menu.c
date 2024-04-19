@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 15:35:21 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 18:44:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:06:29 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	get_key_ascii(int key, bool shift, int allow_char)
 
 void	catch_input(t_mlx *mlx, char *str, int max_size, int allow_char)
 {
-	int		i;
 	t_list	*keyboard;
 	char	c;
 
@@ -42,7 +41,7 @@ void	catch_input(t_mlx *mlx, char *str, int max_size, int allow_char)
 			str[ft_strlen(str) - 1] = 0;
 	}
 	keyboard = mlx->keyboard;
-	while (keyboard && ft_strlen(str) < max_size)
+	while (keyboard && ft_strlen(str) < (size_t)max_size)
 	{
 		if ((int)((intptr_t)keyboard->content) > 0)
 		{
@@ -59,7 +58,7 @@ void	catch_input(t_mlx *mlx, char *str, int max_size, int allow_char)
 	}
 }
 
-int	input_btn(t_mlx *mlx)
+static inline void	input_btn(t_mlx *mlx)
 {
 	if (mlx->menu_button_focus == (intptr_t) set_ip_address_btn(NULL, 2))
 		catch_input(mlx, mlx->game_server.ip, 15, A_NUM | A_POINT);

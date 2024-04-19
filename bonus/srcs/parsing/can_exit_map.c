@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   can_exit_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:30:49 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:00:46 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:11:58 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 t_list	*new_node_pos(int x, int y)
 {
-	t_list		*res;
 	intptr_t	pos;
 
 	pos = (((intptr_t) x) << (4 * 8)) | ((intptr_t) y);
-	res = ft_lstnew((void *) pos);
+	return (ft_lstnew((void *) pos));
 }
 
 t_ivec2	get_node_pos(t_list *node)
@@ -33,7 +32,6 @@ t_ivec2	get_node_pos(t_list *node)
 
 bool	lst_add_pos(t_list *lst, bool *flagBlocks, int width, t_ivec2 pos)
 {
-	t_ivec2	current_pos;
 	t_list	*new;
 
 	if (flagBlocks[pos.y * width + pos.x])

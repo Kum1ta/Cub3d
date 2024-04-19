@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 17:31:56 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:01:01 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline bool	draw_sprite_pixel(t_mlx *mlx, t_sprite *sprite,
 
 	color = mlx_get_image_pixel(mlx->mlx, sprite->txt->img,
 			draw_data->img_pos_x, draw_data->img_pos_y);
-	if (color >> 24 & 0xFF == 0xFF)
+	if ((color >> 24 & 0xFF) == 0xFF)
 	{
 		mlx_pixel_put(mlx->mlx, mlx->win, draw_data->pos_x,
 			draw_data->pos_y + mlx->map->cam_dir.z, color);
@@ -57,8 +57,6 @@ static inline bool	draw_sprite_line(t_mlx *mlx, t_sprite *sprite,
 
 static inline float	get_quality_ray_dist(t_mlx *mlx, t_raydata **ray, int x)
 {
-	float	dist;
-
 	x = x / mlx->stg->quality;
 	x = x * mlx->stg->quality;
 	return (ray[x]->dist);

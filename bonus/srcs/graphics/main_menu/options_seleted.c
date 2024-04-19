@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_seleted.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 00:08:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 00:08:56 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:34:21 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	init_quality_settings(t_mlx *mlx, t_selected selected[22])
 	else
 		selected[10] = SELECTED;
 	if (mlx->stg->texture)
-		selected[21] = SELECTED;
-	else
 		selected[20] = SELECTED;
+	else
+		selected[21] = SELECTED;
 }
 
 void	init_button(t_mlx *mlx, t_selected selected[22], int *init)

@@ -6,7 +6,7 @@
 /*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:29:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:24:13 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:00:33 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static inline bool	mv_forward_ray(t_mlx *mlx, t_ray *ray,
 		ray->dir = 1;
 	}
 	if (ray->pos_x >= 0 && ray->pos_y >= 0
-		&& ray->pos_x < mlx->map->width && ray->pos_y < mlx->map->height)
+		&& (size_t)ray->pos_x < mlx->map->width
+		&& (size_t)ray->pos_y < mlx->map->height)
 	{
 		res->block = &(mlx->map->blocks[ray->pos_y][ray->pos_x]);
 		return ((res->block->type == WALL

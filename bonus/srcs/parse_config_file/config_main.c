@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:44:30 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 23:51:12 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:49:55 by edbernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	*return_good_int(t_settings *settings, char *line)
 
 void	*create_default_config(char *path)
 {
-	t_settings	*settings;
 	int			fd;
 
 	fd = open(path, O_CREAT | O_WRONLY, 0644);
@@ -95,8 +94,6 @@ t_settings	*verification_settings(t_settings *settings)
 t_settings	*parse_config_file(char *path)
 {
 	t_settings	*settings;
-	int			fd;
-	char		*line;
 
 	if ((access(path, F_OK) == -1 && create_default_config(path) == NULL)
 		|| access(path, R_OK))
