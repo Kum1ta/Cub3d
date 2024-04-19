@@ -17,7 +17,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	cc
 
-CFLAGS			=	-Werror -Iincludes -Iincludes/libft -L./includes/libft -lft -Iincludes/MacroLibX/includes/ -lm -MD
+CFLAGS			=	-Werror -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/
 
 all : ${NAME}
 
@@ -31,7 +31,7 @@ $(OBJ_DIR):
 	@mkdir -p $@
 
 ${NAME} : libft $(OBJ_DIR) ${OBJS}
-	${CC} ${OBJS} -o ${NAME} ${CFLAGS}
+	${CC} ${OBJS} -o ${NAME} ${CFLAGS} -L./includes/libft -lft -lm -MD
 
 clean:
 	rm -rf ${OBJS}

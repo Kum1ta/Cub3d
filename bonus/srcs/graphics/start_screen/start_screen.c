@@ -22,6 +22,7 @@ int	put_video(t_mlx *mlx, int need_free)
 	{
 		if (img.img)
 			mlx_destroy_image(mlx->mlx, img.img);
+		img.img = NULL;
 		return (1);
 	}
 	ft_strncpy(str, "textures/main_menu/video/1/000.png\0", 36);

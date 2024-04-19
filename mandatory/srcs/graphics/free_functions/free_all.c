@@ -17,7 +17,7 @@ int	free_all_graphics(t_mlx *mlx)
 	if (mlx)
 	{
 		free(mlx->menu_map);
-		free(mlx->map);
+		free_map(mlx->map);
 		free(mlx->keyboard);
 	}
 	free(mlx);

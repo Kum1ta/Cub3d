@@ -28,6 +28,7 @@ int	window(int event, void *mlx_ptr)
 		inventory(mlx, 1);
 		options_menu(mlx, 1);
 		dead_screen(mlx, 1);
+		start_screen(mlx, 1);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		if (mlx->game_server.status == CONNECTED)

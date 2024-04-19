@@ -65,7 +65,7 @@ int	init(t_mlx *mlx, t_map *map, t_settings *settings)
 	if (!mlx->mouse)
 		return (free_all_graphics(mlx));
 	init_mouse(mlx->mouse);
-	mlx->actuel_menu = MAIN_MENU;
+	mlx->actuel_menu = START_GAME;
 	mlx->player = malloc(sizeof(t_player));
 	if (!mlx->player)
 		return (free_all_graphics(mlx));
