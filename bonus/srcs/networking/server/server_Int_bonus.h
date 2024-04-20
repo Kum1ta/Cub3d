@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_Int.h                                       :+:      :+:    :+:   */
+/*   server_Int_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 16:01:35 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:29 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_INT_H
-# define SERVER_INT_H
+#ifndef SERVER_INT_BONUS_H
+# define SERVER_INT_BONUS_H
 
 # include "libft.h"
 # include "vector.h"

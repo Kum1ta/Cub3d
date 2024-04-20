@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shoot.c                                            :+:      :+:    :+:   */
+/*   shoot_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:43:52 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:33:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../server_Int.h"
+#include "../server_Int_bonus.h"
 
 void	act_shoot(t_server *srv, int clientI, char *value)
 {

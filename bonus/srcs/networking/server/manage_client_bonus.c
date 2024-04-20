@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_client.c                                    :+:      :+:    :+:   */
+/*   manage_client_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:21:14 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 17:42:40 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:11 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server_Int.h"
+#include "server_Int_bonus.h"
 
 void	init_clients_tab(t_client *clients)
 {

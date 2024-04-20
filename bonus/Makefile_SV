@@ -1,15 +1,15 @@
 NAME			=	cub3d_server
 
-SRCS			=	networking/server/server.c								\
-					networking/server/manage_client.c						\
-					networking/server/manage_client_input.c					\
-					networking/server/req_actions/health_kit.c				\
-					networking/server/req_actions/set.c						\
-					networking/server/req_actions/shoot.c					\
-					networking/utils/current_timestamp.c					\
-					networking/utils/read_request.c							\
-					networking/utils/socket_init.c							\
-					utils/vector.c 											\
+SRCS			=	networking/server/server_bonus.c							\
+					networking/server/manage_client_bonus.c						\
+					networking/server/manage_client_input_bonus.c				\
+					networking/server/req_actions/health_kit_bonus.c			\
+					networking/server/req_actions/set_bonus.c					\
+					networking/server/req_actions/shoot_bonus.c					\
+					networking/utils/current_timestamp_bonus.c					\
+					networking/utils/read_request_bonus.c						\
+					networking/utils/socket_init_bonus.c						\
+					utils/vector_bonus.c 										\
 
 OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.c                                              :+:      :+:    :+:   */
+/*   set_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:56:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 16:03:58 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:20 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../server_Int.h"
+#include "../server_Int_bonus.h"
 #define PLAYER_ATTR_REQ "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f,%.2f,%d;"
 
 void	act_init_player(t_server *srv, int client_i, char *value)

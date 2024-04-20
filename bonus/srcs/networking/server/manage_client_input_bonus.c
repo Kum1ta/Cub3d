@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_client_input.c                              :+:      :+:    :+:   */
+/*   manage_client_input_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:01 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 21:19:19 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:08 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server_Int.h"
+#include "server_Int_bonus.h"
 #define ACTIONS_NAME 
 #define ACTIONS_FCT 
 

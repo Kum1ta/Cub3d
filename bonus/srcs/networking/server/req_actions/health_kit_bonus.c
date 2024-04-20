@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   health_kit.c                                       :+:      :+:    :+:   */
+/*   health_kit_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:35:07 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 21:38:14 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:18 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../server_Int.h"
+#include "../server_Int_bonus.h"
 
 void	act_add_health_kit(t_server *srv, int clientI, char *value)
 {

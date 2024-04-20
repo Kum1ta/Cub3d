@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:42:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:36:59 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:19:05 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server_Int.h"
+#include "server_Int_bonus.h"
 
 void	error_socket(char *errval, int sockfd, char *special_err_msg)
 {
