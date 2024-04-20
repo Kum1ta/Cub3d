@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/19 13:01:01 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:57:54 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,42 @@ static inline bool	draw_sprite_pixel(t_mlx *mlx, t_sprite *sprite,
 									t_drawsprt_attr *draw_data)
 {
 	int		color;
+	int		pos_y;
 
 	color = mlx_get_image_pixel(mlx->mlx, sprite->txt->img,
 			draw_data->img_pos_x, draw_data->img_pos_y);
 	if ((color >> 24 & 0xFF) == 0xFF)
 	{
+		pos_y = draw_data->pos_y + mlx->map->cam_dir.z;
 		mlx_pixel_put(mlx->mlx, mlx->win, draw_data->pos_x,
-			draw_data->pos_y + mlx->map->cam_dir.z, color);
+			pos_y, color);
 		if (draw_data->pos_x == mlx->stg->width / 2
-			&& draw_data->pos_y + mlx->map->cam_dir.z == mlx->stg->height / 2)
-			return (true);
+			&& pos_y == mlx->stg->height / 2)
+				return (true);
 	}
 	return (false);
 }
 
 static inline bool	draw_sprite_line(t_mlx *mlx, t_sprite *sprite,
-									t_drawsprt_attr *draw_data)
+									t_drawsprt_attr *draw)
 {
 	bool	touch_center;
 
 	touch_center = false;
-	draw_data->img_pos_x = ((float)(draw_data->pos_x - draw_data->start_x))
+	draw->img_pos_x = ((float)(draw->pos_x - draw->start_x))
 		/ ((float) sprite->screen_size[0]) * sprite->txt->width;
-	draw_data->start_y = mlx->stg->height / 2 - sprite->screen_size[1] / 2;
-	draw_data->pos_y = draw_data->start_y;
-	if (draw_data->pos_y - draw_data->start_y < 0)
-		draw_data->pos_y = -draw_data->start_y;
-	while (draw_data->pos_y - draw_data->start_y < sprite->screen_size[1]
-		&& draw_data->pos_y + mlx->map->cam_dir.z < mlx->stg->height)
+	draw->start_y = mlx->stg->height / 2 - sprite->screen_size[1] / 2;
+	draw->pos_y = draw->start_y;
+	while (draw->pos_y - draw->start_y < sprite->screen_size[1]
+		&& draw->pos_y + mlx->map->cam_dir.z < mlx->stg->height)
 	{
-		draw_data->img_pos_y = ((float)(draw_data->pos_y - draw_data->start_y))
-			/ ((float) sprite->screen_size[1]) * sprite->txt->height;
-		if (draw_data->pos_y + mlx->map->cam_dir.z >= 0)
-			draw_sprite_pixel(mlx, sprite, draw_data);
-		touch_center |= draw_sprite_pixel(mlx, sprite, draw_data);
-		draw_data->pos_y++;
+		if (draw->pos_y + mlx->map->cam_dir.z >= 0)
+		{
+			draw->img_pos_y = ((float)(draw->pos_y - draw->start_y))
+				/ ((float) sprite->screen_size[1]) * sprite->txt->height;
+			touch_center |= draw_sprite_pixel(mlx, sprite, draw);
+		}
+		draw->pos_y++;
 	}
 	return (touch_center);
 }

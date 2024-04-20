@@ -54,6 +54,6 @@ dkms.conf
 .vscode
 */.vscode
 bonus/.config
-bonus/cub3d
+bonus/cub3D
 bonus/cub3d_server
-mandatory/cub3d
+mandatory/cub3D
