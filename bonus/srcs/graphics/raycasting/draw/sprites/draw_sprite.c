@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 15:57:54 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:07:29 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline bool	draw_sprite_pixel(t_mlx *mlx, t_sprite *sprite,
 			pos_y, color);
 		if (draw_data->pos_x == mlx->stg->width / 2
 			&& pos_y == mlx->stg->height / 2)
-				return (true);
+			return (true);
 	}
 	return (false);
 }
