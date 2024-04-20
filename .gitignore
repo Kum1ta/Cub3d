@@ -52,3 +52,8 @@ Mkfile.old
 dkms.conf
 
 .vscode
+*/.vscode
+bonus/.config
+bonus/cub3d
+bonus/cub3d_server
+mandatory/cub3d

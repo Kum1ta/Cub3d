@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:01:27 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:04:12 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ static bool	check_file_ext(char *filename, char *ext)
 	filename_size = ft_strlen(filename);
 	ext_size = ft_strlen(ext);
 	if (filename_size < ext_size)
+	{
+		ft_dprintf(2, "Error\nBad file extention\n");
 		return (false);
+	}
 	if (ft_strncmp(filename + filename_size - ext_size, ext, ext_size) == 0)
 		return (true);
 	else

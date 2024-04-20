@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:24:58 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:35:59 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:02:20 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ void	init_antialiasing(t_mlx *mlx, t_selected (*selected)[22])
 
 void	init_button_lm(t_mlx *mlx, t_selected (*selected)[22], int *init)
 {
-	int	i;
-
-	i = -1;
 	*init = 1;
 	if (mlx->stg->show_fps)
 		(*selected)[1] = SELECTED;

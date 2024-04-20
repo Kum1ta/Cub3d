@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options_seleted.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 00:08:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:34:21 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:01:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ void	init_quality_settings(t_mlx *mlx, t_selected selected[22])
 
 void	init_button(t_mlx *mlx, t_selected selected[22], int *init)
 {
-	int	i;
-
-	i = -1;
 	if (mlx->stg->show_fps)
 		selected[1] = SELECTED;
 	else
