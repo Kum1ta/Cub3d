@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 13:12:38 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 15:58:07 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:00:52 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	set_player_attr(t_server *srv, char *value, void *mlx)
 		;
 	ply->pos = parse_vec3(&value);
 	ply->dir = parse_vec2(&value);
+	ply->health = ft_atoi(value);
 	popup_str = ft_strjoin(ply->player_name, " joined the server.");
 	if (popup_str)
 		add_popup(srv, popup_str);

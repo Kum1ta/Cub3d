@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_action_one.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:36:49 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 16:02:16 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:02:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ char	*connect_btn(void *ptr, int action)
 		mlx_mouse_move(mlx->mlx, mlx->win, mlx->stg->width / 2,
 			mlx->stg->height / 2);
 		dprintf(mlx->game_server.sockfd,
-			"initPlayer:%s,%.2f,%.2f,%.2f,%.2f,%.2f;",
+			"initPlayer:%s,%.2f,%.2f,%.2f,%.2f,%.2f,%d;",
 			mlx->game_server.player_name, mlx->map->player_pos.x,
 			mlx->map->player_pos.y, mlx->map->player_pos.z,
-			mlx->map->cam_dir.x, mlx->map->cam_dir.y);
+			mlx->map->cam_dir.x, mlx->map->cam_dir.y,
+			mlx->player->health);
 	}
 	return (NULL);
 }

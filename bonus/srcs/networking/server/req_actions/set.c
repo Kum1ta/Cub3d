@@ -6,12 +6,12 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:56:30 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 19:33:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:03:58 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../server_Int.h"
-#define PLAYER_ATTR_PRINTLINE "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f,%.2f;"
+#define PLAYER_ATTR_REQ "setPlayerAttr:%d,%s,%.2f,%.2f,%.2f,%.2f,%.2f,%d;"
 
 void	act_init_player(t_server *srv, int client_i, char *value)
 {
@@ -22,9 +22,8 @@ void	act_init_player(t_server *srv, int client_i, char *value)
 	while (*value && *value != ',')
 		if (i <= SV_MAX_PLAYER_NAME)
 			srv->clients[client_i].player_name[i++] = *value++;
-	value++;
 	srv->clients[client_i].player_name[i] = 0;
-	while (value[i++] != ',')
+	while (*value++ != ',')
 		;
 	srv->clients[client_i].player_pos = parse_vec3(&value);
 	srv->clients[client_i].player_dir = parse_vec2(&value);
@@ -35,10 +34,11 @@ void	act_init_player(t_server *srv, int client_i, char *value)
 			continue ;
 		ft_dprintf(srv->clients[i].socket, "setPlayerAttr:%d,%s;",
 			client_i, base_str);
-		dprintf(srv->clients[client_i].socket, PLAYER_ATTR_PRINTLINE,
+		dprintf(srv->clients[client_i].socket, PLAYER_ATTR_REQ,
 			i, srv->clients[i].player_name, srv->clients[i].player_pos.x,
 			srv->clients[i].player_pos.y, srv->clients[i].player_pos.z,
-			srv->clients[i].player_dir.x, srv->clients[i].player_dir.y);
+			srv->clients[i].player_dir.x, srv->clients[i].player_dir.y,
+			srv->clients[i].health);
 	}
 }
 
@@ -85,6 +85,7 @@ void	act_set_health(t_server *srv, int clientI, char *value)
 		health = 100;
 	if (health < 0)
 		health = 0;
+	srv->clients[clientI].health = health;
 	while (i < SV_MAX_CONNECTION)
 	{
 		if (i != clientI && srv->clients[i].socket != -1)

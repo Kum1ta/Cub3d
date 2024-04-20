@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:17:24 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/17 20:10:13 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:01:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_client
 	char		*req_buffer;
 	t_vec3		player_pos;
 	t_vec2		player_dir;
+	int			health;
 	long long	last_ping;
 }	t_client;
 
