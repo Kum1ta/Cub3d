@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   set_map_blocks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:06:53 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 22:05:02 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:33:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "./parsing_int.h"
+#include "./parsing_Int.h"
 
-static t_map_error_type	parse_map_char(t_map *map, char c, size_t x, size_t y)
+static t_map_error_type	parse_map_char(t_map *map, char c, t_ivec2 pos)
 {
 	if (ft_isspace(c))
-		map->blocks[y][x] = EMPTY;
+		map->blocks[pos.y][pos.x] = EMPTY;
 	else if (c == '0')
-		map->blocks[y][x] = FLOOR;
+		map->blocks[pos.y][pos.x] = FLOOR;
 	else if (c == '1')
-		map->blocks[y][x] = WALL;
+		map->blocks[pos.y][pos.x] = WALL;
 	else if (c == 'N' || c == 'W' || c == 'S' || c == 'E')
 	{
-		map->blocks[y][x] = FLOOR;
+		map->blocks[pos.y][pos.x] = FLOOR;
 		if (map->player_pos.x != -1.0f)
 			return (MAP_DUPLICATE_PLAYER_POS);
-		map->player_pos.x = x;
-		map->player_pos.y = y;
+		map->player_pos.x = pos.x;
+		map->player_pos.y = pos.y;
 		map->player_pos.z = 0.0f;
 		if (c == 'N')
 			map->player_pos.h = 0.0f;
@@ -56,7 +56,7 @@ t_map_error_type	set_map_blocks(t_map *map, t_list *lines)
 		line = lines->content;
 		while (line[x] && map->blocks[y][x] != END)
 		{
-			res = parse_map_char(map, line[x], x, y);
+			res = parse_map_char(map, line[x], (t_ivec2){x, y});
 			if (res != MAP_NO_ERROR)
 				return (res);
 			x++;
@@ -65,28 +65,4 @@ t_map_error_type	set_map_blocks(t_map *map, t_list *lines)
 		lines = lines->next;
 	}
 	return (res);
-}
-
-bool	allocate_map(t_map *map)
-{
-	size_t	i;
-
-	map->blocks = malloc((map->height + 1) * sizeof(t_block *));
-	if (!map->blocks)
-		return (false);
-	i = 0;
-	while (i < map->height)
-	{
-		map->blocks[i] = ft_calloc((map->width + 1), sizeof(t_block));
-		if (map->blocks[i] == NULL)
-		{
-			free_blocks(map->blocks);
-			map->blocks = NULL;
-			return (false);
-		}
-		map->blocks[i][map->width] = END;
-		i++;
-	}
-	map->blocks[i] = NULL;
-	return (true);
 }

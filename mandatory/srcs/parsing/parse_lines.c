@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 21:57:47 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:31:22 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "./parsing_int.h"
+#include "./parsing_Int.h"
 #include <errno.h>
 #include <string.h>
 
@@ -44,8 +44,8 @@ t_map_error_type	add_map_line(char *line, t_list **map_lines)
 	return (MAP_NO_ERROR);
 }
 
-static inline bool	check_line_content(char *line,
-	t_map *map_data, t_list **map_lines)
+static inline bool	check_line_content(char *line, t_map *map_data,
+										t_list **map_lines)
 {
 	t_map_error_type	res;
 

@@ -95,7 +95,7 @@ OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
 CC				=	cc
 
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/
+CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/ -g
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 

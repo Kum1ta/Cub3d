@@ -12,10 +12,10 @@
 
 MAKEFLAGS 		+= --silent
 
-SRCS			=	main.c 													\
-					graphics/main_graphics.c 								\
+SRCS			=	main.c													\
+					graphics/main_graphics.c								\
 					graphics/load_textures/load_textures.c					\
-					graphics/free_functions/free_all.c 						\
+					graphics/free_functions/free_all.c						\
 					graphics/free_functions/destroy_textures.c				\
 					graphics/raycasting/main_raycasting.c					\
 					graphics/raycasting/raycast.c							\
@@ -24,13 +24,14 @@ SRCS			=	main.c 													\
 					graphics/entry/keyboard/game_keyboard.c					\
 					graphics/init/init.c									\
 					graphics/update.c										\
-					parsing/check_map_lines.c 								\
-					parsing/check_map_param.c 								\
-					parsing/parse_file.c 									\
-					parsing/parse_lines.c 									\
+					parsing/check_map_lines.c								\
+					parsing/check_map_param.c								\
+					parsing/parse_file.c									\
+					parsing/parse_lines.c									\
+					parsing/can_exit_map.c									\
 					parsing/set_map_blocks.c								\
-					utils/first.c 											\
-					free_map.c 												\
+					utils/first.c											\
+					free_map.c												\
 
 NAME			=	cub3d
 

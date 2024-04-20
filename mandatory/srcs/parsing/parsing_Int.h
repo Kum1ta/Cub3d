@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_int.h                                      :+:      :+:    :+:   */
+/*   parsing_Int.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 22:04:49 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:34:14 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ typedef enum e_map_line_type
 	LTYPE_MAP
 }	t_map_line_type;
 
-typedef struct s_vec2
+typedef struct s_ivec2
 {
-	size_t	x;
-	size_t	y;
-}	t_vec2;
+	int	x;
+	int	y;
+}	t_ivec2;
 
 typedef enum e_map_error_type
 {
@@ -42,12 +42,13 @@ typedef enum e_map_error_type
 	MAP_CAN_EXIT
 }	t_map_error_type;
 
-bool				allocate_map(t_map *map);
 bool				parse_lines(int fd, t_map *map_data);
 t_map_error_type	add_map_line(char *line, t_list **map_lines);
 t_map_error_type	check_map_param(char *line, t_map *map_data,
 						t_list **map_lines);
 t_map_error_type	check_map_lines(t_map *map, t_list *lines);
 t_map_error_type	set_map_blocks(t_map *map, t_list *lines);
+bool				can_exit_map(t_block **blocks, bool *flagBlocks,
+						int width, t_ivec2 pos);
 
 #endif

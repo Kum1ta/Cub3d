@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:30:49 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 15:22:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:28:15 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ bool	can_exit_map(t_block **blocks, bool *flagBlocks, int width, t_ivec2 pos)
 	while (!res && lst_pos)
 	{
 		pos = get_node_pos(lst_pos);
-		if (!blocks[pos.y] || blocks[pos.y][pos.x].type == END
-			|| blocks[pos.y][pos.x].type == EMPTY
+		if (!blocks[pos.y] || blocks[pos.y][pos.x] == END
+			|| blocks[pos.y][pos.x] == EMPTY
 			|| ((pos.x == 0 || pos.y == 0)
-				&& blocks[pos.y][pos.x].type != WALL))
+				&& blocks[pos.y][pos.x] != WALL))
 			res = true;
-		else if (blocks[pos.y][pos.x].type != WALL
+		else if (blocks[pos.y][pos.x] != WALL
 			&& !propagate_pos(lst_pos, flagBlocks, width, pos))
 			res = true;
 		prev_pos = lst_pos;

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:42:19 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 22:01:53 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:30:55 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "./parsing_int.h"
+#include "./parsing_Int.h"
 #include <string.h>
 #include <errno.h>
 
@@ -56,7 +56,10 @@ static bool	check_file_ext(char *filename, char *ext)
 	filename_size = ft_strlen(filename);
 	ext_size = ft_strlen(ext);
 	if (filename_size < ext_size)
+	{
+		ft_dprintf(2, "Error\nBad file extention\n");
 		return (false);
+	}
 	if (ft_strncmp(filename + filename_size - ext_size, ext, ext_size) == 0)
 		return (true);
 	else

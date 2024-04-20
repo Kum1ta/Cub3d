@@ -3,18 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_param.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:27:23 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 22:03:30 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:29:01 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./parsing_int.h"
+#include "parsing_Int.h"
 #include "cub3d.h"
 
-static inline void	*get_param_ptr(char *identifier,
-	t_map *map_data, int *type)
+static inline t_map_line_type	get_line_type(char *line)
+{
+	while (*line)
+	{
+		if (ft_isspace(*line))
+			line++;
+		else if (*line == '0' || *line == '1')
+			return (LTYPE_MAP);
+		else if (((*line == 'N' || *line == 'S') && line[1] != 'O')
+			|| (*line == 'W' && line[1] != 'E')
+			|| (*line == 'E' && line[1] != 'A'))
+			return (LTYPE_MAP);
+		else
+			return (LTYPE_DATA);
+	}
+	return (LTYPE_EMPTY);
+}
+
+static inline void	*get_param_ptr(char *identifier, t_map *map_data, int *type)
 {
 	*type = 0;
 	if (ft_strncmp(identifier, "NO", 3) == 0)
@@ -94,26 +111,8 @@ static t_map_error_type	set_map_param(char **data, t_map *map_data)
 	return (MAP_NO_ERROR);
 }
 
-static inline t_map_line_type	get_line_type(char *line)
-{
-	while (*line)
-	{
-		if (ft_isspace(*line))
-			line++;
-		else if (*line == '1' || *line == '0')
-			return (LTYPE_MAP);
-		else if (((*line == 'N' || *line == 'S') && line[1] != 'O')
-			|| (*line == 'W' && line[1] != 'E')
-			|| (*line == 'E' && line[1] != 'A'))
-			return (LTYPE_MAP);
-		else
-			return (LTYPE_DATA);
-	}
-	return (LTYPE_EMPTY);
-}
-
-t_map_error_type	check_map_param(char *line,
-	t_map *map_data, t_list **map_lines)
+t_map_error_type	check_map_param(char *line, t_map *map_data,
+									t_list **map_lines)
 {
 	char				**data;
 	t_map_line_type		type;

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/02 22:04:55 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:31:31 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "./parsing_int.h"
+#include "./parsing_Int.h"
 
 static bool	is_all_lines_valid(t_list *lines)
 {
@@ -72,15 +72,17 @@ static size_t	get_map_height(t_list *lines)
 {
 	size_t	height;
 	char	*str;
+	int		i;
 
 	height = 0;
 	while (lines)
 	{
 		str = lines->content;
+		i = 0;
 		while (*str)
-			if (!ft_isspace(*str++))
+			if (!ft_isspace(str[i++]))
 				break ;
-		if (*str == 0)
+		if (str[i] == 0 && (i == 0 || str[i - 1] == ' '))
 			break ;
 		height++;
 		lines = lines->next;
@@ -88,33 +90,28 @@ static size_t	get_map_height(t_list *lines)
 	return (height);
 }
 
-static bool	can_exit_map(t_block **blocks,
-	bool *flagBlocks, size_t width, t_vec2 pos)
+static bool	allocate_map(t_map *map)
 {
-	bool	escaped;
+	size_t	i;
 
-	if (blocks[pos.y] == NULL)
-		return (true);
-	if (blocks[pos.y][pos.x] == END || blocks[pos.y][pos.x] == EMPTY
-			|| blocks[pos.y][pos.x] == WALL)
-		return (blocks[pos.y][pos.x] != WALL);
-	flagBlocks[pos.y * width + pos.x] = true;
-	if (pos.y == 0 || pos.x == 0 || blocks[pos.y + 1] == NULL)
-		return (true);
-	escaped = false;
-	if (!escaped && !flagBlocks[(pos.y - 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width,
-				(t_vec2){pos.x, pos.y - 1});
-	if (!escaped && !flagBlocks[(pos.y + 1) * width + pos.x])
-		escaped = can_exit_map(blocks, flagBlocks, width,
-				(t_vec2){pos.x, pos.y + 1});
-	if (!escaped && !flagBlocks[pos.y * width + pos.x - 1])
-		escaped = can_exit_map(blocks, flagBlocks, width,
-				(t_vec2){pos.x - 1, pos.y});
-	if (!escaped && !flagBlocks[pos.y * width + pos.x + 1])
-		escaped = can_exit_map(blocks, flagBlocks, width,
-				(t_vec2){pos.x + 1, pos.y});
-	return (escaped);
+	map->blocks = malloc((map->height + 1) * sizeof(t_block *));
+	if (!map->blocks)
+		return (false);
+	i = 0;
+	while (i < map->height)
+	{
+		map->blocks[i] = ft_calloc((map->width + 1), sizeof(t_block));
+		if (map->blocks[i] == NULL)
+		{
+			free_blocks(map->blocks);
+			map->blocks = NULL;
+			return (false);
+		}
+		map->blocks[i][map->width] = END;
+		i++;
+	}
+	map->blocks[i] = NULL;
+	return (true);
 }
 
 t_map_error_type	check_map_lines(t_map *map, t_list *lines)
@@ -133,11 +130,11 @@ t_map_error_type	check_map_lines(t_map *map, t_list *lines)
 		return (res);
 	if (map->player_pos.x == -1.0f)
 		return (MAP_NO_ERROR);
-	flag_blocks = ft_calloc(map->height * map->width, sizeof(bool));
+	flag_blocks = ft_calloc((map->height + 1) * (map->width + 1), sizeof(bool));
 	if (flag_blocks == NULL)
 		return (MAP_ERROR_ALLOC);
-	if (can_exit_map(map->blocks, flag_blocks, map->width,
-			(t_vec2){map->player_pos.x, map->player_pos.y}))
+	if (can_exit_map(map->blocks, flag_blocks, map->width + 1,
+			(t_ivec2){map->player_pos.x, map->player_pos.y}))
 		res = MAP_CAN_EXIT;
 	free(flag_blocks);
 	return (res);

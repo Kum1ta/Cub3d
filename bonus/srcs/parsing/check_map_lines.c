@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:38:20 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:24:44 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:20:59 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,17 @@ static size_t	get_map_height(t_list *lines)
 {
 	size_t	height;
 	char	*str;
+	int		i;
 
 	height = 0;
 	while (lines)
 	{
 		str = lines->content;
+		i = 0;
 		while (*str)
-			if (!ft_isspace(*str++))
+			if (!ft_isspace(str[i++]))
 				break ;
-		if (*str == 0)
+		if (str[i] == 0 && (i == 0 || str[i - 1] == ' '))
 			break ;
 		height++;
 		lines = lines->next;
