@@ -33,7 +33,7 @@ SRCS			=	main.c													\
 					utils/first.c											\
 					free_map.c												\
 
-NAME			=	cub3d
+NAME			=	cub3D
 
 OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
