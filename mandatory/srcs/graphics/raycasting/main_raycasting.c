@@ -65,11 +65,11 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int i, float factor)
 	float	imgy;
 
 	j = ray->wall_start;
-	if (ray->dir == 0)
+	if (ray->dir == 3)
 		mlx->tmp = &mlx->textures->north;
-	else if (ray->dir == 1)
+	else if (ray->dir == 0)
 		mlx->tmp = &mlx->textures->east;
-	else if (ray->dir == 2)
+	else if (ray->dir == 1)
 		mlx->tmp = &mlx->textures->south;
 	else
 		mlx->tmp = &mlx->textures->west;
@@ -97,11 +97,11 @@ void	draw_column(t_mlx *mlx, t_raydata **ray)
 		if (ray[i]->found)
 		{
 			factor = HEIGHT / ray[i]->dist;
-			if (ray[i]->dir == 0)
+			if (ray[i]->dir == 3)
 				factor = (float)mlx->textures->north.height / factor;
-			else if (ray[i]->dir == 1)
+			else if (ray[i]->dir == 0)
 				factor = (float)mlx->textures->east.height / factor;
-			else if (ray[i]->dir == 2)
+			else if (ray[i]->dir == 1)
 				factor = (float)mlx->textures->south.height / factor;
 			else
 				factor = (float)mlx->textures->west.height / factor;

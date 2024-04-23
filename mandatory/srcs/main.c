@@ -21,4 +21,6 @@ int	main(int ac, char **av)
 	if (!map)
 		return (0);
 	graphics_part(map);
+	free_map(map);
+	return (1);
 }

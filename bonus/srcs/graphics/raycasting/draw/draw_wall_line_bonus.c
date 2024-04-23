@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_wall_line.c                                   :+:      :+:    :+:   */
+/*   draw_wall_line_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:23:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/20 15:01:37 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/23 17:30:54 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static inline float	get_scalling_factor(t_raydata *ray, t_mlx *mlx)
 
 	if (ray->block->type == DOOR)
 		mlx->tmp = &mlx->textures->door;
-	else if (ray->dir == 0)
+	else if (ray->dir == 3)
 		mlx->tmp = &mlx->textures->north;
-	else if (ray->dir == 1)
+	else if (ray->dir == 0)
 		mlx->tmp = &mlx->textures->east;
-	else if (ray->dir == 2)
+	else if (ray->dir == 1)
 		mlx->tmp = &mlx->textures->south;
 	else
 		mlx->tmp = &mlx->textures->west;

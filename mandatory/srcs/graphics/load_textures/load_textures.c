@@ -14,7 +14,7 @@
 
 int	load_textures(t_mlx *mlx)
 {
-	mlx->textures = malloc(sizeof(t_loadeds_textures));
+	mlx->textures = ft_calloc(1, sizeof(t_loadeds_textures));
 	if (!mlx->textures)
 		return (error_int(ERROR_TXTE, 1));
 	mlx->textures->north.img = mlx_png_file_to_image(mlx->mlx,
