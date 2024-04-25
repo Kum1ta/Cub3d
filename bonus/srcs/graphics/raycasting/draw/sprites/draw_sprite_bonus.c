@@ -6,11 +6,19 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:19:11 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/23 17:47:19 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:56:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites_Int.h"
+
+static inline int	max(int a, int b)
+{
+	if (b > a)
+		return (b);
+	else
+		return (a);
+}
 
 static inline bool	draw_sprite_pixel(t_mlx *mlx, t_sprite *sprite,
 									t_drawsprt_attr *draw_data)
@@ -41,7 +49,7 @@ static inline bool	draw_sprite_line(t_mlx *mlx, t_sprite *sprite,
 	draw->img_pos_x = ((float)(draw->pos_x - draw->start_x))
 		/ ((float) sprite->screen_size[0]) * sprite->txt->width;
 	draw->start_y = mlx->stg->height / 2 - sprite->screen_size[1] / 2;
-	draw->pos_y = draw->start_y;
+	draw->pos_y = max(0, draw->start_y);
 	while (draw->pos_y - draw->start_y < sprite->screen_size[1]
 		&& draw->pos_y + mlx->map->cam_dir.z < mlx->stg->height)
 	{
