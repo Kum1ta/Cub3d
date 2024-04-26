@@ -39,7 +39,8 @@ typedef enum e_map_error_type
 	MAP_DUPLICATE_PARAMETER,
 	MAP_INVALID_CHARACTER,
 	MAP_DUPLICATE_PLAYER_POS,
-	MAP_CAN_EXIT
+	MAP_CAN_EXIT,
+	MAP_EMPTY
 }	t_map_error_type;
 
 bool				parse_lines(int fd, t_map *map_data);

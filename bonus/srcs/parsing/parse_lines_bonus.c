@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_lines.c                                      :+:      :+:    :+:   */
+/*   parse_lines_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:49:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:01:12 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/26 12:50:28 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static inline void	print_map_error(t_map_error_type type)
 		ft_dprintf(2, "Error\nDuplicate player.\n");
 	else if (type == MAP_CAN_EXIT)
 		ft_dprintf(2, "Error\nCan exit map.\n");
+	else if (type == MAP_EMPTY)
+		ft_dprintf(2, "Error\nMap is empty.\n");
 }
 
 t_map_error_type	add_map_line(char *line, t_list **map_lines)
@@ -76,8 +78,9 @@ bool	parse_lines(int fd, t_map *map_data, int screen_res[2])
 		line = get_next_line(fd);
 	}
 	if (!map_lines)
-		return (false);
-	res = check_map_lines(map_data, map_lines, screen_res);
+		res = MAP_EMPTY;
+	else
+		res = check_map_lines(map_data, map_lines, screen_res);
 	ft_lstclear(&map_lines, free);
 	if (res != MAP_NO_ERROR)
 		print_map_error(res);

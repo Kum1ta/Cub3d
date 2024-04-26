@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   supersampling.c                                    :+:      :+:    :+:   */
+/*   supersampling_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:44:52 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 13:20:16 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/26 13:12:44 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static inline void	calc_ss_color(t_mlx *mlx, int pos[2],
 	int	color_tmp;
 
 	color_tmp = mlx_get_image_pixel(mlx->mlx, ((t_img *)mlx->tmp)->img,
-			min(pos[0] + shift_pos[0], ((t_img *)mlx->tmp)->width),
-			min(pos[1] + shift_pos[1], ((t_img *)mlx->tmp)->height));
+			min(pos[0] + shift_pos[0], ((t_img *)mlx->tmp)->width - 1),
+			min(pos[1] + shift_pos[1], ((t_img *)mlx->tmp)->height - 1));
 	color[0] += (color_tmp & 0x00FF0000) >> 16;
 	color[2] += (color_tmp & 0x0000FF00) >> 8;
 	color[1] += color_tmp & 0x000000FF;

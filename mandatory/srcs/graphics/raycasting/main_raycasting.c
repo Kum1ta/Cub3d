@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycasting.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:03:40 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:01:57 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,7 @@ void	raycasting(t_mlx *mlx, int need_free)
 		calcul_wall_size(ray[i]);
 	}
 	draw_column(mlx, ray);
+	i = -1;
+	while (++i < WIDTH)
+		free(ray[i]);
 }

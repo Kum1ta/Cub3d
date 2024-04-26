@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 23:02:37 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/18 15:32:45 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/26 12:49:47 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef enum e_map_error_type
 	MAP_DUPLICATE_PARAMETER,
 	MAP_INVALID_CHARACTER,
 	MAP_DUPLICATE_PLAYER_POS,
-	MAP_CAN_EXIT
+	MAP_CAN_EXIT,
+	MAP_EMPTY
 }	t_map_error_type;
 
 bool				parse_lines(int fd, t_map *map_data, int screen_res[2]);
