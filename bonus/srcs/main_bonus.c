@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:57:39 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 12:57:33 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:14:21 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	main(int ac, char **av)
 	t_settings	*settings;
 	t_map		*map;
 
-	(void)ac;
+	if (ac > 2)
+	{
+		ft_dprintf(2, "Error\nToo many arguments.\n");
+		return (1);
+	}
 	settings = parse_config_file(".config");
 	if (!settings)
 		return (1);
