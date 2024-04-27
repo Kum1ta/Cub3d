@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:14 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:05:11 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:05:50 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void		put_actual_item(t_mlx *mlx);
 
 /* ---- supersampling.c ----------------------------------------------------- */
 int			get_ss_color(t_mlx *mlx, int x, int y, int distance);
+
+/* ---- draw_ceiling_floor.c ------------------------------------------------ */
+void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i);
 
 /* ---- draw_wall_line.c ---------------------------------------------------- */
 void		scalling(t_raydata *ray, t_mlx *mlx, int i);

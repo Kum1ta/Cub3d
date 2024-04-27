@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_graphics.c                                    :+:      :+:    :+:   */
+/*   main_graphics_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:28 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:24:06 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:18:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./graphics.h"
+
+void	window_pixel_put(t_mlx *mlx, int x, int y, int color)
+{
+	if (x >= 0 && y >= 0 && x < mlx->stg->width && y < mlx->stg->height)
+		mlx_pixel_put(mlx->mlx, mlx->win, x, y, color);
+}
 
 int	window(int event, void *mlx_ptr)
 {

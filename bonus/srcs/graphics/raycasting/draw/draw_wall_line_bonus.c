@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:23:29 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/26 13:11:20 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/27 15:07:04 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	scalling(t_raydata *ray, t_mlx *mlx, int x)
 	img_pos.z = get_scalling_factor(ray, mlx);
 	k = -1;
 	img_pos.x = ray->img_x_percent * ((t_img *)mlx->tmp)->width;
-	while (++k < mlx->stg->quality)
+	while (++k < mlx->stg->quality && x + k < mlx->stg->width)
 	{
 		y = get_scalling_y(ray, mlx, &img_pos, img_pos.z);
 		while (++y < fmin(ray->wall_end,

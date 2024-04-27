@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_map.c                                         :+:      :+:    :+:   */
+/*   draw_map_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:29:40 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:07:24 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:50:49 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ void	draw_square(t_mlx *mlx, int size, int color, int xy[2])
 	int	j;
 
 	i = xy[0];
-	while (i < xy[0] + size)
+	if (i < 0)
+		i = 0;
+	while (i < xy[0] + size && i < mlx->stg->width)
 	{
 		j = xy[1];
-		while (j < xy[1] + size)
+		if (j < 0)
+			j = 0;
+		while (j < xy[1] + size && j < mlx->stg->height - 100)
 		{
-			if (i >= 0 && i < mlx->stg->width
-				&& j >= 0 && j < mlx->stg->height - 100)
-				mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
+			mlx_pixel_put(mlx->mlx, mlx->win, i, j, color);
 			j++;
 		}
 		i++;

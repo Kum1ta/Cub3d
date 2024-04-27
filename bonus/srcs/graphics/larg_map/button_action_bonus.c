@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   button_action.c                                    :+:      :+:    :+:   */
+/*   button_action_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:26:33 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 17:16:59 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:49:48 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	not_selected_button_lm(t_mlx *mlx, t_selected selected[22],
 		int xy[2], int list[3])
 {
-	mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F101010);
+	window_pixel_put(mlx, xy[0], xy[1], 0x5F101010);
 	if (mlx->mouse->pressed_left)
 	{
 		while (list[0] <= list[1])

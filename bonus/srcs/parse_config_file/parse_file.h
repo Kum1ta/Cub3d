@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:39:18 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/18 23:54:10 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:12:35 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

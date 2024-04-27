@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_raycasting.c                                  :+:      :+:    :+:   */
+/*   main_raycasting_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:56:57 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 13:04:48 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:56:03 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,6 @@ void	calcul_wall_size(t_mlx *mlx, t_raydata *ray)
 					* (ray[i].block->data.wall - 1));
 		else
 			ray[i].wall_start = ray[i].wall_start;
-	}
-}
-
-void	put_celling_floor(t_mlx *mlx, t_raydata *ray, int i)
-{
-	int		j;
-	int		k;
-	int		color;
-
-	k = -1;
-	while (++k < mlx->stg->quality)
-	{
-		j = -mlx->map->cam_dir.z - 1;
-		while (++j < ray->wall_start)
-		{
-			color = 255 << 24 | mlx->map->texture.ceiling[0] << 16
-				| mlx->map->texture.ceiling[1] << 8
-				| mlx->map->texture.ceiling[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k,
-				j + mlx->map->cam_dir.z, color);
-		}
-		j += ray->wall_size - 1;
-		while (++j < mlx->stg->height - mlx->map->cam_dir.z)
-		{
-			color = 255 << 24 | mlx->map->texture.floor[0] << 16
-				| mlx->map->texture.floor[1] << 8 | mlx->map->texture.floor[2];
-			mlx_pixel_put(mlx->mlx, mlx->win, i + k,
-				j + mlx->map->cam_dir.z, color);
-		}
 	}
 }
 

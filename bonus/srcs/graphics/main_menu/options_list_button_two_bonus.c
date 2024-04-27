@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options_list_button_two.c                          :+:      :+:    :+:   */
+/*   options_list_button_two_bonus.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edbernar <edbernar@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 00:06:05 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/19 00:12:13 by edbernar         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:52:39 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	not_selected_button(t_mlx *mlx, t_selected selected[22],
 		int xy[2], int list[3])
 {
-	mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F101010);
+	window_pixel_put(mlx, xy[0], xy[1], 0x5F101010);
 	if (mlx->mouse->pressed_left)
 	{
 		while (list[0] <= list[1])
@@ -41,13 +41,13 @@ int	add_case(t_mlx *mlx, int pos[4], char *str, int list[3])
 		{
 			if (xy[0] == pos[0] || xy[0] == pos[2] - 1
 				|| xy[1] == pos[1] || xy[1] == pos[3] - 1)
-				mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0xFFFFFFFF);
+				window_pixel_put(mlx, xy[0], xy[1], 0xFFFFFFFF);
 			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2]
 				&& mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3]
 				&& selected[list[2]] == NOT_SELECTED)
 				not_selected_button(mlx, selected, xy, list);
 			else if (selected[list[2]] == SELECTED)
-				mlx_pixel_put(mlx->mlx, mlx->win, xy[0], xy[1], 0x5F0FF000);
+				window_pixel_put(mlx, xy[0], xy[1], 0x5F0FF000);
 		}
 	}
 	mlx_string_put(mlx->mlx, mlx->win, pos[0] + 30, pos[1] + 17, WHITE, str);

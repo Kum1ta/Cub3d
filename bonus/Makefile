@@ -34,6 +34,7 @@ SRCS			=	main_bonus.c 																\
 					graphics/raycasting/draw/sprites/get_sprites_list_bonus.c					\
 					graphics/raycasting/draw/sprites/set_sprites_attr_bonus.c					\
 					graphics/raycasting/draw/draw_wall_line_bonus.c								\
+					graphics/raycasting/draw/draw_ceil_floor_bonus.c							\
 					graphics/main_menu/main_menu_bonus.c										\
 					graphics/main_menu/multiplayer_menu_bonus.c									\
 					graphics/main_menu/options_menu_bonus.c										\
