@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:01:53 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/27 15:10:05 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/27 15:30:16 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ typedef struct s_mlx
 }	t_mlx;
 
 /* ------ main_graphics.c -------------------------------------------------- */
-void	window_pixel_put(t_mlx *mlx, int x, int y, int color);
+void		window_pixel_put(t_mlx *mlx, int x, int y, int color);
 int			window(int event, void *mlx_ptr);
 
 /* ------ draw_image_to_window.c ------------------------------------------- */

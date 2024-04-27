@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:22:23 by edbernar          #+#    #+#             */
-/*   Updated: 2024/04/27 15:19:23 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/27 15:30:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	add_case_lm(t_mlx *mlx, int pos[4], char *str, int list[3])
 		xy[1] = pos[1] - 1;
 		while (++xy[1] < pos[3])
 		{
-			if ((xy[0] == pos[0] || xy[0] == pos[2] - 1
-				|| xy[1] == pos[1] || xy[1] == pos[3] - 1))
+			if (xy[0] == pos[0] || xy[0] == pos[2] - 1
+				|| xy[1] == pos[1] || xy[1] == pos[3] - 1)
 				window_pixel_put(mlx, xy[0], xy[1], 0xFFFFFFFF);
 			else if (mlx->mouse->x > pos[0] && mlx->mouse->x < pos[2]
 				&& mlx->mouse->y > pos[1] && mlx->mouse->y < pos[3]
