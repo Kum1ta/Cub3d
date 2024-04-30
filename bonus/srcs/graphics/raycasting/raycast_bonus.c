@@ -6,7 +6,7 @@
 /*   By: psalame <psalame@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:29:54 by psalame           #+#    #+#             */
-/*   Updated: 2024/04/27 15:12:03 by psalame          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:44:53 by psalame          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static inline void	get_wall_data(t_ray *ray, t_raydata *res, t_vec3 start)
 	}
 	res->img_x_percent = res->img_x_percent - ((int) res->img_x_percent);
 	ray->curr_size++;
+	if (res->dir == 1 || res->dir == 2)
+		res->img_x_percent = 1 - res->img_x_percent;
 	if (res->block->type == WALL)
 		ray->curr_size = res->block->data.wall;
 }
