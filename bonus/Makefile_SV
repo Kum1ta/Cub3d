@@ -15,23 +15,26 @@ OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
 OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
+LIBFT			=	../Libs/libft/libft.a
+
 CC				=	cc
 
-CFLAGS			=	-Werror -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/
+CFLAGS			=	-Werror -Iincludes -I$(dir $(LIBFT))
+
 
 all : ${NAME}
 
 ./.build/%.o : ./srcs/%.c
 	$(CC) -c $(CFLAGS) "$<" -o "$@"
 
-libft :
-	@make -C "./includes/libft/"
+$(LIBFT) :
+	@make -C "$(dir $(LIBFT))"
 
 $(OBJ_DIR):
 	@mkdir -p $@
 
-${NAME} : libft $(OBJ_DIR) ${OBJS}
-	${CC} ${OBJS} -o ${NAME} ${CFLAGS} -L./includes/libft -lft -lm -MD
+${NAME} : $(LIBFT) $(OBJ_DIR) ${OBJS}
+	${CC} ${OBJS} -o ${NAME} ${CFLAGS} -L$(dir $(LIBFT)) -lft -lm -MD
 
 clean:
 	rm -rf ${OBJS}

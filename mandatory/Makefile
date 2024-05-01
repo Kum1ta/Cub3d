@@ -39,9 +39,13 @@ OBJS			=	$(addprefix ./.build/, $(SRCS:.c=.o))
 
 OBJ_DIR			=	$(sort $(dir $(OBJS)))
 
+MACROLIBX		=	../Libs/MacroLibX/libmlx.so
+
+LIBFT			=	../Libs/libft/libft.a
+
 CC				=	cc
 
-CFLAGS			=	-Wall -Werror -Wextra -Iincludes -Iincludes/libft -Iincludes/MacroLibX/includes/
+CFLAGS			=	-Wall -Werror -Wextra -Iincludes -I$(dir $(LIBFT)) -I$(dir $(MACROLIBX))/includes/
 
 TOTAL_SRCS		= 	$(words $(SRCS))
 
@@ -76,18 +80,18 @@ all : ${NAME}
 	$(eval COMPILED_SRCS=$(shell echo $$(($(COMPILED_SRCS)+1))))
 	@tput cnorm
 
-libft :
-	@make -C "./includes/libft/"
+$(LIBFT) :
+	@make -C "$(dir $(LIBFT))"
 
-mlx :
+$(MACROLIBX) :
 	@echo "── MLX ─────────────────────────"
-	@make -C "./includes/MacroLibX/" -j
+	@make -C "$(dir $(MACROLIBX))" -j
 	@echo "────────────────────────────────"
 
 $(OBJ_DIR):
 	@mkdir -p $@
 
-${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
+${NAME} : $(MACROLIBX) $(LIBFT) $(OBJ_DIR) ${OBJS}
 	@if [ "$(COMPILED_SRCS)" -ne "0" ]; then \
         tput cuu1; \
 		tput el; \
@@ -102,7 +106,7 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
         echo "┌───────────────────────────────────────┐"; \
 		echo "│███████████████████████████████████████│"; \
 		echo "└───────────────────────────────────────┘"; \
-		$(CC) ${OBJS} -o ${NAME} ./includes/MacroLibX/libmlx.so ${CFLAGS} -L./includes/libft -lft -lm -lSDL2; \
+		$(CC) ${OBJS} -o ${NAME} $(MACROLIBX) ${CFLAGS} -L$(dir $(LIBFT)) -lft -lm -lSDL2; \
 		echo "[ 100% ]\033[32m Compilation $(NAME) completed !\033[0m"; \
 		echo "\n\033[32mThe program \"$(NAME)\" is ready !\033[0m"; \
 	else \
@@ -112,9 +116,9 @@ ${NAME} : mlx libft $(OBJ_DIR) ${OBJS}
 clean :
 	@rm -f ${OBJS}
 	@echo "── MLX ─────────────────────────"
-	@make -C "./includes/MacroLibX/" clean
+	@make -C "$(dir $(MACROLIBX))" clean
 	@echo "── CUB3D ───────────────────────"
-	@make -C "./includes/libft/" clean
+	@make -C "$(dir $(LIBFT))" clean
 	@echo "Files successfully cleaned."
 	@echo "────────────────────────────────"
 	@rm -rf .build
@@ -122,10 +126,10 @@ clean :
 fclean :
 	@rm -f ${OBJS}
 	@echo "── MLX ─────────────────────────"
-	@make -C "./includes/MacroLibX/" fclean
+	@make -C "$(dir $(MACROLIBX))" fclean
 	@echo "── CUB3D ───────────────────────"
 	@rm -f ${NAME}
-	@make -C "./includes/libft/" fclean
+	@make -C "$(dir $(LIBFT))" fclean
 	@echo "Files successfully cleaned."
 	@echo "────────────────────────────────"
 	@rm -rf .build
@@ -140,4 +144,4 @@ recub :
 
 -include $(OBJS:.o=.d)
 
-.PHONY : libft mlx re fclean all clean create
+.PHONY : libft mlx re fclean all clean create $(NAME)
